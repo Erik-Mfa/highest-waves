@@ -1,3 +1,4 @@
+// ./models/Beat.js
 const mongoose = require('mongoose');
 
 const beatSchema = new mongoose.Schema({
@@ -18,6 +19,14 @@ const beatSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  bpm: {
+    type: Number,
+    required: true,
+  },
+  tone: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
     default: '',
@@ -30,7 +39,12 @@ const beatSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-  }
-});
+  },
+  tags: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Tag',
+    required: true
+  }]
+}, { timestamps: true });
 
 module.exports = mongoose.model('Beat', beatSchema);

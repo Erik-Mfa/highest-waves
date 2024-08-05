@@ -33,7 +33,6 @@ class AuthController {
       if (!user) return res.status(400).json({ message: 'User not found' });
 
       // Check password
-      
       const isMatch = await bcrypt.compare(password, user.password);
       console.log(password)
       console.log(user.password)

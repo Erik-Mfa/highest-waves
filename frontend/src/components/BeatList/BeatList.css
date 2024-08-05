@@ -1,0 +1,110 @@
+/* BeatList.css */
+.beat-list-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 16rem;
+    background-color: #1f2937; /* Tailwind's bg-gray-800 */
+    padding: 1rem;
+    color: #ffffff;
+  }
+  
+  .filter-group {
+    margin-bottom: 1rem;
+  }
+  
+  .filter-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #cccccc;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+  }
+  
+  .filter-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .filter-checkbox input {
+    margin-right: 0.5rem;
+  }
+  
+  .filter-checkbox label {
+    margin: 0;
+  }
+  
+  .price-slider {
+  margin: 16px 0;
+}
+
+.thumb {
+  background: #BF5B04;
+  border-radius: 50%;
+}
+
+.track {
+  background: #A7E4F2;
+}
+
+/* BeatList.css */
+
+.price-slider {
+    position: relative;
+    margin: 16px 0;
+  }
+  
+  .slider-thumb {
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #A7E4F2;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .slider-thumb::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #BF5B04;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .slider-thumb::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #BF5B04;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .price-values {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 0.875rem;
+  }
+
+.font-be-vietnam {
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.filter-group {
+  margin-bottom: 1rem;
+}
+
+.price-slider {
+  position: relative;
+}
+
+.slider-thumb {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #ddd;
+
+}
