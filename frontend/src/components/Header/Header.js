@@ -11,8 +11,10 @@ const Header = () => {
           </li>
         </ul>
       
+      <Link to='/'>
         <img src='/assets/highestwaves-logo.png' alt='Highest Waves Logo' className="mx-10" width='140px' />
-     
+      </Link>
+      
         <ul className='content-center'>
           <li>
             <Link to="/contact" className="text-white text-lg hover:underline">About</Link>

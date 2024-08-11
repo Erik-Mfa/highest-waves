@@ -1,0 +1,108 @@
+/* Base Sidebar Styles */
+.sidebar {
+    width: 16rem;
+    background-color: #0D3140;
+    padding: 1rem;
+    color: #ffffff;
+    height: 50vh;
+    position: sticky;
+    top: 2rem;
+    z-index: 1000;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 12rem;
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 10rem;
+        padding: 0.5rem;
+    }
+}
+
+/* Mobile View */
+@media (max-width: 640px) {
+    .sidebar {
+        width: 100vw;
+        height: auto;
+        position: relative;
+        top: 0;
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .filter-group {
+        margin-bottom: 1rem;
+    }
+
+    .price-values {
+        margin-bottom: 1rem;
+    }
+
+    .tag-container {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Other Existing Styles */
+
+.filter-group {
+    margin-bottom: 1rem;
+}
+
+.filter-input {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: transparent;
+    border: 1px solid #56ACBF;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    margin-top: 0.5rem;
+}
+
+.price-values {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 0.875rem;
+    color: #ffffff;
+}
+
+/* Tag styles */
+.tag-box {
+    font-size: 0.75rem;
+    border: 1px solid #56ACBF;
+    border-radius: 9999px;
+}
+
+.tag-box.bg-gray-200 {
+    background-color: transparent;
+    border: 1px solid #56ACBF;
+    color: white;
+}
+
+/* SLIDER */
+/* Slider track style */
+.horizontal-slider {
+    width: 100%;
+    height: 8px;
+    position: relative;
+}
+
+.example-thumb {
+    height: 16px;
+    width: 16px;
+    background-color: #333;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #fff;
+    z-index: 1;
+    position: relative;
+}
