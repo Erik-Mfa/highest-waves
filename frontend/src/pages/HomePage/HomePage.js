@@ -1,12 +1,20 @@
-import React from 'react';
+import {React, useEffect, useState} from 'react';
 import Header from '../../components/Header/Header';
 // import BeatList from '../../components/AvailableBeats/BeatList/BeatList';
 import AvailableBeats from '../../components/AvailableBeats/AvailableBeats';
 import Hero from '../../components/Hero/Hero'; 
 import FeaturedBeats from '../../components/FeaturedBeats/FeaturedBeats';
+import { isAdmin, isAuthenticated } from '../../services/auth';
 import './HomePage.css';
 
-function HomePage() {
+function HomePage({authentication}) {
+  useEffect(() => {
+    const admin = isAdmin();
+    const authenticated = isAuthenticated();
+
+    authentication(admin, authenticated)
+}, []);
+
   return (
     <div className="home-page">
       <Header />
