@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa'; 
-import { isAdmin, isAuthenticated } from '../../services/auth';
+import { isAdmin, isAuthenticated, logout } from '../../services/auth';
 
 const Header = () => {
   const [admin, setAdmin] = useState(false);
   const [user, setUser] = useState("");
+  const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    const getOut = await logout();
+
+    if(!!getOut){
+      navigate("/");
+    }
+
+    window.location.reload();
+    return getOut;
+  };
+  
   useEffect(() => {
     const checkAdmin = async () => {
       const result = await isAdmin();
-      
       setAdmin(result);
     };
 
     const checkUser = async () => {
       const result = await isAuthenticated();
-      
       setUser(result);
     };
 
@@ -44,9 +54,16 @@ const Header = () => {
           )}
 
           {user ? 
+          <div>
           <li>
             <h1 className='text-white'>Welcome, {user.username}</h1>
-          </li> : ""}
+          </li>
+          <li>
+              <button onClick={handleLogout} className="text-white hover:text-gray-200">Logout</button>
+          </li>
+          </div>
+          : ""}
+          
           <li>
             <Link to="/login" className="text-white text-lg hover:underline">
               <FaUserCircle size={28} />

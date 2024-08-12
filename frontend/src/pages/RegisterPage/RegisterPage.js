@@ -1,20 +1,13 @@
 import React from 'react';
-import AuthForm from '../../components/Auth/AuthForm/AuthForm';
+import RegisterForm from '../../components/Auth/RegisterForm/RegisterForm';
+import Header from '../../components/Header/Header';
 
 const RegisterPage = () => {
-  const handleRegister = (formData) => {
-    // Add logic for registration
-    console.log('Register Data:', formData);
-  };
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <AuthForm
-        formType="register"
-        onSubmit={handleRegister}
-        title="Create an Account"
-        buttonText="Register"
-      />
+      <Header />
+      <RegisterForm />
     </div>
   );
 };
