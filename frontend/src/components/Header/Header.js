@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa'; 
+import { FaUserCircle, FaShoppingCart } from 'react-icons/fa'; 
 import { isAdmin, isAuthenticated, logout } from '../../services/auth';
+import PurchaseCart from '../PurchaseCart/PurchaseCart'; // Import the PurchaseCart component
 
 const Header = () => {
   const [admin, setAdmin] = useState(false);
   const [user, setUser] = useState("");
+  const [showPurchaseCart, setShowPurchaseCart] = useState(false); // State to manage PurchaseCart visibility
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -69,8 +71,14 @@ const Header = () => {
               <FaUserCircle size={28} />
             </Link>
           </li>
+          <li>
+            <button onClick={() => setShowPurchaseCart(true)} className="text-white text-lg hover:underline">
+              <FaShoppingCart size={28} />
+            </button>
+          </li>
         </ul>
       </nav>
+      {showPurchaseCart && <PurchaseCart onClose={() => setShowPurchaseCart(false)} />}
     </header>
   );
 };

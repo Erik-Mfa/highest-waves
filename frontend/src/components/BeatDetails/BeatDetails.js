@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../axios/axios'; // Adjust the import path as needed
 import Header from '../Header/Header'; // Ensure Header is included
+import { isAuthenticated } from '../../services/auth'; // Import the isAuthenticated function
 
 function BeatDetails({ beatId }) {
   const [beat, setBeat] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [purchaseSuccess, setPurchaseSuccess] = useState(false);
 
   useEffect(() => {
     const fetchBeatDetails = async () => {
       try {
         const response = await axios.get(`/beats/${beatId}`);
-        console.log(response);
         setBeat(response.data);
       } catch (error) {
         console.error('Error fetching beat details:', error);
@@ -22,15 +23,56 @@ function BeatDetails({ beatId }) {
     fetchBeatDetails();
   }, [beatId]);
 
+  const handleBuyNow = async () => {
+    try {
+        const user = await isAuthenticated();
+
+        if (!user) {
+            alert('You must be logged in to purchase a beat.');
+            return;
+        }
+
+        const orderData = {
+            beat: beat._id,
+            price: beat.price,
+            user: user.userId
+        };
+
+        console.table(orderData)
+
+        const response = await axios.post('/orders', orderData, {
+            withCredentials: true // Include cookies
+        });
+       
+        //OK
+        if (response.status === 201) {
+            setPurchaseSuccess(true);
+            alert('Purchase successful!');
+        }
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            //CHECK TOKEN
+            alert('Unauthorized. Please log in again.');
+
+        } else {
+            alert('Failed to place order. Please try again.');
+        }
+        console.error('Error placing order:', error);
+    }
+};
+
+
+
+
   if (loading) return <div>Loading...</div>;
   if (!beat) return <div>Beat not found</div>;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-gray-900 text-black">
       {/* Header */}
       <Header />
 
-      <div className="flex flex-col lg:flex-row items-center lg:items-start p-4 lg:p-8">
+      <div className="flex flex-col lg:flex-row items-center lg:items-start p-4 lg:p-8 text-white">
         {/* Image Section */}
         <div className="flex justify-center lg:w-1/2 max-w-md lg:max-w-none mb-4 lg:mb-0 lg:mr-8">
           <div className="w-1/2 h-full bg-gray-800 rounded-lg overflow-hidden">
@@ -56,10 +98,16 @@ function BeatDetails({ beatId }) {
 
           {/* Buy Now Button */}
           <button
+            onClick={handleBuyNow}
             className="w-full max-w-xs bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
           >
             Buy Now
           </button>
+
+          {/* Optional success message */}
+          {purchaseSuccess && (
+            <p className="mt-4 text-green-500">Thank you for your purchase!</p>
+          )}
         </div>
       </div>
     </div>

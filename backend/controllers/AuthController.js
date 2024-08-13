@@ -41,7 +41,8 @@ class AuthController {
       // Generate token
       const token = jwt.sign({ userId: user._id, role: user.role, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-      res.cookie('token', token, { httpOnly: true });
+      res.cookie('jwt_token', token, { httpOnly: true });
+      
       res.status(200).json({ message: 'Login successful', token });
     } catch (err) {
       console.error(err);

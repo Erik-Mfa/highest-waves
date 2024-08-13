@@ -5,37 +5,27 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoute');
 const userRoutes = require('./routes/userRoute');
 const beatRoutes = require('./routes/beatRoute');
+const orderRoutes = require('./routes/orderRoute');
 const tagRoutes = require('./routes/tagRoute');
-const bcrypt = require('bcryptjs');
-
 
 const app = express();
 
+const corsOptions = {
+    origin: 'http://localhost:3000', // Your frontend URL
+    credentials: true // This allows cookies to be sent
+  };
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
 
-// app.get('/api/test-hashing', async (req, res) => {
-//     try {
-//       const testPassword = '123';
-//       const hashedPassword = await bcrypt.hash(testPassword, 10);
-//       console.log('Hashed Password:', hashedPassword);
-  
-//       const isMatch = await bcrypt.compare(testPassword, hashedPassword);
-//       console.log('Password Match:', isMatch); // Should be true
-  
-//       res.status(200).json({ message: 'Hashing test complete', hashedPassword, isMatch });
-//     } catch (err) {
-//       console.error('Error:', err);
-//       res.status(500).json({ message: 'Error during hashing test', error: err.message });
-//     }
-//   });
-
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Handle preflight requests
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/tags', tagRoutes);
-app.use('/api/beats', beatRoutes); 
+app.use('/api/orders', orderRoutes); 
+app.use('/api/beats', beatRoutes);
 
 app.listen(3001, '0.0.0.0', () => console.log('Server running on port 3001'));
 

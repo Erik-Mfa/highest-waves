@@ -9,17 +9,18 @@ export const login = async (credentials) => {
   
   try {
     const response = await axios.post(`${BASE_URL}/api/auth/login`, credentials);
-    cookies.set("jwt_authorization", response.data.token, { path: '/', maxAge: 100  });
+    cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 7200  });
     return response.data.token;
   } catch (error) {
     console.error('Login failed:', error.message);
     throw error;
   }
 };
+
 export const logout = async () => { 
   try {
       const cookies = new Cookies();
-      cookies.remove('jwt_authorization');
+      cookies.remove('jwt_token');
       return false; 
     } catch (error) {
       console.error('Logout failed:', error.message);
@@ -31,7 +32,7 @@ export const register = async (credentials) => {
   
   try {
     const response = await axios.post(`${BASE_URL}/api/auth/register`, credentials);
-    cookies.set("jwt_authorization", response.data.token, { path: '/', maxAge: 100  });
+    cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 7200  });
     return response.data.token;
   } catch (error) {
     console.error('Login failed:', error.message);
@@ -40,7 +41,7 @@ export const register = async (credentials) => {
 };
 
 export const isAuthenticated = async () => {
-  const cookie = await cookies.get('jwt_authorization');
+  const cookie = await cookies.get('jwt_token');
   if (!cookie) {
     return false; 
   }
@@ -48,7 +49,7 @@ export const isAuthenticated = async () => {
   try {
     const decoded = jwtDecode(cookie);
     const user = decoded;
-    console.log(user)
+    console.log("Token decoded (auth.js): " + user)
     return user; 
   } catch (error) {
     console.error('Error decoding JWT token:', error.message);
@@ -57,7 +58,7 @@ export const isAuthenticated = async () => {
 };
 
 export const isAdmin = async () => {
-  const cookie = await cookies.get('jwt_authorization');
+  const cookie = await cookies.get('jwt_token');
   if (!cookie) {
     return false; 
   }

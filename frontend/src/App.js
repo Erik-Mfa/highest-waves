@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react';
+import {React, useState} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage'; 
 import LoginPage from './pages/LoginPage/LoginPage'; 
@@ -6,11 +6,11 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage'; 
 import AdminPage from './pages/AdminPage/AdminPage'; 
 import ProtectedRoute from './components/ProtectedRoutes/ProtectedRoutes';
-import Cookies from 'universal-cookie';
+
 
 function App() {
   const [checkAdmin, setCheckAdmin] = useState(false)
-const [checkAuthenticated, setCheckAuthenticated] = useState(false)
+  const [checkAuthenticated, setCheckAuthenticated] = useState(false)
 
 async function authentication(admin, auth) {
     await setCheckAdmin(admin)
