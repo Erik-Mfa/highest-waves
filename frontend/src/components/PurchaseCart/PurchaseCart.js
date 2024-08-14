@@ -56,7 +56,7 @@ const PurchaseCart = ({ onClose }) => {
                     <ul>
                         {orders.map(order => (
                             <li key={order.id} className="mb-2">
-                                <p><strong>Beat:</strong> {order.beat.name}</p>
+                                <p><strong>Beat:</strong> {order.beat.title}</p>
                                 <p><strong>Price:</strong> ${order.price}</p>
                                 <p><strong>Status:</strong> {order.status}</p>
                                 <button

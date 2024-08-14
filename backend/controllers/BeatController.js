@@ -4,7 +4,6 @@ const Tag = require('../models/Tag');
 const User = require('../models/User'); // Assuming beats are owned by users
 
 class BeatController {
-  // Get all beats
   async find(req, res) {
     try {
       const beats = await Beat.find().populate('owner').populate('tags'); // Populate owner and tags
@@ -15,10 +14,12 @@ class BeatController {
     }
   }
 
-  // Get a beat by ID
+
   async findById(req, res) {
     try {
-      const beat = await Beat.findById(req.params.id).populate('owner').populate('tags');
+      const id = req.params.id
+
+      const beat = await Beat.findOne({id}).populate('owner').populate('tags');
       if (!beat) return res.status(404).json({ message: 'Beat not found' });
       res.status(200).json(beat);
     } catch (err) {
@@ -27,18 +28,19 @@ class BeatController {
     }
   }
 
-  // Create a new beat
+
   async save(req, res) {
     try {
       const { title, description, price, bpm, tone, image, audioURL, owner, tags } = req.body;
 
-      // Check if owner is valid (optional)
-      const user = await User.findById(owner);
-      if (!user) return res.status(400).json({ message: 'Invalid owner' });
-
-      // Get the next beat ID
       const maxBeat = await Beat.findOne({}).sort({ id: -1 });
       const newId = maxBeat ? maxBeat.id + 1 : 1;
+
+      const user = await User.findOne({id: owner});
+      if (!user) return res.status(400).json({ message: 'Invalid owner' });
+
+      const tag = await Tag.find({id: tags});
+      if (!tag) return res.status(400).json({ message: 'Invalid tags' });
 
       const beat = new Beat({
         id: newId,
@@ -49,12 +51,12 @@ class BeatController {
         tone,
         image,
         audioURL,
-        owner,
-        tags // Add tags to beat
+        owner: user,
+        tags: tag
       });
 
-      const newBeat = await beat.save();
-      res.status(201).json(newBeat);
+      const result = await beat.save();
+      res.status(201).json(result);
     } catch (err) {
       console.error(err);
       res.status(400).json({ message: err.message });
@@ -68,17 +70,23 @@ class BeatController {
 
       const id = req.params.id;
       const beat = await Beat.findOne({ id });
-      
       if (!beat) return res.status(404).json({ message: 'Beat not found' });
+
+      const user = await User.findOne({id: owner});
+      if (!user) return res.status(400).json({ message: 'Invalid owner' });
+    
+      const tag = await Tag.find({id: tags});
+      if (!tag) return res.status(400).json({ message: 'Invalid tags' });
+      
 
       beat.title = title || beat.title;
       beat.description = description || beat.description;
       beat.price = price || beat.price;
       beat.image = req.file ? req.file.path : beat.image; 
       beat.audioURL = audioURL || beat.audioURL;
-      beat.owner = owner || beat.owner;
-      beat.tags = tags || beat.tags;
-
+      beat.owner = user;
+      beat.tags = tag; 
+      
       const updatedBeat = await beat.save();
       res.status(200).json(updatedBeat);
     } catch (err) {

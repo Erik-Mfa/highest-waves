@@ -33,7 +33,7 @@ function BeatDetails({ beatId }) {
         }
 
         const orderData = {
-            beat: beat._id,
+            beat: beat.id,
             price: beat.price,
             user: user.userId
         };
@@ -88,7 +88,7 @@ function BeatDetails({ beatId }) {
         {/* Information Section */}
         <div className="w-full lg:w-1/2">
           <h2 className="text-3xl font-bold mb-2">{beat.title}</h2>
-          <p className="text-lg text-gray-300 mb-4">By: {beat.owner.username}</p>
+          <p className="text-lg text-gray-300 mb-4">By: {beat.user.username}</p>
           <p className="text-lg mb-4">
             <span className="text-cyan-600 font-bold">${beat.price}</span>
           </p>

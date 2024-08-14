@@ -1,8 +1,6 @@
-// ./controllers/TagController.js
 const Tag = require('../models/Tag');
 
 class TagController {
-  // Get all tags
   async find(req, res) {
     try {
       const tags = await Tag.find();
@@ -13,10 +11,11 @@ class TagController {
     }
   }
 
-  // Get a tag by ID
   async findById(req, res) {
     try {
-      const tag = await Tag.findById(req.params.id);
+      const tagId = req.params.id;
+      
+      const tag = await Tag.findOne({ id: tagId });
       if (!tag) return res.status(404).json({ message: 'Tag not found' });
       res.status(200).json(tag);
     } catch (err) {
@@ -25,16 +24,19 @@ class TagController {
     }
   }
 
-  // Create a new tag
   async save(req, res) {
     try {
       const { name } = req.body;
 
-      // Check if tag with this name already exists
       const existingTag = await Tag.findOne({ name });
       if (existingTag) return res.status(400).json({ message: 'Tag already exists' });
 
-      const tag = new Tag({ name });
+      const id = req.params.id;
+
+      const max = await Tag.findOne({}).sort({ id: -1 });
+      const newId = max ? max.id + 1 : 1;
+
+      const tag = new Tag({ id: newId, name });
       const newTag = await tag.save();
       res.status(201).json(newTag);
     } catch (err) {
@@ -43,12 +45,12 @@ class TagController {
     }
   }
 
-  // Update a tag by ID
   async update(req, res) {
     try {
       const { name } = req.body;
+      const id = req.params.id
 
-      const tag = await Tag.findById(req.params.id);
+      const tag = await Tag.findOne({ id });
       if (!tag) return res.status(404).json({ message: 'Tag not found' });
 
       tag.name = name || tag.name;
@@ -61,11 +63,15 @@ class TagController {
     }
   }
 
-  // Delete a tag by ID
+
   async delete(req, res) {
     try {
-      const tag = await Tag.findByIdAndDelete(req.params.id);
+      const id = req.params.id
+
+      const tag = await Tag.findOne({ id });
       if (!tag) return res.status(404).json({ message: 'Tag not found' });
+
+      await Tag.findOneAndDelete({ id });
       res.status(200).json({ message: 'Tag deleted' });
     } catch (err) {
       console.error(err);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactSlider from 'react-slider';
 import './FilterSidebar.css';
 
-function FilterSidebar({ filters, setFilters, tags = [], owners = [], tones = [] }) {
+function FilterSidebar({ filters, setFilters, tags = [], users = [], tones = [] }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const handleSliderChange = (values) => {
@@ -59,11 +59,11 @@ function FilterSidebar({ filters, setFilters, tags = [], owners = [], tones = []
                     <div className="tag-container flex flex-wrap gap-2 mb-8">
                         {tags.map(tag => (
                             <div
-                                key={tag._id}
+                                key={tag.id}
                                 className={`tag-box rounded-full px-3 py-1 text-sm cursor-pointer transition-all duration-300 ease-in-out ${
-                                    filters.tag && filters.tag.includes(tag._id) ? 'bg-cyan-600 text-white' : 'bg-gray-200 text-black'
+                                    filters.tag && filters.tag.includes(tag.id) ? 'bg-cyan-600 text-white' : 'bg-gray-200 text-black'
                                 } hover:bg-cyan-500 hover:text-white hover:scale-105`}
-                                onClick={() => handleTagClick(tag._id)}
+                                onClick={() => handleTagClick(tag.id)}
                             >
                                 {tag.name}
                             </div>
@@ -105,18 +105,18 @@ function FilterSidebar({ filters, setFilters, tags = [], owners = [], tones = []
                     </select>
                 </div>
 
-                {/* Owner Filter */}
+                {/* User Filter */}
                 <div className="filter-group mb-6 mt-4">
                     <select
-                        id="owner"
+                        id="user"
                         className="filter-input text-black rounded-lg"
-                        value={filters.owner}
-                        onChange={(e) => setFilters({ ...filters, owner: e.target.value })}
+                        value={filters.user}
+                        onChange={(e) => setFilters({ ...filters, user: e.target.value })}
                     >
-                        <option value="">Owner</option>
-                        {owners.map((owner, index) => (
-                            <option key={index} value={owner}>
-                                {owner}
+                        <option value="">User</option>
+                        {users.map((user, index) => (
+                            <option key={index} value={user}>
+                                {user}
                             </option>
                         ))}
                     </select>

@@ -11,11 +11,21 @@ class AuthController {
       // Check if user already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) return res.status(400).json({ message: 'Email already exists' });
+      
+      const max = await User.findOne({}).sort({ id: -1 });
+      const newId = max ? max.id + 1 : 1;
   
       // Create new user
-      const newUser = new User({ username, email, password, role });
-      await newUser.save();
-  
+      const newUser = new User({ 
+        id: newId, 
+        username, 
+        email, 
+        password, 
+        role
+       });
+
+      const result = await newUser.save();
+      return res.status(201).json(result);
       res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
       console.error(err);
@@ -39,7 +49,7 @@ class AuthController {
       if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
       // Generate token
-      const token = jwt.sign({ userId: user._id, role: user.role, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user.id, role: user.role, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
       res.cookie('jwt_token', token, { httpOnly: true });
       

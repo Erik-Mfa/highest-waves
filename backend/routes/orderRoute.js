@@ -5,6 +5,7 @@ const { authorize, isAdmin } = require('../middlewares/auth/auth');
 
 
 router.get('/', authorize, isAdmin, OrderController.find);
+router.get('/all/:user', authorize, OrderController.findOrdersByUserId);
 router.get('/:id', authorize, OrderController.findById);
 router.post('/', authorize, OrderController.save); // Protected route
 router.put('/:id', authorize, OrderController.update); // Protected route

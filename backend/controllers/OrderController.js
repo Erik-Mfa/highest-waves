@@ -1,46 +1,11 @@
-const orderModel = require('../models/Order');
-const userModel = require('../models/User');
-const beatModel = require('../models/Beat');
-const auth = require('../middlewares/auth/auth.js');
+const Order = require('../models/Order');
+const User = require('../models/User');
+const Beat = require('../models/Beat');
 
 class OrderController {
-    async save(req, res) {
-        try {
-            const order = req.body;
-
-            // Assign a new ID
-            const max = await orderModel.findOne({}).sort({ id: -1 });
-            order.id = max == null ? 1 : max.id + 1;
-
-            // Find the user
-            const user = await userModel.findOne({ _id: order.user });
-            if (!user) {
-                return res.status(404).json({ message: "User not found" });
-            }
-
-            order.user = user._id;
-
-            // Find the beat
-            const beat = await beatModel.findOne({ _id: order.beat });
-
-            if (!beat) {
-                return res.status(404).json({ message: "Beat not found" });
-            }
-
-            order.beat = beat._id;
-
-            const result = await orderModel.create(order);
-            
-            return res.status(201).json(result);
-        } catch (error) {
-            console.error('Error saving order:', error);
-            return res.status(500).json({ message: 'Internal server error' });
-        }
-    }
-
     async find(req, res) {
         try {
-            const result = await orderModel.find({}).populate('user').populate('beat');
+            const result = await Order.find({}).populate('user').populate('beats');
             res.status(200).json(result);
         } catch (error) {
             console.error('Error finding orders:', error);
@@ -48,27 +13,91 @@ class OrderController {
         }
     }
 
+    async save(req, res) {
+        try {
+          const { price, user, beats } = req.body;
+      
+          const max = await Order.findOne({}).sort({ id: -1 });
+          const newId = max == null ? 1 : max.id + 1;
+      
+          const findUser = await User.findOne({ id: user });
+          if (!findUser) {
+            return res.status(404).json({ message: "User not found" });
+          }
+      
+          const findBeats = await Beat.find({ id: { $in: beats } });
+      
+          if (findBeats.length !== beats.length) {
+            return res.status(400).json({ message: 'Invalid beat(s) provided' });
+          }
+      
+          const order = new Order({
+            id: newId,
+            price: price,
+            user: findUser._id, 
+            beats: findBeats.map(beat => beat._id),
+          });
+      
+          const result = await order.save();
+          return res.status(201).json(result);
+        } catch (error) {
+          console.error('Error saving order:', error);
+          return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+      
     async findById(req, res) {
-        const { userId, id } = req.params;
-        const result = await orderModel.findOne({ 'id': id, 'userId': userId }).populate('beat').populate('user');
+        const tagId = req.params.id;
+
+        const result = await Order.findOne({ 'id': tagId }).populate('beats').populate('user');
+        res.status(200).json(result);
+    }
+
+    async findOrdersByUserId(req, res) {
+        const { user } = req.params;
+        const result = await Order.findOne({ 'user': user }).populate('beats').populate('user');
         res.status(200).json(result);
     }
 
     async update(req, res) {
-        const id = req.params.id;
-        const _id = String((await userModel.findOne({ 'id': id }))._id);
-        await userModel.findByIdAndUpdate(String(_id), req.body);
-        res.status(200).send();
+        try {
+            const { price, beats, user } = req.body;
+
+            const id = req.params.id;
+
+            const order = await Order.findOne({ id });
+            if (!order) return res.status(404).json({ message: 'Order not found' });
+
+            const findUser = await User.findOne({id: user});
+            if (!findUser) return res.status(400).json({ message: 'Invalid user' });
+        
+            const findBeats = await Beat.find({ id: { $in: beats } });
+
+            if (findBeats.length !== beats.length) {
+            return res.status(400).json({ message: 'Invalid beat(s) provided' });
+        }
+
+            order.price = price || order.price;
+            order.user = findUser._id;
+            order.beats = findBeats.map(beat => beat._id);
+        
+        const updatedOrder = await order.save();
+        res.status(200).json(updatedOrder);
+        } catch (err) {
+        console.error(err);
+        res.status(400).json({ message: err.message });
+        }
     }
 
     async delete(req, res) {
         try {
           const id = req.params.id;
-          const order = await orderModel.findOne({ id });
+          const order = await Order.findOne({ id });
           if (!order) {
             return res.status(404).json({ message: 'Order not found' });
           }
-          await orderModel.findByIdAndDelete(order._id);
+
+          await Order.findOneAndDelete({ id });
           res.status(200).send();
         } catch (error) {
           console.error('Error deleting order:', error);

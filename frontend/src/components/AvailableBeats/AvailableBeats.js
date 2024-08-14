@@ -6,7 +6,7 @@ import axios from '../../axios/axios'; // Adjust the import path as needed
 function AvailableBeats() {
   const [beats, setBeats] = useState([]);
   const [tags, setTags] = useState([]);
-  const [owners, setOwners] = useState([]);
+  const [users, setUsers] = useState([]);
   const [tones, setTones] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +16,7 @@ function AvailableBeats() {
     tag: [],
     bpm: { min: 0, max: 200 },
     tone: '',
-    owner: ''
+    user: ''
   });
 
   useEffect(() => {
@@ -29,8 +29,8 @@ function AvailableBeats() {
         setBeats(beatsResponse.data);
         setTags(tagsResponse.data);
 
-        const uniqueOwners = [...new Set(beatsResponse.data.map(beat => beat.owner.username))];
-        setOwners(uniqueOwners);
+        const uniqueUsers = [...new Set(beatsResponse.data.map(beat => beat.user.username))];
+        setUsers(uniqueUsers);
 
         const uniqueTones = [...new Set(beatsResponse.data.map(beat => beat.tone))];
         setTones(uniqueTones);
@@ -54,7 +54,7 @@ function AvailableBeats() {
             filters={filters}
             setFilters={setFilters}
             tags={tags}
-            owners={owners}
+            users={users}
             tones={tones}
           />
           <BeatList
