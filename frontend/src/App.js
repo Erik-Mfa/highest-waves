@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import { React, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage'; 
 import LoginPage from './pages/LoginPage/LoginPage'; 
@@ -7,15 +7,14 @@ import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage';
 import AdminPage from './pages/AdminPage/AdminPage'; 
 import ProtectedRoute from './components/ProtectedRoutes/ProtectedRoutes';
 
-
 function App() {
-  const [checkAdmin, setCheckAdmin] = useState(false)
-  const [checkAuthenticated, setCheckAuthenticated] = useState(false)
+  const [checkAdmin, setCheckAdmin] = useState(false);
+  const [checkAuthenticated, setCheckAuthenticated] = useState(false);
 
-async function authentication(admin, auth) {
-    await setCheckAdmin(admin)
-    await setCheckAuthenticated(auth)
-}
+  async function authentication(admin, auth) {
+    await setCheckAdmin(admin);
+    await setCheckAuthenticated(auth);
+  }
 
   return (
     <Router>
@@ -28,13 +27,11 @@ async function authentication(admin, auth) {
             <Route path="/admin" 
               element={
                 <ProtectedRoute 
-                  isAllowed={checkAdmin} 
-                  isAuthenticated={checkAuthenticated}
-                  redirectTo='/'> 
-                    {/* Admin page rendered after validation */}
-                    <AdminPage />
-              </ProtectedRoute>
-              }
+                  checkAuthenticated={checkAuthenticated} 
+                  checkAdmin={checkAdmin}
+                  component={AdminPage}
+                />
+              } 
             />
             <Route path="/register" element={<RegisterPage />} />
           </Routes>

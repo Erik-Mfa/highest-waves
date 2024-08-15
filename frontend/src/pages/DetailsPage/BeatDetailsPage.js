@@ -1,15 +1,13 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import BeatDetails from '../../components/BeatDetails/BeatDetails';
-import PurchaseCart from '../../components/PurchaseCart/PurchaseCart';
+import { useParams } from 'react-router-dom'; // Ensure this is imported
+import BeatDetails from '../../components/BeatDetails/BeatDetails'; // Ensure this is imported correctly
 
 function BeatDetailsPage() {
-  const { id } = useParams();
+  const { id: beatId } = useParams(); // Use useParams to get the beatId
 
   return (
     <div>
-      <BeatDetails beatId={id} />
-      <PurchaseCart beatId={id} />
+      <BeatDetails beatId={beatId} />
     </div>
   );
 }
