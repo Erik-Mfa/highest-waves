@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../axios/axios'; // Adjust the import path as needed
 
-const PurchaseCart = ({ onClose }) => {
+const PurchaseCart = ({ onClose, beatId }) => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await axios.get(`/orders`, {
+                const response = await axios.get(`/orders/all/${beatId}`, {
                     withCredentials: true // Include cookies
                 });
-                console.log('Orders Response:', response.data); // Check the response
+                console.log('Orders Response: ', response.data); // Check the response
                 setOrders(response.data);
             } catch (error) {
                 console.error('Error fetching orders:', error);
@@ -56,7 +56,7 @@ const PurchaseCart = ({ onClose }) => {
                     <ul>
                         {orders.map(order => (
                             <li key={order.id} className="mb-2">
-                                <p><strong>Beat:</strong> {order.beat.title}</p>
+                                <p><strong>Beat:</strong> {order.beats.title}</p>
                                 <p><strong>Price:</strong> ${order.price}</p>
                                 <p><strong>Status:</strong> {order.status}</p>
                                 <button

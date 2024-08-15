@@ -5,14 +5,18 @@ import { isAuthenticated } from '../../services/auth'; // Import the isAuthentic
 
 function BeatDetails({ beatId }) {
   const [beat, setBeat] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [purchaseSuccess, setPurchaseSuccess] = useState(false);
 
   useEffect(() => {
     const fetchBeatDetails = async () => {
       try {
+        const userToken = await isAuthenticated();
+
         const response = await axios.get(`/beats/${beatId}`);
         setBeat(response.data);
+        setUser(userToken)
       } catch (error) {
         console.error('Error fetching beat details:', error);
       } finally {
@@ -25,8 +29,6 @@ function BeatDetails({ beatId }) {
 
   const handleBuyNow = async () => {
     try {
-        const user = await isAuthenticated();
-
         if (!user) {
             alert('You must be logged in to purchase a beat.');
             return;
@@ -44,14 +46,12 @@ function BeatDetails({ beatId }) {
             withCredentials: true // Include cookies
         });
        
-        //OK
         if (response.status === 201) {
             setPurchaseSuccess(true);
             alert('Purchase successful!');
         }
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            //CHECK TOKEN
             alert('Unauthorized. Please log in again.');
 
         } else {
@@ -88,7 +88,7 @@ function BeatDetails({ beatId }) {
         {/* Information Section */}
         <div className="w-full lg:w-1/2">
           <h2 className="text-3xl font-bold mb-2">{beat.title}</h2>
-          <p className="text-lg text-gray-300 mb-4">By: {beat.user.username}</p>
+          <p className="text-lg text-gray-300 mb-4">By: {beat.owner.name}</p>
           <p className="text-lg mb-4">
             <span className="text-cyan-600 font-bold">${beat.price}</span>
           </p>
@@ -104,10 +104,6 @@ function BeatDetails({ beatId }) {
             Buy Now
           </button>
 
-          {/* Optional success message */}
-          {purchaseSuccess && (
-            <p className="mt-4 text-green-500">Thank you for your purchase!</p>
-          )}
         </div>
       </div>
     </div>

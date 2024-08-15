@@ -42,6 +42,7 @@ export const register = async (credentials) => {
 
 export const isAuthenticated = async () => {
   const cookie = await cookies.get('jwt_token');
+  console.log("jwt isAuthenticated: " + cookie) 
   if (!cookie) {
     return false; 
   }
@@ -49,7 +50,7 @@ export const isAuthenticated = async () => {
   try {
     const decoded = jwtDecode(cookie);
     const user = decoded;
-    console.log("Token decoded (auth.js): " + user)
+    console.table(user)
     return user; 
   } catch (error) {
     console.error('Error decoding JWT token:', error.message);

@@ -15,8 +15,6 @@ function App() {
 async function authentication(admin, auth) {
     await setCheckAdmin(admin)
     await setCheckAuthenticated(auth)
-
-    console.log("Route page admin: "+ admin)
 }
 
   return (

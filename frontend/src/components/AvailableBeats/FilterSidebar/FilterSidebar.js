@@ -46,7 +46,7 @@ function FilterSidebar({ filters, setFilters, tags = [], users = [], tones = [] 
                         max={300}
                         value={[filters.price.min, filters.price.max]}
                         onChange={handleSliderChange}
-                        renderThumb={(props) => <div {...props} />}
+                        renderThumb={({ key, ...restProps }) => <div key={key} {...restProps} />}
                     />
                     <div className="price-values text-white mb-8">
                         <span>${filters.price.min}</span> <span>${filters.price.max}</span>

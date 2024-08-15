@@ -1,6 +1,8 @@
 const Order = require('../models/Order');
 const User = require('../models/User');
 const Beat = require('../models/Beat');
+const jwt = require('jsonwebtoken');
+
 
 class OrderController {
     async find(req, res) {
@@ -14,38 +16,38 @@ class OrderController {
     }
 
     async save(req, res) {
-        try {
-          const { price, user, beats } = req.body;
-      
-          const max = await Order.findOne({}).sort({ id: -1 });
-          const newId = max == null ? 1 : max.id + 1;
-      
-          const findUser = await User.findOne({ id: user });
-          if (!findUser) {
+      try {
+        const { price, user, beat } = req.body;
+
+        const max = await Order.findOne({}).sort({ id: -1 });
+        const newId = max == null ? 1 : max.id + 1;
+
+        const findUser = await User.findOne({ id: user });
+        if (!findUser) {
             return res.status(404).json({ message: "User not found" });
-          }
-      
-          const findBeats = await Beat.find({ id: { $in: beats } });
-      
-          if (findBeats.length !== beats.length) {
-            return res.status(400).json({ message: 'Invalid beat(s) provided' });
-          }
-      
-          const order = new Order({
+        }
+
+        const findBeat = await Beat.findOne({ id: beat });
+        if (!findBeat) {
+            return res.status(400).json({ message: 'Invalid beat provided' });
+        }
+
+        const order = new Order({
             id: newId,
             price: price,
-            user: findUser._id, 
-            beats: findBeats.map(beat => beat._id),
-          });
-      
-          const result = await order.save();
-          return res.status(201).json(result);
-        } catch (error) {
+            user: findUser._id,
+            beats: [findBeat._id],
+        });
+
+        const result = await order.save();
+
+        return res.status(201).json(result);
+      } catch (error) {
           console.error('Error saving order:', error);
           return res.status(500).json({ message: 'Internal server error' });
-        }
-    }
-      
+      }
+  }
+  
     async findById(req, res) {
         const tagId = req.params.id;
 
@@ -54,10 +56,23 @@ class OrderController {
     }
 
     async findOrdersByUserId(req, res) {
-        const { user } = req.params;
-        const result = await Order.findOne({ 'user': user }).populate('beats').populate('user');
-        res.status(200).json(result);
-    }
+      const userId = req.params.id;
+  
+      try {
+          const user = await User.findOne({ id: userId });
+          if (!user) {
+              return res.status(404).json({ message: 'User not found' });
+          }
+  
+          const orders = await Order.find({ user: user })
+                                    .populate('beats')
+                                    .populate('user');
+          res.status(200).json(orders);
+      } catch (error) {
+          console.error('Error fetching orders:', error);
+          res.status(400).json({ message: 'Error fetching orders', error });
+      }
+  }
 
     async update(req, res) {
         try {

@@ -18,14 +18,14 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   password: {
-    type: String,  // Correct type for password
+    type: String, 
     required: true,
   },
   role: {
     type: String,
     enum: ['admin', 'customer'],
     default: 'customer',
-  },
+  }
 }, { timestamps: true });
 
 userSchema.pre('save', async function(next) {

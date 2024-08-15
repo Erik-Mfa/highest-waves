@@ -29,7 +29,7 @@ function AvailableBeats() {
         setBeats(beatsResponse.data);
         setTags(tagsResponse.data);
 
-        const uniqueUsers = [...new Set(beatsResponse.data.map(beat => beat.user.username))];
+        const uniqueUsers = [...new Set(beatsResponse.data.map(beat => beat.user))];
         setUsers(uniqueUsers);
 
         const uniqueTones = [...new Set(beatsResponse.data.map(beat => beat.tone))];

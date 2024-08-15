@@ -17,7 +17,7 @@ function BeatList({ beats, filters }) {
     // Tone Filter
     const matchesTone = filters.tone ? beat.tone === filters.tone : true;
     // User filter
-    const matchesUser = filters.user ? beat.user.username === filters.user : true;
+    const matchesUser = filters.user ? beat.user === filters.user : true;
 
     return matchesPrice && matchesTag && matchesBpm && matchesTone && matchesUser;
   });
@@ -42,7 +42,7 @@ function BeatList({ beats, filters }) {
               </div>
               <div className='text-center'>
                 <h3 className="text-sm md:text-base text-white font-semibold mb-1">{beat.title}</h3>
-                <p className="text-sm text-gray-300 mb-1">{beat.user.username}</p>
+                <p className="text-sm text-gray-300 mb-1">{beat.user}</p>
                 <p className="text-sm text-sky-400 font-bold">${beat.price}</p>
               </div>
             </div>
