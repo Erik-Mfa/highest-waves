@@ -1,19 +1,18 @@
 const jwt = require('jsonwebtoken');
 
+//Get this route for making authorizations, it gets the token from the Cookies (Cookiesn need to be passed through every request)
 const authorize = (req, res, next) => {
   // Access the token from the cookie
   const token = req.cookies.jwt_token;
-
-  console.log('Cookies:', req.cookies); // Log all cookies for debugging
-  console.log('Token:', token); // Log the token extracted
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });
   }
 
+  // Check if token is valid1
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      console.log('Token verification error:', err.message); // Log token verification errors
+      console.log('Token verification error:', err.message);
       return res.status(401).json({ message: 'Invalid token' });
     }
     req.user = decoded;
@@ -21,14 +20,13 @@ const authorize = (req, res, next) => {
   });
 };
 
-
-
-const isAdmin = (req, res, next) => {
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({ message: 'Access denied' });
-  }
-  next();
-};
+  //Check if user is admin 
+  const isAdmin = (req, res, next) => {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+    next();
+  };
 
 
 module.exports = { authorize, isAdmin };

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from '../../axios/axios';
 import Header from '../Header/Header';
 import { isAuthenticated } from '../../services/auth';
-import { addToCart } from '../../services/cartUtils';
 
 function BeatDetails() {
   const [beat, setBeat] = useState(null);
@@ -29,13 +28,22 @@ function BeatDetails() {
     fetchBeatDetails();
   }, [beatId]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!user) {
       alert('You must be logged in to add items to your cart.');
       return;
     }
-    addToCart(beat);
-    alert('Beat added to cart!');
+
+    try {
+      await axios.post('/carts', {
+        beat: beat.id,
+        user: user.userId
+      }, { withCredentials: true });
+      alert('Beat added to cart!');
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      alert('Failed to add beat to cart.');
+    }
   };
 
   const handleBuyNow = async () => {
@@ -45,19 +53,13 @@ function BeatDetails() {
         return;
       }
 
-      const orderData = {
+      await axios.post('/orders', {
         beat: beat.id,
         price: beat.price,
         user: user.userId,
-      };
+      }, { withCredentials: true });
 
-      const response = await axios.post('/orders', orderData, {
-        withCredentials: true,
-      });
-
-      if (response.status === 201) {
-        alert('Purchase successful!');
-      }
+      alert('Purchase successful!');
     } catch (error) {
       if (error.response && error.response.status === 401) {
         alert('Unauthorized. Please log in again.');
@@ -99,14 +101,13 @@ function BeatDetails() {
 
           <button
             onClick={handleBuyNow}
-            className="w-full max-w-xs bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
+            className="w-full max-w-xs bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mb-4"
           >
             Buy Now
           </button>
-
           <button
             onClick={handleAddToCart}
-            className="w-full max-w-xs bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 mt-4"
+            className="w-full max-w-xs bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
           >
             Add to Cart
           </button>

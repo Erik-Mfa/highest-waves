@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoute');
 const userRoutes = require('./routes/userRoute');
 const beatRoutes = require('./routes/beatRoute');
 const orderRoutes = require('./routes/orderRoute');
+const cartRoutes = require('./routes/cartRoute');
 const tagRoutes = require('./routes/tagRoute');
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Handle preflight requests
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/carts', cartRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api/orders', orderRoutes); 

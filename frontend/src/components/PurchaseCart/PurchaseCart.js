@@ -1,67 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import { loadCartFromLocalStorage, removeFromCart, clearCart } from '../../services/cartUtils';
+import React, { useEffect, useState } from 'react';
+import axios from '../../axios/axios';
+import { isAuthenticated } from '../../services/auth';
 
-const PurchaseCart = ({ onClose }) => {
-  const [cart, setCart] = useState([]);
+function PurchaseCart() {
+  const [beats, setBeats] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const savedCart = loadCartFromLocalStorage();
-    setCart(savedCart);
+    const fetchCart = async () => {
+      try {
+        const userToken = await isAuthenticated();
+        setUser(userToken);
+
+        if (userToken && userToken.userId) {
+          const response = await axios.get(`/carts/${userToken.userId}`, { withCredentials: true });
+          console.log(response.data);
+          // Assuming response.data is an array of cart objects
+          const allBeats = response.data.flatMap(cart => cart.beats);
+          setBeats(allBeats);
+        } else {
+          console.error('User is not authenticated.');
+        }
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCart();
   }, []);
 
-  const handleRemoveItem = (beatId) => {
-    removeFromCart(beatId);
-    setCart(loadCartFromLocalStorage()); // Update state after removing item
+  const handleRemoveFromCart = async (beatId) => {
+    try {
+      await axios.delete(`/carts/${user.userId}/${beatId}`, { withCredentials: true });
+      setBeats(beats.filter(item => item._id !== beatId)); // Use _id to match with beatId
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
   };
 
-  const handleCheckout = () => {
-    // Add your checkout logic here (e.g., redirect to a payment page)
-    console.log('Proceeding to checkout...');
-    clearCart(); // Clear the cart after checkout
-    setCart([]); // Update state to reflect cleared cart
-    onClose(); // Close the cart after checkout
+  const handleCheckout = async () => {
+    try {
+      if (!user) {
+        alert('You must be logged in to proceed with checkout.');
+        return;
+      }
+
+      await axios.post('/orders', {
+        cart: beats.map(item => item._id), // Use _id for the checkout request
+        user: user.userId,
+      }, { withCredentials: true });
+
+      setBeats([]);
+      alert('Checkout successful!');
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      alert('Failed to complete checkout.');
+    }
   };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-4 rounded shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Your Cart</h2>
-        
-        {cart.length === 0 ? (
+    <div className="min-h-screen bg-gray-900 text-white">
+      <div className="p-4 lg:p-8">
+        <h2 className="text-3xl font-bold mb-4">Your Cart</h2>
+        {beats.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
-          <ul>
-            {cart.map(beat => (
-              <li key={beat.id} className="mb-2">
-                <p><strong>Beat:</strong> {beat.title}</p>
-                <p><strong>Price:</strong> ${beat.price}</p>
+          <div>
+            {beats.map(item => (
+              <div key={item._id} className="flex items-center justify-between p-4 bg-gray-800 rounded-lg mb-4">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-16 h-16 object-cover rounded-lg"
+                />
+                <div className="flex-1 ml-4">
+                  <h3 className="text-xl font-bold">{item.title}</h3>
+                  <p className="text-lg">${item.price}</p>
+                </div>
                 <button
-                  onClick={() => handleRemoveItem(beat.id)}
-                  className="mt-2 bg-red-500 text-white px-4 py-2 rounded"
+                  onClick={() => handleRemoveFromCart(item._id)}
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                 >
                   Remove
                 </button>
-              </li>
+              </div>
             ))}
-          </ul>
+            <button
+              onClick={handleCheckout}
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+            >
+              Checkout
+            </button>
+          </div>
         )}
-
-        <button
-          onClick={handleCheckout}
-          className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
-          disabled={cart.length === 0}
-        >
-          Proceed to Checkout
-        </button>
-        <button
-          onClick={onClose}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Close
-        </button>
       </div>
     </div>
   );
-};
+}
 
 export default PurchaseCart;

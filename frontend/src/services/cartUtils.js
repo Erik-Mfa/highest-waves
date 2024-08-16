@@ -1,4 +1,3 @@
-// src/utils/cartUtils.js
 
 export const loadCartFromLocalStorage = () => {
     const savedCart = localStorage.getItem('cart');

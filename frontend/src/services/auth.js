@@ -42,7 +42,7 @@ export const register = async (credentials) => {
 
 export const isAuthenticated = async () => {
   const cookie = await cookies.get('jwt_token');
-  console.log("jwt isAuthenticated: " + cookie) 
+ 
   if (!cookie) {
     return false; 
   }

@@ -3,17 +3,9 @@ import Header from '../../components/Header/Header';
 import AvailableBeats from '../../components/AvailableBeats/AvailableBeats';
 import Hero from '../../components/Hero/Hero'; 
 import FeaturedBeats from '../../components/FeaturedBeats/FeaturedBeats';
-import { isAdmin, isAuthenticated } from '../../services/auth';
 import './HomePage.css';
 
-function HomePage({authentication}) {
-  useEffect(() => {
-    const admin = isAdmin();
-    const authenticated = isAuthenticated();
-
-    authentication(admin, authenticated)
-}, []);
-
+function HomePage() {
   return (
     <div className="home-page">
       <Header />
