@@ -15,7 +15,7 @@ class OrderController {
     }
 
     async save(req, res) {
-      try {
+        try {
         const { price, user, beat } = req.body;
 
         const max = await Order.findOne({}).sort({ id: -1 });
@@ -41,12 +41,12 @@ class OrderController {
         const result = await order.save();
 
         return res.status(201).json(result);
-      } catch (error) {
-          console.error('Error saving order:', error);
-          return res.status(500).json({ message: 'Internal server error' });
-      }
-  }
-  
+        } catch (error) {
+            console.error('Error saving order:', error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
     async findById(req, res) {
         const tagId = req.params.id;
 
@@ -55,23 +55,23 @@ class OrderController {
     }
 
     async findOrdersByUserId(req, res) {
-      const userId = req.params.id;
-  
-      try {
-          const user = await User.findOne({ id: userId });
-          if (!user) {
-              return res.status(404).json({ message: 'User not found' });
-          }
-  
-          const orders = await Order.find({ user: user })
+        const userId = req.params.id;
+
+        try {
+            const user = await User.findOne({ id: userId });
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            const orders = await Order.find({ user: user })
                                     .populate('beats')
                                     .populate('user');
-          res.status(200).json(orders);
-      } catch (error) {
-          console.error('Error fetching orders:', error);
-          res.status(400).json({ message: 'Error fetching orders', error });
-      }
-  }
+            res.status(200).json(orders);
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+            res.status(400).json({ message: 'Error fetching orders', error });
+        }
+    }
 
     async update(req, res) {
         try {
@@ -105,19 +105,19 @@ class OrderController {
 
     async delete(req, res) {
         try {
-          const id = req.params.id;
-          const order = await Order.findOne({ id });
-          if (!order) {
+            const id = req.params.id;
+            const order = await Order.findOne({ id });
+            if (!order) {
             return res.status(404).json({ message: 'Order not found' });
-          }
+            }
 
-          await Order.findOneAndDelete({ id });
-          res.status(200).send();
+            await Order.findOneAndDelete({ id });
+            res.status(200).send();
         } catch (error) {
-          console.error('Error deleting order:', error);
-          res.status(500).json({ message: 'Internal server error' });
+            console.error('Error deleting order:', error);
+            res.status(500).json({ message: 'Internal server error' });
         }
-      }
+    }
 }
 
 

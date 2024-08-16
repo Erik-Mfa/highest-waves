@@ -38,8 +38,7 @@ class AuthController {
       if (!user) return res.status(400).json({ message: 'User not found' });
 
       const isMatch = await bcrypt.compare(password, user.password);
-      console.log(password)
-      console.log(user.password)
+
       if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
       const token = jwt.sign({ userId: user.id, role: user.role, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });

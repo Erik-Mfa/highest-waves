@@ -1,10 +1,11 @@
 // AdminDashboard.js
 import React, { useState, useEffect } from 'react';
-import { isAdmin } from '../../services/auth'; // Adjust import based on your file structure
+import { isAdmin } from '../../services/auth'; 
 
 const AdminDashboard = () => {
   const [isAdminUser, setIsAdminUser] = useState(false);
 
+  //CHECK ADMIN useEffect
   useEffect(() => {
     const checkAdmin = async () => {
       const result = await isAdmin();
@@ -20,7 +21,6 @@ const AdminDashboard = () => {
   return (
     <div>
       <h1>Admin Dashboard</h1>
-      {/* Admin functionalities such as uploading beats and managing profiles */}
     </div>
   );
 };

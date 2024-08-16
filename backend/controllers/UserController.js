@@ -1,8 +1,6 @@
 const User = require('../models/User');
-const Beat = require('../models/Beat');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
+
 
 class UserController {
   async find(req, res) {

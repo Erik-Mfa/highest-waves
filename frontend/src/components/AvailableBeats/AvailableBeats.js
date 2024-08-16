@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BeatList from './BeatList/BeatList';
 import FilterSidebar from './FilterSidebar/FilterSidebar';
-import axios from '../../axios/axios'; // Adjust the import path as needed
+import axios from '../../axios/axios'; 
 
 function AvailableBeats() {
   const [beats, setBeats] = useState([]);
@@ -19,6 +19,7 @@ function AvailableBeats() {
     user: ''
   });
 
+  //FETCH BEATS AND TAGS
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,6 +51,7 @@ function AvailableBeats() {
     <div className="flex flex-row justify-center px-10">
       <main style={{ backgroundColor: '#102D40' }}>
         <div className="flex flex-col lg:flex-row">
+
           <FilterSidebar
             filters={filters}
             setFilters={setFilters}
@@ -57,10 +59,12 @@ function AvailableBeats() {
             users={users}
             tones={tones}
           />
+
           <BeatList
             beats={beats}
             filters={filters}
           />
+          
         </div>
       </main>
     </div>

@@ -11,6 +11,7 @@ function BeatDetails() {
 
   const { id: beatId } = useParams();
 
+  //FETCH BEAT BY ID
   useEffect(() => {
     const fetchBeatDetails = async () => {
       try {
@@ -45,7 +46,7 @@ function BeatDetails() {
       alert('Failed to add beat to cart.');
     }
   };
-
+  //NOT USING YET
   const handleBuyNow = async () => {
     try {
       if (!user) {
@@ -75,17 +76,20 @@ function BeatDetails() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-black">
+
       <Header />
 
       <div className="flex flex-col lg:flex-row items-center lg:items-start p-4 lg:p-8 text-white">
         <div className="flex justify-center lg:w-1/2 max-w-md lg:max-w-none mb-4 lg:mb-0 lg:mr-8">
           <div className="w-1/2 h-full bg-gray-800 rounded-lg overflow-hidden">
+
             <img
               src={beat.image}
               alt={beat.title}
               className="w-full h-full object-cover"
               style={{ aspectRatio: '5/5' }}
             />
+
           </div>
         </div>
 
@@ -105,12 +109,14 @@ function BeatDetails() {
           >
             Buy Now
           </button>
+          
           <button
             onClick={handleAddToCart}
             className="w-full max-w-xs bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
           >
             Add to Cart
           </button>
+
         </div>
       </div>
     </div>

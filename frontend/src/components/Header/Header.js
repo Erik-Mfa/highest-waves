@@ -20,7 +20,7 @@ const Header = () => {
     window.location.reload();
     return getOut;
   };
-  
+  //CHECK USER AND ADMIN
   useEffect(() => {
     const checkAdmin = async () => {
       const result = await isAdmin();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../axios/axios'; // Adjust the import path as needed
+import axios from '../../axios/axios'; 
 import './FeaturedBeats.css';
 
 function FeaturedBeats() {
@@ -8,7 +8,7 @@ function FeaturedBeats() {
   useEffect(() => {
     const fetchFeaturedBeats = async () => {
       try {
-        const response = await axios.get('/beats'); // Adjust the endpoint as needed
+        const response = await axios.get('/beats'); 
         const latestBeats = response.data.slice(0, 5); // Get the latest 5 beats
         setFeaturedBeats(latestBeats);
       } catch (error) {

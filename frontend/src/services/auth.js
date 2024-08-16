@@ -12,34 +12,40 @@ export const login = async (credentials) => {
     cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 7200  });
     return response.data.token;
   } catch (error) {
-    console.error('Login failed:', error.message);
+    console.error('LOGIN:', error.message);
     throw error;
   }
-};
 
-export const logout = async () => { 
-  try {
-      const cookies = new Cookies();
-      cookies.remove('jwt_token');
-      return false; 
-    } catch (error) {
-      console.error('Logout failed:', error.message);
-      throw error;
-  }
-}
+};
 
 export const register = async (credentials) => {
   
   try {
     const response = await axios.post(`${BASE_URL}/api/auth/register`, credentials);
     cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 7200  });
+    
     return response.data.token;
   } catch (error) {
-    console.error('Login failed:', error.message);
+    console.error('REGISTRATION FAILED:', error.message);
     throw error;
   }
+
 };
 
+export const logout = async () => { 
+
+  try {
+      const cookies = new Cookies();
+      cookies.remove('jwt_token');
+      return false; 
+    } catch (error) {
+      console.error('LOGOUT FAILED:', error.message);
+      throw error;
+  }
+
+}
+
+//ALWAYS RETRIEVE THE USER FROM THE TOKEN
 export const isAuthenticated = async () => {
   const cookie = await cookies.get('jwt_token');
  
@@ -50,16 +56,21 @@ export const isAuthenticated = async () => {
   try {
     const decoded = jwtDecode(cookie);
     const user = decoded;
+
+    console.log("USER TABLE FRONTEND:")
     console.table(user)
+
     return user; 
   } catch (error) {
-    console.error('Error decoding JWT token:', error.message);
+    console.error('ERROR DECODING JWT TOKEN:', error.message);
     return false; 
   }
+
 };
 
 export const isAdmin = async () => {
   const cookie = await cookies.get('jwt_token');
+
   if (!cookie) {
     return false; 
   }
@@ -69,7 +80,8 @@ export const isAdmin = async () => {
     const admin = decoded.role;
     return !!admin; 
   } catch (error) {
-    console.error('Error decoding JWT token:', error.message);
+    console.error('ERROR DECODING JWT TOKEN:', error.message);
     return false; 
   }
+
 };

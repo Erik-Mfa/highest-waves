@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const OrderController = require('../controllers/OrderController.js');
-const { authorize, isAdmin } = require('../middlewares/auth/auth');
+const { authorize, isAdmin } = require('../services/auth/auth');
 
 router.get('/', authorize, isAdmin, OrderController.find);
 router.get('/all/:id', authorize, OrderController.findOrdersByUserId);

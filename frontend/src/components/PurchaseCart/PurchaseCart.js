@@ -15,8 +15,7 @@ function PurchaseCart() {
 
         if (userToken && userToken.userId) {
           const response = await axios.get(`/carts/${userToken.userId}`, { withCredentials: true });
-          console.log(response.data);
-          // Assuming response.data is an array of cart objects
+
           const allBeats = response.data.flatMap(cart => cart.beats);
           setBeats(allBeats);
         } else {

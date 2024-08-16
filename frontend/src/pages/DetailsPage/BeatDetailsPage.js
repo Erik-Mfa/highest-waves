@@ -1,9 +1,9 @@
 import React from 'react';
-import { useParams } from 'react-router-dom'; // Ensure this is imported
-import BeatDetails from '../../components/BeatDetails/BeatDetails'; // Ensure this is imported correctly
+import { useParams } from 'react-router-dom'; 
+import BeatDetails from '../../components/BeatDetails/BeatDetails'; 
 
 function BeatDetailsPage() {
-  const { id: beatId } = useParams(); // Use useParams to get the beatId
+  const { id: beatId } = useParams(); 
 
   return (
     <div>

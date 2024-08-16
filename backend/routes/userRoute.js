@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const UserController = require('../controllers/UserController');
-const { authorize, isAdmin } = require('../middlewares/auth/auth');
+const { authorize, isAdmin } = require('../services/auth/auth');
 
 router.get('/', authorize, UserController.find);
 router.get('/:id', authorize, UserController.getUserById); // Protected route

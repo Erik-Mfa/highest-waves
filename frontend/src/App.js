@@ -11,12 +11,16 @@ import AdminPage from './pages/AdminPage/AdminPage';
 function App() {
   return (
     <Router>
+
       <div className="App">
         <main>
           <Routes>
             <Route path="/" element={<HomePage/>} />
+
             <Route path="/beats/:id" element={<BeatDetailsPage/>} />
+
             <Route path="/login" element={<LoginPage />} />
+
             <Route path="/admin" 
               element={
                 <ProtectedRoute 
@@ -24,10 +28,12 @@ function App() {
                 />
               } 
             />
+
             <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </main>
       </div>
+
     </Router>
   );
 }

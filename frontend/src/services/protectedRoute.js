@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { isAdmin, isAuthenticated } from './auth';
-import { useNavigate } from "react-router-dom";
 
 export default function ProtectedRoute({ children }) {
   const navigate = useNavigate();
@@ -13,9 +13,6 @@ export default function ProtectedRoute({ children }) {
       try {
         const admin = await isAdmin();
         const authenticated = await isAuthenticated();
-  
-        console.log("First admin: ", admin);
-        console.log("First auth: ", authenticated);
   
         setIsAdminCheck(admin);
         setIsAuthenticatedCheck(authenticated);

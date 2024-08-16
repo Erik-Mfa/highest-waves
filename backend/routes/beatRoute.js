@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const BeatController = require('../controllers/BeatController.js');
-const { authorize, isAdmin } = require('../middlewares/auth/auth');
+const { authorize, isAdmin } = require('../services/auth/auth');
 
 
 router.get('/', BeatController.find);

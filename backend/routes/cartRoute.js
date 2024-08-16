@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const CartController = require('../controllers/CartController.js');
-const { authorize, isAdmin } = require('../middlewares/auth/auth');
+const { authorize, isAdmin } = require('../services/auth/auth');
 
 
 router.get('/', authorize, isAdmin, CartController.find);

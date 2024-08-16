@@ -12,7 +12,7 @@ const tagRoutes = require('./routes/tagRoute');
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // Your frontend URL
+    origin: 'http://localhost:3000', 
     credentials: true // This allows cookies to be sent
   };
 
@@ -20,14 +20,18 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight requests
-// Routes
+app.options('*', cors(corsOptions));
+
+
+
 app.use('/api/auth', authRoutes);
 app.use('/api/carts', cartRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api/orders', orderRoutes); 
 app.use('/api/beats', beatRoutes);
+
+
 
 app.listen(3001, '0.0.0.0', () => console.log('Server running on port 3001'));
 
