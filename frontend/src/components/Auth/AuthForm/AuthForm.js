@@ -12,6 +12,8 @@ const Login = () => {
     if(!!logged){
       console.log("logged: " + logged);
       navigate("/");
+
+      window.location.reload();
     }
   };
 

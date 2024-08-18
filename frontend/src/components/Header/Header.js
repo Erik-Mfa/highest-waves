@@ -1,86 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa'; 
-import { isAdmin, isAuthenticated, logout } from '../../services/auth';
-import PurchaseCart from '../PurchaseCart/PurchaseCart'; // Import the PurchaseCart component
+import { logout } from '../../services/auth';
+import PurchaseCart from '../PurchaseCart/PurchaseCart';
 
-const Header = () => {
-  const [admin, setAdmin] = useState(false);
-  const [user, setUser] = useState("");
-  const [showPurchaseCart, setShowPurchaseCart] = useState(false); // State to manage PurchaseCart visibility
+const Header = ({user, admin}) => {
+  const [showPurchaseCart, setShowPurchaseCart] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     const getOut = await logout();
 
-    if(!!getOut){
+    if (getOut) {
       navigate("/");
     }
 
     window.location.reload();
-    return getOut;
   };
-  //CHECK USER AND ADMIN
-  useEffect(() => {
-    const checkAdmin = async () => {
-      const result = await isAdmin();
-      setAdmin(result);
-    };
-
-    const checkUser = async () => {
-      const result = await isAuthenticated();
-      setUser(result);
-    };
-
-    checkUser();
-    checkAdmin();
-  }, []);
 
   return (
-    <header className="bg-blue-950 flex justify-between items-center p-2" style={{ backgroundColor: '#071D26' }}>
-      <nav className="flex row">
-        <ul className="flex items-center space-x-4">
-          <Link to='/'>
-            <img src='/assets/highestwaves-logo.png' alt='Highest Waves Logo' className="mx-10" width='140px' />
-          </Link>
+    <header className="bg-[#071D26] flex justify-between items-center p-6">
+      <nav className="flex items-center">
+        <ul className="flex items-center space-x-8">
           <li>
-            <Link to="/beats" className="text-white text-lg hover:underline">Explore</Link>
-          </li>
-          <li>
-            <Link to="/contact" className="text-white text-lg hover:underline">About</Link>
-          </li>
-          {admin && (
-            <li>
-              <Link to="/admin" className="text-white text-lg hover:underline">Admin</Link>
-            </li>
-          )}
-
-          {user ? 
-          <div>
-          <li>
-            <h1 className='text-white'>Welcome, {user.username}</h1>
-          </li>
-          <li>
-              <button onClick={handleLogout} className="text-white hover:text-gray-200">Logout</button>
-          </li>
-          </div>
-          : ""}
-          
-          <li>
-            <Link to="/login" className="text-white text-lg hover:underline">
-              <FaUserCircle size={28} />
+            <Link to='/'>
+              <img src='/assets/highestwaves-logo.png' alt='Highest Waves Logo' className="w-36" />
             </Link>
           </li>
           <li>
-            <button onClick={() => setShowPurchaseCart(true)} className="text-white text-lg hover:underline">
-              <FaShoppingCart size={28} />
+            <Link to="/beats" className="text-white text-xl hover:underline">Explore</Link>
+          </li>
+          <li>
+            <Link to="/contact" className="text-white text-xl hover:underline">About</Link>
+          </li>
+          {admin && (
+            <li>
+              <Link to="/admin" className="text-white text-xl hover:underline">Admin</Link>
+            </li>
+          )}
+          {user ? (
+            <div className="flex items-center space-x-6">
+              <li>
+                <span className='text-white text-xl'>{user && user.username ? `Welcome, ${user.username}` : ""}</span>
+              </li>
+              <li>
+                <button onClick={handleLogout} className="text-white text-xl hover:text-gray-300">Logout</button>
+              </li>
+            </div>
+          ) : (
+            <li>
+              <Link to="/login" className="text-white text-xl hover:underline">
+                <FaUserCircle size={32} />
+              </Link>
+            </li>
+          )}
+          <li className="relative">
+            <button 
+              onClick={() => setShowPurchaseCart(prev => !prev)} 
+              className="text-white text-xl hover:text-gray-300"
+            >
+              <FaShoppingCart size={32} />
             </button>
+
+            {showPurchaseCart && (
+              <div className="absolute right-0 mt-2 w-[32rem] max-h-[70vh] bg-gray-800 border border-gray-600 rounded-lg shadow-lg z-50 overflow-y-auto p-4">
+                <PurchaseCart user={user}/>
+              </div>
+            )}
+            
           </li>
         </ul>
       </nav>
-      {showPurchaseCart && <PurchaseCart onClose={() => setShowPurchaseCart(false)} />}
     </header>
   );
+  
 };
 
 export default Header;

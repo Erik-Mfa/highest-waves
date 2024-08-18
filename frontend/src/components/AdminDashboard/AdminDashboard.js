@@ -1,27 +1,28 @@
-// AdminDashboard.js
-import React, { useState, useEffect } from 'react';
-import { isAdmin } from '../../services/auth'; 
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
-  const [isAdminUser, setIsAdminUser] = useState(false);
-
-  //CHECK ADMIN useEffect
-  useEffect(() => {
-    const checkAdmin = async () => {
-      const result = await isAdmin();
-      setIsAdminUser(result);
-    };
-    checkAdmin();
-  }, []);
-
-  if (!isAdminUser) {
-    return <div>Access Denied</div>;
-  }
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
-    </div>
+    <div className="fixed w-64 h-screen max-w-xs mx-auto p-4 border border-gray-300 rounded shadow-md">
+      <nav className="flex justify-center items-center">
+
+      <ul>
+        <li className="mb-2">
+          <Link to="/admin/create" className="text-indigo-600 hover:text-indigo-900">Add beat</Link>
+        </li>
+        <li className="mb-2">
+          <Link to="/" className="text-indigo-600 hover:text-indigo-900">Add tags</Link>
+        </li>
+        <li className="mb-2">
+          <Link to="/" className="text-indigo-600 hover:text-indigo-900">Users</Link>
+        </li>
+        <li className="mb-2">
+          <Link to="/" className="text-indigo-600 hover:text-indigo-900">Pagamentos</Link>
+        </li>
+      </ul>
+    </nav>
+  </div>
   );
 };
 

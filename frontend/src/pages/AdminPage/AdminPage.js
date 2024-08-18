@@ -1,11 +1,14 @@
 import React from 'react';
 import AdminDashboard from '../../components/AdminDashboard/AdminDashboard';
+import { Outlet } from "react-router-dom";
+
 
 function AdminPage() {
   
   return (
     <div>
-      <AdminDashboard  />
+      <AdminDashboard/>
+      <Outlet />
     </div>
   );
 }

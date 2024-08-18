@@ -5,10 +5,8 @@ import Header from '../../components/Header/Header';
 const LoginPage = () => {
   return (
     <div className="flex h-screen">
-
-      <Header />
-      <AuthForm />
       
+      <AuthForm />
     </div>
   );
 };

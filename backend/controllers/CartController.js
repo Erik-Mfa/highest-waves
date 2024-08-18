@@ -17,6 +17,7 @@ class CartController {
   async save(req, res) {
     try {
       const { price, user, beat } = req.body;
+      console.log(beat)
 
       const max = await Cart.findOne({}).sort({ id: -1 });
       const newId = max == null ? 1 : max.id + 1;
@@ -33,13 +34,11 @@ class CartController {
 
       const cart = new Cart({
           id: newId,
-          price: price,
           user: findUser._id,
-          beats: [findBeat._id],
+          beats: findBeat._id,
       });
 
       const result = await cart.save();
-
       return res.status(201).json(result);
     } catch (error) {
         console.error('Error saving cart:', error);
@@ -58,16 +57,15 @@ class CartController {
       const userId = req.params.id;
     
       try {
-        // Check if the user exists
         const user = await User.findOne({ id: userId });
+        
         if (!user) {
           return res.status(404).json({ message: 'User not found' });
         }
     
-        // Find carts associated with the user
-        const carts = await Cart.find({ user: user._id }) // Use user._id to find carts
-                                .populate('beats') // Populate beats details
-                                .populate('user'); // Populate user details
+        const carts = await Cart.find({ user: user.id }) 
+                                .populate('beats') 
+                                .populate('user'); 
     
         // If no carts found, return an empty array
         if (carts.length === 0) {

@@ -1,39 +1,40 @@
-import { React} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './services/protectedRoute';
-//PAGES
-import HomePage from './pages/HomePage/HomePage'; 
-import LoginPage from './pages/LoginPage/LoginPage'; 
-import RegisterPage from './pages/RegisterPage/RegisterPage'; 
-import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage'; 
-import AdminPage from './pages/AdminPage/AdminPage'; 
+import Layout from './components/Layout/Layout';
+// PAGES
+import HomePage from './pages/HomePage/HomePage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
+import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage';
+import AdminPage from './pages/AdminPage/AdminPage';
+import CreateBeat from './components/CreateBeat/CreateBeat';
 
 function App() {
+
   return (
     <Router>
-
       <div className="App">
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage/>} />
+        <Layout>
+          <main>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/beats/:id" element={<BeatDetailsPage  />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route 
+                      path="/admin" 
+                      element={
+                      <ProtectedRoute roles={['admin']}> 
+                          <AdminPage /> 
+                      </ProtectedRoute>}>
 
-            <Route path="/beats/:id" element={<BeatDetailsPage/>} />
-
-            <Route path="/login" element={<LoginPage />} />
-
-            <Route path="/admin" 
-              element={
-                <ProtectedRoute 
-                  element={<ProtectedRoute component={AdminPage} roles={['admin']} />}
-                />
-              } 
-            />
-
-            <Route path="/register" element={<RegisterPage />} />
-          </Routes>
-        </main>
+                      <Route path="create" element={<CreateBeat />} />
+              </Route>
+              <Route path="/register" element={<RegisterPage />} />
+            </Routes>
+          </main>
+        </Layout>
       </div>
-
     </Router>
   );
 }

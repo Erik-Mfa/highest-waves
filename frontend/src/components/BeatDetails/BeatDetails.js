@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../../axios/axios';
-import Header from '../Header/Header';
 import { isAuthenticated } from '../../services/auth';
 
 function BeatDetails() {
@@ -76,8 +75,6 @@ function BeatDetails() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-black">
-
-      <Header />
 
       <div className="flex flex-col lg:flex-row items-center lg:items-start p-4 lg:p-8 text-white">
         <div className="flex justify-center lg:w-1/2 max-w-md lg:max-w-none mb-4 lg:mb-0 lg:mr-8">
