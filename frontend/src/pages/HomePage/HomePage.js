@@ -1,6 +1,6 @@
 import {React} from 'react';
-import FeaturedBeats from '../../components/FeaturedBeats/FeaturedBeats';
-import AvailableBeats from '../../components/AvailableBeats/AvailableBeats';
+import FeaturedBeats from '../../components/Beats/FeaturedBeats/FeaturedBeats';
+import AvailableBeats from '../../components/Beats/AvailableBeats/AvailableBeats';
 import Hero from '../../components/Hero/Hero'; 
 
 

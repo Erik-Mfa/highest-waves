@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../axios/axios'; // Adjust the import path as needed
 import './FeaturedBeats.css';
-import {getBeats} from '../../services/beat'
+import {getBeats} from '../../../services/beat'
 
 function FeaturedBeats() {
   const [featuredBeats, setFeaturedBeats] = useState([]);
@@ -30,7 +29,12 @@ function FeaturedBeats() {
       {featuredBeats.concat(featuredBeats).map((beat, index) => (
         <div key={`${beat.id}-${index}`} className="inline-block mr-5">
           <div className="w-64 h-64 bg-gray-800  flex items-center justify-center rounded-lg">
-            <img src={beat.image} alt={beat.title} className="w-full h-full object-cover rounded-lg" />
+          <img
+              src={`http://localhost:3001/${beat.image}`}
+              alt={beat.title}
+              className="w-full h-full object-cover"
+              style={{ aspectRatio: '5/5' }}
+            />
           </div>
         </div>
       ))}

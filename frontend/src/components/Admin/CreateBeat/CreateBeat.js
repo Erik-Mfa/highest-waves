@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { createBeat } from '../../services/beat'; 
+import { createBeat } from '../../../services/beat'; 
 
 
 const CreateBeat = () => {
@@ -94,12 +94,10 @@ const CreateBeat = () => {
 
         <div className="mb-4">
           <label htmlFor="image" className="block text-sm font-medium text-gray-700">Image URL</label>
-          <input
-            type="text"
+           <input
+            type="file"
             id="image"
-            placeholder="Enter image URL"
-            value={beatDetails.image}
-            onChange={(e) => setBeatDetails({ ...beatDetails, image: e.target.value })}
+            onChange={(e) => setBeatDetails({ ...beatDetails, image: e.target.files[0] })} // Store the file object
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
@@ -107,11 +105,9 @@ const CreateBeat = () => {
         <div className="mb-4">
           <label htmlFor="audioURL" className="block text-sm font-medium text-gray-700">Audio URL</label>
           <input
-            type="text"
+            type="file"
             id="audioURL"
-            placeholder="Enter audio URL"
-            value={beatDetails.audioURL}
-            onChange={(e) => setBeatDetails({ ...beatDetails, audioURL: e.target.value })}
+            onChange={(e) => setBeatDetails({ ...beatDetails, audioURL: e.target.files[0] })}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>

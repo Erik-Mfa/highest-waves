@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminDashboard from '../../components/AdminDashboard/AdminDashboard';
+import AdminDashboard from '../../components/Admin/AdminDashboard/AdminDashboard';
 import { Outlet } from "react-router-dom";
 
 

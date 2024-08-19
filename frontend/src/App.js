@@ -8,7 +8,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage';
 import AdminPage from './pages/AdminPage/AdminPage';
-import CreateBeat from './components/CreateBeat/CreateBeat';
+import CreateBeat from './components/Admin/CreateBeat/CreateBeat';
 
 function App() {
 

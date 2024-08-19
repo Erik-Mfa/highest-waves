@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from '../../axios/axios';
-import { isAuthenticated } from '../../services/auth';
+import axios from '../../../axios/axios';
+import { isAuthenticated } from '../../../services/auth';
+import AudioPlayer from '../AudioPlayer/AudioPlayer';
 
 function BeatDetails() {
   const [beat, setBeat] = useState(null);
@@ -81,7 +82,7 @@ function BeatDetails() {
           <div className="w-1/2 h-full bg-gray-800 rounded-lg overflow-hidden">
 
             <img
-              src={beat.image}
+              src={`http://localhost:3001/${beat.image}`}
               alt={beat.title}
               className="w-full h-full object-cover"
               style={{ aspectRatio: '5/5' }}
@@ -99,6 +100,9 @@ function BeatDetails() {
           <p className="text-md text-gray-400 mb-4">BPM: {beat.bpm}</p>
           <p className="text-md text-gray-400 mb-4">Tone: {beat.tone}</p>
           <p className="text-md text-gray-300 mb-6">{beat.description}</p>
+
+          <AudioPlayer audioURL={`http://localhost:3001/${beat.audioURL}`} />
+
 
           <button
             onClick={handleBuyNow}

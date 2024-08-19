@@ -38,7 +38,12 @@ function BeatList({ beats, filters }) {
               onClick={() => handleBeatClick(beat.id)}
             >
               <div className="w-full h-[70%] bg-gray-600 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
-                <img src={beat.image} alt={beat.title} className="w-full h-full object-cover" />
+              <img
+                src={`http://localhost:3001/${beat.image}`}
+                alt={beat.title}
+                className="w-full h-full object-cover"
+                style={{ aspectRatio: '5/5' }}
+              />
               </div>
               <div className='text-center'>
                 <h3 className="text-sm md:text-base text-white font-semibold mb-1">{beat.title}</h3>

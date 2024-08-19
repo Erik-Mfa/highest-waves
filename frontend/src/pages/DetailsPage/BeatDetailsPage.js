@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom'; 
-import BeatDetails from '../../components/BeatDetails/BeatDetails'; 
+import BeatDetails from '../../components/Beats/BeatDetails/BeatDetails'; 
 
 function BeatDetailsPage({user}) {
   const { id: beatId } = useParams(); 

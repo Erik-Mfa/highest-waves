@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BeatList from './BeatList/BeatList';
 import FilterSidebar from './FilterSidebar/FilterSidebar';
-import axios from '../../axios/axios'; 
+import axios from '../../../axios/axios'; 
 
 function AvailableBeats() {
   const [beats, setBeats] = useState([]);

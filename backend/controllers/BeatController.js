@@ -1,6 +1,8 @@
 const Beat = require('../models/Beat');
 const Tag = require('../models/Tag');
 const User = require('../models/User'); 
+const fs = require('fs');
+const path = require('path');
 
 class BeatController {
   
@@ -40,6 +42,10 @@ class BeatController {
       const tag = await Tag.find({id: tags});
       if (!tag) return res.status(400).json({ message: 'Invalid tags' });
 
+      // Prepend "assets/" to the filenames
+      const imageFile = req.files['image'] ? `assets/beats-logos/${req.files['image'][0].filename}` : null;
+      const audioFile = req.files['audioURL'] ? `assets/beats-audios/${req.files['audioURL'][0].filename}` : null;
+
       const beat = new Beat({
         id: newId,
         title,
@@ -47,14 +53,14 @@ class BeatController {
         price,
         bpm,
         tone,
-        image,
-        audioURL,
+        image: imageFile,
+        audioURL: audioFile,
         owner: user,
         tags: tag
       });
 
       const result = await beat.save();
-      res.status(201).json(result);
+      res.status(201).json({ success: true, data: result });
     } catch (err) {
       console.error(err);
       res.status(400).json({ message: err.message });
@@ -96,9 +102,25 @@ class BeatController {
       const id = req.params.id;
       const beat = await Beat.findOne({ id });
       if (!beat) return res.status(404).json({ message: 'Beat not found' });
-
+  
+      // Construct the full paths to the image and audio files
+      const imageFilePath = path.join(__dirname, '../public/assets/beats-logos', path.basename(beat.image));
+      const audioFilePath = path.join(__dirname, '../public/assets/beats-audios', path.basename(beat.audioURL));
+  
+      // Delete the image file if it exists
+      if (fs.existsSync(imageFilePath)) {
+        fs.unlinkSync(imageFilePath);
+      }
+  
+      // Delete the audio file if it exists
+      if (fs.existsSync(audioFilePath)) {
+        fs.unlinkSync(audioFilePath);
+      }
+  
+      // Delete the Beat record from the database
       await Beat.findByIdAndDelete(beat._id);
-      res.status(200).json({ message: 'Beat deleted' });
+  
+      res.status(200).json({ message: 'Beat and associated files deleted' });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: err.message });

@@ -11,7 +11,12 @@ const instance = axios.create({
 export const createBeat = async (beatDetails) => {
     try {
       beatDetails.owner = beatOwner.userId
-      const response = await instance.post('/beats', beatDetails, { withCredentials: true });
+      const response = await instance.post('/beats', beatDetails, {
+        headers: {
+          'Content-Type': 'multipart/form-data', 
+        },
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       console.error("Error creating beat:", error);
