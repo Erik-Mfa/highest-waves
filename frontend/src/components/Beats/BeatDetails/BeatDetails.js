@@ -1,17 +1,16 @@
+// components/BeatDetails/BeatDetails.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../../../axios/axios';
 import { isAuthenticated } from '../../../services/auth';
-import AudioPlayer from '../AudioPlayer/AudioPlayer';
 
-function BeatDetails() {
+function BeatDetails({ playTrack }) {
   const [beat, setBeat] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const { id: beatId } = useParams();
 
-  //FETCH BEAT BY ID
   useEffect(() => {
     const fetchBeatDetails = async () => {
       try {
@@ -46,7 +45,7 @@ function BeatDetails() {
       alert('Failed to add beat to cart.');
     }
   };
-  //NOT USING YET
+
   const handleBuyNow = async () => {
     try {
       if (!user) {
@@ -76,18 +75,15 @@ function BeatDetails() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-black">
-
       <div className="flex flex-col lg:flex-row items-center lg:items-start p-4 lg:p-8 text-white">
         <div className="flex justify-center lg:w-1/2 max-w-md lg:max-w-none mb-4 lg:mb-0 lg:mr-8">
           <div className="w-1/2 h-full bg-gray-800 rounded-lg overflow-hidden">
-
             <img
               src={`http://localhost:3001/${beat.image}`}
               alt={beat.title}
               className="w-full h-full object-cover"
               style={{ aspectRatio: '5/5' }}
             />
-
           </div>
         </div>
 
@@ -101,8 +97,12 @@ function BeatDetails() {
           <p className="text-md text-gray-400 mb-4">Tone: {beat.tone}</p>
           <p className="text-md text-gray-300 mb-6">{beat.description}</p>
 
-          <AudioPlayer audioURL={`http://localhost:3001/${beat.audioURL}`} />
-
+          <button
+            onClick={() => playTrack(`http://localhost:3001/${beat.audioURL}`)}
+            className="w-full max-w-xs bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mb-4"
+          >
+            Play Preview
+          </button>
 
           <button
             onClick={handleBuyNow}
@@ -117,7 +117,6 @@ function BeatDetails() {
           >
             Add to Cart
           </button>
-
         </div>
       </div>
     </div>

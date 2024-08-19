@@ -26,7 +26,7 @@ function PurchaseCart({user}) {
     };
 
     fetchCart();
-  }, []);
+  }, [user]);
 
   const handleRemoveFromCart = async (beatId) => {
     try {

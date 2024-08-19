@@ -63,7 +63,7 @@ class CartController {
           return res.status(404).json({ message: 'User not found' });
         }
     
-        const carts = await Cart.find({ user: user.id }) 
+        const carts = await Cart.find({ user: user }) 
                                 .populate('beats') 
                                 .populate('user'); 
     

@@ -9,8 +9,10 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage';
 import AdminPage from './pages/AdminPage/AdminPage';
 import CreateBeat from './components/Admin/CreateBeat/CreateBeat';
+import AudioPlayer from './components/Beats/AudioPlayer/AudioPlayer';
 
 function App() {
+  
 
   return (
     <Router>

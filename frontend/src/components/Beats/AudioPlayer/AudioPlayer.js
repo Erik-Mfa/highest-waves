@@ -1,12 +1,20 @@
+// components/Beats/AudioPlayer/AudioPlayer.js
 import React from 'react';
+import ReactPlayer from 'react-player';
 
-const AudioPlayer = ({ audioURL }) => {
+const AudioPlayer = ({ url, playing, onPlayPause }) => {
   return (
     <div className="audio-player">
-      <audio controls>
-        <source src={audioURL} type="audio/mp3" />
-        Your browser does not support the audio element.
-      </audio>
+      <ReactPlayer 
+        url={url} 
+        playing={playing} 
+        controls={true} 
+        height="50px" 
+        width="100%" 
+      />
+      <button onClick={onPlayPause}>
+        {playing ? 'Pause' : 'Play'}
+      </button>
     </div>
   );
 };
