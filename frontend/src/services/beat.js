@@ -27,7 +27,6 @@ export const createBeat = async (beatDetails) => {
   export const getBeats = async () => {
     try {
       const response = await instance.get('/beats'); // Adjust the endpoint
-      console.log("BEATS VINDO" + response);
       return response.data;
     } catch (error) {
       console.error('Error fetching featured beats:', error);

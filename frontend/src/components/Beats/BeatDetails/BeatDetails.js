@@ -1,15 +1,17 @@
-// components/BeatDetails/BeatDetails.js
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from '../../../axios/axios';
+import { useParams } from 'react-router-dom';
 import { isAuthenticated } from '../../../services/auth';
+import { FaPlay } from 'react-icons/fa';
+import AudioPlayerContext from '../../Layout/AudioPlayerContext';
 
-function BeatDetails({ playTrack }) {
+function BeatDetails() { 
   const [beat, setBeat] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const { id: beatId } = useParams();
+  const { playTrack } = useContext(AudioPlayerContext);
 
   useEffect(() => {
     const fetchBeatDetails = async () => {
@@ -70,20 +72,30 @@ function BeatDetails({ playTrack }) {
     }
   };
 
+  const handlePlayTrack = () => {
+    playTrack(`http://localhost:3001/${beat.audioURL}`, beat.title, `http://localhost:3001/${beat.image}`);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (!beat) return <div>Beat not found</div>;
 
   return (
     <div className="min-h-screen bg-gray-900 text-black">
       <div className="flex flex-col lg:flex-row items-center lg:items-start p-4 lg:p-8 text-white">
-        <div className="flex justify-center lg:w-1/2 max-w-md lg:max-w-none mb-4 lg:mb-0 lg:mr-8">
-          <div className="w-1/2 h-full bg-gray-800 rounded-lg overflow-hidden">
+        <div className="relative flex justify-center lg:w-1/2 max-w-md lg:max-w-none mb-4 lg:mb-0 lg:mr-8">
+          <div className="w-1/2 h-full bg-gray-800 rounded-lg overflow-hidden relative">
             <img
               src={`http://localhost:3001/${beat.image}`}
               alt={beat.title}
               className="w-full h-full object-cover"
               style={{ aspectRatio: '5/5' }}
             />
+            <button
+              onClick={handlePlayTrack}
+              className="absolute inset-0 flex justify-center items-center text-white bg-black bg-opacity-50 hover:bg-opacity-70"
+            >
+              <FaPlay size={48} />
+            </button>
           </div>
         </div>
 
@@ -96,13 +108,6 @@ function BeatDetails({ playTrack }) {
           <p className="text-md text-gray-400 mb-4">BPM: {beat.bpm}</p>
           <p className="text-md text-gray-400 mb-4">Tone: {beat.tone}</p>
           <p className="text-md text-gray-300 mb-6">{beat.description}</p>
-
-          <button
-            onClick={() => playTrack(`http://localhost:3001/${beat.audioURL}`)}
-            className="w-full max-w-xs bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mb-4"
-          >
-            Play Preview
-          </button>
 
           <button
             onClick={handleBuyNow}

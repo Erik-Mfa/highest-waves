@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header/Header';
 import { isAdmin, isAuthenticated } from '../../services/auth';
 import PurchaseCart from '../PurchaseCart/PurchaseCart';
+import AudioPlayerContext from './AudioPlayerContext';
+import AudioPlayer from '../Beats/AudioPlayer/AudioPlayer'; 
 
-const Layout = ({ children}) => {
+const Layout = ({ children }) => {
   const [showPurchaseCart, setShowPurchaseCart] = useState(false);
   const [admin, setAdmin] = useState(null);
   const [user, setUser] = useState(null);
 
+  const { currentTrack, isPlaying, togglePlayPause } = useContext(AudioPlayerContext);
+
   useEffect(() => {
-    //SEND ADMIN TO HEADER
+    console.log("Current track Layout: " + currentTrack);
+  }, [currentTrack]);
+  
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const isUserAdmin = await isAdmin();
         const authenticatedUser = await isAuthenticated();
-        
-        console.log("Admin:", isUserAdmin);
-        console.log("User:", authenticatedUser);
         
         setAdmin(isUserAdmin);
         setUser(authenticatedUser);
@@ -30,13 +34,26 @@ const Layout = ({ children}) => {
     fetchData();
   }, []);
 
+
   return (
     <>
-      <Header setShowPurchaseCart={setShowPurchaseCart} user={user} admin={admin} />
+      <Header 
+        setShowPurchaseCart={setShowPurchaseCart} 
+        user={user} 
+        admin={admin}
+      />
 
-      {children}
-      
+      <main>{children}</main>
+
       {showPurchaseCart && <PurchaseCart onClose={() => setShowPurchaseCart(false)} />}
+
+      {currentTrack && (
+        <AudioPlayer 
+          url={currentTrack} 
+          playing={isPlaying} 
+          onPlayPause={togglePlayPause} 
+        />
+      )}
     </>
   );
 };

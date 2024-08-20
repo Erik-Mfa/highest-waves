@@ -32,10 +32,10 @@ function PurchaseCart({user}) {
     try {
       if (user && user.userId) {
         await axios.delete(`/carts/${beatId}`, { withCredentials: true });
-        setBeats(beats.filter(item => item.id !== beatId)); // Use id to match with beatId
+        setBeats(beats.filter(beat => beat.id !== beatId)); // Use id to match with beatId
       }
     } catch (error) {
-      console.error('Error removing item from cart:', error);
+      console.error('Error removing beat from cart:', error);
     }
   };
 
@@ -47,7 +47,7 @@ function PurchaseCart({user}) {
       }
 
       await axios.post('/orders', {
-        cart: beats.map(item => item.id), // Use id for the checkout request
+        cart: beats.map(beat => beat.id), // Use id for the checkout request
         user: user.userId,
       }, { withCredentials: true });
 
@@ -68,22 +68,23 @@ function PurchaseCart({user}) {
         <p className="text-xl">Your cart is empty.</p>
       ) : (
         <div>
-          {beats.map(item => (
+          {beats.map(beat => (
             <div 
-              key={item.id} 
-              className="flex items-center justify-between p-5 mb-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+              key={beat.id} 
+              className="flex beats-center justify-between p-5 mb-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
             >
               <img
-                src={item.image}
-                alt={item.title}
-                className="w-24 h-24 object-cover rounded-lg border border-gray-600"
+                src={`http://localhost:3001/${beat.image}`}
+                alt={beat.title}
+                className="h-4/1 object-cover"
+                style={{ aspectRatio: '30/30' }}
               />
               <div className="flex-1 ml-6">
-                <h3 className="text-2xl font-bold">{item.title}</h3>
-                <p className="text-xl">${item.price}</p>
+                <h3 className="text-2xl font-bold">{beat.title}</h3>
+                <p className="text-xl">${beat.price}</p>
               </div>
               <button
-                onClick={() => handleRemoveFromCart(item.id)}
+                onClick={() => handleRemoveFromCart(beat.id)}
                 className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition-colors"
               >
                 Remove
