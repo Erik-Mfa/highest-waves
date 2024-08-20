@@ -2,6 +2,8 @@ import {React} from 'react';
 import FeaturedBeats from '../../components/Beats/FeaturedBeats/FeaturedBeats';
 import AvailableBeats from '../../components/Beats/AvailableBeats/AvailableBeats';
 import Hero from '../../components/Hero/Hero'; 
+import About from '../../components/About/About'; 
+import Footer from '../../components/Footer/Footer'
 
 
 function HomePage() {
@@ -16,6 +18,8 @@ function HomePage() {
 
           <FeaturedBeats />
           <AvailableBeats />
+          <About />
+          <Footer />
           
         </div>
         <div>

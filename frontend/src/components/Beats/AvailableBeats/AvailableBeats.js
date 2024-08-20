@@ -48,8 +48,8 @@ function AvailableBeats() {
   if (loading) return <div className="text-white text-center">Loading...</div>;
 
   return (
-    <div className="flex flex-row justify-center px-10">
-      <main style={{ backgroundColor: '#102D40' }}>
+    <div className="flex flex-row justify-center px-10 bg-black">
+      <main className="">
         <div className="flex flex-col lg:flex-row">
 
           <FilterSidebar

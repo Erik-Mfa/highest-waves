@@ -29,8 +29,8 @@ function BeatList({ beats, filters }) {
   return (
     <div className="beat-list-container bg-gray-900 p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row">
       <div className="beat-list flex-1 p-4 sm:p-6 lg:p-8 lg:pt-0 rounded-lg">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-white mb-6 sm:mb-8">Beats</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <h2 className="text-3xl sm:text-4xl lg:text-3xl font-bold text-start text-white mb-6 sm:mb-8" style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}>Available Beats</h2>
+        <div className="grid grid-cols sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
           {filteredBeats.map((beat) => (
             <div 
               key={beat.id} 
@@ -38,17 +38,23 @@ function BeatList({ beats, filters }) {
               onClick={() => handleBeatClick(beat.id)}
             >
               <div className="w-full h-[70%] bg-gray-600 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
-              <img
-                src={`http://localhost:3001/${beat.image}`}
-                alt={beat.title}
-                className="w-full h-full object-cover"
-                style={{ aspectRatio: '5/5' }}
-              />
+                <img
+                  src={`http://localhost:3001/${beat.image}`}
+                  alt={beat.title}
+                  className="w-full h-full object-cover"
+                  style={{ aspectRatio: '5/5' }}
+                />
               </div>
               <div className='text-center'>
-                <h3 className="text-sm md:text-base text-white font-semibold mb-1">{beat.title}</h3>
-                <p className="text-sm text-gray-300 mb-1">{beat.user}</p>
-                <p className="text-sm text-sky-400 font-bold">${beat.price}</p>
+                <h3 className="text-sm text-white font-semibold mb-1 truncate" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: '"Fira Code", monospace' }}>
+                  {beat.title}
+                </h3>
+                <p className="text-sm text-gray-300 mb-1 truncate" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {beat.user}
+                </p>
+                <p className="text-sm text-sky-400 font-bold truncate" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: '"Be Vietnam Pro", sans-serif' }}>
+                  ${beat.price}
+                </p>
               </div>
             </div>
           ))}

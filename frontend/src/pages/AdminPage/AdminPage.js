@@ -8,7 +8,9 @@ function AdminPage() {
   return (
     <div>
       <AdminDashboard/>
+      <main className='pt-12'>
       <Outlet />
+      </main>
     </div>
   );
 }

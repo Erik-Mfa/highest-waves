@@ -48,47 +48,24 @@ function BeatDetails() {
     }
   };
 
-  const handleBuyNow = async () => {
-    try {
-      if (!user) {
-        alert('You must be logged in to purchase a beat.');
-        return;
-      }
-
-      await axios.post('/orders', {
-        beat: beat.id,
-        price: beat.price,
-        user: user.userId,
-      }, { withCredentials: true });
-
-      alert('Purchase successful!');
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        alert('Unauthorized. Please log in again.');
-      } else {
-        alert('Failed to place order. Please try again.');
-      }
-      console.error('Error placing order:', error);
-    }
-  };
-
   const handlePlayTrack = () => {
     playTrack(`http://localhost:3001/${beat.audioURL}`, beat.title, `http://localhost:3001/${beat.image}`);
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (!beat) return <div>Beat not found</div>;
+  if (loading) return <div className="text-white text-center py-4">Loading...</div>;
+  if (!beat) return <div className="text-white text-center py-4">Beat not found</div>;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-black">
-      <div className="flex flex-col lg:flex-row items-center lg:items-start p-4 lg:p-8 text-white">
-        <div className="relative flex justify-center lg:w-1/2 max-w-md lg:max-w-none mb-4 lg:mb-0 lg:mr-8">
-          <div className="w-1/2 h-full bg-gray-800 rounded-lg overflow-hidden relative">
+    <div className="min-h-screen bg-gray-900 flex flex-col items-center pt-10 px-4">
+      <div className="flex flex-col lg:flex-row items-start bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        {/* Image Section */}
+        <div className="flex-shrink-0 lg:w-1/2 lg:max-w-lg mb-4 lg:mb-0 lg:mr-8 relative">
+          <div className="relative w-full h-[300px] lg:h-[400px] bg-gray-800 rounded-lg overflow-hidden">
             <img
               src={`http://localhost:3001/${beat.image}`}
               alt={beat.title}
               className="w-full h-full object-cover"
-              style={{ aspectRatio: '5/5' }}
+              style={{ aspectRatio: '1/1' }}
             />
             <button
               onClick={handlePlayTrack}
@@ -98,24 +75,19 @@ function BeatDetails() {
             </button>
           </div>
         </div>
-
-        <div className="w-full lg:w-1/2">
-          <h2 className="text-3xl font-bold mb-2">{beat.title}</h2>
-          <p className="text-lg text-gray-300 mb-4">By: {beat.owner.name}</p>
+  
+        {/* Information Section */}
+        <div className="flex-1 lg:w-1/2 text-white">
+          <h2 className="text-2xl lg:text-3xl font-bold mb-2">{beat.title}</h2>
+          <p className="text-lg mb-4">By: {beat.owner.username}</p>
           <p className="text-lg mb-4">
-            <span className="text-cyan-600 font-bold">${beat.price}</span>
+            Price: 
+            <span className="text-cyan-600 font-bold"> ${beat.price}</span>
           </p>
-          <p className="text-md text-gray-400 mb-4">BPM: {beat.bpm}</p>
-          <p className="text-md text-gray-400 mb-4">Tone: {beat.tone}</p>
-          <p className="text-md text-gray-300 mb-6">{beat.description}</p>
-
-          <button
-            onClick={handleBuyNow}
-            className="w-full max-w-xs bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mb-4"
-          >
-            Buy Now
-          </button>
-          
+          <p className="text-md mb-4">BPM: {beat.bpm}</p>
+          <p className="text-md mb-4">Tone: {beat.tone}</p>
+          <p className="text-md mb-6">Beat Description: {beat.description}</p>
+  
           <button
             onClick={handleAddToCart}
             className="w-full max-w-xs bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"

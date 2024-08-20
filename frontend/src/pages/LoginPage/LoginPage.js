@@ -3,7 +3,7 @@ import AuthForm from '../../components/Auth/AuthForm/AuthForm';
 
 const LoginPage = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       
       <AuthForm />
     </div>

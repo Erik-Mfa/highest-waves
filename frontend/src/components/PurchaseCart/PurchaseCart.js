@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../axios/axios'; 
 
-function PurchaseCart({user}) {
+function PurchaseCart({ user }) {
   const [beats, setBeats] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -12,7 +12,6 @@ function PurchaseCart({user}) {
           const response = await axios.get(`/carts/${user.userId}`, { withCredentials: true });
           console.log('API Response:', response.data);
 
-          // Flatten the array of carts and extract beats
           const allBeats = response.data.flatMap(cart => cart.beats || []);
           setBeats(allBeats);
         } else {
@@ -32,7 +31,7 @@ function PurchaseCart({user}) {
     try {
       if (user && user.userId) {
         await axios.delete(`/carts/${beatId}`, { withCredentials: true });
-        setBeats(beats.filter(beat => beat.id !== beatId)); // Use id to match with beatId
+        setBeats(beats.filter(beat => beat.id !== beatId));
       }
     } catch (error) {
       console.error('Error removing beat from cart:', error);
@@ -47,7 +46,7 @@ function PurchaseCart({user}) {
       }
 
       await axios.post('/orders', {
-        cart: beats.map(beat => beat.id), // Use id for the checkout request
+        cart: beats.map(beat => beat.id),
         user: user.userId,
       }, { withCredentials: true });
 
@@ -62,30 +61,29 @@ function PurchaseCart({user}) {
   if (loading) return <div className="text-white">Loading...</div>;
 
   return (
-    <div className="bg-gray-900 text-white p-8 rounded-lg shadow-lg max-w-[28rem] w-full overflow-y-auto">
-      <h2 className="text-4xl font-bold mb-6">Your Cart</h2>
+    <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg max-w-[24rem] w-full overflow-y-auto">
+      <h2 className="text-3xl font-bold mb-4">Your Cart</h2>
       {beats.length === 0 ? (
-        <p className="text-xl">Your cart is empty.</p>
+        <p className="text-lg">Your cart is empty.</p>
       ) : (
         <div>
           {beats.map(beat => (
             <div 
               key={beat.id} 
-              className="flex beats-center justify-between p-5 mb-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+              className="flex items-center justify-between p-3 mb-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
             >
               <img
                 src={`http://localhost:3001/${beat.image}`}
                 alt={beat.title}
-                className="h-4/1 object-cover"
-                style={{ aspectRatio: '30/30' }}
+                className="h-16 w-16 object-cover rounded-md"
               />
-              <div className="flex-1 ml-6">
-                <h3 className="text-2xl font-bold">{beat.title}</h3>
-                <p className="text-xl">${beat.price}</p>
+              <div className="flex-1 ml-4">
+                <h3 className="text-lg font-bold">{beat.title}</h3>
+                <p className="text-md">${beat.price}</p>
               </div>
               <button
                 onClick={() => handleRemoveFromCart(beat.id)}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition-colors"
+                className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
               >
                 Remove
               </button>
@@ -93,7 +91,7 @@ function PurchaseCart({user}) {
           ))}
           <button
             onClick={handleCheckout}
-            className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded mt-6 w-full transition-colors"
+            className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded mt-4 w-full transition-colors"
           >
             Checkout
           </button>
@@ -101,7 +99,6 @@ function PurchaseCart({user}) {
       )}
     </div>
   );
-  
 }
 
 export default PurchaseCart;

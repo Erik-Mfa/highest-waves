@@ -54,6 +54,7 @@ const Layout = ({ children }) => {
           onPlayPause={togglePlayPause} 
         />
       )}
+
     </>
   );
 };
