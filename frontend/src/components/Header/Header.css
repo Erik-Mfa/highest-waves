@@ -1,0 +1,22 @@
+.header-link {
+    color: white;
+    font-size: 1.25rem; /* Equivalent to text-xl */
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+  
+  .header-link:hover {
+    color: #d1d5db; /* Equivalent to hover:text-gray-300 */
+    transform: scale(1.1); /* Equivalent to hover:scale-110 */
+  }
+  
+  .header-button {
+    color: white;
+    font-size: 1.25rem;
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+  
+  .header-button:hover {
+    color: #d1d5db;
+    transform: scale(1.1);
+  }
+  

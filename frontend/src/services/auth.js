@@ -36,7 +36,9 @@ export const logout = async () => {
 
   try {
       const cookies = new Cookies();
-      cookies.remove('jwt_token');
+      cookies.remove('jwt_token', { path: '/' });
+
+      window.location.assign('/');
       return false; 
     } catch (error) {
       console.error('LOGOUT FAILED:', error.message);

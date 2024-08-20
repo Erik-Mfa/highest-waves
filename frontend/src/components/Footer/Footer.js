@@ -11,8 +11,8 @@ const Footer = () => {
           <div className="flex-1">
             <h2 className="text-4xl font-bold mb-4">Contact Us</h2>
             <p className="text-lg">123 Music Lane, Sound City, ST 45678</p>
-            <p className="text-lg">Email: <a href="mailto:info@highestwaves.com" className="hover:underline">info@highestwaves.com</a></p>
-            <p className="text-lg">Phone: <a href="tel:+1234567890" className="hover:underline">+1 (234) 567-890</a></p>
+            <p className="text-lg">Email: </p>
+            <p className="text-lg">Phone: </p>
             <p className="text-xs my-10">&copy; 2024 Highest Waves. All rights reserved.</p>
           </div>
 
@@ -20,18 +20,17 @@ const Footer = () => {
           <div className="flex-1 flex flex-col items-center md:items-start">
             <h2 className="text-4xl font-bold mb-6">Follow Us</h2>
             <div className="flex space-x-6 mb-6">
-              <a href="#" className="text-[#1da1f2] hover:text-[#0d8bf2]" aria-label="Twitter">
+              
                 <FaTwitter size={32} />
-              </a>
-              <a href="#" className="text-[#4267B2] hover:text-[#365899]" aria-label="Facebook">
+             
+ 
                 <FaFacebookF size={32} />
-              </a>
-              <a href="#" className="text-[#E1306C] hover:text-[#c13584]" aria-label="Instagram">
+
                 <FaInstagram size={32} />
-              </a>
-              <a href="#" className="text-[#0077b5] hover:text-[#005582]" aria-label="LinkedIn">
+     
+          
                 <FaLinkedinIn size={32} />
-              </a>
+              
             </div>
           </div>
 

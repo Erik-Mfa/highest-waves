@@ -9,7 +9,7 @@ function AdminPage() {
     <div>
       <AdminDashboard/>
       <main className='pt-12'>
-      <Outlet />
+        <Outlet />
       </main>
     </div>
   );

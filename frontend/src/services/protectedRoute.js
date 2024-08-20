@@ -8,6 +8,7 @@ export default function ProtectedRoute({ children }) {
   const [isAdminCheck, setIsAdminCheck] = useState(null);
   const [isAuthenticatedCheck, setIsAuthenticatedCheck] = useState(null);
 
+  //Get User and Admin
   useEffect(() => {
     const fetchInfo = async () => {
       try {
@@ -32,7 +33,7 @@ export default function ProtectedRoute({ children }) {
 
     if (isAuthenticatedCheck === false) {
       console.log("User not authenticated, redirecting to login...");
-      navigate("/login");
+      navigate("/");
     } else if (isAuthenticatedCheck && !isAdminCheck) {
       console.log("User authenticated but not admin, redirecting to home...");
       navigate("/");
