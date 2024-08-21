@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './services/protectedRoute';
 import Layout from './components/Layout/Layout';
-import { AudioPlayerProvider } from './components/Layout/AudioPlayerContext';
+import { AudioPlayerProvider } from './components/Layout/ContextAudioPlayer';
 // PAGES
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -10,6 +10,8 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage';
 import AdminPage from './pages/AdminPage/AdminPage';
 import CreateBeat from './components/Admin/CreateBeat/CreateBeat';
+import CreateTag from './components/Admin/CreateTag/CreateTag';
+import UserDashboard from './components/Admin/UserDashboard/UserDashboard';
 
 function App() {
   // Define the playTrack function
@@ -49,7 +51,9 @@ function App() {
                     </ProtectedRoute>
                   }
                 >
-                  <Route path="create" element={<CreateBeat />} />
+                  <Route path="user-dashboard" element={<UserDashboard/>} />
+                  <Route path="create-beat" element={<CreateBeat />} />
+                  <Route path="create-tag" element={<CreateTag />} />
                 </Route>
                 <Route path="/register" element={<RegisterPage />} />
               </Routes>

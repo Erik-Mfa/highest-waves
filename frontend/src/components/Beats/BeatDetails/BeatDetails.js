@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from '../../../axios/axios';
 import { useParams } from 'react-router-dom';
-import { isAuthenticated } from '../../../services/auth';
+import { isAuthenticated } from '../../../services/endpoints/auth';
+import { getBeatById } from '../../../services/endpoints/beats';
+import { addToCart } from '../../../services/endpoints/carts';
 import { FaPlay } from 'react-icons/fa';
-import AudioPlayerContext from '../../Layout/AudioPlayerContext';
+import ContextAudioPlayer from '../../Layout/ContextAudioPlayer';
 
 function BeatDetails() { 
   const [beat, setBeat] = useState(null);
@@ -11,14 +12,14 @@ function BeatDetails() {
   const [loading, setLoading] = useState(true);
 
   const { id: beatId } = useParams();
-  const { playTrack } = useContext(AudioPlayerContext);
+  const { playTrack } = useContext(ContextAudioPlayer);
 
   useEffect(() => {
     const fetchBeatDetails = async () => {
       try {
         const userToken = await isAuthenticated();
-        const response = await axios.get(`/beats/${beatId}`);
-        setBeat(response.data);
+        const beatData = await getBeatById(beatId);
+        setBeat(beatData);
         setUser(userToken);
       } catch (error) {
         console.error('Error fetching beat details:', error);
@@ -37,10 +38,7 @@ function BeatDetails() {
     }
 
     try {
-      await axios.post('/carts', {
-        beat: beat.id,
-        user: user.userId
-      }, { withCredentials: true });
+      await addToCart(beat.id, user.userId);
       alert('Beat added to cart!');
     } catch (error) {
       console.error('Error adding to cart:', error);

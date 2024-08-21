@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../axios/axios'; 
+import { getCarts, deleteCarts } from '../../services/endpoints/carts';
+import { saveOrder } from '../../services/endpoints/orders';
 
 function PurchaseCart({ user }) {
   const [cartItems, setCartItems] = useState([]);
@@ -9,15 +10,22 @@ function PurchaseCart({ user }) {
     const fetchCart = async () => {
       try {
         if (user && user.userId) {
-          const response = await axios.get(`/carts/${user.userId}`, { withCredentials: true });
-          console.log(response.data);
-
-          setCartItems(response.data);
+          const cartData = await getCarts(user.userId);
+          
+          // Ensure cartData is an array
+          if (Array.isArray(cartData)) {
+            setCartItems(cartData);
+          } else {
+            console.error('Invalid cart data format:', cartData);
+            setCartItems([]);
+          }
         } else {
           console.error('User is not authenticated.');
+          setCartItems([]);
         }
       } catch (error) {
         console.error('Error fetching cart:', error);
+        setCartItems([]);
       } finally {
         setLoading(false);
       }
@@ -29,7 +37,7 @@ function PurchaseCart({ user }) {
   const handleRemoveFromCart = async (cartId) => {
     try {
       if (user && user.userId) {
-        await axios.delete(`/carts/${cartId}`, { withCredentials: true });
+        await deleteCarts(cartId);
         setCartItems(cartItems.filter(item => item.id !== cartId));
       }
     } catch (error) {
@@ -45,11 +53,7 @@ function PurchaseCart({ user }) {
       }
 
       const cartBeatIds = cartItems.map(item => item.beats.id);
-
-      await axios.post('/orders', {
-        cart: cartBeatIds,
-        user: user.userId,
-      }, { withCredentials: true });
+      await saveOrder(user.userId, cartBeatIds);
 
       setCartItems([]);
       alert('Checkout successful!');

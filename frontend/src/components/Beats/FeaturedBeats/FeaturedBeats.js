@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './FeaturedBeats.css';
-import {getBeats} from '../../../services/beat'
+import {getBeats} from '../../../services/endpoints/beats'
 
 function FeaturedBeats() {
   const [featuredBeats, setFeaturedBeats] = useState([]);

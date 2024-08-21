@@ -23,12 +23,10 @@ const Footer = () => {
               
                 <FaTwitter size={32} />
              
- 
                 <FaFacebookF size={32} />
 
                 <FaInstagram size={32} />
      
-          
                 <FaLinkedinIn size={32} />
               
             </div>

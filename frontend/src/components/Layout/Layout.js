@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header/Header';
-import { isAdmin, isAuthenticated } from '../../services/auth';
+import { isAdmin, isAuthenticated } from '../../services/endpoints/auth';
 import PurchaseCart from '../PurchaseCart/PurchaseCart';
-import AudioPlayerContext from './AudioPlayerContext';
+import ContextAudioPlayer from './ContextAudioPlayer';
 import AudioPlayer from '../Beats/AudioPlayer/AudioPlayer'; 
 
 const Layout = ({ children }) => {
@@ -10,11 +10,7 @@ const Layout = ({ children }) => {
   const [admin, setAdmin] = useState(null);
   const [user, setUser] = useState(null);
 
-  const { currentTrack, isPlaying, togglePlayPause } = useContext(AudioPlayerContext);
-
-  useEffect(() => {
-    console.log("Current track Layout: " + currentTrack);
-  }, [currentTrack]);
+  const { currentTrack, isPlaying, togglePlayPause } = useContext(ContextAudioPlayer);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +29,6 @@ const Layout = ({ children }) => {
 
     fetchData();
   }, []);
-
 
   return (
     <>
@@ -54,7 +49,6 @@ const Layout = ({ children }) => {
           onPlayPause={togglePlayPause} 
         />
       )}
-
     </>
   );
 };

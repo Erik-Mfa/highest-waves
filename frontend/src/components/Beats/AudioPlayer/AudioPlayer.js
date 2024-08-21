@@ -1,10 +1,10 @@
 import React, { useState, useRef, useContext } from 'react';
 import ReactPlayer from 'react-player';
 import { FaPlay, FaPause, FaForward, FaBackward } from 'react-icons/fa';
-import AudioPlayerContext from '../../Layout/AudioPlayerContext';
+import ContextAudioPlayer from '../../Layout/ContextAudioPlayer';
 
 const AudioPlayer = () => {
-  const { currentTrack, currentTitle, currentCover, isPlaying, togglePlayPause } = useContext(AudioPlayerContext);
+  const { currentTrack, currentTitle, currentCover, isPlaying, togglePlayPause } = useContext(ContextAudioPlayer);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const playerRef = useRef(null);

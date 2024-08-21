@@ -1,7 +1,7 @@
 // In AudioPlayerProvider.js
 import React, { createContext, useState } from 'react';
 
-const AudioPlayerContext = createContext();
+const ContextAudioPlayer = createContext();
 
 export const AudioPlayerProvider = ({ children }) => {
   const [currentTrack, setCurrentTrack] = useState(null);
@@ -22,11 +22,10 @@ export const AudioPlayerProvider = ({ children }) => {
   };
 
   return (
-    <AudioPlayerContext.Provider value={{ currentTrack, currentTitle, currentCover, isPlaying, playTrack, togglePlayPause }}>
-      {console.log("Current track Audio Context:", currentTrack)}
+    <ContextAudioPlayer.Provider value={{ currentTrack, currentTitle, currentCover, isPlaying, playTrack, togglePlayPause }}>
       {children}
-    </AudioPlayerContext.Provider>
+    </ContextAudioPlayer.Provider>
   );
 };
 
-export default AudioPlayerContext;
+export default ContextAudioPlayer;

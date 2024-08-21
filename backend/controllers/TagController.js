@@ -38,7 +38,7 @@ class TagController {
 
       const tag = new Tag({ id: newId, name });
       const newTag = await tag.save();
-      res.status(201).json(newTag);
+      res.status(201).json({ success: true});
     } catch (err) {
       console.error(err);
       res.status(400).json({ message: err.message });

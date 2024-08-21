@@ -23,7 +23,7 @@ class AuthController {
        });
 
       const result = await newUser.save();
-      res.status(201).json({ message: 'User registered successfully' });
+      res.status(201).json({ success: true });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: err.message });

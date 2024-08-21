@@ -1,4 +1,3 @@
-// ./services/beat.js
 import axios from 'axios';
 import {isAuthenticated} from './auth';
 
@@ -23,12 +22,23 @@ export const createBeat = async (beatDetails) => {
       return { success: false, error };
     }
   };
-  
-  export const getBeats = async () => {
-    try {
-      const response = await instance.get('/beats'); // Adjust the endpoint
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching featured beats:', error);
-    }
-  };
+
+export const getBeats = async () => {
+  try {
+    const response = await instance.get('/beats'); // Adjust the endpoint
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching featured beats:', error);
+  }
+};
+
+
+export const getBeatById = async (beatId) => {
+  try {
+    const response = await instance.get(`/beats/${beatId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching beat details:', error);
+    throw error; // Rethrow the error so it can be handled in the component
+  }
+};

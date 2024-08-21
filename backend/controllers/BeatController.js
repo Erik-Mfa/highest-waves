@@ -60,7 +60,7 @@ class BeatController {
       });
 
       const result = await beat.save();
-      res.status(201).json({ success: true, data: result });
+      res.status(201).json({ success: true });
     } catch (err) {
       console.error(err);
       res.status(400).json({ message: err.message });

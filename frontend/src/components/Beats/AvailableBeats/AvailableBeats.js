@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import BeatList from './BeatList/BeatList';
 import FilterSidebar from './FilterSidebar/FilterSidebar';
-import axios from '../../../axios/axios'; 
+import { getBeats } from '../../../services/endpoints/beats'; // Import the getBeats function
+import { getTags } from '../../../services/endpoints/tags';   // Import the getTags function
 
 function AvailableBeats() {
   const [beats, setBeats] = useState([]);
@@ -19,21 +20,22 @@ function AvailableBeats() {
     user: ''
   });
 
-  //FETCH BEATS AND TAGS
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [beatsResponse, tagsResponse] = await Promise.all([
-          axios.get('/beats'),
-          axios.get('/tags')
+          getBeats(), 
+          getTags()   
         ]);
-        setBeats(beatsResponse.data);
-        setTags(tagsResponse.data);
 
-        const uniqueUsers = [...new Set(beatsResponse.data.map(beat => beat.user))];
+        setBeats(beatsResponse); // Set the beats state with the fetched data
+        setTags(tagsResponse);   // Set the tags state with the fetched data
+
+        const uniqueUsers = [...new Set(beatsResponse.map(beat => beat.user))];
         setUsers(uniqueUsers);
 
-        const uniqueTones = [...new Set(beatsResponse.data.map(beat => beat.tone))];
+        const uniqueTones = [...new Set(beatsResponse.map(beat => beat.tone))];
         setTones(uniqueTones);
       } catch (error) {
         console.error('Error fetching data:', error);

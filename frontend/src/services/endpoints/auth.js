@@ -2,13 +2,16 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import {jwtDecode} from "jwt-decode";
 
-const BASE_URL = 'http://localhost:3001';
+const instance = axios.create({
+  baseURL: 'http://localhost:3001/api/', // Ensure this is correct
+});
+
 const cookies = new Cookies();
 
 export const login = async (credentials) => {
   
   try {
-    const response = await axios.post(`${BASE_URL}/api/auth/login`, credentials);
+    const response = await instance.post('/auth/login', credentials);
     cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 7200  });
     return response.data.token;
   } catch (error) {
@@ -21,7 +24,7 @@ export const login = async (credentials) => {
 export const register = async (credentials) => {
   
   try {
-    const response = await axios.post(`${BASE_URL}/api/auth/register`, credentials);
+    const response = await instance.post('/auth/register', credentials);
     cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 7200  });
     
     return response.data.token;
@@ -58,9 +61,6 @@ export const isAuthenticated = async () => {
   try {
     const decoded = jwtDecode(cookie);
     const user = decoded;
-
-    console.log("USER TABLE FRONTEND:")
-    console.table(user)
 
     return user; 
   } catch (error) {
