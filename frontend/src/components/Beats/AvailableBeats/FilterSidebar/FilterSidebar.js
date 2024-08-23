@@ -1,129 +1,158 @@
-import React, { useState } from 'react';
-import ReactSlider from 'react-slider';
-import './FilterSidebar.css';
+import React from 'react';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
-function FilterSidebar({ filters, setFilters, tags = [], users = [], tones = [] }) {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+function FilterSidebar({ filters, setFilters, tags, users, tones }) {
+  // Handle slider change
+  const handlePriceChange = (value) => {
+    setFilters({
+      ...filters,
+      price: { min: value[0], max: value[1] }
+    });
+  };
 
-    const handleSliderChange = (values) => {
-        setFilters({ ...filters, price: { min: values[0], max: values[1] } });
-    };
+  // Define BPM options
+  const bpmOptions = [
+    { label: '1-20', value: { min: 1, max: 20 } },
+    { label: '21-40', value: { min: 21, max: 40 } },
+    { label: '41-60', value: { min: 41, max: 60 } },
+    { label: '61-80', value: { min: 61, max: 80 } },
+    { label: '81-100', value: { min: 81, max: 100 } },
+    { label: '101-120', value: { min: 101, max: 120 } },
+    { label: '121-140', value: { min: 121, max: 140 } },
+    { label: '141-160', value: { min: 141, max: 160 } },
+    { label: '161-180', value: { min: 161, max: 180 } },
+    { label: '181-200', value: { min: 181, max: 200 } }
+  ];
 
-    const handleBpmChange = (e) => {
-        const [min, max] = e.target.value.split('-').map(Number);
-        setFilters({ ...filters, bpm: { min, max } });
-    };
+  return (
+    <div className="p-6 rounded-lg shadow-md h-full" style={{ backgroundColor: '#102D40' }}>
+      <div className="sticky top-20">
+        <h2 className="text-2xl font-semibold text-white mb-4">Filters</h2>
 
-    const handleTagClick = (tag) => {
-        setFilters(prevFilters => {
-            const newTags = prevFilters.tag && prevFilters.tag.includes(tag)
-                ? prevFilters.tag.filter(t => t !== tag)
-                : [...(prevFilters.tag || []), tag];
-            return { ...prevFilters, tag: newTags };
-        });
-    };
+        {/* Price Filter */}
+        <div className="mb-6">
+        <label className="block text-white mb-2">Price</label>
+          <div className="flex items-center space-x-2">
+            <div className="flex-1">
+              <Slider
+                range
+                value={[filters.price.min, filters.price.max]}
+                min={0}
+                max={300}
+                step={1}
+                onChange={handlePriceChange}
+                trackStyle={{ backgroundColor: '#0FC2C0' }}
+                railStyle={{ backgroundColor: '#0FC2C0' }}
+                handleStyle={{
+                  borderColor: '#0FC2C0',
+                  backgroundColor: '#0FC2C0',
+                  height: 20,
+                  width: 20
+                }}
+              />
+              <div className="flex justify-between text-white mt-2">
+                <span>${filters.price.min}</span>
+                <span>${filters.price.max}</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    return (
-        <div>
-            {/* Toggle Button for Mobile */}
-            <button
-                className="block md:hidden mb-4 bg-cyan-600 text-white py-2 px-4 rounded"
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            >
-                {isSidebarOpen ? 'Hide Filters' : 'Show Filters'}
-            </button>
-
-            {/* Sidebar */}
-            <div className={`sidebar ${isSidebarOpen ? 'block' : 'hidden'} md:block rounded-lg`}>
-                {/* Price Filter */}
-                <div className="filter-group">
-                    <h4 className="font-semibold text-white text-center mb-2 mt-2">Price</h4>
-                    <ReactSlider
-                        className="horizontal-slider mb-4"
-                        thumbClassName="example-thumb"
-                        trackClassName="example-track"
-                        min={0}
-                        max={300}
-                        value={[filters.price.min, filters.price.max]}
-                        onChange={handleSliderChange}
-                        renderThumb={({ key, ...restProps }) => <div key={key} {...restProps} />}
-                    />
-                    <div className="price-values text-white mb-8">
-                        <span>${filters.price.min}</span> <span>${filters.price.max}</span>
-                    </div>
-                </div>
-
-                {/* Tags Filter */}
-                <div className="filter-group mt-2">
-                    <h4 className="font-semibold text-white mb-2">Tags</h4>
-                    <div className="tag-container flex flex-wrap gap-2 mb-8">
-                        {tags.map(tag => (
-                            <div
-                                key={tag.id}
-                                className={`tag-box rounded-full px-3 py-1 text-sm cursor-pointer transition-all duration-300 ease-in-out ${
-                                    filters.tag && filters.tag.includes(tag.id) ? 'bg-cyan-600 text-white' : 'bg-gray-200 text-black'
-                                } hover:bg-cyan-500 hover:text-white hover:scale-105`}
-                                onClick={() => handleTagClick(tag.id)}
-                            >
-                                {tag.name}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* BPM Filter */}
-                <div className="filter-group mt-4">
-                    <select
-                        id="bpm"
-                        className="filter-input text-black rounded-lg"
-                        value={`${filters.bpm.min}-${filters.bpm.max}`}
-                        onChange={handleBpmChange}
-                    >
-                        <option value="0-200">BPM</option>
-                        {[...Array(20).keys()].map(i => (
-                            <option key={i} value={`${i * 10}-${(i + 1) * 10}`}>
-                                {i * 10} - {(i + 1) * 10}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+        {/* BPM Filter */}
+        <div className="mb-6">
+          <label className="block text-white mb-2">BPM</label>
+          <select
+            className="w-full p-2 bg-gray-700 text-white rounded bg-transparent border border-cyan-500"
+            value={`${filters.bpm.min}-${filters.bpm.max}`}
+            onChange={(e) => {
+              const selectedBpm = bpmOptions.find(option => option.label === e.target.value);
+              setFilters({ ...filters, bpm: selectedBpm ? selectedBpm.value : { min: 1, max: 200 } });
+            }}
+          >
+          <option value="">Select the BPM value</option>
+          {bpmOptions.map((option) => (
+            <option key={option.label} value={option.label}>
+              {option.label}
+            </option>
+          ))}
+          </select>
+        </div>
 
                 {/* Tone Filter */}
-                <div className="filter-group mb-8 mt-2">
-                    <select
-                        id="tone"
-                        className="filter-input text-black rounded-lg"
-                        value={filters.tone}
-                        onChange={(e) => setFilters({ ...filters, tone: e.target.value })}
-                    >
-                        <option value="">Tone</option>
-                        {tones.map((tone, index) => (
-                            <option key={index} value={tone}>
-                                {tone}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                {/* User Filter */}
-                <div className="filter-group mb-6 mt-4">
-                    <select
-                        id="user"
-                        className="filter-input text-black rounded-lg"
-                        value={filters.user}
-                        onChange={(e) => setFilters({ ...filters, user: e.target.value })}
-                    >
-                        <option value="">User</option>
-                        {users.map((user, index) => (
-                            <option key={index} value={user}>
-                                {user}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            </div>
+        <div className="mb-6">
+          <label className="block text-white mb-2">Tone</label>
+          <select
+            className="w-full p-2 bg-gray-700 text-white rounded bg-transparent border border-cyan-500"
+            value={filters.tone}
+            onChange={(e) => setFilters({ ...filters, tone: e.target.value })}
+          >
+            <option value="">Select a tone</option>
+            {tones.map((tone) => (
+              <option key={tone} value={tone}>{tone}</option>
+            ))}
+          </select>
         </div>
-    );
+
+        {/* Tags Filter */}
+        <div className="mb-6">
+          <label className="block text-white mb-2">Tags</label>
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <button
+                key={tag.id}
+                className={`px-3 py-1 rounded-full border border-cyan-500 ${
+                  filters.tag.includes(tag.id)
+                    ? 'bg-blue-500 border-blue-500 text-white'
+                    : 'border-gray-500 text-gray-300'
+                }`}
+                onClick={() => {
+                  setFilters({
+                    ...filters,
+                    tag: filters.tag.includes(tag.id)
+                      ? filters.tag.filter((id) => id !== tag.id)
+                      : [...filters.tag, tag.id]
+                  });
+                }}
+              >
+                {tag.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* User Filter */}
+        <div className="mb-8">
+          <label className="block text-white mb-2">Producer</label>
+          <select
+            className="w-full p-2 bg-transparent border border-cyan-500 text-white rounded"
+            value={filters.user}
+            onChange={(e) => setFilters({ ...filters, user: e.target.value })}
+          >
+            <option value="">All Producers</option>
+            {users.map((user) => (
+              <option key={user} value={user}>{user}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Reset Filters Button */}
+        <button
+          className="w-full py-2 bg-transparent border border-red-700 text-white rounded hover:bg-red-700 transition"
+          onClick={() => setFilters({
+            price: { min: 0, max: 300 },
+            createdAt: '',
+            tag: [],
+            bpm: { min: 1, max: 200 },
+            tone: '',
+            user: ''
+          })}
+        >
+          Clear
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default FilterSidebar;

@@ -1,22 +1,19 @@
 import React from 'react';
+import { FaPlay } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import ContextAudioPlayer from '../../../Layout/ContextAudioPlayer';
 
 function BeatList({ beats, filters }) {
   const navigate = useNavigate();
+  const { playTrack } = useContext(ContextAudioPlayer);
 
   const filteredBeats = beats.filter((beat) => {
-    // Price range filter
     const matchesPrice = beat.price >= filters.price.min && beat.price <= filters.price.max;
-    // Tag filter
-    const beatTagIds = beat.tags.map(tag => tag.id);
-    const matchesTag = filters.tag.length > 0 ? filters.tag.every(tagId => beatTagIds.includes(tagId)) : true;
-    // BPM Filter
-    const matchesBpm = filters.bpm.min !== undefined && filters.bpm.max !== undefined
-      ? beat.bpm >= filters.bpm.min && beat.bpm <= filters.bpm.max
-      : true;
-    // Tone Filter
+    const beatTagIds = beat.tags.map((tag) => tag.id);
+    const matchesTag = filters.tag.length > 0 ? filters.tag.every((tagId) => beatTagIds.includes(tagId)) : true;
+    const matchesBpm = beat.bpm >= filters.bpm.min && beat.bpm <= filters.bpm.max;
     const matchesTone = filters.tone ? beat.tone === filters.tone : true;
-    // User filter
     const matchesUser = filters.user ? beat.user === filters.user : true;
 
     return matchesPrice && matchesTag && matchesBpm && matchesTone && matchesUser;
@@ -26,40 +23,49 @@ function BeatList({ beats, filters }) {
     navigate(`/beats/${beatId}`);
   };
 
+  const handlePlayTrack = (beat) => {
+    playTrack(`http://localhost:3001/${beat.audioURL}`, beat.title, `http://localhost:3001/${beat.image}`);
+  };
+
   return (
-    <div className="beat-list-container bg-gray-900 p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row">
-      <div className="beat-list flex-1 p-4 sm:p-6 lg:p-8 lg:pt-0 rounded-lg">
-        <h2 className="text-3xl sm:text-4xl lg:text-3xl font-bold text-start text-white mb-6 sm:mb-8" style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}>Available Beats</h2>
-        <div className="grid grid-cols sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+    <div className="">
+
+      {filteredBeats.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredBeats.map((beat) => (
-            <div 
-              key={beat.id} 
-              className="w-[200px] h-[300px] mx-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
+            <div
+              key={beat.id}
+              className="rounded-lg overflow-hidden transition-shadow cursor-pointer group"
               onClick={() => handleBeatClick(beat.id)}
             >
-              <div className="w-full h-[70%] bg-gray-600 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
+              <div className="relative w-full h-48 bg-gray-600 transform transition-transform duration-300 ease-in-out group-hover:scale-105">
                 <img
                   src={`http://localhost:3001/${beat.image}`}
                   alt={beat.title}
                   className="w-full h-full object-cover"
-                  style={{ aspectRatio: '5/5' }}
                 />
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent triggering the click event for the parent
+                    handlePlayTrack(beat);
+                  }}
+                  className="absolute inset-0 flex justify-center items-center text-white bg-black bg-opacity-0 hover:bg-opacity-50 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                >
+                  <FaPlay size={36} />
+                </button>
               </div>
-              <div className='text-center'>
-                <h3 className="text-sm text-white font-semibold mb-1 truncate" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: '"Fira Code", monospace' }}>
-                  {beat.title}
-                </h3>
-                <p className="text-sm text-gray-300 mb-1 truncate" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {beat.user}
-                </p>
-                <p className="text-sm text-sky-400 font-bold truncate" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: '"Be Vietnam Pro", sans-serif' }}>
-                  ${beat.price}
-                </p>
+
+              <div className="p-2">
+                <h3 className="text-lg font-semibold text-white truncate">{beat.title}</h3>
+                <p className="text-sm text-gray-400">{beat.owner.username}</p>
+                <p className="text-md text-blue-400 font-bold">${beat.price}</p>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      ) : (
+        <p className="text-gray-400">No beats found matching the selected filters.</p>
+      )}
     </div>
   );
 }
