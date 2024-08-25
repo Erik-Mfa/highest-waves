@@ -29,7 +29,7 @@ function BeatList({ beats, filters }) {
   };
 
   return (
-    <div className="beat-list-container">
+    <div className="beat-list-container" style={{backgroundColor: '#102D40'}}>
       {filteredBeats.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredBeats.map((beat) => (
@@ -50,9 +50,9 @@ function BeatList({ beats, filters }) {
                 <FaPlay size={36} />
               </button>
               <div className="beat-details">
-                <h3 className="text-lg font-semibold truncate">{beat.title}</h3>
+                <h3 className="text-md font-semibold truncate">{beat.title}</h3>
                 <p className="text-sm">by {beat.owner.username}</p>
-                <p className="text-md font-bold">${beat.price}</p>
+                <p className="text-lg font-bold text-cyan-500">${beat.price}</p>
               </div>
             </div>
           ))}

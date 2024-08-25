@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa'; 
 import { logout } from '../../services/endpoints/auth';
-import PurchaseCart from '../PurchaseCart/PurchaseCart';
+import PurchaseCart from '../PurchaseCart/PurchaseCart'; // <-- Add this import
 import './Header.css'; 
 
 const Header = ({ user, admin }) => {
@@ -10,14 +10,29 @@ const Header = ({ user, admin }) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const getOut = await logout();
-    if (getOut) {
-      navigate("/");
+    try {
+      const success = await logout();
+      if (success) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
+
+  const handleNavigation = (path, sectionId) => {
+    if (window.location.pathname === '/') {
+      document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate(path);
+      setTimeout(() => {
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+      }, 100); // Delay to allow the navigation to complete
     }
   };
 
   return (
-    <header className="bg-[#071D26] flex justify-between items-center p-6 px-20">
+    <header className="flex justify-between items-center p-2 px-20">
       <nav className="flex items-center justify-between w-full">
         <ul className="flex items-center space-x-8">
           <li>
@@ -30,34 +45,31 @@ const Header = ({ user, admin }) => {
             </Link>
           </li>
           <li className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200">
-            <Link 
-              to="/beats" 
-            >
+            <button onClick={() => handleNavigation('/', 'beats-section')}>
               Explore
-            </Link>
+            </button>
           </li>
           <li className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200">
-            <Link 
-              to="/contact" 
-            >
+            <button onClick={() => handleNavigation('/', 'about-section')}>
               About
-            </Link>
+            </button>
           </li>
           {admin && (
             <li className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200">
-              <Link 
-                to="/admin" 
-              >
+              <Link to="/admin">
                 Admin
               </Link>
             </li>
           )}
         </ul>
+
         <ul className="flex items-center space-x-10">
           {user ? (
             <>
               <li>
-                <p className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200">{`Welcome, ${user.username}`}</p>
+                <p className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200">
+                  {`Welcome, ${user.username}`}
+                </p>
               </li>
               <li>
                 <button 
@@ -72,12 +84,13 @@ const Header = ({ user, admin }) => {
             <li>
               <Link 
                 to="/login" 
-                className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200"
+                className="text-white text-xl flex items-center hover:scale-110 hover:bg-opacity-70 transition-transform duration-200"
               >
                 <FaUserCircle size={32} />
               </Link>
             </li>
           )}
+
           <li className="relative">
             <button 
               onClick={() => setShowPurchaseCart(prev => !prev)} 

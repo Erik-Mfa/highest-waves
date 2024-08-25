@@ -27,7 +27,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
   ];
 
   return (
-    <div className="p-6 rounded-lg shadow-md h-full" style={{ backgroundColor: '#102D40' }}>
+    <div className="p-10 rounded-lg shadow-md h-full" style={{ backgroundColor: '#102D40' }}>
       <div className="sticky top-20">
         
         {/* Price Filter */}
@@ -141,34 +141,33 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
           />
         </div>
 
-{/* Tags Filter */}
-<div className="mb-6">
-  <label className="block text-white mb-2 font-semibold">Tags</label>
-  <div className="flex flex-wrap gap-2">
-    {tags.map((tag) => (
-      <button
-        key={tag.id}
-        className={`px-3 py-1 rounded-full border border-sky-500 transition-transform transform duration-300 ease-in-out ${
-          filters.tag.includes(tag.id)
-            ? 'bg-blue-500 border-blue-500 text-white hover:scale-105'
-            : 'border-gray-500 text-gray-300 hover:scale-105'
-        }`}
-        onClick={() => {
-          setFilters({
-            ...filters,
-            tag: filters.tag.includes(tag.id)
-              ? filters.tag.filter((id) => id !== tag.id)
-              : [...filters.tag, tag.id]
-          });
-        }}
-      >
-        {tag.name}
-      </button>
-    ))}
-  </div>
-</div>
-
-
+        {/* Tags Filter */}
+        <div className="mb-6">
+          <label className="block text-white mb-2 font-semibold">Tags</label>
+          <div className="flex flex-wrap ">
+            {tags.map((tag) => (
+              <button
+                key={tag.id}
+                className={`px-3 py-1 m-1 rounded-full border border-cyan-500 transition-transform transform duration-300 ease-in-out ${
+                  filters.tag.includes(tag.id)
+                    ? 'bg-cyan-500 text-white hover:scale-105'
+                    : 'border-cyan-500 text-gray-300 hover:scale-105'
+                }`}
+                
+                onClick={() => {
+                  setFilters({
+                    ...filters,
+                    tag: filters.tag.includes(tag.id)
+                      ? filters.tag.filter((id) => id !== tag.id)
+                      : [...filters.tag, tag.id]
+                  });
+                }}
+              >
+                {tag.name}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* User Filter */}
         <div className="mb-8">

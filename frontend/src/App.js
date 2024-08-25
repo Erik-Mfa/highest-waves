@@ -51,7 +51,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 >
-                  <Route path="user-dashboard" element={<UserDashboard/>} />
+                  <Route path="user-dashboard" element={<UserDashboard/>}/>
                   <Route path="create-beat" element={<CreateBeat />} />
                   <Route path="create-tag" element={<CreateTag />} />
                 </Route>

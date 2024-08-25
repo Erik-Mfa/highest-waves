@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BeatList from './BeatList/BeatList';
 import FilterSidebar from './FilterSidebar/FilterSidebar';
 import Loading from '../../Loading/Loading'; // Correctly import Loading
+import './AvailableBeats.css'
 import { getBeats } from '../../../services/endpoints/beats';
 import { getTags } from '../../../services/endpoints/tags';
 import { FaBars } from 'react-icons/fa'; // Import the hamburger icon
@@ -52,7 +53,7 @@ function AvailableBeats() {
   if (loading) return <Loading />; // Replace with the Loading component
 
   return (
-    <div className="bg-black min-h-screen px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen sm:px-6 lg:px-8 p-20">
       <div className="max-w-7xl mx-auto">
         <div className="lg:flex lg:space-x-8">
           {/* Sidebar for larger screens */}

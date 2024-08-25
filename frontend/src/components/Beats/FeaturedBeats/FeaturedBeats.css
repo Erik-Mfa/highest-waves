@@ -1,43 +1,39 @@
-.featured-beats {
-    background-color: #000;
+.marquee {
+  overflow: hidden;
+  position: relative;
+  /* Add a larger, more noticeable shadow */
+  box-shadow: inset 0 0 45px rgba(0, 0, 0, 1);
+}
+
+.marquee-content {
+  display: flex;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(4%);
   }
-  
-  .marquee {
-    overflow: hidden;
-    position: relative;
+  100% {
+    transform: translateX(-4%);
   }
-  
-  .marquee-content {
-    display: flex;
-    animation: marquee 20s linear infinite;
-  }
-  
-  @keyframes marquee {
-    0% {
-      transform: translateX(4%);
-    }
-    100% {
-      transform: translateX(-4%);
-    }
-  }
-  
-  .carousel-item {
-    display: inline-block;
-    margin-right: 20px;
-    text-align: center;
-  }
-  
-  .image-container {
-    width: 250px;
-    height: 250px;
-    background-color: #333;
-    border-radius: 50%; /* Makes the container circular */
-    overflow: hidden; /* Ensures the image stays within the rounded container */
-  }
-  
-  .image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
+}
+
+/* Ensures the button is above the image and only the button is clickable for playing */
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10; /* Ensure the play button is above the image */
+  opacity: 0; /* Initially hidden */
+}
+
+/* Show play button on hover */
+.group:hover button {
+  opacity: 1;
+}
