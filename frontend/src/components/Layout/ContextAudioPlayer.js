@@ -1,5 +1,5 @@
 // In AudioPlayerProvider.js
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState  } from 'react';
 
 const ContextAudioPlayer = createContext();
 
@@ -8,6 +8,7 @@ export const AudioPlayerProvider = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTitle, setCurrentTitle] = useState('');
   const [currentCover, setCurrentCover] = useState('');
+
 
   const playTrack = (trackUrl, trackTitle, coverImage) => {
     console.log("Setting track URL Context:", trackUrl);

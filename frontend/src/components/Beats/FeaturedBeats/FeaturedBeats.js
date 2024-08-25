@@ -12,7 +12,7 @@ function FeaturedBeats() {
     const fetchFeaturedBeats = async () => {
       try {
         const response = await getBeats();
-        const latestBeats = response.slice(0, 5); // Get the latest 5 beats
+        const latestBeats = response.slice(0, 7); // Get the latest 5 beats
         setFeaturedBeats(latestBeats);
       } catch (error) {
         console.error('Error fetching featured beats:', error);
@@ -22,7 +22,6 @@ function FeaturedBeats() {
     fetchFeaturedBeats();
   }, []);
 
-  if (featuredBeats.length === 0) return <div>Loading...</div>;
 
   const handlePlayTrack = (beat) => {
     playTrack(`http://localhost:3001/${beat.audioURL}`, beat.title, `http://localhost:3001/${beat.image}`);

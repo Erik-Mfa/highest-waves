@@ -1,8 +1,7 @@
-// AvailableBeats.js
-
 import React, { useEffect, useState } from 'react';
 import BeatList from './BeatList/BeatList';
 import FilterSidebar from './FilterSidebar/FilterSidebar';
+import Loading from '../../Loading/Loading'; // Correctly import Loading
 import { getBeats } from '../../../services/endpoints/beats';
 import { getTags } from '../../../services/endpoints/tags';
 import { FaBars } from 'react-icons/fa'; // Import the hamburger icon
@@ -14,8 +13,6 @@ function AvailableBeats() {
   const [tones, setTones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false); // State to handle mobile sidebar visibility
-
-  console.log(users)
 
   const [filters, setFilters] = useState({
     price: { min: 0, max: 300 },
@@ -52,15 +49,12 @@ function AvailableBeats() {
     fetchData();
   }, []);
 
-  if (loading) return <div className="text-white text-center">Loading...</div>;
+  if (loading) return <Loading />; // Replace with the Loading component
 
   return (
     <div className="bg-black min-h-screen px-4 sm:px-6 lg:px-8 py-8">
       <div className="max-w-7xl mx-auto">
         <div className="lg:flex lg:space-x-8">
-
-
-
           {/* Sidebar for larger screens */}
           <div className="hidden lg:block lg:w-1/4">
             <FilterSidebar
@@ -72,23 +66,21 @@ function AvailableBeats() {
             />
           </div>
 
-          {/* Beat List */}
+          {/* Main content */}
           <div className="lg:w-3/4">
             {/* Mobile Hamburger Button */}
-            
             <div className="lg:hidden mb-4 flex justify-between items-center">
               <button 
                 onClick={() => setShowFilters(!showFilters)} 
                 className="text-white text-3xl focus:outline-none"
               >
-                Filters
                 <FaBars />
+                Filters
               </button>
-
-              <h2 className="text-3xl font-bold text-white">Available Beats</h2>
             </div>
 
-            {showFilters && ( // Show the filter sidebar when the state is true
+            {/* Mobile Filter Sidebar */}
+            {showFilters && (
               <div className="lg:hidden mb-8">
                 <FilterSidebar
                   filters={filters}
@@ -100,12 +92,13 @@ function AvailableBeats() {
               </div>
             )}
 
+            {/* Available Beats - Large Screens and Mobile */}
+            <h2 className="text-3xl font-bold text-white mb-6">Available Beats</h2>
             <BeatList
               beats={beats}
               filters={filters}
             />
           </div>
-
         </div>
       </div>
     </div>

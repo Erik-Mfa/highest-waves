@@ -5,7 +5,6 @@ import Hero from '../../components/Hero/Hero';
 import About from '../../components/About/About'; 
 import Footer from '../../components/Footer/Footer'
 
-
 function HomePage() {
   
   return (

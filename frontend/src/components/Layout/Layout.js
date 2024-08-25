@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 import { isAdmin, isAuthenticated } from '../../services/endpoints/auth';
 import PurchaseCart from '../PurchaseCart/PurchaseCart';
 import ContextAudioPlayer from './ContextAudioPlayer';
-import AudioPlayer from '../Beats/AudioPlayer/AudioPlayer'; 
+import AudioPlayer from './AudioPlayer/AudioPlayer'; 
 
 const Layout = ({ children }) => {
   const [showPurchaseCart, setShowPurchaseCart] = useState(false);

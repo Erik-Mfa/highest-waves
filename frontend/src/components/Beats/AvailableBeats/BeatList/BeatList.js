@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
 import ContextAudioPlayer from '../../../Layout/ContextAudioPlayer';
+import './BeatList.css'
 
 function BeatList({ beats, filters }) {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function BeatList({ beats, filters }) {
     const matchesTag = filters.tag.length > 0 ? filters.tag.every((tagId) => beatTagIds.includes(tagId)) : true;
     const matchesBpm = beat.bpm >= filters.bpm.min && beat.bpm <= filters.bpm.max;
     const matchesTone = filters.tone ? beat.tone === filters.tone : true;
-    const matchesUser = filters.user ? beat.user === filters.user : true;
+    const matchesUser = filters.user ? beat.owner.username === filters.user : true;
 
     return matchesPrice && matchesTag && matchesBpm && matchesTone && matchesUser;
   });
@@ -23,42 +23,36 @@ function BeatList({ beats, filters }) {
     navigate(`/beats/${beatId}`);
   };
 
-  const handlePlayTrack = (beat) => {
+  const handlePlayTrack = (e, beat) => {
+    e.stopPropagation(); // Prevent navigating to BeatDetail
     playTrack(`http://localhost:3001/${beat.audioURL}`, beat.title, `http://localhost:3001/${beat.image}`);
   };
 
   return (
-    <div className="">
-
+    <div className="beat-list-container">
       {filteredBeats.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredBeats.map((beat) => (
             <div
               key={beat.id}
-              className="rounded-lg overflow-hidden transition-shadow cursor-pointer group"
-              onClick={() => handleBeatClick(beat.id)}
+              className="beat-item relative rounded-lg overflow-hidden transition-shadow cursor-pointer group"
+              onClick={() => handleBeatClick(beat.id)} // Navigation on image click
             >
-              <div className="relative w-full h-48 bg-gray-600 transform transition-transform duration-300 ease-in-out group-hover:scale-105">
-                <img
-                  src={`http://localhost:3001/${beat.image}`}
-                  alt={beat.title}
-                  className="w-full h-full object-cover"
-                />
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent triggering the click event for the parent
-                    handlePlayTrack(beat);
-                  }}
-                  className="absolute inset-0 flex justify-center items-center text-white bg-black bg-opacity-0 hover:bg-opacity-50 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-                >
-                  <FaPlay size={36} />
-                </button>
-              </div>
-
-              <div className="p-2">
-                <h3 className="text-lg font-semibold text-white truncate">{beat.title}</h3>
-                <p className="text-sm text-gray-400">{beat.owner.username}</p>
-                <p className="text-md text-blue-400 font-bold">${beat.price}</p>
+              <img
+                src={`http://localhost:3001/${beat.image}`}
+                alt={beat.title}
+                className="beat-image"
+              />
+              <button
+                onClick={(e) => handlePlayTrack(e, beat)} // Play track on button click
+                className="play-button text-cyan-400"
+              >
+                <FaPlay size={36} />
+              </button>
+              <div className="beat-details">
+                <h3 className="text-lg font-semibold truncate">{beat.title}</h3>
+                <p className="text-sm">by {beat.owner.username}</p>
+                <p className="text-md font-bold">${beat.price}</p>
               </div>
             </div>
           ))}

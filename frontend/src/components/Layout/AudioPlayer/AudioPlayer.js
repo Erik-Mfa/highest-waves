@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import ReactPlayer from 'react-player';
 import { FaPlay, FaPause, FaForward, FaBackward } from 'react-icons/fa';
-import ContextAudioPlayer from '../../Layout/ContextAudioPlayer';
+import ContextAudioPlayer from '../ContextAudioPlayer';
 
 const AudioPlayer = () => {
   const { currentTrack, currentTitle, currentCover, isPlaying, togglePlayPause } = useContext(ContextAudioPlayer);

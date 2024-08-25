@@ -1,6 +1,7 @@
 import React from 'react';
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
+import Select from 'react-select';
+import Slider from 'rc-slider'; // Import Slider
+import 'rc-slider/assets/index.css'; // Import default Slider styles
 
 function FilterSidebar({ filters, setFilters, tags, users, tones }) {
   // Handle slider change
@@ -28,11 +29,10 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
   return (
     <div className="p-6 rounded-lg shadow-md h-full" style={{ backgroundColor: '#102D40' }}>
       <div className="sticky top-20">
-        <h2 className="text-2xl font-semibold text-white mb-4">Filters</h2>
-
+        
         {/* Price Filter */}
         <div className="mb-6">
-        <label className="block text-white mb-2">Price</label>
+          <label className="block text-white mb-2">Price</label>
           <div className="flex items-center space-x-2">
             <div className="flex-1">
               <Slider
@@ -62,78 +62,151 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
         {/* BPM Filter */}
         <div className="mb-6">
           <label className="block text-white mb-2">BPM</label>
-          <select
-            className="w-full p-2 bg-gray-700 text-white rounded bg-transparent border border-cyan-500"
-            value={`${filters.bpm.min}-${filters.bpm.max}`}
-            onChange={(e) => {
-              const selectedBpm = bpmOptions.find(option => option.label === e.target.value);
-              setFilters({ ...filters, bpm: selectedBpm ? selectedBpm.value : { min: 1, max: 200 } });
+          <Select
+            options={bpmOptions}
+            value={bpmOptions.find(option => 
+              `${option.value.min}-${option.value.max}` === `${filters.bpm.min}-${filters.bpm.max}`
+            )}
+            onChange={(selectedOption) => {
+              setFilters({ ...filters, bpm: selectedOption ? selectedOption.value : { min: 1, max: 200 } });
             }}
-          >
-          <option value="">Select the BPM value</option>
-          {bpmOptions.map((option) => (
-            <option key={option.label} value={option.label}>
-              {option.label}
-            </option>
-          ))}
-          </select>
+            className="basic-single"
+            classNamePrefix="select"
+            styles={{
+              control: (provided) => ({
+                ...provided,
+                backgroundColor: '#102D40',
+                borderColor: '#0FC2C0',
+                borderRadius: '0.375rem',
+                padding: '10px',
+              }),
+              menu: (provided) => ({
+                ...provided,
+                backgroundColor: '#102D40',
+              }),
+              option: (provided, state) => ({
+                ...provided,
+                backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
+                color: '#ffffff',
+                padding: '10px',
+              }),
+              singleValue: (provided) => ({
+                ...provided,
+                color: '#ffffff',
+              }),
+              placeholder: (provided) => ({
+                ...provided,
+                color: '#ffffff',
+              }),
+            }}
+          />
         </div>
 
-                {/* Tone Filter */}
+        {/* Tone Filter */}
         <div className="mb-6">
           <label className="block text-white mb-2">Tone</label>
-          <select
-            className="w-full p-2 bg-gray-700 text-white rounded bg-transparent border border-cyan-500"
-            value={filters.tone}
-            onChange={(e) => setFilters({ ...filters, tone: e.target.value })}
-          >
-            <option value="">Select a tone</option>
-            {tones.map((tone) => (
-              <option key={tone} value={tone}>{tone}</option>
-            ))}
-          </select>
+          <Select
+            options={tones.map(tone => ({ label: tone, value: tone }))}
+            value={filters.tone ? { label: filters.tone, value: filters.tone } : null}
+            onChange={(selectedOption) => setFilters({ ...filters, tone: selectedOption ? selectedOption.value : '' })}
+            className="basic-single"
+            classNamePrefix="select"
+            styles={{
+              control: (provided) => ({
+                ...provided,
+                backgroundColor: '#102D40',
+                borderColor: '#0FC2C0',
+                borderRadius: '0.375rem',
+                padding: '10px',
+              }),
+              menu: (provided) => ({
+                ...provided,
+                backgroundColor: '#102D40',
+              }),
+              option: (provided, state) => ({
+                ...provided,
+                backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
+                color: '#ffffff',
+                padding: '10px',
+              }),
+              singleValue: (provided) => ({
+                ...provided,
+                color: '#ffffff',
+              }),
+              placeholder: (provided) => ({
+                ...provided,
+                color: '#ffffff',
+              }),
+            }}
+          />
         </div>
 
-        {/* Tags Filter */}
-        <div className="mb-6">
-          <label className="block text-white mb-2">Tags</label>
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <button
-                key={tag.id}
-                className={`px-3 py-1 rounded-full border border-cyan-500 ${
-                  filters.tag.includes(tag.id)
-                    ? 'bg-blue-500 border-blue-500 text-white'
-                    : 'border-gray-500 text-gray-300'
-                }`}
-                onClick={() => {
-                  setFilters({
-                    ...filters,
-                    tag: filters.tag.includes(tag.id)
-                      ? filters.tag.filter((id) => id !== tag.id)
-                      : [...filters.tag, tag.id]
-                  });
-                }}
-              >
-                {tag.name}
-              </button>
-            ))}
-          </div>
-        </div>
+{/* Tags Filter */}
+<div className="mb-6">
+  <label className="block text-white mb-2 font-semibold">Tags</label>
+  <div className="flex flex-wrap gap-2">
+    {tags.map((tag) => (
+      <button
+        key={tag.id}
+        className={`px-3 py-1 rounded-full border border-sky-500 transition-transform transform duration-300 ease-in-out ${
+          filters.tag.includes(tag.id)
+            ? 'bg-blue-500 border-blue-500 text-white hover:scale-105'
+            : 'border-gray-500 text-gray-300 hover:scale-105'
+        }`}
+        onClick={() => {
+          setFilters({
+            ...filters,
+            tag: filters.tag.includes(tag.id)
+              ? filters.tag.filter((id) => id !== tag.id)
+              : [...filters.tag, tag.id]
+          });
+        }}
+      >
+        {tag.name}
+      </button>
+    ))}
+  </div>
+</div>
+
+
 
         {/* User Filter */}
         <div className="mb-8">
           <label className="block text-white mb-2">Producer</label>
-          <select
-            className="w-full p-2 bg-transparent border border-cyan-500 text-white rounded"
-            value={filters.user}
-            onChange={(e) => setFilters({ ...filters, user: e.target.value })}
-          >
-            <option value="">All Producers</option>
-            {users.map((user) => (
-              <option key={user} value={user}>{user}</option>
-            ))}
-          </select>
+          <Select
+            options={users.map(user => ({ label: user, value: user }))}
+            value={filters.user ? { label: filters.user, value: filters.user } : null}
+            onChange={(selectedOption) => setFilters({ ...filters, user: selectedOption ? selectedOption.value : '' })}
+            className="basic-single"
+            classNamePrefix="select"
+            styles={{
+              control: (provided) => ({
+                ...provided,
+                backgroundColor: '#102D40',
+                borderColor: '#0FC2C0',
+                borderRadius: '0.375rem',
+                padding: '10px',
+              }),
+              menu: (provided) => ({
+                ...provided,
+                backgroundColor: '#102D40',
+              }),
+              option: (provided, state) => ({
+                ...provided,
+                backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
+                color: '#ffffff',
+                padding: '10px',
+              }),
+              singleValue: (provided) => ({
+                ...provided,
+                color: '#ffffff',
+              }),
+              placeholder: (provided) => ({
+                ...provided,
+                color: '#ffffff',
+              }),
+            }}
+          />
         </div>
 
         {/* Reset Filters Button */}

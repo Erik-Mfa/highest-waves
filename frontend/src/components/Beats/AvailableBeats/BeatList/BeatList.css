@@ -1,0 +1,66 @@
+.beat-list-container {
+    /* Add general styles for the container if needed */
+  }
+  
+  .beat-item {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-bottom: 100%; /* Creates a square aspect ratio */
+    background-color: #333; /* Optional: Background color for better visibility */
+    transition: transform 0.3s ease; /* Smooth scaling effect */
+  }
+  
+  .beat-item:hover {
+    transform: scale(1.05); /* Slightly increase the size of the beat item on hover */
+  }
+  
+  .beat-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  
+  .play-button {
+    position: absolute;
+    /* color: rgb(91, 209, 215); */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10; /* Ensure the play button is above the image */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease;
+  }
+  
+  .beat-item:hover .play-button {
+    opacity: 1; /* Show play button on hover */
+  }
+  
+  .beat-item:hover .beat-image {
+    opacity: 0.6; /* Darken the image on hover */
+  }
+  
+  .beat-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for text */
+    color: white;
+    box-sizing: border-box;
+    transition: opacity 0.3s ease; /* Smooth transition for hiding details */
+  }
+  
+  .beat-item:hover .beat-details {
+    opacity: 0; /* Hide details on hover */
+  }
+  
