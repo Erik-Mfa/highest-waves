@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getCarts, deleteCarts } from '../../services/endpoints/carts';
-import { saveOrder } from '../../services/endpoints/orders';
+import { getCarts, deleteCarts } from '../../services/api/carts';
+import { saveOrder } from '../../services/api/orders';
 
 function PurchaseCart({ user }) {
   const [cartItems, setCartItems] = useState([]);

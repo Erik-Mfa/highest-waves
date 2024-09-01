@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { isAuthenticated } from '../../../services/endpoints/auth';
-import { getBeatById } from '../../../services/endpoints/beats';
-import { addToCart } from '../../../services/endpoints/carts';
-import { FaPlay } from 'react-icons/fa';
-import ContextAudioPlayer from '../../Layout/ContextAudioPlayer';
+import { useDispatch, useSelector } from 'react-redux';
+import { isAuthenticated } from '../../../services/api/auth';
+import { getBeatById } from '../../../services/api/beats';
+import { addToCart } from '../../../services/api/carts';
+import { FaPlay } from 'react-icons/fa'
+import { setCurrentTrack, setCurrentTitle, setCurrentCover, togglePlayPause } from '../../../store/audioPlayerSlice'; // Import the actions from Redux slice
 
 function BeatDetails() { 
   const [beat, setBeat] = useState(null);
@@ -12,7 +13,8 @@ function BeatDetails() {
   const [loading, setLoading] = useState(true);
 
   const { id: beatId } = useParams();
-  const { playTrack } = useContext(ContextAudioPlayer);
+  const dispatch = useDispatch();
+  const isPlaying = useSelector(state => state.audioPlayer.isPlaying); // Track play/pause state
 
   useEffect(() => {
     const fetchBeatDetails = async () => {
@@ -21,6 +23,16 @@ function BeatDetails() {
         const beatData = await getBeatById(beatId);
         setBeat(beatData);
         setUser(userToken);
+
+        // Set playback details as soon as the beat details are set
+        if (beatData) {
+          dispatch(setCurrentTrack(`http://localhost:3001/${beatData.audioURL}`));
+          dispatch(setCurrentTitle(beatData.title));
+          dispatch(setCurrentCover(`http://localhost:3001/${beatData.image}`));
+          if (!isPlaying) {
+            dispatch(togglePlayPause()); // Start playback if not already playing
+          }
+        }
       } catch (error) {
         console.error('Error fetching beat details:', error);
       } finally {
@@ -29,7 +41,7 @@ function BeatDetails() {
     };
 
     fetchBeatDetails();
-  }, [beatId]);
+  }, [beatId, dispatch, isPlaying]);
 
   const handleAddToCart = async () => {
     if (!user) {
@@ -47,7 +59,13 @@ function BeatDetails() {
   };
 
   const handlePlayTrack = () => {
-    playTrack(`http://localhost:3001/${beat.audioURL}`, beat.title, `http://localhost:3001/${beat.image}`);
+    // Set playback details and start playing when image is clicked
+    dispatch(setCurrentTrack(`http://localhost:3001/${beat.audioURL}`));
+    dispatch(setCurrentTitle(beat.title));
+    dispatch(setCurrentCover(`http://localhost:3001/${beat.image}`));
+    if (!isPlaying) {
+      dispatch(togglePlayPause()); // Start playback if not already playing
+    }
   };
 
   if (loading) return <div className="text-white text-center py-4">Loading...</div>;
@@ -58,19 +76,16 @@ function BeatDetails() {
       <div className="flex flex-col lg:flex-row items-start bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
         {/* Image Section */}
         <div className="flex-shrink-0 lg:w-1/2 lg:max-w-lg mb-4 lg:mb-0 lg:mr-8 relative">
-          <div className="relative w-full h-[300px] lg:h-[400px] bg-gray-800 rounded-lg overflow-hidden">
+          <div className="relative w-full h-[300px] lg:h-[400px] bg-gray-800 rounded-lg overflow-hidden cursor-pointer" onClick={handlePlayTrack}>
             <img
               src={`http://localhost:3001/${beat.image}`}
               alt={beat.title}
               className="w-full h-full object-cover"
               style={{ aspectRatio: '1/1' }}
             />
-            <button
-              onClick={handlePlayTrack}
-              className="absolute inset-0 flex justify-center items-center text-white bg-black bg-opacity-50 hover:bg-opacity-70"
-            >
+            <div className="absolute inset-0 flex justify-center items-center text-white bg-black bg-opacity-50">
               <FaPlay size={48} />
-            </button>
+            </div>
           </div>
         </div>
   

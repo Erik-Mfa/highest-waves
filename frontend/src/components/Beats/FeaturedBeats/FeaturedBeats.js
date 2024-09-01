@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
-import './FeaturedBeats.css';
-import { getBeats } from '../../../services/endpoints/beats';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ContextAudioPlayer from '../../Layout/ContextAudioPlayer';
+import { useDispatch } from 'react-redux';
+import { setCurrentTrack, setCurrentTitle, setCurrentCover, playTrack } from '../../../store/audioPlayerSlice';
+import { setPlaylist, setCurrentIndex } from '../../../store/playlistSlice';
+import { getBeats } from '../../../services/api/beats';
 import { FaPlay } from 'react-icons/fa';
+import './FeaturedBeats.css';
 
 function FeaturedBeats() {
   const [featuredBeats, setFeaturedBeats] = useState([]);
   const navigate = useNavigate();
-  const { playTrack } = useContext(ContextAudioPlayer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchFeaturedBeats = async () => {
@@ -30,7 +32,18 @@ function FeaturedBeats() {
 
   const handlePlayTrack = (e, beat) => {
     e.stopPropagation(); // Prevent navigating to BeatDetail
-    playTrack(`http://localhost:3001/${beat.audioURL}`, beat.title, `http://localhost:3001/${beat.image}`);
+
+    // Set the playlist with all featured beats
+    dispatch(setPlaylist(featuredBeats));
+
+    // Find the index of the selected beat
+    const trackIndex = featuredBeats.findIndex((b) => b.id === beat.id);
+    dispatch(setCurrentIndex(trackIndex));
+
+    // Set the current track details
+    dispatch(setCurrentTrack(`http://localhost:3001/${beat.audioURL}`));
+    dispatch(setCurrentTitle(beat.title));
+    dispatch(setCurrentCover(`http://localhost:3001/${beat.image}`));
   };
 
   return (

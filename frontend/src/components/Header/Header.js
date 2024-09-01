@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaUserCircle, FaShoppingCart } from 'react-icons/fa'; 
-import { logout } from '../../services/endpoints/auth';
+import { logout } from '../../services/api/auth';
 import PurchaseCart from '../PurchaseCart/PurchaseCart'; // <-- Add this import
 import './Header.css'; 
 

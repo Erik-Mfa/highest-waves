@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import {store} from './store/store'; // Make sure this path is correct
 import ProtectedRoute from './services/protectedRoute';
 import Layout from './components/Layout/Layout';
-import { AudioPlayerProvider } from './components/Layout/ContextAudioPlayer';
 // PAGES
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -14,34 +15,15 @@ import CreateTag from './components/Admin/CreateTag/CreateTag';
 import UserDashboard from './components/Admin/UserDashboard/UserDashboard';
 
 function App() {
-  // Define the playTrack function
-  const playTrack = (trackUrl) => {
-    console.log("Setting track URL:", trackUrl); // Check what track URL is being set
-
-    if (!trackUrl) {
-      console.error('No track URL provided');
-      return;
-    }
-
-    const audio = new Audio(trackUrl);
-    audio.addEventListener('error', (event) => {
-      console.error('Error playing track:', event);
-    });
-    audio.play().catch(error => console.error('Error playing track:', error));
-  };
-
   return (
-    <AudioPlayerProvider>
+    <Provider store={store}>
       <Router>
         <div className="App">
-          <Layout playTrack={playTrack}>
+          <Layout>
             <main>
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route 
-                  path="/beats/:id" 
-                  element={<BeatDetailsPage playTrack={playTrack} />} 
-                />
+                <Route path="/beats/:id" element={<BeatDetailsPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route 
                   path="/admin" 
@@ -51,7 +33,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 >
-                  <Route path="user-dashboard" element={<UserDashboard/>}/>
+                  <Route path="user-dashboard" element={<UserDashboard />} />
                   <Route path="create-beat" element={<CreateBeat />} />
                   <Route path="create-tag" element={<CreateTag />} />
                 </Route>
@@ -61,9 +43,8 @@ function App() {
           </Layout>
         </div>
       </Router>
-    </AudioPlayerProvider>
+    </Provider>
   );
 }
-
 
 export default App;

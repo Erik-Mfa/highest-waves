@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUsers } from '../../../services/endpoints/users'; // Adjust the import path as needed
+import { getUsers } from '../../../services/api/users'; // Adjust the import path as needed
 
 const UserDashboard = () => {
   const [users, setUsers] = useState([]);

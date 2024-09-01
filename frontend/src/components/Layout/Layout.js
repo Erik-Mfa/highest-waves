@@ -1,17 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
-import { isAdmin, isAuthenticated } from '../../services/endpoints/auth';
+import { isAdmin, isAuthenticated } from '../../services/api/auth';
 import PurchaseCart from '../PurchaseCart/PurchaseCart';
-import ContextAudioPlayer from './ContextAudioPlayer';
-import AudioPlayer from './AudioPlayer/AudioPlayer'; 
+import AudioPlayer from './AudioPlayer/AudioPlayer';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentTrack, togglePlayPause, selectCurrentTrack, selectIsPlaying } from '../../store/audioPlayerSlice'; // Adjust paths as needed
 
 const Layout = ({ children }) => {
   const [showPurchaseCart, setShowPurchaseCart] = useState(false);
   const [admin, setAdmin] = useState(null);
   const [user, setUser] = useState(null);
 
-  const { currentTrack, isPlaying, togglePlayPause } = useContext(ContextAudioPlayer);
-  
+  const dispatch = useDispatch();
+  const currentTrack = useSelector(selectCurrentTrack);
+  const isPlaying = useSelector(selectIsPlaying);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,6 +33,10 @@ const Layout = ({ children }) => {
     fetchData();
   }, []);
 
+  const handlePlayPause = () => {
+    dispatch(togglePlayPause());
+  };
+
   return (
     <>
       <Header 
@@ -46,7 +53,7 @@ const Layout = ({ children }) => {
         <AudioPlayer 
           url={currentTrack} 
           playing={isPlaying} 
-          onPlayPause={togglePlayPause} 
+          onPlayPause={handlePlayPause} 
         />
       )}
     </>

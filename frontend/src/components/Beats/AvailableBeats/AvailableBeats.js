@@ -3,8 +3,8 @@ import BeatList from './BeatList/BeatList';
 import FilterSidebar from './FilterSidebar/FilterSidebar';
 import Loading from '../../Loading/Loading'; // Correctly import Loading
 import './AvailableBeats.css'
-import { getBeats } from '../../../services/endpoints/beats';
-import { getTags } from '../../../services/endpoints/tags';
+import { getBeats } from '../../../services/api/beats';
+import { getTags } from '../../../services/api/tags';
 import { FaBars } from 'react-icons/fa'; // Import the hamburger icon
 
 function AvailableBeats() {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { createBeat } from '../../../services/endpoints/beats';
-import { getTags } from '../../../services/endpoints/tags'; // Import the getTags function
+import { createBeat } from '../../../services/api/beats';
+import { getTags } from '../../../services/api/tags'; // Import the getTags function
 import { FaImage, FaVideo, FaChevronDown } from 'react-icons/fa';
 
 const CreateBeat = () => {

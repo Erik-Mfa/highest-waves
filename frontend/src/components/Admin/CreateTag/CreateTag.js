@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createTag } from '../../../services/endpoints/tags'; // Import your tag creation service
+import { createTag } from '../../../services/api/tags'; // Import your tag creation service
 
 const CreateTag = () => {
   const [tagDetails, setTagDetails] = useState({

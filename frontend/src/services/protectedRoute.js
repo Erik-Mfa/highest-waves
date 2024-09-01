@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { isAdmin, isAuthenticated } from './endpoints/auth';
+import { isAdmin, isAuthenticated } from './api/auth';
 
 export default function ProtectedRoute({ children }) {
   const navigate = useNavigate();
