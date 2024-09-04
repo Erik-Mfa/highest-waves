@@ -47,11 +47,16 @@ function FeaturedBeats() {
   };
 
   return (
-    <div className="bg-w p-20">
+    <div className="bg-w p-20 bg-black relative" style={{ background: 'linear-gradient(to left, #005A5B, #003840)' }}>
       <h2 className="text-3xl font-bold text-center text-white mb-8" style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}>
         Featured Beats
       </h2>
       <div className="relative overflow-hidden marquee">
+        {/* Fade effect div */}
+        <div 
+          className="absolute top-0 right-0 h-full w-1/4 pointer-events-none"
+          
+        ></div>
         <div className="flex marquee-content">
           {featuredBeats.concat(featuredBeats).map((beat, index) => (
             <div 
@@ -81,6 +86,8 @@ function FeaturedBeats() {
       </div>
     </div>
   );
+  
+  
 }
 
 export default FeaturedBeats;

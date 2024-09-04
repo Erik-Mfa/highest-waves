@@ -10,9 +10,9 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage';
 import AdminPage from './pages/AdminPage/AdminPage';
-import CreateBeat from './components/Admin/CreateBeat/CreateBeat';
-import CreateTag from './components/Admin/CreateTag/CreateTag';
-import UserDashboard from './components/Admin/UserDashboard/UserDashboard';
+import ManageBeats from './components/Admin/ManageBeats/ManageBeats';
+import ManageTags from './components/Admin/ManageTags/ManageTags';
+import ManageUsers from './components/Admin/ManageUsers/ManageUsers';
 
 function App() {
   return (
@@ -33,9 +33,9 @@ function App() {
                     </ProtectedRoute>
                   }
                 >
-                  <Route path="user-dashboard" element={<UserDashboard />} />
-                  <Route path="create-beat" element={<CreateBeat />} />
-                  <Route path="create-tag" element={<CreateTag />} />
+                  <Route path="manage-beats" element={<ManageBeats />} />
+                  <Route path="manage-users" element={<ManageUsers />} />
+                  <Route path="manage-tags" element={<ManageTags />} />
                 </Route>
                 <Route path="/register" element={<RegisterPage />} />
               </Routes>

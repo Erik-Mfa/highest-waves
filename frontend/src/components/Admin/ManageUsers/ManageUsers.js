@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers } from '../../../services/api/users'; // Adjust the import path as needed
 
-const UserDashboard = () => {
+const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -44,4 +44,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default ManageUsers;

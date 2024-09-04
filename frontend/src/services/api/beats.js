@@ -4,7 +4,7 @@ import {isAuthenticated} from './auth';
 const beatOwner = await isAuthenticated();
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3001/api/', // Ensure this is correct
+  baseURL: 'http://localhost:3001/api/', 
 });
 
 export const createBeat = async (beatDetails) => {
@@ -17,6 +17,7 @@ export const createBeat = async (beatDetails) => {
         withCredentials: true,
       });
       return response.data;
+      
     } catch (error) {
       console.error("Error creating beat:", error);
       return { success: false, error };
@@ -42,3 +43,19 @@ export const getBeatById = async (beatId) => {
     throw error; // Rethrow the error so it can be handled in the component
   }
 };
+
+export const deleteBeat = async (beatId) => {
+  try {
+    const response = await instance.delete(`/beats/${beatId}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data', 
+      },
+      withCredentials: true,
+    });
+    return { success: true };
+  } catch (error) {
+    console.error('Error deleting beat:', error);
+    return { success: false, error };
+  }
+};
+

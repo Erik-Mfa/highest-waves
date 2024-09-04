@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createTag } from '../../../services/api/tags'; // Import your tag creation service
 
-const CreateTag = () => {
+const ManageTags = () => {
   const [tagDetails, setTagDetails] = useState({
     name: '',
   });
@@ -21,19 +21,19 @@ const CreateTag = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white border border-gray-300 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Add a new tag</h2>
+    <div className="max-w-md mx-auto p-6 bg-gray-800 rounded-lg shadow-lg ">
+      <h2 className="text-2xl font-bold text-center text-white mb-6">Add a new tag</h2>
       <form>
 
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+          <label htmlFor="name" className="block text-sm font-medium text-white">Name</label>
           <input
             type="text"
             id="name"
             placeholder="Enter tag name"
             value={tagDetails.name}
             onChange={(e) => setTagDetails({ ...tagDetails, name: e.target.value })}
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-2 border border-white rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
           />
         </div>
 
@@ -49,4 +49,4 @@ const CreateTag = () => {
   );
 };
 
-export default CreateTag;
+export default ManageTags;

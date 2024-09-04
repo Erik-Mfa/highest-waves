@@ -4,10 +4,10 @@ import { Outlet } from 'react-router-dom';
 
 function AdminPage() {
   return (
-    <div className="flex h-screen bg-gray-900">
-      <AdminSidebar />
-      <div className="flex-1 ml-64 p-6 bg-gray-800">
-        <div className="mx-auto w-full max-w-2xl">
+    <div className="flex flex-col md:flex-row">
+      <AdminSidebar className="hidden md:w-64 w-full" />
+      <div className="flex-1 p-6  overflow-y-auto">
+        <div className="mx-auto w-full max-w-4xl">
           <Outlet />
         </div>
       </div>
