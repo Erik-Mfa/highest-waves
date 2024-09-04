@@ -25,14 +25,7 @@ function BeatDetails() {
         setUser(userToken);
 
         // Set playback details as soon as the beat details are set
-        if (beatData) {
-          dispatch(setCurrentTrack(`http://localhost:3001/${beatData.audioURL}`));
-          dispatch(setCurrentTitle(beatData.title));
-          dispatch(setCurrentCover(`http://localhost:3001/${beatData.image}`));
-          if (!isPlaying) {
-            dispatch(togglePlayPause()); // Start playback if not already playing
-          }
-        }
+        
       } catch (error) {
         console.error('Error fetching beat details:', error);
       } finally {

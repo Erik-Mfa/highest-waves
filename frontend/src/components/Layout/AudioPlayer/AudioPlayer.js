@@ -10,6 +10,7 @@ const AudioPlayer = () => {
   const dispatch = useDispatch();
   const playlist = useSelector(selectPlaylist);
   const currentIndex = useSelector(selectCurrentTrackIndex);
+  
   const { currentTrack, currentTitle, currentCover, isPlaying, isRepeating, volume } = useSelector(state => state.audioPlayer);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
