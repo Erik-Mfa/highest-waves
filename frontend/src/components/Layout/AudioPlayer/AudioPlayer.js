@@ -1,30 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
-import { FaPlay, FaPause, FaForward, FaBackward, FaRedo, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
-import { setCurrentTrack, setCurrentTitle, setCurrentCover, togglePlayPause, setIsRepeating, setVolume } from '../../../store/audioPlayerSlice';
+import { FaPlay, FaPause, FaForward, FaBackward, FaRedo, FaVolumeUp, FaVolumeMute, FaRandom } from 'react-icons/fa'; // Added FaRandom
+import { setCurrentTrack, setCurrentTitle, setCurrentCover, togglePlayPause, setIsRepeating, setVolume, setIsShuffling } from '../../../store/audioPlayerSlice';
 import { selectPlaylist, selectCurrentTrackIndex, setCurrentIndex } from '../../../store/playlistSlice';
 
+// Add setIsShuffling and isShuffling to your audioPlayerSlice
 const AudioPlayer = () => {
   const playerRef = useRef(null);
   const dispatch = useDispatch();
   const playlist = useSelector(selectPlaylist);
   const currentIndex = useSelector(selectCurrentTrackIndex);
-  
-  const { currentTrack, currentTitle, currentCover, isPlaying, isRepeating, volume } = useSelector(state => state.audioPlayer);
+  const { currentTrack, currentTitle, currentCover, isPlaying, isRepeating, volume, isShuffling } = useSelector(state => state.audioPlayer); // Added isShuffling to selector
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isSeeking, setIsSeeking] = useState(false);
 
   useEffect(() => {
     if (currentTrack) {
       dispatch(togglePlayPause(true)); // Ensure playing when the track is loaded
-    }
+    } 
   }, [currentTrack]);
 
   useEffect(() => {
     const updateProgress = () => {
-      if (playerRef.current && isPlaying && !isSeeking) {
+      if (playerRef.current && isPlaying ) {
         handleProgress({
           played: playerRef.current.getCurrentTime() / playerRef.current.getDuration()
         });
@@ -36,7 +35,7 @@ const AudioPlayer = () => {
       requestAnimationFrame(updateProgress);
     }
     return () => cancelAnimationFrame(updateProgress);
-  }, [isPlaying, isSeeking]);
+  }, [isPlaying]);
 
   useEffect(() => {
     if (playerRef.current && currentTrack) {
@@ -45,9 +44,7 @@ const AudioPlayer = () => {
   }, [currentTrack]);
 
   const handleProgress = (state) => {
-    if (!isSeeking) {
       setProgress(state.played * 100);
-    }
   };
 
   const handleDuration = (duration) => {
@@ -59,15 +56,7 @@ const AudioPlayer = () => {
     setProgress(newProgress);
     if (playerRef.current) {
       playerRef.current.seekTo(newProgress / 100);
-    }
-  };
-
-  const handleSeekStart = () => {
-    setIsSeeking(true);
-  };
-
-  const handleSeekEnd = () => {
-    setIsSeeking(false);
+    } 
   };
 
   const handleVolumeChange = (event) => {
@@ -86,8 +75,18 @@ const AudioPlayer = () => {
     dispatch(setIsRepeating(!isRepeating));
   };
 
+  const handleShuffleToggle = () => {
+    dispatch(setIsShuffling(!isShuffling)); // Toggle shuffle mode
+  };
+
   const handleNext = () => {
-    const nextIndex = (currentIndex + 1) % playlist.length;
+    let nextIndex;
+    if (isShuffling) {
+      nextIndex = Math.floor(Math.random() * playlist.length); // Pick a random track if shuffle is enabled
+    } else {
+      nextIndex = (currentIndex + 1) % playlist.length; // Normal sequential behavior
+    }
+
     const nextTrackData = playlist[nextIndex];
     if (nextTrackData) {
       const nextTrackURL = `http://localhost:3001/${nextTrackData.audioURL}`;
@@ -115,17 +114,15 @@ const AudioPlayer = () => {
   };
 
   const handleTrackEnd = () => {
-    if (isRepeating) {
-      if (playerRef.current) {
-        playerRef.current.seekTo(0);
-        dispatch(togglePlayPause(true)); // Force the track to play again
-      }
-    } else {
+    if(isRepeating){
+      playerRef.current.seekTo(0);
+    }else{
       handleNext();
     }
   };
 
   const formatTime = (seconds) => {
+    if (!seconds || isNaN(seconds)) return '0:00';
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
@@ -159,8 +156,17 @@ const AudioPlayer = () => {
           <h3 className="text-sm font-semibold ml-4">{currentTitle}</h3>
         </div>
 
+
+
         <div className="flex-grow flex items-center justify-center absolute inset-x-0">
           <div className="flex space-x-4">
+            <button 
+              onClick={handleShuffleToggle} 
+              className={`text-gray-400 hover:text-white ${isShuffling ? 'text-green-400' : 'text-gray-400'}`}
+            >
+              <FaRandom size={20} /> {/* Shuffle button */}
+            </button>
+
             <button 
               onClick={handlePrevious}
               className="text-gray-400 hover:text-white"
@@ -217,9 +223,7 @@ const AudioPlayer = () => {
           max="100" 
           step="0.1" 
           value={isFinite(progress) ? progress : 0} 
-          onMouseDown={handleSeekStart}
           onChange={handleSeek} 
-          onMouseUp={handleSeekEnd}
           className="w-full"
         />
         <div className="flex justify-between text-xs text-gray-400 mt-1">

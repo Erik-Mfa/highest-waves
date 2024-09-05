@@ -7,6 +7,7 @@ const initialState = {
   isPlaying: false,
   isRepeating: false,
   volume: 0.5,
+  isShuffling: false, // Add shuffle state
 };
 
 const audioPlayerSlice = createSlice({
@@ -22,8 +23,8 @@ const audioPlayerSlice = createSlice({
     setCurrentCover: (state, action) => {
       state.currentCover = action.payload;
     },
-    togglePlayPause: (state) => {
-      state.isPlaying = !state.isPlaying;
+    togglePlayPause: (state, action) => {
+      state.isPlaying = action.payload ?? !state.isPlaying;
     },
     setIsRepeating: (state, action) => {
       state.isRepeating = action.payload;
@@ -31,12 +32,23 @@ const audioPlayerSlice = createSlice({
     setVolume: (state, action) => {
       state.volume = action.payload;
     },
+    setIsShuffling: (state, action) => { // Define setIsShuffling reducer
+      state.isShuffling = action.payload;
+    },
   },
 });
 
-export const { setCurrentTrack, setCurrentTitle, setCurrentCover, togglePlayPause, setIsRepeating, setVolume } = audioPlayerSlice.actions;
+export const {
+  setCurrentTrack,
+  setCurrentTitle,
+  setCurrentCover,
+  togglePlayPause,
+  setIsRepeating,
+  setVolume,
+  setIsShuffling, // Export setIsShuffling
+} = audioPlayerSlice.actions;
 
 export const selectCurrentTrack = (state) => state.audioPlayer.currentTrack;
 export const selectIsPlaying = (state) => state.audioPlayer.isPlaying;
 
-export default audioPlayerSlice.reducer;
+export default audioPlayerSlice.reducer; // Export the reducer as default
