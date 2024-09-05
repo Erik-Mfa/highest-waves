@@ -278,7 +278,7 @@ const ManageBeats = () => {
             </div>
           </div>
           <button
-              onClick={() => handleDeleteBeat(beat._id)}
+              onClick={() => handleDeleteBeat(beat.id)}
               className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-transform transform hover:scale-105"
             >
               <FaTrash />
