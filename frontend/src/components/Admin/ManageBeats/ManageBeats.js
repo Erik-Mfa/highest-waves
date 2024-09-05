@@ -24,13 +24,34 @@ const ManageBeats = () => {
   const [loading, setLoading] = useState(false); // Add loading state
   const [imageName, setImageName] = useState('No file chosen'); // State for image name
   const [audioName, setAudioName] = useState('No file chosen'); // State for audio name
+  const [validationErrors, setValidationErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(''); // State for success message
+  const [deletedBeatId, setDeletedBeatId] = useState(null); // State for deleted beat ID
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!beatDetails.title) errors.title = 'Title is required';
+    if (!beatDetails.description) errors.description = 'Description is required';
+    if (!beatDetails.price) errors.price = 'Price is required';
+    if (!beatDetails.bpm) errors.bpm = 'BPM is required';
+    if (!beatDetails.tone) errors.tone = 'Tone is required';
+    if (!beatDetails.image) errors.image = 'Image is required';
+    if (!beatDetails.audioURL) errors.audioURL = 'Audio file is required';
+
+    setValidationErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  };
 
   const handleCreateBeat = async () => {
+    if (!validateForm()) return; // Prevent submission if there are validation errors
+
     setLoading(true);
     try {
       const response = await createBeat(beatDetails);
       if (response.success) {
-        fetchBeats();
+        setSuccessMessage('Beat created successfully!');
         setBeatDetails({
           title: '',
           description: '',
@@ -43,6 +64,8 @@ const ManageBeats = () => {
           tags: [],
         });
         setIsFormDropdownOpen(false);
+        fetchBeats();
+        setTimeout(() => setSuccessMessage(''), 3000); // Fade out message after 3 seconds
       } else {
         console.error('Failed to create beat');
       }
@@ -57,7 +80,8 @@ const ManageBeats = () => {
     try {
       const response = await deleteBeat(beatId);
       if (response.success) {
-        setBeats(beats.filter((beat) => beat._id !== beatId)); 
+        setDeletedBeatId(beatId);
+        setBeats(beats.filter((beat) => beat.id !== beatId)); 
         fetchBeats();
       } else {
         console.error('Failed to delete beat');
@@ -126,22 +150,29 @@ const ManageBeats = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
+    <div className="p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
       {loading && <Loading />} {/* Show loading component if loading */}
 
-      <div className="mb-4">
+      {/* Success Message */}
+      {successMessage && (
+        <div className="mb-4 px-4 py-2 text-white bg-green-600 rounded-md shadow-md transition-opacity duration-300 ease-in-out">
+          {successMessage}
+        </div>
+      )}
+
+      <div className="mb-4 mx-10">
         <button
           onClick={toggleFormDropdown}
           className="w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
         >
-          Add Beat
+          ADD A NEW BEAT
         </button>
       </div>
 
       {isFormDropdownOpen && (
-        <form className="space-y-4 mb-4">
-          {/* Form fields */}
-          <div className="mb-4">
+        <form className="space-y-4 mb-4 border border-gray-600 p-4 rounded-lg bg-gray-800">
+          {/* Title */}
+          <div className="mb-4 mx-10">
             <label htmlFor="title" className="block text-sm font-medium text-white">
               Title
             </label>
@@ -151,11 +182,13 @@ const ManageBeats = () => {
               placeholder="Enter beat title"
               value={beatDetails.title}
               onChange={(e) => setBeatDetails({ ...beatDetails, title: e.target.value })}
-              className="mt-1 block w-full px-4 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white"
+              className={`mt-1 block w-full px-4 py-2 border ${validationErrors.title ? 'border-red-500' : 'border-gray-600'} rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white transform transition-transform duration-300 hover:scale-105`}
             />
+            {validationErrors.title && <p className="text-red-500 text-sm">{validationErrors.title}</p>}
           </div>
 
-          <div className="mb-4">
+          {/* Description */}
+          <div className="mb-4 mx-10">
             <label htmlFor="description" className="block text-sm font-medium text-white">
               Description
             </label>
@@ -164,11 +197,13 @@ const ManageBeats = () => {
               placeholder="Enter beat description"
               value={beatDetails.description}
               onChange={(e) => setBeatDetails({ ...beatDetails, description: e.target.value })}
-              className="mt-1 block w-full px-4 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white"
+              className={`mt-1 block w-full px-4 py-2 border ${validationErrors.description ? 'border-red-500' : 'border-gray-600'} rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white transform transition-transform duration-300 hover:scale-105`}
             />
+            {validationErrors.description && <p className="text-red-500 text-sm">{validationErrors.description}</p>}
           </div>
 
-          <div className="mb-4">
+          {/* Price */}
+          <div className="mb-4 mx-10">
             <label htmlFor="price" className="block text-sm font-medium text-white">
               Price
             </label>
@@ -178,79 +213,115 @@ const ManageBeats = () => {
               placeholder="Enter beat price"
               value={beatDetails.price}
               onChange={(e) => setBeatDetails({ ...beatDetails, price: e.target.value })}
-              className="mt-1 block w-full px-4 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white"
+              className={`mt-1 block w-full px-4 py-2 border ${validationErrors.price ? 'border-red-500' : 'border-gray-600'} rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white transform transition-transform duration-300 hover:scale-105`}
             />
+            {validationErrors.price && <p className="text-red-500 text-sm">{validationErrors.price}</p>}
           </div>
 
-          <div className="mb-4">
+          {/* BPM */}
+          <div className="mb-4 mx-10">
             <label htmlFor="bpm" className="block text-sm font-medium text-white">
               BPM
             </label>
             <input
-              type="number"
+              type="text"
               id="bpm"
-              placeholder="Enter beats per minute"
+              placeholder="Enter BPM"
               value={beatDetails.bpm}
               onChange={(e) => setBeatDetails({ ...beatDetails, bpm: e.target.value })}
-              className="mt-1 block w-full px-4 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white"
+              className={`mt-1 block w-full px-4 py-2 border ${validationErrors.bpm ? 'border-red-500' : 'border-gray-600'} rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white transform transition-transform duration-300 hover:scale-105`}
             />
+            {validationErrors.bpm && <p className="text-red-500 text-sm">{validationErrors.bpm}</p>}
           </div>
 
-          <div className="mb-4">
+          {/* Tone */}
+          <div className="mb-4 mx-10">
             <label htmlFor="tone" className="block text-sm font-medium text-white">
               Tone
             </label>
             <input
               type="text"
               id="tone"
-              placeholder="Enter beat tone"
+              placeholder="Enter tone"
               value={beatDetails.tone}
               onChange={(e) => setBeatDetails({ ...beatDetails, tone: e.target.value })}
-              className="mt-1 block w-full px-4 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white"
+              className={`mt-1 block w-full px-4 py-2 border ${validationErrors.tone ? 'border-red-500' : 'border-gray-600'} rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white transform transition-transform duration-300 hover:scale-105`}
             />
+            {validationErrors.tone && <p className="text-red-500 text-sm">{validationErrors.tone}</p>}
           </div>
 
-          <div className="mb-4">
-            <div className="relative">
-              <input
-                type="file"
-                id="image"
-                onChange={handleImageChange}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              />
-              <button
-                type="button"
-                className="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white flex items-center justify-center hover:bg-gray-600 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
-              >
-                <i className="text-xl">
-                  <FaImage />
-                </i>
-                <span className="ml-2">{imageName}</span>
-              </button>
+          <div className="mb-4 mx-10">
+            <label htmlFor="image" className="block text-sm font-medium text-white">
+              Image
+            </label>
+            <div className="flex items-center">
+              <label className="flex items-center px-3 py-2 bg-gray-700 rounded-md shadow-sm cursor-pointer hover:bg-gray-600">
+                <FaImage className="mr-2" />
+                <span>{imageName}</span>
+                <input
+                  type="file"
+                  id="image"
+                  onChange={handleImageChange}
+                  className="hidden"
+                  accept="image/*"
+                />
+              </label>
             </div>
+            {validationErrors.image && <p className="text-red-500 text-sm">{validationErrors.image}</p>}
           </div>
 
-          <div className="mb-4">
-            <div className="relative">
-              <input
-                type="file"
-                id="audioURL"
-                onChange={handleAudioChange}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              />
-              <button
-                type="button"
-                className="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white flex items-center justify-center hover:bg-gray-600 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
-              >
-                <i className="text-xl">
-                  <FaVideo />
-                </i>
-                <span className="ml-2">{audioName}</span>
-              </button>
+           <div className="mb-4 mx-10">
+            <label htmlFor="audioURL" className="block text-sm font-medium text-white">
+              Audio File
+            </label>
+            <div className="flex items-center">
+              <label className="flex items-center px-3 py-2 bg-gray-700 rounded-md shadow-sm cursor-pointer hover:bg-gray-600">
+                <FaVideo className="mr-2" />
+                <span>{audioName}</span>
+                <input
+                  type="file"
+                  id="audioURL"
+                  onChange={handleAudioChange}
+                  className="hidden"
+                  accept="audio/*"
+                />
+              </label>
             </div>
+            {validationErrors.audioURL && <p className="text-red-500 text-sm">{validationErrors.audioURL}</p>}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 mx-10">
+            <label htmlFor="tags" className="block text-sm font-medium text-white">
+              Tags
+            </label>
+            <button
+              type="button" // Make sure the button is not a submit button
+              onClick={(e) => {
+                e.preventDefault(); // Prevent form submission
+                toggleTagsDropdown();
+              }}
+              className="mt-1 block w-full px-4 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white flex justify-between items-center"
+            >
+              Select Tags <FaChevronDown />
+            </button>
+            {isTagsDropdownOpen && (
+              <ul className="bg-gray-700 rounded-md shadow-md py-2 mt-2 max-h-48 overflow-y-auto">
+                {availableTags.map((tag) => (
+                  <li
+                    key={tag.id}
+                    className={`cursor-pointer px-4 py-2 hover:bg-gray-600 ${
+                      beatDetails.tags.includes(tag.id) ? 'bg-cyan-700' : ''
+                    }`}
+                    onClick={() => handleTagSelect(tag.id)}
+                  >
+                    {tag.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <div className="mb-4 mx-10">
             <button
               type="button"
               onClick={handleCreateBeat}
@@ -262,31 +333,35 @@ const ManageBeats = () => {
         </form>
       )}
 
-    <ul className="space-y-4">
-      {beats.map((beat) => (
-        <li key={beat.id} className="bg-gray-700 p-4 rounded-md shadow-lg flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <img 
-              src={`http://localhost:3001/${beat.image}`} 
-              alt="Cover Art" 
-              className="w-16 h-16 rounded-md object-cover"
+      {/* Beat List */}
+      <div className="mx-10">
+        {beats.map((beat) => (
+          <div
+            key={beat.id}
+            className="flex items-center justify-between mb-4 p-4 border border-gray-600 rounded-lg bg-gray-800"
+          >
+            <img
+              src={`http://localhost:3001/${beat.image}`}
+              alt="Cover Art"
+              className="w-20 h-20 rounded-md object-cover mr-4"
             />
-            <div>
-              <h3 className="text-lg font-bold text-white">{beat.title}</h3>
-              <p className="text-sm text-gray-300">{beat.description}</p>
-              <h3 className="text-md text-gray-200">{beat.owner.username}</h3>
+            <div className="flex-grow">
+              <h3 className="text-md font-semibold text-white">{beat.title}</h3>
+              <p className="text-sm text-gray-400">Description: {beat.description}</p>
+              <p className="text-sm text-gray-400">Price: ${beat.price}</p>
+              <p className="text-sm text-gray-400">BPM: {beat.bpm}</p>
+              <p className="text-sm text-gray-400">Tone: {beat.tone}</p>
             </div>
-          </div>
-          <button
+            <button
               onClick={() => handleDeleteBeat(beat.id)}
-              className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-transform transform hover:scale-105"
+              className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
             >
-              <FaTrash />
+              <FaTrash className="text-lg" />
             </button>
-        </li>
-      ))}
-    </ul>
-      
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
