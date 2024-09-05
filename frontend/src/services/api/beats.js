@@ -59,3 +59,18 @@ export const deleteBeat = async (beatId) => {
   }
 };
 
+export const updateBeat = async (beatId, beatDetails) => {
+  try {
+    beatDetails.owner = beatOwner.userId; // Ensure the owner is set
+    const response = await instance.put(`/beats/${beatId}`, beatDetails, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // In case you are updating files
+      },
+      withCredentials: true, // To handle cookies for authentication
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating beat:', error);
+    return { success: false, error }; // Return error information to handle it in the component
+  }
+};

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createBeat, getBeats, deleteBeat } from '../../../services/api/beats';
-import { getTags } from '../../../services/api/tags';
 import { FaImage, FaVideo, FaChevronDown, FaTrash } from 'react-icons/fa';
+import { getTags } from '../../../services/api/tags';
 import Loading from '../../Loading/Loading'; // Import the Loading component
 
 const ManageBeats = () => {
@@ -17,13 +17,15 @@ const ManageBeats = () => {
     tags: [],
   });
 
-  const [availableTags, setAvailableTags] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [beats, setBeats] = useState([]);
   const [isFormDropdownOpen, setIsFormDropdownOpen] = useState(false);
   const [isTagsDropdownOpen, setIsTagsDropdownOpen] = useState(false);
-  const [beats, setBeats] = useState([]);
+
   const [loading, setLoading] = useState(false); // Add loading state
   const [imageName, setImageName] = useState('No file chosen'); // State for image name
   const [audioName, setAudioName] = useState('No file chosen'); // State for audio name
+
   const [validationErrors, setValidationErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState(''); // State for success message
   const [deletedBeatId, setDeletedBeatId] = useState(null); // State for deleted beat ID
@@ -103,7 +105,7 @@ const ManageBeats = () => {
   const fetchTags = async () => {
     try {
       const tags = await getTags();
-      setAvailableTags(tags);
+      setTags(tags);
     } catch (error) {
       console.error('Error fetching tags:', error);
     }
@@ -165,7 +167,7 @@ const ManageBeats = () => {
           onClick={toggleFormDropdown}
           className="w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
         >
-          ADD A NEW BEAT
+          Create Beat
         </button>
       </div>
 
@@ -306,7 +308,7 @@ const ManageBeats = () => {
             </button>
             {isTagsDropdownOpen && (
               <ul className="bg-gray-700 rounded-md shadow-md py-2 mt-2 max-h-48 overflow-y-auto">
-                {availableTags.map((tag) => (
+                {tags.map((tag) => (
                   <li
                     key={tag.id}
                     className={`cursor-pointer px-4 py-2 hover:bg-gray-600 ${

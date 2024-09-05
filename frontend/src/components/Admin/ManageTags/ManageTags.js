@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
-import { createTag } from '../../../services/api/tags'; // Import your tag creation service
+import React, { useState, useEffect } from 'react';
+import { createTag, getTags, deleteTag } from '../../../services/api/tags'; // Import your tag creation and fetching services
+import { FaTrash } from 'react-icons/fa';
 
 const ManageTags = () => {
-  const [tagDetails, setTagDetails] = useState({
-    name: '',
-  });
+  const [tagDetails, setTagDetails] = useState({ name: '' });
+  const [tags, setTags] = useState([]);
 
+  // Fetch tags on component load
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const tags = await getTags();
+        setTags(tags);
+      } catch (error) {
+        console.error('Error fetching tags:', error);
+      }
+    };
+    fetchTags();
+  }, []);
+
+  // Create new tag
   const handleCreateTag = async () => {
     try {
       const response = await createTag(tagDetails);
       if (response.success) {
-        console.log("Tag created successfully");
-        alert("Tag created successfully"); // Provide user feedback
+        setTags([...tags, response.data]); // Add the newly created tag to the list
+        setTagDetails({ name: '' }); // Clear input field
+        alert("Tag created successfully");
       } else {
         console.error("Failed to create tag");
       }
@@ -20,11 +35,24 @@ const ManageTags = () => {
     }
   };
 
+  const handleDeleteTag = async (tagId) => {
+    try {
+      const response = await deleteTag(tagId);
+      if (response.success) {
+        setTags(tags.filter((tag) => tag.id !== tagId)); 
+       
+      } else {
+        console.error('Failed to delete Tag');
+      }
+    } catch (error) {
+      console.error('Error deleting Tag:', error);
+    }
+  };
+
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-800 rounded-lg shadow-lg ">
+    <div className="max-w-md mx-auto p-6 bg-gray-800 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center text-white mb-6">Add a new tag</h2>
       <form>
-
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm font-medium text-white">Name</label>
           <input
@@ -45,6 +73,28 @@ const ManageTags = () => {
           Create Tag
         </button>
       </form>
+
+      {/* Display Tags Underneath the Form */}
+      <div className="mt-8">
+        <h3 className="text-xl font-semibold text-white mb-4">Existing Tags:</h3>
+        <ul className="space-y-2">
+          {tags.length > 0 ? (
+            tags.map((tag) => (
+              <li key={tag.id} className="flex items-center justify-between bg-gray-700 text-white text-sm py-1 px-2 rounded-md">
+                {tag.name}
+                <button
+                  onClick={() => handleDeleteTag(tag.id)}
+                  className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
+                >
+                  <FaTrash className="text-xs" />
+                </button>
+              </li>
+            ))
+          ) : (
+            <li className="text-white text-sm">No tags available.</li>
+          )}
+        </ul>
+      </div>
     </div>
   );
 };
