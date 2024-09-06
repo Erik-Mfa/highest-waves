@@ -45,7 +45,9 @@ const Layout = ({ children }) => {
         admin={admin}
       />
 
-      <main>{children}</main>
+      <main className="pt-16"> {/* Adjust padding to match header height */}
+        {children}
+      </main>
 
       {showPurchaseCart && <PurchaseCart onClose={() => setShowPurchaseCart(false)} />}
 

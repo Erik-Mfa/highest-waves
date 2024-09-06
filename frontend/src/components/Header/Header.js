@@ -32,8 +32,8 @@ const Header = ({ user, admin }) => {
   };
 
   return (
-    <header className="flex justify-between items-center p-2 px-20">
-      <nav className="flex items-center justify-between w-full">
+    <header className="fixed top-0 left-0 w-full bg-gray-900 text-white z-50">
+      <nav className="flex justify-between items-center p-2 px-20">
         <ul className="flex items-center space-x-8">
           <li>
             <Link to='/'>
@@ -99,7 +99,7 @@ const Header = ({ user, admin }) => {
               <FaShoppingCart size={32} />
             </button>
             {showPurchaseCart && (
-              <div className="absolute right-0 mt-2 w-[32rem] max-h-[70vh] bg-gray-800 border border-gray-600 rounded-lg shadow-lg z-50 overflow-y-auto p-4">
+              <div className="absolute right-0 mt-2 w-[32rem] max-h-[70vh] bg-teal-950 rounded-lg shadow-lg z-50 overflow-y-auto p-4">
                 <PurchaseCart user={user} />
               </div>
             )}

@@ -153,7 +153,7 @@ const ManageBeats = () => {
 
   return (
     <div className="p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
-      {loading && <Loading />} {/* Show loading component if loading */}
+      {loading && <Loading />}
 
       {/* Success Message */}
       {successMessage && (

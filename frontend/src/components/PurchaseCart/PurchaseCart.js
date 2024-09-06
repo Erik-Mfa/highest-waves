@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getCarts, deleteCarts } from '../../services/api/carts';
 import { saveOrder } from '../../services/api/orders';
+import { FaTrash } from 'react-icons/fa';
+import Loading from '../Loading/Loading';
 
 function PurchaseCart({ user }) {
   const [cartItems, setCartItems] = useState([]);
@@ -8,6 +10,8 @@ function PurchaseCart({ user }) {
 
   useEffect(() => {
     const fetchCart = async () => {
+
+      setLoading(true);
       try {
         if (user && user.userId) {
           const cartData = await getCarts(user.userId);
@@ -63,11 +67,15 @@ function PurchaseCart({ user }) {
     }
   };
 
-  if (loading) return <div className="text-white">Loading...</div>;
+  if (loading) return <Loading />; // Replace with the Loading component
+
 
   return (
-    <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg max-w-[24rem] w-full overflow-y-auto">
+
+    <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg w-full">
+
       <h2 className="text-3xl font-bold mb-4">Your Cart</h2>
+      
       {cartItems.length === 0 ? (
         <p className="text-lg">Your cart is empty.</p>
       ) : (
@@ -87,23 +95,25 @@ function PurchaseCart({ user }) {
                 <p className="text-md">${item.beats.price}</p>
               </div>
               <button
-                onClick={() => handleRemoveFromCart(item.id)}  // Pass cart item ID
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
-              >
-                Remove
-              </button>
+              onClick={() => handleRemoveFromCart(item.id)}
+              className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
+            >
+              <FaTrash className="text-lg" />
+            </button>
             </div>
           ))}
           <button
             onClick={handleCheckout}
-            className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded mt-4 w-full transition-colors"
-          >
+            className="w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+            >
             Checkout
           </button>
         </div>
       )}
     </div>
   );
+
+  
 }
 
 export default PurchaseCart;

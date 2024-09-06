@@ -26,6 +26,7 @@ function AvailableBeats() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const [beatsResponse, tagsResponse] = await Promise.all([
           getBeats(), 

@@ -1,6 +1,17 @@
 header {
-    background: linear-gradient(to left, #0a3e3e, #071D26);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  background: linear-gradient(to left, #0a3e3e, #071D26);
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+}
+
+header img {
+  margin: 0 1rem;
+}
+
+header button {
+  margin: 0 0.5rem;
+}
