@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isAuthenticated } from '../../../services/api/auth';
 import { getBeatById } from '../../../services/api/beats';
 import { addToCart } from '../../../services/api/carts';
-import { FaPlay } from 'react-icons/fa'
+import { FaPlay } from 'react-icons/fa';
+import Loading from '../../Loading/Loading'; // Import the Loading component
 import { setCurrentTrack, setCurrentTitle, setCurrentCover, togglePlayPause } from '../../../store/audioPlayerSlice'; // Import the actions from Redux slice
 
-function BeatDetails() { 
+function BeatDetails() {
   const [beat, setBeat] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,9 +24,6 @@ function BeatDetails() {
         const beatData = await getBeatById(beatId);
         setBeat(beatData);
         setUser(userToken);
-
-        // Set playback details as soon as the beat details are set
-        
       } catch (error) {
         console.error('Error fetching beat details:', error);
       } finally {
@@ -61,7 +59,8 @@ function BeatDetails() {
     }
   };
 
-  if (loading) return <div className="text-white text-center py-4">Loading...</div>;
+  if (loading) return <Loading />; // Use your custom loading component
+
   if (!beat) return <div className="text-white text-center py-4">Beat not found</div>;
 
   return (

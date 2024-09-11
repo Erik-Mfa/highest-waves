@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { playTrack, setCurrentTrack, setCurrentTitle, setCurrentCover } from '../../../../store/audioPlayerSlice';
+import { playTrack, setCurrentTrack, setCurrentTitle, setCurrentOwner, setCurrentCover } from '../../../../store/audioPlayerSlice';
 import { setPlaylist, nextTrack, prevTrack, setCurrentIndex } from '../../../../store/playlistSlice';
 import { useNavigate } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
@@ -38,43 +38,59 @@ function BeatList({ beats, filters }) {
     // Set the current track details
     dispatch(setCurrentTrack(`http://localhost:3001/${beat.audioURL}`));
     dispatch(setCurrentTitle(beat.title));
+    dispatch(setCurrentOwner(beat.owner.username));
     dispatch(setCurrentCover(`http://localhost:3001/${beat.image}`));
   };
 
   return (
-    <div className="beat-list-container" style={{ backgroundColor: '#102D40' }}>
+    <div className="relative">
       {filteredBeats.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredBeats.map((beat) => (
-            <div
+              <div
               key={beat.id}
-              className="beat-item relative rounded-lg overflow-hidden transition-shadow cursor-pointer group"
+              className="relative group rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105 w-full"
               onClick={() => handleBeatClick(beat.id)}
-            >
-              <img
-                src={`http://localhost:3001/${beat.image}`}
-                alt={beat.title}
-                className="beat-image"
-              />
-              <button
-                onClick={(e) => handlePlayTrack(e, beat)}
-                className="play-button text-cyan-400"
               >
-                <FaPlay size={36} />
-              </button>
-              <div className="beat-details">
-                <h3 className="text-md font-semibold truncate">{beat.title}</h3>
-                <p className="text-sm">by {beat.owner.username}</p>
-                <p className="text-lg font-bold text-cyan-400">{`$${beat.price}`}</p>
+              {/* Image Container */}
+              <div className="relative">
+                <div className="w-full pt-[100%] relative rounded-lg overflow-hidden">
+                  <img
+                    src={`http://localhost:3001/${beat.image}`}
+                    alt={beat.title}
+                    className="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-60"
+                  />
+                  
+                  {/* Play Button */}
+                  <button
+                    onClick={(e) => handlePlayTrack(e, beat)}
+                    className="absolute top-1/2 left-1/2 mt-2 transform -translate-x-1/2 -translate-y-1/2 p-1.5 rounded-full text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 z-10"
+                  >
+                    <FaPlay size={24} />
+                  </button>
+                  
+                  {/* Black Overlay */}
+                  <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-60 text-white p-2 transition-transform duration-500 ease-out transform translate-y-full group-hover:translate-y-0">
+                    <p className="text-sm">by {beat.owner.username}</p>
+                    <h3 className="">{beat.price}$</h3>
+                  </div>
+                </div>
+              </div>
+
+              {/* Title */}
+              <div className="mt-2 px-2 text-center">
+                <h3 className="text-md text-white font-semibold truncate">{beat.title}</h3>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p>No beats available.</p>
+        <p className="text-white">No beats available.</p>
       )}
     </div>
   );
+  
+  
 }
 
 export default BeatList;

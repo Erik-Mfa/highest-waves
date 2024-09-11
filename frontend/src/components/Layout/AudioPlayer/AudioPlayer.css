@@ -1,86 +1,81 @@
-.audio-player {
-    border: 2px solid red;
-    background-color: lightgray;
-  }
-
   /* Hide the ball indicator */
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  background: transparent; /* Hide the default thumb */
-  width: 0;
-  height: 0;
-}
-
-input[type="range"]::-moz-range-thumb {
-  background: transparent; /* Hide the default thumb for Firefox */
-  width: 0;
-  height: 0;
-}
-
-input[type="range"]::-ms-thumb {
-  background: transparent; /* Hide the default thumb for IE and Edge */
-  width: 0;
-  height: 0;
-}
-
-/* Style the track for the volume control */
-input[type="range"].volume-slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 4px; /* Adjust height as needed */
-  background: #4b5563; /* Track color */
-  border-radius: 5px;
-  outline: none;
-  cursor: pointer;
-}
-
-input[type="range"].volume-slider::-webkit-slider-runnable-track {
-  height: 4px; /* Adjust height as needed */
-  background: #4b5563; /* Track color */
-  border-radius: 5px;
-}
-
-input[type="range"].volume-slider::-moz-range-track {
-  height: 4px; /* Adjust height as needed */
-  background: #4b5563; /* Track color */
-  border-radius: 5px;
-}
-
-input[type="range"].volume-slider::-ms-track {
-  height: 4px; /* Adjust height as needed */
-  background: #4b5563; /* Track color */
-  border-radius: 5px;
-  border-color: transparent; /* Remove border */
-  background-clip: padding-box; /* Fix for IE */
-}
-
-/* Style the track for the progress slider */
-input[type="range"].progress-slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 4px; /* Adjust height as needed */
-  background: #4b5563; /* Track color */
-  border-radius: 5px;
-  outline: none;
-  cursor: pointer;
-}
-
-input[type="range"].progress-slider::-webkit-slider-runnable-track {
-  height: 4px; /* Adjust height as needed */
-  background: #4b5563; /* Track color */
-  border-radius: 5px;
-}
-
-input[type="range"].progress-slider::-moz-range-track {
-  height: 4px; /* Adjust height as needed */
-  background: #4b5563; /* Track color */
-  border-radius: 5px;
-}
-
-input[type="range"].progress-slider::-ms-track {
-  height: 4px; /* Adjust height as needed */
-  background: #4b5563; /* Track color */
-  border-radius: 5px;
-  border-color: transparent; /* Remove border */
-  background-clip: padding-box; /* Fix for IE */
-}
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: transparent; /* Hide the default thumb */
+    width: 0;
+    height: 0;
+  }
+  
+  input[type="range"]::-moz-range-thumb {
+    background: transparent; /* Hide the default thumb for Firefox */
+    width: 0;
+    height: 0;
+  }
+  
+  input[type="range"]::-ms-thumb {
+    background: transparent; /* Hide the default thumb for IE and Edge */
+    width: 0;
+    height: 0;
+  }
+  
+  /* Style the track for the volume control */
+  input[type="range"].volume-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px; /* Adjust height as needed */
+    background: #4b5563; /* Track color */
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  input[type="range"].volume-slider::-webkit-slider-runnable-track {
+    height: 4px; /* Adjust height as needed */
+    background: #4b5563; /* Track color */
+    border-radius: 5px;
+  }
+  
+  input[type="range"].volume-slider::-moz-range-track {
+    height: 4px; /* Adjust height as needed */
+    background: #4b5563; /* Track color */
+    border-radius: 5px;
+  }
+  
+  input[type="range"].volume-slider::-ms-track {
+    height: 4px; /* Adjust height as needed */
+    background: #4b5563; /* Track color */
+    border-radius: 5px;
+    border-color: transparent; /* Remove border */
+    background-clip: padding-box; /* Fix for IE */
+  }
+  
+  /* Style the track for the progress slider */
+  input[type="range"].progress-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px; /* Adjust height as needed */
+    background: #4b5563; /* Track color */
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  input[type="range"].progress-slider::-webkit-slider-runnable-track {
+    height: 4px; /* Adjust height as needed */
+    background: #4b5563; /* Track color */
+    border-radius: 5px;
+  }
+  
+  input[type="range"].progress-slider::-moz-range-track {
+    height: 4px; /* Adjust height as needed */
+    background: #4b5563; /* Track color */
+    border-radius: 5px;
+  }
+  
+  input[type="range"].progress-slider::-ms-track {
+    height: 4px; /* Adjust height as needed */
+    background: #4b5563; /* Track color */
+    border-radius: 5px;
+    border-color: transparent; /* Remove border */
+    background-clip: padding-box; /* Fix for IE */
+  }

@@ -55,37 +55,46 @@ function FeaturedBeats() {
   if (loading) return <Loading />; // Replace with the Loading component
 
   return (
-    <div className="featured-beats-container p-10 relative" style={{ background: 'linear-gradient(to left, #005A5B, #003840)' }}>
-      <h2 className="text-3xl font-bold text-center text-white mb-8" style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}>
+    <div 
+    className="relative bg-gray-950 py-10 border-t-2 border-teal-600 shadow-bottom-lg"
+  >
+      <h2 className="text-2xl font-bold text-center text-white mb-4" style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}>
         Featured Beats
       </h2>
-
-      <div className="marquee-content">
+      
+  <div className="relative overflow-hidden">
+    <div className="marquee-container overflow-hidden featured-beats-container">
+      <div className="marquee-content flex">
         {featuredBeats.concat(featuredBeats).map((beat, index) => (
-          <div 
-            key={`${beat.id}-${index}`} 
-            className="inline-block mr-5 relative group"
-            onClick={() => handleBeatClick(beat.id)} // Navigate on image container click
+          <div
+            key={`${beat.id}-${index}`}
+            className="inline-block mr-5 relative group rounded-lg overflow-hidden"
+            onClick={() => handleBeatClick(beat.id)}
           >
-            <div 
-              className="w-64 h-64 flex items-center justify-center rounded-lg transition-transform transform group hover:scale-105"
+            <div
+              className="w-64 h-64 flex items-center justify-center rounded-lg transition-transform transform group hover:scale-105 relative"
             >
               <img
                 src={`http://localhost:3001/${beat.image}`}
                 alt={beat.title}
-                className="w-full h-full object-cover"
-                style={{ aspectRatio: '1 / 1' }} // Ensures square aspect ratio
+                className="w-full h-full object-cover rounded-lg"
+                style={{ aspectRatio: '1 / 1' }}
               />
               <button
-                onClick={(e) => handlePlayTrack(e, beat)} // Play track on button click
-                className="play-button text-cyan-400"
+                onClick={(e) => handlePlayTrack(e, beat)}
+                className="absolute inset-0 flex items-center justify-center p-2 rounded-full text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
               >
                 <FaPlay size={24} />
               </button>
             </div>
           </div>
         ))}
-      </div>
+
+    </div>
+
+  </div>
+</div>
+
     </div>
   );
 }

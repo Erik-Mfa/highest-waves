@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   currentTrack: null,
   currentTitle: '',
+  currentOwner: null,
   currentCover: '',
   isPlaying: false,
   isRepeating: false,
@@ -23,6 +24,9 @@ const audioPlayerSlice = createSlice({
     setCurrentCover: (state, action) => {
       state.currentCover = action.payload;
     },
+    setCurrentOwner: (state, action) => {
+      state.currentOwner = action.payload;
+    },
     togglePlayPause: (state, action) => {
       state.isPlaying = action.payload ?? !state.isPlaying;
     },
@@ -42,6 +46,7 @@ export const {
   setCurrentTrack,
   setCurrentTitle,
   setCurrentCover,
+  setCurrentOwner,
   togglePlayPause,
   setIsRepeating,
   setVolume,

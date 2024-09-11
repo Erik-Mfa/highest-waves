@@ -9,7 +9,7 @@ function HomePage() {
   return (
     <div className="home-page">
       <Hero />
-      <main style={{backgroundColor: '#102D40'}}>
+      <main className='bg-slate-900'>
         <div id="beats-section">
           <FeaturedBeats />
           <AvailableBeats />

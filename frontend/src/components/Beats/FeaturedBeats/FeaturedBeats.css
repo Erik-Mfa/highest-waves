@@ -18,27 +18,36 @@
 
 .featured-beats-container::before {
   left: 0;
-  background: linear-gradient(to right, rgba(0, 56, 64, 0.9), transparent);
+  background: linear-gradient(to right, rgb(0, 0, 0), transparent);
 }
 
 .featured-beats-container::after {
   right: 0;
-  background: linear-gradient(to left, rgba(0, 56, 64, 0.9), transparent);
+  background: linear-gradient(to left, rgb(0, 0, 0), transparent);
 }
 
-/* Marquee effect */
+.marquee-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
 .marquee-content {
   display: flex;
-  animation: marquee 20s linear infinite;
-  white-space: nowrap;
+  width: calc(100% * 2); /* Adjust based on the number of items to avoid snapping */
+  animation: marquee 80s linear infinite;
+}
+
+.marquee-content > div {
+  flex: 0 0 auto; /* Ensure items do not shrink */
 }
 
 @keyframes marquee {
   0% {
-    transform: translateX(25%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-25%);
+    transform: translateX(-50%); /* Move left by half the container's width */
   }
 }
 
