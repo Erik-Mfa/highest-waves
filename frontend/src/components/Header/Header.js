@@ -45,17 +45,17 @@ const Header = ({ user, admin }) => {
             </Link>
           </li>
           <li className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200">
-            <button onClick={() => handleNavigation('/', 'beats-section')}>
+            <button onClick={() => handleNavigation('/', 'beats-section')} style={{ fontFamily: '"REM"' }}>
               Explore
             </button>
           </li>
           <li className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200">
-            <button onClick={() => handleNavigation('/', 'about-section')}>
+            <button onClick={() => handleNavigation('/', 'about-section')} style={{ fontFamily: '"REM"' }}>
               About
             </button>
           </li>
           {admin && (
-            <li className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200">
+            <li className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200" style={{ fontFamily: '"REM"' }}>
               <Link to="/admin">
                 Admin
               </Link>
@@ -67,7 +67,7 @@ const Header = ({ user, admin }) => {
           {user ? (
             <>
               <li>
-                <p className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200">
+                <p className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200" style={{ fontFamily: '"REM"' }}>
                   {`Welcome, ${user.username}`}
                 </p>
               </li>
@@ -75,6 +75,7 @@ const Header = ({ user, admin }) => {
                 <button 
                   onClick={handleLogout} 
                   className="text-white text-xl hover:scale-110 hover:bg-opacity-70 transition-transform duration-200"
+                  style={{ fontFamily: '"REM"' }}
                 >
                   Logout
                 </button>

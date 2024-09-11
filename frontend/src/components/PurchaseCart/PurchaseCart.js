@@ -69,50 +69,50 @@ function PurchaseCart({ user }) {
 
   if (loading) return <Loading />; // Replace with the Loading component
 
-
   return (
-
-    <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg w-full">
-
-      <h2 className="text-3xl font-bold mb-4">Your Cart</h2>
-      
+    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-xl w-full border border-gray-700">
+  
+      <h2 className="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">Your Cart</h2>
+  
       {cartItems.length === 0 ? (
-        <p className="text-lg">Your cart is empty.</p>
+        <p className="text-lg text-gray-300">Your cart is empty.</p>
       ) : (
         <div>
           {cartItems.map(item => (
             <div 
-              key={item.id}  // Use cart item ID
-              className="flex items-center justify-between p-3 mb-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+              key={item.id} 
+              className="flex items-center justify-between p-4 mb-5 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-700"
             >
               <img
                 src={`http://localhost:3001/${item.beats.image}`}
                 alt={item.beats.title}
-                className="h-16 w-16 object-cover rounded-md"
+                className="h-20 w-20 object-cover rounded-md border border-gray-600"
               />
               <div className="flex-1 ml-4">
                 <h3 className="text-lg font-bold">{item.beats.title}</h3>
-                <p className="text-md">${item.beats.price}</p>
+                <p className="text-md text-cyan-400">${item.beats.price}</p>
               </div>
               <button
-              onClick={() => handleRemoveFromCart(item.id)}
-              className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
-            >
-              <FaTrash className="text-lg" />
-            </button>
+                onClick={() => handleRemoveFromCart(item.id)}
+                className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
+              >
+                <FaTrash className="text-lg" />
+              </button>
             </div>
           ))}
-          <button
-            onClick={handleCheckout}
-            className="w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+  
+          <div className="mt-8">
+            <button
+              onClick={handleCheckout}
+              className="w-full py-4 px-6 border border-transparent rounded-md shadow-md text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
             >
-            Checkout
-          </button>
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
-
   
 }
 

@@ -66,7 +66,7 @@ function BeatList({ beats, filters }) {
                     onClick={(e) => handlePlayTrack(e, beat)}
                     className="absolute top-1/2 left-1/2 mt-2 transform -translate-x-1/2 -translate-y-1/2 p-1.5 rounded-full text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 z-10"
                   >
-                    <FaPlay size={24} />
+                    <FaPlay size={35} />
                   </button>
                   
                   {/* Black Overlay */}

@@ -56,7 +56,7 @@ function FeaturedBeats() {
 
   return (
     <div 
-    className="relative bg-gray-950 py-10 border-t-2 border-teal-600 shadow-bottom-lg"
+    className="relative bg-gray-950 py-10 pt-4 border-t-2 border-teal-600 shadow-bottom-lg"
   >
       <h2 className="text-2xl font-bold text-center text-white mb-4" style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}>
         Featured Beats
@@ -84,7 +84,7 @@ function FeaturedBeats() {
                 onClick={(e) => handlePlayTrack(e, beat)}
                 className="absolute inset-0 flex items-center justify-center p-2 rounded-full text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
               >
-                <FaPlay size={24} />
+                <FaPlay size={32} />
               </button>
             </div>
           </div>
