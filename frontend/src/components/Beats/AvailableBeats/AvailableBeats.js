@@ -54,7 +54,7 @@ function AvailableBeats() {
   if (loading) return <Loading />; // Replace with the Loading component
 
   return (
-    <div className="min-h-screen sm:px-6 lg:px-8 p-20">
+    <div className="min-h-screen sm:px-6 lg:px-8 p-20 bg-gradient-to-br from-black/50 to-transparent">
       <div className="max-w-7xl mx-auto">
         <div className="lg:flex lg:space-x-8">
           {/* Sidebar for larger screens */}

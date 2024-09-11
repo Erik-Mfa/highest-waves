@@ -56,7 +56,7 @@ function FeaturedBeats() {
 
   return (
     <div 
-    className="relative bg-gray-950 py-10 pt-4 border-t-2 border-teal-600 shadow-bottom-lg"
+    className="relative bg-gray-950 py-10 pt-4  border-teal-600 shadow-fade-lg"
   >
       <h2 className="text-2xl font-bold text-center text-white mb-4" style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}>
         Featured Beats

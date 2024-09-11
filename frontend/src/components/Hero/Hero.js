@@ -23,13 +23,11 @@ const Hero = () => {
     >
       <div className="absolute inset-0 bg-black opacity-40"></div>
       <div className="relative text-right mr-24">
-        <h1 className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r text-sky-500" >
+        <h1 className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r text-teal-500" >
           Welcome to Highest Waves
         </h1>
         <p className="text-4xl mb-6 tracking-widest">Discover the best beats and sounds</p>
-        <button className="mt-8 px-6 py-3 bg-sky-500 hover:bg-sky-900 text-xl font-semibold rounded-lg shadow-lg transition duration-300">
-          Explore Music
-        </button>
+
       </div>
       
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
