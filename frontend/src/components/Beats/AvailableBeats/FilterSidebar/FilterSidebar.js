@@ -29,38 +29,37 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
   return (
     <div className="p-10 rounded-lg shadow-md h-full" style={{ backgroundColor: '#102D40' }}>
       <div className="sticky top-20">
-        
-{/* Price Filter */}
-<div className="mb-6">
-  <label className="block text-white mb-2">Price</label>
-  <div className="flex items-center space-x-2">
-    <div className="flex-1">
-      <Slider
-        range
-        value={[filters.price.min, filters.price.max]}
-        min={0}
-        max={300}
-        step={1}
-        onChange={handlePriceChange}
-        trackStyle={{ backgroundColor: '#0FC2C0', height: 6 }}
-        railStyle={{ backgroundColor: '#073D3A', height: 6 }}
-        handleStyle={{
-          borderColor: '#0FC2C0',  // Make handles more visible with a distinct color
-          backgroundColor: '#0FC2C0',  // Distinct handle color
-          height: 22,
-          width: 22,
-          opacity: 1,
-          top: 2,
-          zIndex: 2, // Ensure handles are on top of the bar
-        }}
-      />
-      <div className="flex justify-between text-white mt-2">
-        <span>${filters.price.min}</span>
-        <span>${filters.price.max}</span>
-      </div>
-    </div>
-  </div>
-</div>
+      {/* Price Filter */}
+      <div className="mb-6">
+        <label className="block text-white mb-2">Price</label>
+            <div className="flex items-center space-x-2">
+              <div className="flex-1">
+                <Slider
+                  range
+                  value={[filters.price.min, filters.price.max]}
+                  min={0}
+                  max={300}
+                  step={1}
+                  onChange={handlePriceChange}
+                  trackStyle={{ backgroundColor: '#0FC2C0', height: 6 }}
+                  railStyle={{ backgroundColor: '#073D3A', height: 6 }}
+                  handleStyle={{
+                    borderColor: '#0FC2C0',  // Make handles more visible with a distinct color
+                    backgroundColor: '#0FC2C0',  // Distinct handle color
+                    height: 22,
+                    width: 22,
+                    opacity: 1,
+                    top: 2,
+                    zIndex: 2, // Ensure handles are on top of the bar
+                  }}
+                />
+                <div className="flex justify-between text-white mt-2">
+                  <span>${filters.price.min}</span>
+                  <span>${filters.price.max}</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
         {/* BPM Filter */}
         <div className="mb-6">

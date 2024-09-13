@@ -59,7 +59,7 @@ const Footer = () => {
 
     </div>
 
-    <div className="py-6 text-center text-sm mt-24">
+    <div className="py-6  text-sm mt-24">
       <p>Built with passion by Highest Waves. Your beats, your way.</p>
     </div>
   </div>

@@ -23,7 +23,7 @@ const Hero = () => {
     >
       <div className="absolute inset-0 bg-black opacity-40"></div>
       <div className="relative text-right mr-24">
-        <h1 className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r text-teal-500" >
+        <h1 className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r text-white" >
           Welcome to Highest Waves
         </h1>
         <p className="text-4xl mb-6 tracking-widest">Discover the best beats and sounds</p>

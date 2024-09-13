@@ -5,8 +5,12 @@ import { FaTrash } from 'react-icons/fa';
 
 const ManageUsers = () => {
   const [userDetails, setUserDetails] = useState({ email: '', username: '', password: '', confirmPassword: '', role: 'customer' });
+
+  const [isFormDropdownOpen, setIsFormDropdownOpen] = useState(false);
+
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [deletedUserId, setDeletedUserId] = useState(null); // State for deleted beat ID
 
@@ -82,6 +86,10 @@ const ManageUsers = () => {
     }
   };
 
+  const toggleFormDropdown = () => {
+    setIsFormDropdownOpen(!isFormDropdownOpen);
+ };
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setUserDetails({ ...userDetails, [id]: value });
@@ -92,8 +100,21 @@ const ManageUsers = () => {
   };
 
   return (
-    <div>
-      {loading && <Loading />} {/* Show loading component if loading */}  
+    <div className='p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg shadow-lg'>
+     
+
+      <div className="mb-4 mx-10">
+        <button
+          onClick={toggleFormDropdown}
+          className="w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+        >
+          Create User
+        </button>
+      </div>
+
+
+      {isFormDropdownOpen && (
+
       <form className="space-y-4 mb-4 border border-gray-600 p-4 max-w-md mx-auto rounded-lg bg-gray-800">
         {/* Username */}
         <div className="mb-4 mx-10">
@@ -186,13 +207,14 @@ const ManageUsers = () => {
           </button>
         </div>
       </form>
+      )}
+
 
       <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
       <h2 className="text-4xl font-bold mb-6 text-center">Users</h2>
-      {users.length === 0 ? (
-        <p className="text-lg text-center">No users found.</p>
-      ) : (
+ 
         <div className="space-y-4">
+          {loading && <Loading />} 
           {users.map(user => (
             <div
               key={user.id} // Assuming each user has a unique 'id'
@@ -214,7 +236,7 @@ const ManageUsers = () => {
             </div>
           ))}
         </div>
-      )}
+      
     </div>
     </div>
   );
