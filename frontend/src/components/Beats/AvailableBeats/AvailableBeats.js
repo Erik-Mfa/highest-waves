@@ -71,13 +71,15 @@ function AvailableBeats() {
           {/* Main content */}
           <div className="lg:w-3/4">
             {/* Mobile Hamburger Button */}
-            <div className="lg:hidden mb-4 flex justify-between items-center">
-              <button 
-                onClick={() => setShowFilters(!showFilters)} 
-                className="text-white text-3xl focus:outline-none"
+            <div className="lg:hidden mb-10 flex justify-between items-center">
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="text-white text-3xl focus:outline-none flex items-center"
               >
-                <FaBars />
-                Filters
+                <FaBars
+                  className={`transition-transform duration-300 ${showFilters ? 'rotate-90' : 'rotate-0'}`}
+                />
+                <span className="ml-2">Filters</span> {/* Added margin-left for spacing */}
               </button>
             </div>
 

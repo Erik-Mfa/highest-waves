@@ -46,10 +46,10 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                   handleStyle={{
                     borderColor: '#0FC2C0',  // Make handles more visible with a distinct color
                     backgroundColor: '#0FC2C0',  // Distinct handle color
-                    height: 22,
-                    width: 22,
+                    height: 20,
+                    width: 20,
                     opacity: 1,
-                    top: 2,
+                    top: 3,
                     zIndex: 2, // Ensure handles are on top of the bar
                   }}
                 />
@@ -80,7 +80,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 backgroundColor: '#102D40',
                 borderColor: '#0FC2C0',
                 borderRadius: '0.375rem',
-                padding: '10px',
+                padding: '5px',
               }),
               menu: (provided) => ({
                 ...provided,
@@ -90,7 +90,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 ...provided,
                 backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
                 color: '#ffffff',
-                padding: '10px',
+                padding: '5px',
               }),
               singleValue: (provided) => ({
                 ...provided,
@@ -119,7 +119,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 backgroundColor: '#102D40',
                 borderColor: '#0FC2C0',
                 borderRadius: '0.375rem',
-                padding: '10px',
+                padding: '5px',
               }),
               menu: (provided) => ({
                 ...provided,
@@ -129,7 +129,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 ...provided,
                 backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
                 color: '#ffffff',
-                padding: '10px',
+                padding: '5px',
               }),
               singleValue: (provided) => ({
                 ...provided,
@@ -186,7 +186,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 backgroundColor: '#102D40',
                 borderColor: '#0FC2C0',
                 borderRadius: '0.375rem',
-                padding: '10px',
+                padding: '5px',
               }),
               menu: (provided) => ({
                 ...provided,
@@ -196,7 +196,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 ...provided,
                 backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
                 color: '#ffffff',
-                padding: '10px',
+                padding: '5px',
               }),
               singleValue: (provided) => ({
                 ...provided,
