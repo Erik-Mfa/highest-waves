@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const BeatController = require('../controllers/BeatController.js');
 const { authorize, isAdmin } = require('../services/auth/auth');
-const upload = require('../services/multer');
-
+const upload = require('../services/multer/beatsMulter.js');
 
 router.get('/', BeatController.find);
 router.get('/:id', BeatController.findById);

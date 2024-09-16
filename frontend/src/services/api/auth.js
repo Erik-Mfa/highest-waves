@@ -12,7 +12,7 @@ export const login = async (credentials) => {
   
   try {
     const response = await instance.post('/auth/login', credentials);
-    cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 7200  });
+    cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 86400  });
     return response.data.token;
   } catch (error) {
     console.error('LOGIN:', error.message);
@@ -25,7 +25,7 @@ export const register = async (credentials) => {
   
   try {
     const response = await instance.post('/auth/register', credentials);
-    cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 7200  });
+    cookies.set("jwt_token", response.data.token, { path: '/', maxAge: 86400  });
     
     return response.data.token;
   } catch (error) {

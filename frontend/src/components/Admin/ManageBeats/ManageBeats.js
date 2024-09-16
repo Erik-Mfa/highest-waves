@@ -3,6 +3,7 @@ import { createBeat, getBeats, deleteBeat } from '../../../services/api/beats';
 import { FaImage, FaVideo, FaChevronDown, FaTrash } from 'react-icons/fa';
 import { getTags } from '../../../services/api/tags';
 import Loading from '../../Loading/Loading'; // Import the Loading component
+import UserRegisterError from '../../Error/UserRegisterError/UserRegisterError'; // Adjust import path
 
 const ManageBeats = () => {
   const [beatDetails, setBeatDetails] = useState({
@@ -25,7 +26,6 @@ const ManageBeats = () => {
   const [loading, setLoading] = useState(false); // Add loading state
   const [imageName, setImageName] = useState('No file chosen'); // State for image name
   const [audioName, setAudioName] = useState('No file chosen'); // State for audio name
-
   const [validationErrors, setValidationErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState(''); // State for success message
   const [deletedBeatId, setDeletedBeatId] = useState(null); // State for deleted beat ID
@@ -48,6 +48,7 @@ const ManageBeats = () => {
 
   const handleCreateBeat = async () => {
     if (!validateForm()) return; // Prevent submission if there are validation errors
+    console.log(beatDetails)
 
     setLoading(true);
     try {
@@ -332,11 +333,19 @@ const ManageBeats = () => {
               Create Beat
             </button>
           </div>
+      {/* Display validation errors */}
+      {Object.keys(validationErrors).length > 0 && (
+        <UserRegisterError message="Please fix the errors above and try again." />
+      )}
         </form>
       )}
 
+<div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
+    <h2 className="text-4xl font-bold text-white mb-6 text-center">Beats</h2>
+
       {/* Beat List */}
       <div className="mx-10">
+      {loading && <Loading />} 
         {beats.map((beat) => (
           <div
             key={beat.id}
@@ -364,6 +373,7 @@ const ManageBeats = () => {
         ))}
       </div>
 
+    </div>
     </div>
   );
 };

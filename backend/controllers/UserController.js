@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
-
 class UserController {
   async find(req, res) {
     try {
@@ -13,7 +12,7 @@ class UserController {
     }
   }
 
-  async getUserById(req, res) {
+  async findById(req, res) {
     try {
       const userId = req.params.id;
 

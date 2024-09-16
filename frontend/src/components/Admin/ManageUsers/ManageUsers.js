@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { createUser, getUsers, deleteUser } from '../../../services/api/users'; // Adjust the import path as needed
 import Loading from '../../Loading/Loading'; // Import the Loading component
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaImage } from 'react-icons/fa';
+import UserRegisterError from '../../Error/UserRegisterError/UserRegisterError'; // Adjust import path
+
 
 const ManageUsers = () => {
-  const [userDetails, setUserDetails] = useState({ email: '', username: '', password: '', confirmPassword: '', role: 'customer' });
-
-  const [isFormDropdownOpen, setIsFormDropdownOpen] = useState(false);
+  const [userDetails, setUserDetails] = useState({ 
+    email: '', 
+    username: '', 
+    password: '', 
+    confirmPassword: '', 
+    role: 'customer', 
+    image: '' 
+  });
 
   const [users, setUsers] = useState([]);
+  const [imageName, setImageName] = useState('No file chosen'); // State for image name
+  
+  const [isFormDropdownOpen, setIsFormDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
@@ -47,9 +57,11 @@ const ManageUsers = () => {
 
   const validateForm = () => {
     const errors = {};
+    
     if (!userDetails.username) errors.username = 'Username is required';
     if (!userDetails.email) errors.email = 'Email is required';
     if (!userDetails.password) errors.password = 'Password is required';
+    if (!userDetails.image) errors.image = 'Image is required';
     if (userDetails.password !== userDetails.confirmPassword) errors.confirmPassword = 'Passwords must match';
 
     setValidationErrors(errors);
@@ -58,14 +70,20 @@ const ManageUsers = () => {
 
   const handleCreateUser = async () => {
     if (!validateForm()) return;
+  
     setLoading(true);
     try {
-      const response = await createUser({
-        username: userDetails.username,
-        email: userDetails.email,
-        password: userDetails.password,
-        role: userDetails.role
-      });
+      const formData = new FormData();
+      formData.append('username', userDetails.username);
+      formData.append('email', userDetails.email);
+      formData.append('password', userDetails.password);
+      formData.append('confirmPassword', userDetails.confirmPassword);
+      formData.append('role', userDetails.role);
+      if (userDetails.image) {
+        formData.append('image', userDetails.image);
+      }
+  
+      const response = await createUser(formData); // Ensure createUser can handle FormData
       if (response) {
         alert('User created successfully!');
         setUserDetails({
@@ -73,7 +91,8 @@ const ManageUsers = () => {
           email: '',
           password: '',
           confirmPassword: '',
-          role: 'customer'
+          role: 'customer',
+          image: ''
         });
         fetchUsers();
       } else {
@@ -94,6 +113,14 @@ const ManageUsers = () => {
     const { id, value } = e.target;
     setUserDetails({ ...userDetails, [id]: value });
   };
+
+    const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        setUserDetails({ ...userDetails, image: file });
+        setImageName(file.name);
+      }
+    };
 
   const handleRoleChange = (e) => {
     setUserDetails({ ...userDetails, role: e.target.value });
@@ -196,6 +223,26 @@ const ManageUsers = () => {
           </select>
         </div>
 
+        <div className="mb-4 mx-10">
+            <label htmlFor="image" className="block text-sm font-medium text-white">
+              Image
+            </label>
+            <div className="flex items-center">
+              <label className="flex items-center px-3 py-2 bg-gray-700 rounded-md shadow-sm cursor-pointer hover:bg-gray-600">
+                <FaImage className="mr-2" />
+                <span>{imageName}</span>
+                <input
+                  type="file"
+                  id="image"
+                  onChange={handleImageChange}
+                  className="hidden"
+                  accept="image/*"
+                />
+              </label>
+            </div>
+            {validationErrors.image && <p className="text-red-500 text-sm">{validationErrors.image}</p>}
+          </div>
+
         {/* Submit */}
         <div className="mb-4 mx-10">
           <button
@@ -206,7 +253,12 @@ const ManageUsers = () => {
             Create User
           </button>
         </div>
+      {/* Display validation errors */}
+      {Object.keys(validationErrors).length > 0 && (
+        <UserRegisterError message="Please fix the errors above and try again." />
+      )}
       </form>
+      
       )}
 
 
@@ -218,12 +270,17 @@ const ManageUsers = () => {
           {users.map(user => (
             <div
               key={user.id} // Assuming each user has a unique 'id'
-              className="flex items-center justify-between p-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-            >
-              <div className="flex flex-col space-y-1">
-                <h3 className="text-xl font-semibold">{user.username}</h3>
-                <p className="text-sm">Email: {user.email}</p>
-                <p className="text-sm">Role: {user.role}</p>
+              className="flex items-center justify-between mb-4 p-4 border border-gray-600 rounded-lg bg-gray-800"
+              >
+            <img
+              src={`http://localhost:3001/${user.image}`}
+              alt="Cover Art"
+              className="w-20 h-20 rounded-md object-cover mr-4"
+            />
+              <div className="flex-grow">
+                <h3 className="text-md font-semibold text-white">{user.username}</h3>
+                <p className="text-sm text-gray-400">Email: {user.email}</p>
+                <p className="text-sm text-gray-400">Role: {user.role}</p>
               </div>
 
               <button

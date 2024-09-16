@@ -36,7 +36,8 @@ function AvailableBeats() {
         setBeats(beatsResponse);
         setTags(tagsResponse);
 
-        const uniqueUsers = [...new Set(beatsResponse.map(beat => beat.owner.username))];
+        const uniqueUsers = [...new Set(beatsResponse.map(beat => beat.owner.username)) ];
+       
         setUsers(uniqueUsers);
 
         const uniqueTones = [...new Set(beatsResponse.map(beat => beat.tone))];

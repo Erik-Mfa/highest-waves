@@ -20,19 +20,20 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cookieParser());
-
-app.use('/assets/beats-logos', express.static(path.join(__dirname, 'public/assets/beats-logos')));
-app.use('/assets/beats-audios', express.static(path.join(__dirname, 'public/assets/beats-audios')));
-
+  
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
+app.use('/assets/beats-logos', express.static(path.join(__dirname, 'public/assets/beats-logos')));
+app.use('/assets/beats-audios', express.static(path.join(__dirname, 'public/assets/beats-audios')));
+app.use('/assets/users-images', express.static(path.join(__dirname, 'public/assets/users-images')));
+
 app.use('/api/auth', authRoutes);
-app.use('/api/carts', cartRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/tags', tagRoutes);
-app.use('/api/orders', orderRoutes); 
 app.use('/api/beats', beatRoutes);
+app.use('/api/tags', tagRoutes);
+app.use('/api/carts', cartRoutes);
+app.use('/api/orders', orderRoutes); 
 
 app.listen(3001, '0.0.0.0', () => console.log('Server running on port 3001'));
 

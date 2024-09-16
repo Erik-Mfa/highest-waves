@@ -3,8 +3,8 @@ const path = require('path');
 const fs = require('fs');
 
 // Ensure that the upload directories exist
-const imageUploadDir = path.join(__dirname, '../public/assets/beats-logos'); // Adjust path as necessary
-const audioUploadDir = path.join(__dirname, '../public/assets/beats-audios'); // Adjust path as necessary
+const imageUploadDir = path.join(__dirname, '../../public/assets/beats-logos'); // Adjust path as necessary
+const audioUploadDir = path.join(__dirname, '../../public/assets/beats-audios'); // Adjust path as necessary
 
 // Create directories if they don't exist
 if (!fs.existsSync(imageUploadDir)) {
