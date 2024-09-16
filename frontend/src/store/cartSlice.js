@@ -37,12 +37,13 @@ export const {
 
 export default cartSlice.reducer;
 
-// Define a simple thunk to fetch cart items
+// Modify the `fetchCartItems` thunk to always return an array.
 export const fetchCartItems = (userId) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const response = await getCarts(userId);
-    dispatch(setCartItems(response));
+    // Ensure that even if the response is an object with a message, you dispatch an empty array for `items`.
+    dispatch(setCartItems(Array.isArray(response.carts) ? response.carts : []));
   } catch (error) {
     dispatch(setError(error.message));
   } finally {

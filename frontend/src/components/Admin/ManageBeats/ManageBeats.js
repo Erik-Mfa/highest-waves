@@ -293,35 +293,37 @@ const ManageBeats = () => {
             {validationErrors.audioURL && <p className="text-red-500 text-sm">{validationErrors.audioURL}</p>}
           </div>
 
+          {/* Tags Dropdown */}
           <div className="mb-4 mx-10">
             <label htmlFor="tags" className="block text-sm font-medium text-white">
               Tags
             </label>
-            <button
-              type="button" // Make sure the button is not a submit button
-              onClick={(e) => {
-                e.preventDefault(); // Prevent form submission
-                toggleTagsDropdown();
-              }}
-              className="mt-1 block w-full px-4 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm bg-gray-900 text-white flex justify-between items-center"
-            >
-              Select Tags <FaChevronDown />
-            </button>
-            {isTagsDropdownOpen && (
-              <ul className="bg-gray-700 rounded-md shadow-md py-2 mt-2 max-h-48 overflow-y-auto">
-                {tags.map((tag) => (
-                  <li
-                    key={tag.id}
-                    className={`cursor-pointer px-4 py-2 hover:bg-gray-600 ${
-                      beatDetails.tags.includes(tag.id) ? 'bg-cyan-700' : ''
-                    }`}
-                    onClick={() => handleTagSelect(tag.id)}
-                  >
-                    {tag.name}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={toggleTagsDropdown}
+                className="w-full px-4 py-2 text-left bg-gray-900 text-white border border-gray-600 rounded-md shadow-sm hover:bg-gray-800"
+              >
+                Select Tags <FaChevronDown className="inline-block ml-2" />
+              </button>
+              {isTagsDropdownOpen && (
+                <div className="absolute z-10 w-full mt-2 bg-gray-900 border border-gray-600 rounded-md shadow-lg">
+                  {tags.map((tag) => (
+                    <div
+                      key={tag.id}
+                      className={`cursor-pointer px-4 py-2 ${
+                        beatDetails.tags.includes(tag.id)
+                          ? 'bg-cyan-600 text-white'
+                          : 'hover:bg-gray-800 text-white'
+                      }`}
+                      onClick={() => handleTagSelect(tag.id)}
+                    >
+                      {tag.name}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="mb-4 mx-10">
@@ -333,6 +335,7 @@ const ManageBeats = () => {
               Create Beat
             </button>
           </div>
+          
       {/* Display validation errors */}
       {Object.keys(validationErrors).length > 0 && (
         <UserRegisterError message="Please fix the errors above and try again." />

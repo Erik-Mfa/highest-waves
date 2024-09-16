@@ -1,5 +1,6 @@
 // ./models/Beat.js
 const mongoose = require('mongoose');
+const Cart = require('./Cart'); 
 
 const beatSchema = new mongoose.Schema({
   id: {
@@ -46,5 +47,17 @@ const beatSchema = new mongoose.Schema({
     required: true
   }]
 }, { timestamps: true });
+
+// Cascade delete carts when a beat is removed
+beatSchema.pre('remove', async function(next) {
+  try {
+    // Delete all carts containing this beat
+    await Cart.deleteMany({ beats: this._id });
+    
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = mongoose.model('Beat', beatSchema);
