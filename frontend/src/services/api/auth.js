@@ -53,7 +53,7 @@ export const logout = async () => {
 //ALWAYS RETRIEVE THE USER FROM THE TOKEN
 export const isAuthenticated = async () => {
   const cookie = await cookies.get('jwt_token');
- 
+  
   if (!cookie) {
     return false; 
   }
@@ -79,11 +79,18 @@ export const isAdmin = async () => {
   
   try {
     const decoded = jwtDecode(cookie);
-    const admin = decoded.role;
-    return !!admin; 
+    const role = decoded.role;
+    console.log("User role: " + role);
+
+    // Check if the role is 'admin'
+    if (role === "admin") {
+      return true;
+    } else {
+      return false;  // If role is 'customer' or anything else, return false
+    }
+
   } catch (error) {
     console.error('ERROR DECODING JWT TOKEN:', error.message);
     return false; 
   }
-
 };

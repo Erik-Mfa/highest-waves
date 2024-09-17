@@ -34,8 +34,8 @@ const Header = ({ user, admin }) => {
   return (
     <>
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full bg-gray-900 text-white z-50">
-        <nav className="flex justify-between items-center p-2 px-10">
+      <header className="fixed top-0 left-0 w-full bg-gray-900 text-white z-50 ">
+        <nav className="flex justify-between items-center p-2 px-10 ">
           <ul className="flex items-center space-x-4">
 
             <li>
@@ -61,32 +61,19 @@ const Header = ({ user, admin }) => {
               </button>
             </li>
 
-            {admin && (
-
-              <li className="text-white text-lg hover:scale-110 hover:bg-opacity-70 transition-transform duration-200" style={{ fontFamily: '"REM"' }}>
-                <Link to="/admin">
-                  Admin
-                </Link>
-              </li>
-
-            )}
-
           </ul>
-
-
-
-          <ul className="flex items-center space-x-4">
+          <ul className="flex items-center">
             {user ? (
               <>
-                <li>
-                  <p className="text-white text-lg hover:scale-110 hover:bg-opacity-70 transition-transform duration-200" style={{ fontFamily: '"REM"' }}>
+                <li className='mr-4'>
+                  <h1 className="text-white text-lg hover:scale-110 hover:bg-opacity-70 transition-transform duration-200 pr-3 " style={{ fontFamily: '"Be Vietnam Pro"', marginTop: 2 }}>
                     {`Welcome, ${user.username}`}
-                  </p>
+                  </h1>
                 </li>
-                <li>
+                <li className=''>
                   <button 
                     onClick={handleLogout} 
-                    className="text-white text-lg hover:scale-110 hover:bg-opacity-70 transition-transform duration-200"
+                    className="text-white text-lg hover:scale-110 hover:bg-opacity-70 transition-transform duration-200 "
                     style={{ fontFamily: '"REM"' }}
                   >
                     Logout
@@ -95,19 +82,18 @@ const Header = ({ user, admin }) => {
               </>
             ) : (
               <>
-                <li>
+                <li className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110">
                   <Link 
                     to="/login" 
-                    className="bg-teal-800 text-white text-lg px-4 py-2 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
-                  >
+                    >
                     Login
                   </Link>
                 </li>
 
-                <li>
+                <li className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
+                >
                   <Link 
                     to="/register" 
-                    className="bg-teal-800 text-white text-lg px-4 py-2 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
                   >
                     Register
                   </Link>
@@ -115,13 +101,22 @@ const Header = ({ user, admin }) => {
               </>
             )}
 
-            <li className="relative flex items-center">
+            <li className="relative flex items-center space-x-10 ml-10">
               <button 
                 onClick={() => setShowPurchaseCart(prev => !prev)} 
                 className="text-white text-lg hover:scale-110 hover:bg-opacity-70 transition-transform duration-200 flex items-center"
               >
                 <FaShoppingCart size={28} className="align-middle" />
               </button>
+
+              {admin && (
+              <li className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110" style={{ fontFamily: '"REM"' }}>
+                <Link to="/admin">
+                  Admin
+                </Link>
+              </li>
+
+              )}
             </li>
           </ul>
         </nav>

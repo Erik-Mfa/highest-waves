@@ -21,7 +21,7 @@ const RegisterForm = () => {
 
     if (registered) {
       console.log("Registered: " + registered);
-      navigate("/login");
+      navigate("/");
     }
   };
 

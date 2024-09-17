@@ -3,7 +3,6 @@ import FeaturedBeats from '../../components/Beats/FeaturedBeats/FeaturedBeats';
 import AvailableBeats from '../../components/Beats/AvailableBeats/AvailableBeats';
 import Hero from '../../components/Hero/Hero'; 
 import About from '../../components/About/About'; 
-import Footer from '../../components/Footer/Footer'
 
 function HomePage() {
   return (
@@ -16,7 +15,6 @@ function HomePage() {
         </div>
         <div id="about-section">
           <About />
-          <Footer />
         </div>
       </main>
     </div>

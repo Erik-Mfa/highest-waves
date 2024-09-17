@@ -7,10 +7,6 @@ import Loading from '../Loading/Loading';
 function PurchaseCart({ user }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
-
-  console.log(cartItems)
-  console.log(user)
-
   const loading = useSelector((state) => state.cart.loading);
 
   useEffect(() => {

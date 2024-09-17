@@ -134,7 +134,6 @@ const ManageBeats = () => {
     setBeatDetails({ ...beatDetails, tags: newTags });
   };
 
-  // Handle image file change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -143,7 +142,6 @@ const ManageBeats = () => {
     }
   };
 
-  // Handle audio file change
   const handleAudioChange = (e) => {
     const file = e.target.files[0];
     if (file) {

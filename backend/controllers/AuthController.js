@@ -54,6 +54,7 @@ class AuthController {
       if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
       const token = jwt.sign({ userId: user.id, role: user.role, username: user.username }, process.env.JWT_SECRET, { expiresIn: '24h' });
+      
       console.log(process.env.JWT_SECRET)
 
       res.cookie('jwt_token', token, { httpOnly: true });

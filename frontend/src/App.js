@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import {store} from './store/store'; // Make sure this path is correct
 import ProtectedRoute from './services/protectedRoute';
 import Layout from './components/Layout/Layout';
+import Footer from './components/Footer/Footer'
 // PAGES
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -41,6 +42,7 @@ function App() {
               </Routes>
             </main>
           </Layout>
+          <Footer/>
         </div>
       </Router>
     </Provider>

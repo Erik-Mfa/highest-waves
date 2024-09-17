@@ -11,6 +11,8 @@ const Layout = ({ children }) => {
   const [admin, setAdmin] = useState(null);
   const [user, setUser] = useState(null);
 
+  console.log("FIRST ADMIN " + admin)
+
   const dispatch = useDispatch();
   const currentTrack = useSelector(selectCurrentTrack);
   const isPlaying = useSelector(selectIsPlaying);
@@ -20,6 +22,8 @@ const Layout = ({ children }) => {
       try {
         const isUserAdmin = await isAdmin();
         const authenticatedUser = await isAuthenticated();
+
+        console.log("ADMIN " + isUserAdmin)
         
         setAdmin(isUserAdmin);
         setUser(authenticatedUser);

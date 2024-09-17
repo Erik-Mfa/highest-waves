@@ -48,11 +48,9 @@ const beatSchema = new mongoose.Schema({
   }]
 }, { timestamps: true });
 
-// Cascade delete carts when a beat is removed
 beatSchema.pre('remove', async function(next) {
   try {
-    // Delete all carts containing this beat
-    await Cart.deleteMany({ beats: this._id });
+    await Cart.deleteMany({ beats: this.id });
     
     next();
   } catch (error) {

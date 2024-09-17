@@ -1,51 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { createTag, getTags, deleteTag } from '../../../services/api/tags'; // Import your tag creation and fetching services
+import Loading from '../../Loading/Loading'; // Import the Loading component
 import { FaTrash } from 'react-icons/fa';
 
 const ManageTags = () => {
   const [tagDetails, setTagDetails] = useState({ name: '' });
+  const [loading, setLoading] = useState(false); // Add loading stat
   const [tags, setTags] = useState([]);
 
-  // Fetch tags on component load
+
+  const fetchTags = async () => {
+    try {
+      const tags = await getTags();
+      setTags(tags);
+    } catch (error) {
+      console.error('Error fetching tags:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const tags = await getTags();
-        setTags(tags);
-      } catch (error) {
-        console.error('Error fetching tags:', error);
-      }
-    };
     fetchTags();
   }, []);
 
-  // Create new tag
   const handleCreateTag = async () => {
+    if (!tagDetails.name) {
+      alert("Please provide a tag name");
+      return;
+    }
+
+    setLoading(true);
+
     try {
       const response = await createTag(tagDetails);
       if (response.success) {
-        setTags([...tags, response.data]); // Add the newly created tag to the list
-        setTagDetails({ name: '' }); // Clear input field
+        setTagDetails({ name: '' }); 
         alert("Tag created successfully");
+        fetchTags();
       } else {
         console.error("Failed to create tag");
       }
     } catch (error) {
       console.error("Error creating tag:", error);
+    }finally {
+      setLoading(false);
     }
   };
+
+
+  
 
   const handleDeleteTag = async (tagId) => {
     try {
       const response = await deleteTag(tagId);
       if (response.success) {
         setTags(tags.filter((tag) => tag.id !== tagId)); 
-       
       } else {
-        console.error('Failed to delete Tag');
+        console.error('Failed to delete tag');
       }
     } catch (error) {
-      console.error('Error deleting Tag:', error);
+      console.error('Error deleting tag:', error);
     }
   };
 
@@ -78,21 +91,24 @@ const ManageTags = () => {
       <div className="mt-8">
         <h3 className="text-xl font-semibold text-white mb-4">Existing Tags:</h3>
         <ul className="space-y-2">
-          {tags.length > 0 ? (
-            tags.map((tag) => (
-              <li key={tag.id} className="flex items-center justify-between bg-gray-700 text-white text-sm py-1 px-2 rounded-md">
-                {tag.name}
+        {loading && <Loading />} 
+
+          {          
+            tags.map((tag) => (   
+              <li key={tag.id || tag._id} className="flex items-center justify-between bg-gray-700 text-white text-sm py-1 px-2 rounded-md">
+                              
+              {tag.name}
+              
                 <button
-                  onClick={() => handleDeleteTag(tag.id)}
+                  onClick={() => handleDeleteTag(tag.id || tag._id)}
                   className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
                 >
                   <FaTrash className="text-xs" />
                 </button>
               </li>
             ))
-          ) : (
-            <li className="text-white text-sm">No tags available.</li>
-          )}
+            }
+
         </ul>
       </div>
     </div>
