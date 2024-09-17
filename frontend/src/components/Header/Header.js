@@ -82,7 +82,7 @@ const Header = ({ user, admin }) => {
               </>
             ) : (
               <>
-                <li className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110">
+                <li className="bg-teal-800 text-white text-lg mr-4 px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110">
                   <Link 
                     to="/login" 
                     >

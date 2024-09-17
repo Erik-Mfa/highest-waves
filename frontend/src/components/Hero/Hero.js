@@ -18,7 +18,7 @@ const Hero = () => {
 
   return (
     <section 
-      className="relative flex items-center justify-end h-[95vh] bg-cover bg-center text-white border-b-2 border-gray-700" 
+      className="relative flex items-center justify-end h-[95vh] bg-cover bg-center text-white" 
       style={{ backgroundImage: "url('/assets/rizzo-e-compania.jpeg')", backgroundPosition: "center top" }}
     >
       <div className="absolute inset-0 bg-black opacity-40"></div>
