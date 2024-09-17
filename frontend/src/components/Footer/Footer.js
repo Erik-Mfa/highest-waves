@@ -4,9 +4,8 @@ import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/f
 
 const Footer = () => {
   return (
-    <footer className="text-white py-10 bg-gray-90 border-t-2 border-l-2 border-gray-900">
+    <footer className="text-white py-10 border-t-2 border-l-2 border-gray-700" style={{ background: "linear-gradient(-120deg, rgba(10, 61, 64, 0.8) 2%, transparent 60%)" }}>
       <div className="container mx-auto px-6">
-
         {/* First row */}
         <div className="flex flex-col md:flex-row gap-12 md:gap-16">
           {/* Privacy and Security Section */}
