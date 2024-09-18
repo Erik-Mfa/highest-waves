@@ -42,7 +42,7 @@ const Hero = () => {
       </div>
 
       <div className="absolute bottom-10 left-5 flex space-x-4">
-        <a href="https://instagram.com" className="text-white hover:text-fuchsia-600">
+        <a href="https://www.instagram.com/highestwavess/" className="text-white hover:text-fuchsia-600">
           <FaInstagram size={24} />
         </a>
         <a href="https://twitter.com" className="text-white hover:text-teal-500">

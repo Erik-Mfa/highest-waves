@@ -34,7 +34,7 @@ const Header = ({ user, admin }) => {
   return (
     <>
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full bg-gray-900 text-white z-50 border-b-2 border-gray-700" >
+      <header className="fixed top-0 left-0 w-full bg-gray-900 text-white z-50 border-b-2 border-teal-950" >
         <nav className="flex justify-between items-center p-2 px-10 ">
           <ul className="flex items-center space-x-4">
 
