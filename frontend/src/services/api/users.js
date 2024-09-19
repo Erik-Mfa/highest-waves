@@ -17,6 +17,7 @@ export const getUsers = async () => {
 };
 
 export const createUser = async (userDetails) => {
+  console.log(userDetails.image)
   try {
     const response = await instance.post('/auth/register', userDetails, { withCredentials: true }); // Adjust the endpoint as needed
     return response.data;

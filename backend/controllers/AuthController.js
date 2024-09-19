@@ -19,7 +19,7 @@ class AuthController {
           const newId = max ? max.id + 1 : 1;
 
           // Get the filename from the request file (if it exists)
-          const imageFile = req.file ? `assets/users-images/${req.file.filename}` : '';
+          const imageFile = req.file ? `assets/users-images/${req.file.filename}` : 'assets/users-images/Standard-User.png';
 
           // Create a new user
           const newUser = new User({

@@ -20,15 +20,15 @@ const Login = () => {
     <div className="flex min-h-screen bg-[#042326]">
       {/* Left side: Form (1/3 of the page) */}
       <div 
-        className="w-full md:w-1/3 flex p-6 pb-0 bg-[#042326]  animate-slide-in-left"
-      >
-        <div className="w-full p-8 rounded-lg border-2 border-b-0 border-[#0A3A40] shadow-lg">
+        className="w-full md:w-1/3 flex flex-col justify-start p-6 bg-[#042326] animate-slide-in-left"
+        >
+        <div className="w-full p-8 rounded-lg border-2 border-[#0A3A40] shadow-lg">
           <h2 className="text-4xl font-bold text-center text-white mb-8 tracking-wider" style={{ textShadow: '0 0 15px #1D7373' }}>
             Sign In
           </h2>
           <form>
-            <div className="mb-6">
-              <label htmlFor="Username" className="block text-sm font-medium text-[#1D7373]">
+            <div className="mb-10">
+              <label htmlFor="Username" className="block text-sm font-medium text-white">
                 Username
               </label>
               <input
@@ -40,8 +40,8 @@ const Login = () => {
               />
             </div>
   
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-sm font-medium text-[#1D7373]">
+            <div className="mb-10">
+              <label htmlFor="email" className="block text-sm font-medium text-white">
                 E-mail
               </label>
               <input
@@ -53,8 +53,8 @@ const Login = () => {
               />
             </div>
   
-            <div className="mb-6">
-              <label htmlFor="password" className="block text-sm font-medium text-[#1D7373]">
+            <div className="mb-10">
+              <label htmlFor="password" className="block text-sm font-medium text-white">
                 Password
               </label>
               <input

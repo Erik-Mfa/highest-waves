@@ -139,7 +139,6 @@ const ManageUsers = () => {
         </button>
       </div>
 
-
       {isFormDropdownOpen && (
 
       <form className="space-y-4 mb-4 border border-gray-600 p-4 max-w-md mx-auto rounded-lg bg-gray-800">
