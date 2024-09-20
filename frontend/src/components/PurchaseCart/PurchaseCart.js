@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCartItems, removeCartItem, addToCartAndUpdate } from '../../store/cartSlice'; // Ensure correct path
+import { fetchCartItems, removeCartItem, setTotalAmount } from '../../store/cartSlice'; // Ensure correct path
 import { useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import Loading from '../Loading/Loading';
@@ -9,8 +9,13 @@ function PurchaseCart({ user }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const loading = useSelector((state) => state.cart.loading);
-
   
+  // Calculate total price
+  const totalPrice = cartItems.reduce((total, item) => total + item.beats.price, 0);
+
+  useEffect(() => {
+    dispatch(setTotalAmount(totalPrice));
+  }, [dispatch, totalPrice]);
 
   useEffect(() => {
     if (user && user.userId) {
@@ -27,8 +32,6 @@ function PurchaseCart({ user }) {
 
   if (loading) return <Loading />;
 
-  // Calculate total price
-  const totalPrice = cartItems.reduce((total, item) => total + item.beats.price, 0);
 
   return (
     <div className="bg-gray-900 text-white p-6 mt-4 rounded-lg shadow-xl w-full border border-gray-700">
