@@ -3,15 +3,19 @@ import { fetchCartItems, removeCartItem, addToCartAndUpdate } from '../../store/
 import { useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import Loading from '../Loading/Loading';
+import { Link } from 'react-router-dom';
 
 function PurchaseCart({ user }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const loading = useSelector((state) => state.cart.loading);
 
+  
+
   useEffect(() => {
     if (user && user.userId) {
       dispatch(fetchCartItems(user.userId));
+      console.log("WORKING")
     }
   }, [user, dispatch]);
 
@@ -21,11 +25,10 @@ function PurchaseCart({ user }) {
     }
   };
 
-  const handleCheckout = async () => {
-    // Define this function based on your needs
-  };
-
   if (loading) return <Loading />;
+
+  // Calculate total price
+  const totalPrice = cartItems.reduce((total, item) => total + item.beats.price, 0);
 
   return (
     <div className="bg-gray-900 text-white p-6 mt-4 rounded-lg shadow-xl w-full border border-gray-700">
@@ -58,12 +61,17 @@ function PurchaseCart({ user }) {
             <p className="text-lg text-gray-300">There was a problem loading your cart.</p>
           )}
           <div className="mt-8">
-            <button
-              onClick={handleCheckout}
-              className="w-full py-4 px-6 border border-transparent rounded-md shadow-md text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+            <p className="text-lg font-bold mb-4">Total: ${totalPrice.toFixed(2)}</p>
+            {/* Checkout Button now using Link */}
+            <Link
+              to={{
+                pathname: "/payment", // Assuming this is the correct path for the payment page
+                state: { totalAmount: totalPrice }, // Pass totalPrice in the state
+              }}
+              className="w-full py-4 px-6 border border-transparent rounded-md shadow-md text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105 text-center block"
             >
               Proceed to Checkout
-            </button>
+            </Link>
           </div>
         </div>
       )}

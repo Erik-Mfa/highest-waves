@@ -5,15 +5,16 @@ import {store} from './store/store'; // Make sure this path is correct
 import ProtectedRoute from './services/protectedRoute';
 import Layout from './components/Layout/Layout';
 import Footer from './components/Footer/Footer'
+import ManageBeats from './components/Admin/ManageBeats/ManageBeats';
+import ManageTags from './components/Admin/ManageTags/ManageTags';
+import ManageUsers from './components/Admin/ManageUsers/ManageUsers';
 // PAGES
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage';
 import AdminPage from './pages/AdminPage/AdminPage';
-import ManageBeats from './components/Admin/ManageBeats/ManageBeats';
-import ManageTags from './components/Admin/ManageTags/ManageTags';
-import ManageUsers from './components/Admin/ManageUsers/ManageUsers';
+import PaymentPage from './pages/PaymentPage/PaymentPage'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
                   <Route path="manage-users" element={<ManageUsers />} />
                   <Route path="manage-tags" element={<ManageTags />} />
                 </Route>
+                <Route path="/payment" element={<PaymentPage />} />
                 <Route path="/register" element={<RegisterPage />} />
               </Routes>
             </main>

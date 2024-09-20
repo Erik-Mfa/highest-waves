@@ -6,6 +6,7 @@ const cartSlice = createSlice({
   initialState: {
     items: [],
     loading: false,
+    totalAmount: 0, // Add totalAmount to the initial state
     error: null,
   },
   reducers: {
@@ -14,6 +15,9 @@ const cartSlice = createSlice({
     },
     setCartItems(state, action) {
       state.items = action.payload;
+    },
+    setTotalAmount(state, action) {
+      state.totalAmount = action.payload;
     },
     addItem(state, action) {
       state.items = action.payload;
@@ -33,17 +37,17 @@ export const {
   addItem,
   removeItem,
   setError,
+  setTotalAmount,  // Export this action
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
-// Modify the `fetchCartItems` thunk to always return an array.
+// Define a simple thunk to fetch cart items
 export const fetchCartItems = (userId) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const response = await getCarts(userId);
-    // Ensure that even if the response is an object with a message, you dispatch an empty array for `items`.
-    dispatch(setCartItems(Array.isArray(response.carts) ? response.carts : []));
+    dispatch(setCartItems(response));
   } catch (error) {
     dispatch(setError(error.message));
   } finally {

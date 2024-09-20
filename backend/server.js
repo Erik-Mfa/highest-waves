@@ -10,6 +10,7 @@ const beatRoutes = require('./routes/beatRoute');
 const orderRoutes = require('./routes/orderRoute');
 const cartRoutes = require('./routes/cartRoute');
 const tagRoutes = require('./routes/tagRoute');
+const paymentRoutes = require ('./routes/paymentRoute')
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/assets/beats-logos', express.static(path.join(__dirname, 'public/asset
 app.use('/assets/beats-audios', express.static(path.join(__dirname, 'public/assets/beats-audios')));
 app.use('/assets/users-images', express.static(path.join(__dirname, 'public/assets/users-images')));
 
+app.use('/api/payment', paymentRoutes)
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/beats', beatRoutes);
