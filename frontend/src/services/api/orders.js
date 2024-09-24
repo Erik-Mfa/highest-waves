@@ -20,3 +20,14 @@ export const saveOrder = async (userId, cartBeatIds) => {
     throw error;
   }
 };
+
+// Function to fetch orders
+export const getOrders = async () => {
+  try {
+    const response = await instance.get('/orders', { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    throw error;
+  }
+};

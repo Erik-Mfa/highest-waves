@@ -8,6 +8,7 @@ import Footer from './components/Footer/Footer'
 import ManageBeats from './components/Admin/ManageBeats/ManageBeats';
 import ManageTags from './components/Admin/ManageTags/ManageTags';
 import ManageUsers from './components/Admin/ManageUsers/ManageUsers';
+import ManagePayments from './components/Admin/ManagePayments/ManagePayments';
 // PAGES
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -38,6 +39,7 @@ function App() {
                   <Route path="manage-beats" element={<ManageBeats />} />
                   <Route path="manage-users" element={<ManageUsers />} />
                   <Route path="manage-tags" element={<ManageTags />} />
+                  <Route path="manage-payments" element={<ManagePayments />} />
                 </Route>
                 <Route path="/payment" element={<PaymentPage />} />
                 <Route path="/register" element={<RegisterPage />} />
