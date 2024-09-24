@@ -10,7 +10,6 @@ const Login = () => {
     const logged = await login(credentials);
 
     if(!!logged){
-      console.log("logged: " + logged);
       navigate("/");
       window.location.reload();
     }

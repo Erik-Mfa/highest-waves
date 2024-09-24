@@ -17,7 +17,6 @@ class CartController {
   async save(req, res) {
     try {
       const { price, user, beat } = req.body;
-      console.log(beat)
 
       const max = await Cart.findOne({}).sort({ id: -1 });
       const newId = max == null ? 1 : max.id + 1;

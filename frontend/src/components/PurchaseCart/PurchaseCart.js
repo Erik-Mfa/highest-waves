@@ -22,7 +22,6 @@ function PurchaseCart({ user }) {
   useEffect(() => {
     if (user && user.userId) {
       dispatch(fetchCartItems(user.userId));
-      console.log("Fetching cart items for user:", user.userId);
     }
   }, [user, dispatch]);
 

@@ -1,7 +1,9 @@
+// PaymentPage.js
 import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from '../../components/Payment/PaymentForm/PaymentForm';
-import { stripePromise } from '../../services/stripe'
+import { stripePromise } from '../../services/stripe';
+
 const PaymentPage = () => {
   return (
     <Elements stripe={stripePromise}>

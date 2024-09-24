@@ -20,7 +20,6 @@ const AudioPlayer = () => {
     if (currentTrack) {
       dispatch(togglePlayPause(true)); 
     } 
-    console.log(currentTrack)
   }, [currentTrack]);
 
   useEffect(() => {

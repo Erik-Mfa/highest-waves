@@ -22,7 +22,6 @@ const playlistSlice = createSlice({
       state.currentIndex = action.payload;
     },
     nextTrack: (state) => {
-      console.log("state")
       state.currentIndex = (state.currentIndex + 1) % state.playlist.length;
     },
     prevTrack: (state) => {

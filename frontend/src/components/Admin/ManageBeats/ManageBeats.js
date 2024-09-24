@@ -48,7 +48,6 @@ const ManageBeats = () => {
 
   const handleCreateBeat = async () => {
     if (!validateForm()) return; // Prevent submission if there are validation errors
-    console.log(beatDetails)
 
     setLoading(true);
     try {

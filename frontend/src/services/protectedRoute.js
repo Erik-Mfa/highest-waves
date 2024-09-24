@@ -15,8 +15,6 @@ export default function ProtectedRoute({ children }) {
         const admin = await isAdmin();
         const authenticated = await isAuthenticated();
         
-        console.log("Admin Check:", admin); // Debugging
-        console.log("Authenticated Check:", authenticated); // Debugging
 
         setIsAdminCheck(admin);
         setIsAuthenticatedCheck(authenticated);

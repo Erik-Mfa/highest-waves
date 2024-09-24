@@ -98,9 +98,7 @@ const PaymentForm = () => {
             if (stripeError) {
                 console.error('Error confirming card payment:', stripeError);
             } else {
-              cartItems.map(cartId => deleteCarts(cartId))
-                
-                navigate('/success'); // Redirect to a success page
+                navigate('/success'); 
             }
         } catch (error) {
             console.error('Error creating payment intent:', error);

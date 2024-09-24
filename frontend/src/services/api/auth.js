@@ -80,7 +80,6 @@ export const isAdmin = async () => {
   try {
     const decoded = jwtDecode(cookie);
     const role = decoded.role;
-    console.log("User role: " + role);
 
     // Check if the role is 'admin'
     if (role === "admin") {

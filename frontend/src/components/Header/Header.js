@@ -37,16 +37,14 @@ const Header = ({ user, admin }) => {
       <header className="fixed top-0 left-0 w-full bg-gray-900 text-white z-50 border-b-2 border-teal-950" >
         <nav className="flex justify-between items-center p-2 px-10 ">
           <ul className="flex items-center space-x-4">
-
-            <li>
-              <Link to='/'>
-                <img 
-                  src='/assets/highestwaves-logo.png' 
-                  alt='Highest Waves Logo' 
-                  className="w-28 hover:scale-105 transition-transform duration-200" 
-                />
-              </Link>
-            </li>
+            <Link to='/'>
+              <img 
+                src='/assets/highestwaves-logo.png' 
+                alt='Highest Waves Logo' 
+                className="w-28 hover:scale-105 transition-transform duration-200" 
+              />
+            </Link>
+            
 
             <li className="text-white text-lg hover:scale-110 hover:bg-opacity-70 transition-transform duration-200 flex items-center">
               <button onClick={() => handleNavigation('/', 'beats-section')} style={{ fontFamily: '"REM"' }} className="flex items-center">
@@ -82,22 +80,21 @@ const Header = ({ user, admin }) => {
               </>
             ) : (
               <>
-                <li className="bg-teal-800 text-white text-lg mr-4 px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110">
-                  <Link 
-                    to="/login" 
-                    >
-                    Login
-                  </Link>
-                </li>
-
-                <li className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
-                >
-                  <Link 
-                    to="/register" 
+                <Link 
+                  to="/login" 
+                  className="bg-teal-800 text-white text-lg mr-4 px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
                   >
-                    Register
-                  </Link>
-                </li>
+                  Login
+                </Link>
+              
+
+              
+                <Link 
+                  className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
+                  to="/register" 
+                >
+                  Register
+                </Link>
               </>
             )}
 
@@ -110,8 +107,13 @@ const Header = ({ user, admin }) => {
               </button>
 
               {admin && (
-              <li className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110" style={{ fontFamily: '"REM"' }}>
-                <Link to="/admin">
+              <li>
+                <Link 
+                  className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
+                  to="/admin"
+                  style={{ fontFamily: '"REM"' }}
+                >
+          
                   Admin
                 </Link>
               </li>

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import { isAdmin, isAuthenticated } from '../../services/api/auth';
+import { togglePlayPause, selectCurrentTrack, selectIsPlaying } from '../../store/audioPlayerSlice'; // Adjust paths as needed
+import { useSelector, useDispatch } from 'react-redux';
 import PurchaseCart from '../PurchaseCart/PurchaseCart';
 import AudioPlayer from '../AudioPlayer/AudioPlayer';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentTrack, togglePlayPause, selectCurrentTrack, selectIsPlaying } from '../../store/audioPlayerSlice'; // Adjust paths as needed
 
 const Layout = ({ children }) => {
   const [showPurchaseCart, setShowPurchaseCart] = useState(false);
   const [admin, setAdmin] = useState(null);
   const [user, setUser] = useState(null);
 
-  console.log("FIRST ADMIN " + admin)
 
   const dispatch = useDispatch();
   const currentTrack = useSelector(selectCurrentTrack);
@@ -23,8 +22,6 @@ const Layout = ({ children }) => {
         const isUserAdmin = await isAdmin();
         const authenticatedUser = await isAuthenticated();
 
-        console.log("ADMIN " + isUserAdmin)
-        
         setAdmin(isUserAdmin);
         setUser(authenticatedUser);
       } catch (error) {
@@ -49,7 +46,7 @@ const Layout = ({ children }) => {
         admin={admin}
       />
 
-      <main className="pt-16"> {/* Adjust padding to match header height */}
+      <main className="pt-16">
         {children}
       </main>
 
