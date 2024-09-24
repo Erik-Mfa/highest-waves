@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import { isAdmin, isAuthenticated } from '../../services/api/auth';
 import PurchaseCart from '../PurchaseCart/PurchaseCart';
-import AudioPlayer from './AudioPlayer/AudioPlayer';
+import AudioPlayer from '../AudioPlayer/AudioPlayer';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentTrack, togglePlayPause, selectCurrentTrack, selectIsPlaying } from '../../store/audioPlayerSlice'; // Adjust paths as needed
 

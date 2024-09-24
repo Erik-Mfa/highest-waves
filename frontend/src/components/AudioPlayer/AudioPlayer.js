@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 import { FaPlay, FaPause, FaForward, FaBackward, FaRedo, FaVolumeUp, FaVolumeMute, FaRandom } from 'react-icons/fa'; // Added FaRandom
-import { setCurrentTrack, setCurrentTitle, setCurrentCover, setCurrentOwner, togglePlayPause, setIsRepeating, setVolume, setIsShuffling } from '../../../store/audioPlayerSlice';
-import { selectPlaylist, selectCurrentTrackIndex, setCurrentIndex } from '../../../store/playlistSlice';
+import { setCurrentTrack, setCurrentTitle, setCurrentCover, setCurrentOwner, togglePlayPause, setIsRepeating, setVolume, setIsShuffling } from '../../store/audioPlayerSlice';
+import { selectPlaylist, selectCurrentTrackIndex, setCurrentIndex } from '../../store/playlistSlice';
 import './AudioPlayer.css'
 
 // Add setIsShuffling and isShuffling to your audioPlayerSlice

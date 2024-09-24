@@ -13,10 +13,16 @@ const orderSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
       },
-    status: { 
-        type: String, 
-        default: "Waiting payment"
-    }
+    billingInfo: {
+      name: { type: String, required: true },
+      address: { type: String, required: true },
+      city: { type: String, required: true },
+      postalCode: { type: String, required: true },
+      country: { type: String, required: true },
+      
+    },
+    paymentStatus: { type: String, default: 'unpaid' },
+
 },{ timestamps: true })
 
 module.exports = mongoose.model('Order', orderSchema); 

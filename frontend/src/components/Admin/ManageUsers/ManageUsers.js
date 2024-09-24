@@ -3,6 +3,7 @@ import { createUser, getUsers, deleteUser } from '../../../services/api/users'; 
 import Loading from '../../Loading/Loading'; // Import the Loading component
 import { FaTrash, FaImage } from 'react-icons/fa';
 import UserRegisterError from '../../Error/UserRegisterError/UserRegisterError'; // Adjust import path
+import ConfirmMessage from '../../Messages/ConfirmMessage/ConfirmMessage';
 
 
 const ManageUsers = () => {
@@ -23,7 +24,7 @@ const ManageUsers = () => {
   const [showForm, setShowForm] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [deletedUserId, setDeletedUserId] = useState(null); // State for deleted beat ID
-
+  const [userToDelete, setUserToDelete] = useState(null); // State for selected user to delete
 
   const fetchUsers = async () => {
     try {
@@ -48,6 +49,21 @@ const ManageUsers = () => {
       }
     } catch (error) {
       console.error('Error deleting user:', error);
+    }
+  };
+
+  const confirmDeleteUser = (user) => {
+    setUserToDelete(user);
+  };
+
+  const cancelDelete = () => {
+    setUserToDelete(null);
+  };
+
+  const confirmDelete = async () => {
+    if (userToDelete) {
+      await handleDeleteUser(userToDelete.id);
+      setUserToDelete(null);
     }
   };
 
@@ -128,6 +144,15 @@ const ManageUsers = () => {
 
   return (
     <div className='p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg shadow-lg'>
+
+            {/* Display Confirmation Message when deleting a user */}
+      {userToDelete && (
+        <ConfirmMessage
+          message={`Are you sure that you want to delete ${userToDelete.username}? All the information related will also be deleted.`}
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
      
 
       <div className="mb-4 mx-10">
@@ -283,7 +308,7 @@ const ManageUsers = () => {
               </div>
 
               <button
-                onClick={() => handleDeleteUser(user.id)}
+                onClick={() => confirmDeleteUser(user)}
                 className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
                 aria-label={`Delete user ${user.username}`}
               >
