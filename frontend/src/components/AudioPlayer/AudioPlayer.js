@@ -133,8 +133,8 @@ const AudioPlayer = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white px-10 py-3 flex flex-col z-50">
-      <ReactPlayer 
+<div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white px-10 py-2 flex flex-col z-50 shadow-audioplayer-shadow">
+<ReactPlayer 
         ref={playerRef}
         url={currentTrack} 
         playing={isPlaying} 

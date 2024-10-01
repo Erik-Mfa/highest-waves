@@ -16,14 +16,15 @@ const Login = () => {
   };
 
   return (
+
     <div className="flex min-h-screen bg-[#042326]">
       {/* Left side: Form (1/3 of the page) */}
       <div 
-        className="w-full md:w-1/3 flex flex-col justify-start p-6 bg-[#042326] animate-slide-in-left"
+        className="w-full md:w-1/3 flex flex-col justify-start mt-20 p-6 bg-[#042326] animate-slide-in-left"
         >
         <div className="w-full p-8 rounded-lg border-2 border-[#0A3A40] shadow-lg">
-          <h2 className="text-4xl font-bold text-center text-white mb-8 tracking-wider" style={{ textShadow: '0 0 15px #1D7373' }}>
-            Sign In
+          <h2 className="text-4xl font-bold text-center text-white mb-8 tracking-wider">
+            SIGN IN
           </h2>
           <form>
             <div className="mb-10">

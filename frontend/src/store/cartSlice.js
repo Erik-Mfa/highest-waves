@@ -37,12 +37,11 @@ export const {
   addItem,
   removeItem,
   setError,
-  setTotalAmount,  // Export this action
+  setTotalAmount
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
-// Define a simple thunk to fetch cart items
 export const fetchCartItems = (userId) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
@@ -55,7 +54,6 @@ export const fetchCartItems = (userId) => async (dispatch) => {
   }
 };
 
-// Define a simple thunk to remove a cart item
 export const removeCartItem = (cartId) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
@@ -68,7 +66,6 @@ export const removeCartItem = (cartId) => async (dispatch) => {
   }
 };
 
-// Define a simple thunk to add a cart item
 export const addToCartAndUpdate = ({ beatId, userId }) => async (dispatch) => {
   dispatch(setLoading(true));
   try {

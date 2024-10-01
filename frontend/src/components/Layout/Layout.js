@@ -10,8 +10,6 @@ const Layout = ({ children }) => {
   const [showPurchaseCart, setShowPurchaseCart] = useState(false);
   const [admin, setAdmin] = useState(null);
   const [user, setUser] = useState(null);
-
-
   const dispatch = useDispatch();
   const currentTrack = useSelector(selectCurrentTrack);
   const isPlaying = useSelector(selectIsPlaying);

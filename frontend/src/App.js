@@ -18,8 +18,8 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage';
 import AdminPage from './pages/AdminPage/AdminPage';
-import PaymentPage from './pages/PaymentPage/PaymentPage';
-import SuccessPage from './pages/SuccessPage/SuccessPage'; // Import SuccessPage
+import CheckoutPage from './pages/CheckoutPage/CheckoutPage'
+import SuccessPage from './pages/SuccessPage/SuccessPage';
 
 function App() {
   return (
@@ -51,8 +51,8 @@ function App() {
             </Route>
 
             {/* Payment page with Checkout Layout */}
-            <Route path="/payment" element={<CheckoutLayout><PaymentPage /></CheckoutLayout>} />
-            <Route path="/success" element={<CheckoutLayout><SuccessPage /></CheckoutLayout>} />
+            <Route path="/checkout" element={<CheckoutPage />}/>
+            <Route path="/success" element={<SuccessPage />}/>
 
           </Routes>
           <Footer />

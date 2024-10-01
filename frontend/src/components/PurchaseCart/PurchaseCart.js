@@ -1,12 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCartItems, removeCartItem, setTotalAmount } from '../../store/cartSlice'; // Ensure correct path
-import { useEffect } from 'react';
-import { FaTrash } from 'react-icons/fa';
 import Loading from '../Loading/Loading';
+import { FaTrash } from 'react-icons/fa';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCartItems, removeCartItem, setTotalAmount } from '../../store/cartSlice';
 
 function PurchaseCart({ user }) {
   const dispatch = useDispatch();
+
   const cartItems = useSelector((state) => state.cart.items);
   const loading = useSelector((state) => state.cart.loading);
   
@@ -71,8 +72,7 @@ function PurchaseCart({ user }) {
             <p className="text-lg font-bold mb-4">Total: ${totalPrice.toFixed(2)}</p>
             <Link
               to={{
-                pathname: "/payment",
-                state: { totalAmount: totalPrice },
+                pathname: "/checkout",
               }}
               className="w-full py-4 px-6 border border-transparent rounded-md shadow-md text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105 text-center block"
             >

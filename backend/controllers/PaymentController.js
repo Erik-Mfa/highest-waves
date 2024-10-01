@@ -2,59 +2,57 @@ const Order = require('../models/Order');
 const User = require('../models/User');
 const Cart = require('../models/Cart');
 
-const stripe = require('stripe')(process.env.STRIPE_KEY);  // Use the secret key from your .env
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 class PaymentController {
     async save(req, res) {
         try {
             const { price, user, cart, billingInfo } = req.body;
+
+            const max = await Order.findOne({}).sort({ id: -1 });
+            const newId = max == null ? 1 : max.id + 1;
     
-            // Find the user by their id
             const findUser = await User.findOne({ id: user });
             if (!findUser) {
                 return res.status(404).json({ message: "User not found" });
             }
     
-            // Find the user's cart and populate the beats and user fields
             const findUserCart = await Cart.find({ user: findUser._id })
                 .populate('beats')
                 .populate('user');
-    
-            console.log(findUserCart);
     
             if (!findUserCart || findUserCart.length === 0) {
                 return res.status(200).json({ message: 'No carts found for this user', carts: [] });
             }
     
-            // Extract the beat IDs directly from the cart
             const cartItems = findUserCart.flatMap(cart => cart.beats ? [cart.beats._id.toString()] : []).join(',');
     
-            // Create the payment intent using Stripe
+            // Create a payment intent
             const paymentIntent = await stripe.paymentIntents.create({
-                amount: price * 100,  // Convert price to cents
+                amount: price * 100, 
                 currency: 'usd',
                 payment_method_types: ['card'],
                 metadata: {
                     userId: findUser.id.toString(),
-                    cartId: cartItems,  // Store the cart items in metadata
+                    cartId: cartItems,
                 },
             });
     
-            // Create a new order in the database
+
             const newOrder = new Order({
+                id: newId,
                 price,
-                beats: cartItems.split(','),  // Store as an array if needed
+                beats: cartItems.split(','), 
                 user: findUser._id,
                 billingInfo,
-                paymentStatus: 'Waiting payment',
+                paymentStatus: 'Pending', 
             });
     
             await newOrder.save();
     
-            // Delete all carts for this user after creating the order
             await Cart.deleteMany({ user: findUser._id });
-    
-            // Return the client secret and order information
+
+            // Return client secret and order ID for the frontend to process the payment
             res.status(200).json({
                 clientSecret: paymentIntent.client_secret,
                 orderId: newOrder.id,
@@ -65,6 +63,7 @@ class PaymentController {
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
+    
 }
 
 

@@ -2,6 +2,7 @@
 import React from 'react';
 
 const CheckoutLayout = ({ children }) => {
+
   return (
     <div className="checkout-layout">
       {children}

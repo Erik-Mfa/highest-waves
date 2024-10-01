@@ -1,4 +1,5 @@
 require('./database/mongodb');
+const Order = require('./models/Order')
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');

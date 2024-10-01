@@ -7,6 +7,8 @@ module.exports = {
     extend: {
       boxShadow: {
         'fade-lg': '0 -8px 30px rgba(0, 0, 0, 1), 0 8px 30px rgba(0, 0, 0, 1)', // Combined top and bottom shadow
+        'header-shadow': '0 4px 30px rgba(0, 0, 0, 0.7)', // Custom shadow for the header
+        'audioplayer-shadow': '0 -4px 30px rgba(0, 0, 0, 0.7)', // Custom shadow for the audio player (top shadow)
       },
       keyframes: {
         'slide-in-left': {
