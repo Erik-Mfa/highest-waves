@@ -46,6 +46,7 @@ class PaymentController {
                 user: findUser._id,
                 billingInfo,
                 paymentStatus: 'Pending', 
+                stripePaymentIntentId: paymentIntent.id, // Add this line
             });
     
             await newOrder.save();

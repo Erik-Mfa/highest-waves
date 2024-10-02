@@ -24,7 +24,6 @@ const corsOptions = {
     credentials: true // This allows cookies to be sent
 };
 
-// Middleware for raw body for Stripe webhook
 app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -45,25 +44,28 @@ app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), asyn
   // Handle the event based on its type
   switch (event.type) {
       case 'payment_intent.succeeded':
-          const paymentIntent = event.data.object;
-          console.log('PaymentIntent was successful!', paymentIntent);
-          await Order.updateOne({ stripePaymentIntentId: paymentIntent.id }, { status: 'paid' });
+          const successfulPaymentIntent = event.data.object;
+          console.log('PaymentIntent was successful!', successfulPaymentIntent);
+          await Order.updateOne({ stripePaymentIntentId: successfulPaymentIntent.id }, { paymentStatus: 'Completed' });
           break;
-      case 'charge.succeeded':
-          // Handle charge succeeded event
+
+      case 'payment_intent.payment_failed':
+          const failedPaymentIntent = event.data.object;
+          console.log('PaymentIntent has failed:', failedPaymentIntent);
+          await Order.updateOne({ stripePaymentIntentId: failedPaymentIntent.id }, { paymentStatus: 'Failed' });
           break;
+
       default:
           console.log(`Unhandled event type ${event.type}`);
   }
 
   res.status(200).send('Webhook received successfully');
-}
-);
+});
 
-// Middleware for parsing other request bodies
+
 app.use(cookieParser());
-app.use(bodyParser.json()); // For parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));

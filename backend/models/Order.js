@@ -22,6 +22,8 @@ const orderSchema = new mongoose.Schema({
       
     },
     paymentStatus: { type: String, enum: ['Pending', 'Completed', 'Failed'], default: 'Pending' },
+    stripePaymentIntentId: { type: String, required: true }, // Add this field
+
 },{ timestamps: true })
 
 module.exports = mongoose.model('Order', orderSchema); 
