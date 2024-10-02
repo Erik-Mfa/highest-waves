@@ -63,6 +63,41 @@ class PaymentController {
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+    async handleWebhook(req, res) {
+        const sig = req.headers['stripe-signature'];
+        const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+        let event;
+
+        // Log the raw body for debugging
+        console.log(req.body);
+
+        try {
+            // Use the raw body for the verification
+            event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+            console.log('Webhook event verified:', event);
+        } catch (err) {
+            console.error('Webhook signature verification failed.', err.message);
+            return res.status(400).send(`Webhook Error: ${err.message}`);
+        }
+
+        // Handle the event based on its type
+        switch (event.type) {
+            case 'payment_intent.succeeded':
+                const paymentIntent = event.data.object;
+                console.log('PaymentIntent was successful!', paymentIntent);
+                await Order.updateOne({ stripePaymentIntentId: paymentIntent.id }, { status: 'paid' });
+                break;
+            case 'charge.succeeded':
+                // Handle charge succeeded event
+                break;
+            default:
+                console.log(`Unhandled event type ${event.type}`);
+        }
+
+        res.status(200).send('Webhook received successfully');
+    }
     
 }
 
