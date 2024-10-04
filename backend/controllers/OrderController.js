@@ -6,7 +6,13 @@ class OrderController {
 
     async find(req, res) {
         try {
-            const result = await Order.find({}).populate('user').populate('beats');
+            const result = await Order.find({}).populate({
+                path: 'beats',
+                populate: {
+                  path: 'owner', // Populate the owner field within beats
+                  select: 'username' // Only retrieve the username field from owner
+                }
+              }).populate('user');
             res.status(200).json(result);
         } catch (error) {
             console.error('Error finding orders:', error);
