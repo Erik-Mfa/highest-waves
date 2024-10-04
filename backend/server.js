@@ -25,42 +25,81 @@ const corsOptions = {
 };
 
 app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
-  const sig = req.headers['stripe-signature'];
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    const sig = req.headers['stripe-signature'];
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  let event;
+    let event;
 
-  console.log(req.body);
+    try {
+        event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+        console.log('Webhook event verified:', event);
+    } catch (err) {
+        console.error('Webhook signature verification failed.', err.message);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
 
-  try {
-      // Use the raw body for the verification
-      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-      console.log('Webhook event verified:', event);
-  } catch (err) {
-      console.error('Webhook signature verification failed.', err.message);
-      return res.status(400).send(`Webhook Error: ${err.message}`);
-  }
+    switch (event.type) {
+        case 'payment_intent.succeeded': {
+            const successfulPaymentIntent = event.data.object;
+            console.log('PaymentIntent was successful!', successfulPaymentIntent);
+            
+            await Order.updateOne(
+                { stripePaymentIntentId: successfulPaymentIntent.id }, 
+                { 
+                    paymentStatus: 'Completed',
+                    paymentMethod: successfulPaymentIntent.payment_method,
+                    $push: { 
+                        paymentHistory: { status: 'Completed', message: 'Payment successful' }
+                    }
+                }
+            );
+            break;
+        }
 
-  // Handle the event based on its type
-  switch (event.type) {
-      case 'payment_intent.succeeded':
-          const successfulPaymentIntent = event.data.object;
-          console.log('PaymentIntent was successful!', successfulPaymentIntent);
-          await Order.updateOne({ stripePaymentIntentId: successfulPaymentIntent.id }, { paymentStatus: 'Completed' });
-          break;
+        case 'payment_intent.payment_failed': {
+            const failedPaymentIntent = event.data.object;
+            console.log('PaymentIntent has failed:', failedPaymentIntent);
 
-      case 'payment_intent.payment_failed':
-          const failedPaymentIntent = event.data.object;
-          console.log('PaymentIntent has failed:', failedPaymentIntent);
-          await Order.updateOne({ stripePaymentIntentId: failedPaymentIntent.id }, { paymentStatus: 'Failed' });
-          break;
+            const failureReason = failedPaymentIntent.last_payment_error?.message || 'Unknown reason';
+            await Order.updateOne(
+                { stripePaymentIntentId: failedPaymentIntent.id }, 
+                { 
+                    paymentStatus: 'Failed',
+                    paymentFailureReason: failureReason,
+                    $push: { 
+                        paymentHistory: { status: 'Failed', message: failureReason }
+                    }
+                }
+            );
+            break;
+        }
 
-      default:
-          console.log(`Unhandled event type ${event.type}`);
-  }
+        case 'charge.refunded': {
+            const refundedCharge = event.data.object;
+            console.log('Charge has been refunded:', refundedCharge);
 
-  res.status(200).send('Webhook received successfully');
+            // You may need to retrieve the associated order if you stored the order ID in the charge metadata
+            const orderId = refundedCharge.metadata.order_id; // Assume you saved the order ID in metadata
+            
+            await Order.updateOne(
+                { stripeChargeId: refundedCharge.id }, // Match by charge ID
+                { 
+                    paymentStatus: 'Refunded', // Update the payment status
+                    $push: { 
+                        paymentHistory: { status: 'Refunded', message: 'Charge refunded' }
+                    }
+                }
+            );
+            break;
+        }
+
+        default:
+            console.log(`Unhandled event type ${event.type}`);
+    }
+
+    res.status(200).send('Webhook received successfully');
 });
+
 
 
 app.use(cookieParser());

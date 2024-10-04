@@ -9,5 +9,6 @@ router.use(bodyParser.json());
 
 // router.post('/webhook', express.raw({ type: 'application/json' }), PaymentController.handleWebhook);
 router.post('/create-payment-intent', authorize, PaymentController.save); 
+router.post('/refund', authorize, PaymentController.refund); 
 
 module.exports = router;

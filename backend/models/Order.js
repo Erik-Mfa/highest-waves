@@ -12,18 +12,27 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-      },
+    },
     billingInfo: {
       name: { type: String, required: true },
       address: { type: String, required: true },
       city: { type: String, required: true },
       postalCode: { type: String, required: true },
       country: { type: String, required: true },
-      
     },
-    paymentStatus: { type: String, enum: ['Pending', 'Completed', 'Failed'], default: 'Pending' },
-    stripePaymentIntentId: { type: String, required: true }, // Add this field
+    paymentStatus: { 
+      type: String, 
+      enum: ['Pending', 'Completed', 'Failed', 'Refunded'], // Include more statuses if necessary
+      default: 'Pending' 
+    },
+    stripePaymentIntentId: { type: String, required: true }, 
+    paymentMethod: { type: String }, // Optional: Record payment method type (e.g., card)
+    paymentFailureReason: { type: String }, // Record reason for payment failure
+    paymentHistory: [{
+      status: { type: String },
+      message: { type: String },
+      date: { type: Date, default: Date.now }
+    }], // Track the history of payment status changes
+}, { timestamps: true });
 
-},{ timestamps: true })
-
-module.exports = mongoose.model('Order', orderSchema); 
+module.exports = mongoose.model('Order', orderSchema);

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartItems } from '../../../store/cartSlice';
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
+import { save } from '../../../services/api/payment'; 
 import { isAuthenticated } from '../../../services/api/auth';
 
 const PaymentForm = ({ billingInfo, user }) => {
@@ -25,23 +26,21 @@ const PaymentForm = ({ billingInfo, user }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+    
         if (!stripe || !elements) {
             return;
         }
-
+    
         try {
-            const { data: { clientSecret } } = await axios.post(
-                'http://localhost:3001/api/payment/create-payment-intent',
-                {
-                    price: totalPrice,
-                    user: user.userId,
-                    cart: cartItems,
-                    billingInfo
-                },
-                { withCredentials: true }
-            );
-
+            const paymentInfo = {
+                price: totalPrice,
+                user: user.userId,
+                cart: cartItems,
+                billingInfo
+            };
+    
+            const { clientSecret } = await save(paymentInfo);
+    
             const { error: stripeError } = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: elements.getElement(CardNumberElement),
@@ -56,14 +55,15 @@ const PaymentForm = ({ billingInfo, user }) => {
                     }
                 },
             });
-
+    
             if (stripeError) {
-                console.error('Error confirming card payment:', stripeError);
+                navigate('/failed');
             } else {
-                navigate('/success'); 
+                navigate('/success');
             }
         } catch (error) {
             console.error('Error creating payment intent:', error);
+            navigate('/error')
         }
     };
 

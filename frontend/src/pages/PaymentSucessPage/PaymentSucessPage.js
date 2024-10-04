@@ -1,8 +1,8 @@
 import React from 'react';
-import { FaCheckCircle } from 'react-icons/fa'; // Import success icon from react-icons
+import { FaCheckCircle } from 'react-icons/fa'; // Import failure icon from react-icons
 import { useNavigate, Link } from 'react-router-dom';
 
-const PaymentSuccess = () => {
+const PaymentSucessPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -35,4 +35,4 @@ const PaymentSuccess = () => {
   );
 };
 
-export default PaymentSuccess;
+export default PaymentSucessPage;

@@ -19,7 +19,10 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import BeatDetailsPage from './pages/DetailsPage/BeatDetailsPage';
 import AdminPage from './pages/AdminPage/AdminPage';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage'
-import SuccessPage from './pages/SuccessPage/SuccessPage';
+import PaymentSucessPage from './pages/PaymentSucessPage/PaymentSucessPage';
+import PaymentFailedPage from './pages/PaymentFailedPage/PaymentFailedPage';
+import PaymentErrorPage from './pages/PaymentErrorPage/PaymentErrorPage'
+
 
 function App() {
   return (
@@ -52,7 +55,9 @@ function App() {
 
             {/* Payment page with Checkout Layout */}
             <Route path="/checkout" element={<CheckoutPage />}/>
-            <Route path="/success" element={<SuccessPage />}/>
+            <Route path="/success" element={<PaymentSucessPage />}/>
+            <Route path="/failed" element={<PaymentFailedPage />}/>
+            <Route path="/error" element={<PaymentErrorPage />}/>
 
           </Routes>
           <Footer />

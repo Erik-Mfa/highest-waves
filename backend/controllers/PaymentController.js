@@ -27,7 +27,6 @@ class PaymentController {
     
             const cartItems = findUserCart.flatMap(cart => cart.beats ? [cart.beats._id.toString()] : []).join(',');
     
-            // Create a payment intent
             const paymentIntent = await stripe.paymentIntents.create({
                 amount: price * 100, 
                 currency: 'usd',
@@ -35,6 +34,7 @@ class PaymentController {
                 metadata: {
                     userId: findUser.id.toString(),
                     cartId: cartItems,
+                    orderId: newId
                 },
             });
     
@@ -46,14 +46,13 @@ class PaymentController {
                 user: findUser._id,
                 billingInfo,
                 paymentStatus: 'Pending', 
-                stripePaymentIntentId: paymentIntent.id, // Add this line
+                stripePaymentIntentId: paymentIntent.id, 
             });
     
             await newOrder.save();
     
             await Cart.deleteMany({ user: findUser._id });
 
-            // Return client secret and order ID for the frontend to process the payment
             res.status(200).json({
                 clientSecret: paymentIntent.client_secret,
                 orderId: newOrder.id,
@@ -65,39 +64,34 @@ class PaymentController {
         }
     }
 
-    async handleWebhook(req, res) {
-        const sig = req.headers['stripe-signature'];
-        const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-        let event;
-
-        // Log the raw body for debugging
-        console.log(req.body);
-
+    async refund(req, res) {
         try {
-            // Use the raw body for the verification
-            event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-            console.log('Webhook event verified:', event);
-        } catch (err) {
-            console.error('Webhook signature verification failed.', err.message);
-            return res.status(400).send(`Webhook Error: ${err.message}`);
-        }
+            const { orderId } = req.body;
 
-        // Handle the event based on its type
-        switch (event.type) {
-            case 'payment_intent.succeeded':
-                const paymentIntent = event.data.object;
-                console.log('PaymentIntent was successful!', paymentIntent);
-                await Order.updateOne({ stripePaymentIntentId: paymentIntent.id }, { status: 'paid' });
-                break;
-            case 'charge.succeeded':
-                // Handle charge succeeded event
-                break;
-            default:
-                console.log(`Unhandled event type ${event.type}`);
-        }
+            const order = await Order.findOne({ id: orderId });
+            if (!order) {
+                return res.status(404).json({ message: "Order not found" });
+            }
 
-        res.status(200).send('Webhook received successfully');
+            const refund = await stripe.refunds.create({
+                payment_intent: order.stripePaymentIntentId,
+            });
+
+            order.paymentStatus = 'Refunded'; 
+            order.paymentHistory.push({
+                date: new Date(),
+                status: 'Refunded',
+                message: `Refund processed: ${refund.id}`,
+            });
+
+            await order.save();
+
+            res.status(200).json({ message: 'Refund successful', refund });
+        } catch (error) {
+            console.error('Error processing refund:', error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
     }
     
 }
