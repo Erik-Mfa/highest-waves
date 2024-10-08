@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { createBeat, getBeats, deleteBeat } from '../../../services/api/beats';
 import { FaImage, FaVideo, FaChevronDown, FaTrash } from 'react-icons/fa';
 import { getTags } from '../../../services/api/tags';
-import Loading from '../../Loading/Loading'; // Import the Loading component
 import UserRegisterError from '../../Error/UserRegisterError/UserRegisterError'; // Adjust import path
 
 const ManageBeats = () => {
@@ -22,13 +21,13 @@ const ManageBeats = () => {
   const [beats, setBeats] = useState([]);
   const [isFormDropdownOpen, setIsFormDropdownOpen] = useState(false);
   const [isTagsDropdownOpen, setIsTagsDropdownOpen] = useState(false);
-
-  const [loading, setLoading] = useState(false); // Add loading state
-  const [imageName, setImageName] = useState('No file chosen'); // State for image name
-  const [audioName, setAudioName] = useState('No file chosen'); // State for audio name
+  const [loading, setLoading] = useState(true);
+  const [imageName, setImageName] = useState('No file chosen'); 
+  const [audioName, setAudioName] = useState('No file chosen'); 
   const [validationErrors, setValidationErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState(''); // State for success message
-  const [deletedBeatId, setDeletedBeatId] = useState(null); // State for deleted beat ID
+  const [deletedBeatId, setDeletedBeatId] = useState(null); 
+  const [isImageLoaded, setImageLoaded] = useState(false);
 
   const validateForm = () => {
     const errors = {};
@@ -151,14 +150,14 @@ const ManageBeats = () => {
 
   return (
     <div className="p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg">
-      {/* Success Message */}
+
       {successMessage && (
         <div className="mb-4 px-4 py-2 text-white bg-green-600 rounded-md transition-opacity duration-300 ease-in-out">
           {successMessage}
         </div>
       )}
 
-      <div className="mb-4 mx-10 flex justify-center">
+      <div className="mx-10 flex justify-center">
         <button
           onClick={toggleFormDropdown}
           className="bg-teal-800 text-white text-lg px-8 py-2 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
@@ -168,7 +167,7 @@ const ManageBeats = () => {
       </div>
 
       {isFormDropdownOpen && (
-        <form className="space-y-4 mb-4 border border-gray-600 p-4 rounded-lg bg-gray-800">
+        <form className="mb-4 mt-10 mx-12 border border-gray-600 py-10 rounded-lg bg-gray-800">
           {/* Title */}
           <div className="mb-4 mx-10">
             <label htmlFor="title" className="block text-sm font-medium text-white">
@@ -248,6 +247,7 @@ const ManageBeats = () => {
             {validationErrors.tone && <p className="text-red-500 text-sm">{validationErrors.tone}</p>}
           </div>
 
+          {/* Image */}
           <div className="mb-4 mx-10">
             <label htmlFor="image" className="block text-sm font-medium text-white">
               Image
@@ -268,109 +268,132 @@ const ManageBeats = () => {
             {validationErrors.image && <p className="text-red-500 text-sm">{validationErrors.image}</p>}
           </div>
 
-           <div className="mb-4 mx-10">
-            <label htmlFor="audioURL" className="block text-sm font-medium text-white">
-              Audio File
-            </label>
-            <div className="flex items-center">
-              <label className="flex items-center px-3 py-2 bg-gray-700 rounded-md shadow-sm cursor-pointer hover:bg-gray-600">
-                <FaVideo className="mr-2" />
-                <span>{audioName}</span>
-                <input
-                  type="file"
-                  id="audioURL"
-                  onChange={handleAudioChange}
-                  className="hidden"
-                  accept="audio/*"
-                />
-              </label>
-            </div>
-            {validationErrors.audioURL && <p className="text-red-500 text-sm">{validationErrors.audioURL}</p>}
-          </div>
-
-          {/* Tags Dropdown */}
+          {/* Audio File */}
           <div className="mb-4 mx-10">
-            <label htmlFor="tags" className="block text-sm font-medium text-white">
-              Tags
+          <label htmlFor="audioURL" className="block text-sm font-medium text-white">
+            Audio File
+          </label>
+          <div className="flex items-center">
+            <label className="flex items-center px-3 py-2 bg-gray-700 rounded-md shadow-sm cursor-pointer hover:bg-gray-600">
+              <FaVideo className="mr-2" />
+              <span>{audioName}</span>
+              <input
+                type="file"
+                id="audioURL"
+                onChange={handleAudioChange}
+                className="hidden"
+                accept="audio/*"
+              />
             </label>
-            <div className="relative">
-              <button
-                type="button"
-                onClick={toggleTagsDropdown}
-                className="w-full px-4 py-2 text-left bg-gray-900 text-white border border-gray-600 rounded-md shadow-sm hover:bg-gray-800"
-              >
-                Select Tags <FaChevronDown className="inline-block ml-2" />
-              </button>
-              {isTagsDropdownOpen && (
-                <div className="absolute z-10 w-full mt-2 bg-gray-900 border border-gray-600 rounded-md shadow-lg">
-                  {tags.map((tag) => (
-                    <div
-                      key={tag.id}
-                      className={`cursor-pointer px-4 py-2 ${
-                        beatDetails.tags.includes(tag.id)
-                          ? 'bg-cyan-600 text-white'
-                          : 'hover:bg-gray-800 text-white'
-                      }`}
-                      onClick={() => handleTagSelect(tag.id)}
-                    >
-                      {tag.name}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
           </div>
+          {validationErrors.audioURL && <p className="text-red-500 text-sm">{validationErrors.audioURL}</p>}
+        </div>
 
-          <div className="mb-4 mx-10">
+        {/* Tags Dropdown */}
+        <div className="mb-4 mx-10">
+          <label htmlFor="tags" className="block text-sm font-medium text-white">
+            Tags
+          </label>
+          <div className="relative">
             <button
               type="button"
-              onClick={handleCreateBeat}
-              className="w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+              onClick={toggleTagsDropdown}
+              className="w-full px-4 py-2 text-left bg-gray-900 text-white border border-gray-600 rounded-md shadow-sm hover:bg-gray-800"
             >
-              Create Beat
+              Select Tags <FaChevronDown className="inline-block ml-2" />
             </button>
+            {isTagsDropdownOpen && (
+              <div className="absolute z-10 w-full mt-2 bg-gray-900 border border-gray-600 rounded-md shadow-lg">
+                {tags.map((tag) => (
+                  <div
+                    key={tag.id}
+                    className={`cursor-pointer px-4 py-2 ${
+                      beatDetails.tags.includes(tag.id)
+                        ? 'bg-cyan-600 text-white'
+                        : 'hover:bg-gray-800 text-white'
+                    }`}
+                    onClick={() => handleTagSelect(tag.id)}
+                  >
+                    {tag.name}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+        </div>
+
+        {/* Create Beat */}
+        <div className="mb-4 mx-10">
+          <button
+            type="button"
+            onClick={handleCreateBeat}
+            className="w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+          >
+            Create Beat
+          </button>
+        </div>
           
-      {/* Display validation errors */}
-      {Object.keys(validationErrors).length > 0 && (
-        <UserRegisterError message="Please fix the errors above and try again." />
-      )}
+        {/* Form validation errors */}
+        {Object.keys(validationErrors).length > 0 && (
+          <UserRegisterError message="Please fix the errors above and try again." />
+        )}
         </form>
       )}
 
-    <div className="text-white p-6 rounded-lg max-w-3xl mx-auto">
-      {loading && <Loading />}
-      {/* Beats List */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {beats.map((beat) => (
-          <div
-            key={beat.id}
-            className="p-4 bg-gray-800 border border-gray-600 rounded-lg flex flex-col items-center hover:bg-gray-700 transition-colors duration-300 ease-in-out"
-          >
-            <img
-              src={`http://localhost:3001/${beat.image}`}
-              alt="Cover Art"
-              className="w-32 h-32 rounded-md object-cover mb-4"
-            />
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-white">{beat.title}</h3>
-              <p className="text-sm text-gray-400">Price: ${beat.price}</p>
-              <p className="text-sm text-gray-400">BPM: {beat.bpm}</p>
-              <p className="text-sm text-gray-400">Tone: {beat.tone}</p>
-            </div>
-            <button
-              onClick={() => handleDeleteBeat(beat.id)}
-              className="mt-4 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-md"
-            >
-              <FaTrash />
-            </button>
+      <div className="text-white rounded-lg max-w-5xl mx-auto"> 
+        <div className="m-6 bg-gray-800 rounded-lg p-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            {beats.map((beat) => {
+              return (
+                <div
+                  key={beat.id}
+                  className="p-4 bg-gray-800 border border-gray-600 rounded-lg flex items-center hover:bg-gray-700 transition-colors duration-300 ease-in-out"
+                >
+
+                  {/* Image Container */}
+                  <div className="relative w-32 h-32 mr-4 flex-shrink-0"> 
+                    {/* Gray placeholder effect while image is loading */}
+                    {!isImageLoaded && (
+                      <div className="absolute inset-0 bg-gray-700 animate-pulse rounded-md"></div>
+                    )}
+
+                    <img
+                      src={`http://localhost:3001/${beat.image}`}
+                      alt="Cover Art"
+                      className={`w-full h-full rounded-md object-cover transition-opacity duration-500 ${
+                        isImageLoaded ? "opacity-100" : "opacity-0"
+                      }`}
+                      onLoad={() => setImageLoaded(true)}
+                    />
+                  </div>
+                  
+                  {/* Beat Information */}
+                  <div className="flex flex-col text-left flex-grow">
+                    <h3 className="text-md font-semibold text-white mb-4">{beat.title}</h3>
+                    <p className="text-sm text-gray-400">BPM: {beat.bpm}</p>
+                    <p className="text-sm text-gray-400">Tone: {beat.tone}</p>
+
+                    {/* Flex container to keep Tone and Trash on the same line */}
+                    <div className="flex justify-between items-center mt-2">
+                    <p className="text-sm font-bold text-gray-400 mt-2">${beat.price}</p>
+
+                      <button
+                        onClick={() => handleDeleteBeat(beat.id)}
+                        className="text-red-500 p-2 rounded-full"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              );
+            })}
           </div>
-        ))}
-      </div>
         </div>
-
       </div>
 
+    </div>
   );
 };
 

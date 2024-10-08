@@ -81,14 +81,14 @@ const Header = ({ user, admin }) => {
               <>
                 {admin && (
                   <Link 
-                    className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
+                    className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
                     to="/admin"
                     style={{ fontFamily: '"REM"' }}
                   >
                     Admin
                   </Link>
                 )}
-                <li className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110">
+                <li className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110">
                   <button onClick={handleLogout} style={{ fontFamily: '"REM"' }}>
                     Logout
                   </button>
@@ -98,12 +98,12 @@ const Header = ({ user, admin }) => {
               <li className="relative flex items-center space-x-4">
                 <Link 
                   to="/login" 
-                  className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
+                  className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
                 >
                   Login
                 </Link>
                 <Link 
-                  className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
+                  className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
                   to="/register" 
                 >
                   Register
