@@ -63,11 +63,13 @@ const ManageTags = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-800 rounded-lg shadow-lg">
+    <div className="max-w-md mx-auto m-10 p-10 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
+      {/* Title */}
       <h2 className="text-2xl font-bold text-center text-white mb-6">Add a new tag</h2>
+      
+      {/* Form */}
       <form>
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium text-white">Name</label>
           <input
             type="text"
             id="name"
@@ -78,37 +80,39 @@ const ManageTags = () => {
           />
         </div>
 
+        {/* Submit Button */}
         <button
           type="button"
           onClick={handleCreateTag}
-          className="w-full py-2 px-4 mt-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+          className="w-full bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
         >
           Create Tag
         </button>
       </form>
 
       {/* Display Tags Underneath the Form */}
-      <div className="mt-8">
-        <h3 className="text-xl font-semibold text-white mb-4">Existing Tags:</h3>
+      <div className="mt-8 rounded-lg bg-gray-900 p-6">
+        <h3 className="text-xl font-semibold text-white mb-4">Available Tags</h3>
         <ul className="space-y-2">
-        {loading && <Loading />} 
+          {loading && <div className="text-white">Loading...</div>}
 
-          {          
-            tags.map((tag) => (   
-              <li key={tag.id || tag._id} className="flex items-center justify-between bg-gray-700 text-white text-sm py-1 px-2 rounded-md">
-                              
-              {tag.name}
-              
-                <button
-                  onClick={() => handleDeleteTag(tag.id || tag._id)}
-                  className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
-                >
-                  <FaTrash className="text-xs" />
-                </button>
-              </li>
-            ))
-            }
+          {/* Tag List */}
+          {tags.map((tag) => (
+            <li
+              key={tag.id || tag._id}
+              className="flex items-center justify-between bg-gray-800 text-white text-sm py-2 px-4 rounded-md hover:bg-gray-700 transition-colors duration-300 ease-in-out"
+            >
+              <span>{tag.name}</span>
 
+              {/* Delete Button */}
+              <button
+                onClick={() => handleDeleteTag(tag.id || tag._id)}
+                className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
+              >
+                <FaTrash className="text-xs" />
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

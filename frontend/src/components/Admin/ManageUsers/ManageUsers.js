@@ -144,8 +144,7 @@ const ManageUsers = () => {
 
   return (
     <div className='p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg shadow-lg'>
-
-            {/* Display Confirmation Message when deleting a user */}
+      {/* Display Confirmation Message when deleting a user */}
       {userToDelete && (
         <ConfirmMessage
           message={`Are you sure that you want to delete ${userToDelete.username}? All the information related will also be deleted.`}
@@ -155,10 +154,10 @@ const ManageUsers = () => {
       )}
      
 
-      <div className="mb-4 mx-10">
+     <div className="mb-4 mx-10 flex justify-center">
         <button
           onClick={toggleFormDropdown}
-          className="w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+          className="bg-teal-800 text-white text-lg px-8 py-2 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
         >
           Create User
         </button>
@@ -166,7 +165,7 @@ const ManageUsers = () => {
 
       {isFormDropdownOpen && (
 
-      <form className="space-y-4 mb-4 border border-gray-600 p-4 max-w-md mx-auto rounded-lg bg-gray-800">
+      <form className="space-y-4 mb-4 border border-gray-600 p-4 max-w-md mx-auto rounded-lg">
         {/* Username */}
         <div className="mb-4 mx-10">
           <label htmlFor="username" className="block text-sm font-medium text-white">
@@ -285,40 +284,39 @@ const ManageUsers = () => {
       
       )}
 
+<div className=" text-white p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
 
-      <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
-      <h2 className="text-4xl font-bold mb-6 text-center">Users</h2>
- 
-        <div className="space-y-4">
-          {loading && <Loading />} 
-          {users.map(user => (
-            <div
-              key={user.id} // Assuming each user has a unique 'id'
-              className="flex items-center justify-between mb-4 p-4 border border-gray-600 rounded-lg bg-gray-800"
-              >
-            <img
-              src={`http://localhost:3001/${user.image}`}
-              alt="Cover Art"
-              className="w-20 h-20 rounded-md object-cover mr-4"
-            />
-              <div className="flex-grow">
-                <h3 className="text-md font-semibold text-white">{user.username}</h3>
-                <p className="text-sm text-gray-400">Email: {user.email}</p>
-                <p className="text-sm text-gray-400">Role: {user.role}</p>
-              </div>
 
-              <button
-                onClick={() => confirmDeleteUser(user)}
-                className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
-                aria-label={`Delete user ${user.username}`}
-              >
-                <FaTrash className="text-lg" />
-              </button>
-            </div>
-          ))}
+  <div className="space-y-4">
+    {loading && <Loading />}
+    {users.map(user => (
+      <div
+        key={user.id} // Assuming each user has a unique 'id'
+        className="flex items-center justify-between mb-4 p-4 border border-gray-600 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors duration-300 ease-in-out"
+      >
+        <img
+          src={`http://localhost:3001/${user.image}`}
+          alt="User Avatar"
+          className="w-20 h-20 rounded-full object-cover mr-4 border-2 border-cyan-600" // Adding a border around the image
+        />
+        <div className="flex-grow">
+          <h3 className="text-md font-semibold text-white">{user.username}</h3>
+          <p className="text-sm text-gray-400">Email: {user.email}</p>
+          <p className="text-sm text-gray-400">Role: {user.role}</p>
         </div>
-      
-    </div>
+
+        <button
+          onClick={() => confirmDeleteUser(user)}
+          className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
+          aria-label={`Delete user ${user.username}`}
+        >
+          <FaTrash className="text-lg" />
+        </button>
+      </div>
+    ))}
+  </div>
+</div>
+
     </div>
   );
 };

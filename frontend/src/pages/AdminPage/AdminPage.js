@@ -4,16 +4,11 @@ import { Outlet } from 'react-router-dom';
 
 function AdminPage() {
   return (
-<div className="flex min-h-screen bg-dark-teal">
-      
-      {/* Sidebar */}
-      <div className="md:w-64 w-full mt-2">
-        <AdminSidebar />
-      </div>
+    <div className="flex flex-col min-h-screen bg-dark-teal">
+      <AdminSidebar />
 
-      {/* Main Content */}
-      <div className="flex-1 p-10 flex justify-center ">
-        <div className="w-full max-w-4xl p-6 ">
+      <div className="flex-1 w-full flex justify-center">
+        <div className="w-full max-w-6xl ">
           <Outlet />
         </div>
       </div>

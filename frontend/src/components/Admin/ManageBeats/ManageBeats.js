@@ -150,20 +150,18 @@ const ManageBeats = () => {
   };
 
   return (
-    <div className="p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
-      {loading && <Loading />}
-
+    <div className="p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg">
       {/* Success Message */}
       {successMessage && (
-        <div className="mb-4 px-4 py-2 text-white bg-green-600 rounded-md shadow-md transition-opacity duration-300 ease-in-out">
+        <div className="mb-4 px-4 py-2 text-white bg-green-600 rounded-md transition-opacity duration-300 ease-in-out">
           {successMessage}
         </div>
       )}
 
-      <div className="mb-4 mx-10">
+      <div className="mb-4 mx-10 flex justify-center">
         <button
           onClick={toggleFormDropdown}
-          className="w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+          className="bg-teal-800 text-white text-lg px-8 py-2 rounded-lg hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
         >
           Create Beat
         </button>
@@ -340,41 +338,39 @@ const ManageBeats = () => {
         </form>
       )}
 
-<div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
-    <h2 className="text-4xl font-bold text-white mb-6 text-center">Beats</h2>
-
-      {/* Beat List */}
-      <div className="mx-10">
-      {loading && <Loading />} 
+    <div className="text-white p-6 rounded-lg max-w-3xl mx-auto">
+      {loading && <Loading />}
+      {/* Beats List */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {beats.map((beat) => (
           <div
             key={beat.id}
-            className="flex items-center justify-between mb-4 p-4 border border-gray-600 rounded-lg bg-gray-800"
+            className="p-4 bg-gray-800 border border-gray-600 rounded-lg flex flex-col items-center hover:bg-gray-700 transition-colors duration-300 ease-in-out"
           >
             <img
               src={`http://localhost:3001/${beat.image}`}
               alt="Cover Art"
-              className="w-20 h-20 rounded-md object-cover mr-4"
+              className="w-32 h-32 rounded-md object-cover mb-4"
             />
-            <div className="flex-grow">
-              <h3 className="text-md font-semibold text-white">{beat.title}</h3>
-              <p className="text-sm text-gray-400">Description: {beat.description}</p>
+            <div className="text-center">
+              <h3 className="text-lg font-semibold text-white">{beat.title}</h3>
               <p className="text-sm text-gray-400">Price: ${beat.price}</p>
               <p className="text-sm text-gray-400">BPM: {beat.bpm}</p>
               <p className="text-sm text-gray-400">Tone: {beat.tone}</p>
             </div>
             <button
               onClick={() => handleDeleteBeat(beat.id)}
-              className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
+              className="mt-4 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-md"
             >
-              <FaTrash className="text-lg" />
+              <FaTrash />
             </button>
           </div>
         ))}
       </div>
+        </div>
 
-    </div>
-    </div>
+      </div>
+
   );
 };
 
