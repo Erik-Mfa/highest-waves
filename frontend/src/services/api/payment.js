@@ -14,12 +14,10 @@ export const handleRefund = async (orderId) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ orderId }),
-            credentials: 'include', // Ensure cookies are sent
+            credentials: 'include', 
         });
 
-        const data = await response.json();
-        alert(data.message); // Show a success or error message
-        // Optionally refresh the orders or update the state
+        return response.data
     } catch (error) {
         console.error('Error processing refund:', error);
         alert('Failed to process refund.');
@@ -33,9 +31,9 @@ export const save = async (paymentInfo) => {
                 paymentInfo,  // Send paymentInfo directly
             { withCredentials: true }
         );
-        return response.data; // Return the response data to use in PaymentForm
+        return response.data; 
     } catch (error) {
         console.error('Error creating payment intent:', error);
-        throw error; // Rethrow error for handling in PaymentForm
+        throw error; 
     }
 }

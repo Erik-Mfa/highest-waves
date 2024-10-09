@@ -25,7 +25,7 @@ const ManageBeats = () => {
   const [imageName, setImageName] = useState('No file chosen'); 
   const [audioName, setAudioName] = useState('No file chosen'); 
   const [validationErrors, setValidationErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState(''); // State for success message
+  const [successMessage, setSuccessMessage] = useState('');
   const [deletedBeatId, setDeletedBeatId] = useState(null); 
   const [isImageLoaded, setImageLoaded] = useState(false);
 

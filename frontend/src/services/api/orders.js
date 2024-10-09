@@ -31,3 +31,14 @@ export const getOrders = async () => {
     throw error;
   }
 };
+
+export const deleteOrders = async (orderId) => {
+  try {
+    await instance.delete(`/orders/${orderId}`, { withCredentials: true });
+    return { success: true };
+
+  } catch (error) {
+    console.error('Error deleting order:', error);
+    throw error;
+  }
+};

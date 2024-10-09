@@ -144,7 +144,7 @@ const ManageUsers = () => {
 
   return (
     <div className='p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg shadow-lg'>
-      {/* Display Confirmation Message when deleting a user */}
+      {/* Confirm delete message */}
       {userToDelete && (
         <ConfirmMessage
           message={`Are you sure that you want to delete ${userToDelete.username}? All the information related will also be deleted.`}

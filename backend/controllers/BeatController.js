@@ -107,12 +107,10 @@ class BeatController {
       const imageFilePath = path.join(__dirname, '../public/assets/beats-logos', path.basename(beat.image));
       const audioFilePath = path.join(__dirname, '../public/assets/beats-audios', path.basename(beat.audioURL));
   
-      // Delete the image file if it exists
       if (fs.existsSync(imageFilePath)) {
         fs.unlinkSync(imageFilePath);
       }
   
-      // Delete the audio file if it exists
       if (fs.existsSync(audioFilePath)) {
         fs.unlinkSync(audioFilePath);
       }

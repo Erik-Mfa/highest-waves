@@ -24,6 +24,7 @@ const BillingForm = ({ onBillingInfoChange }) => {
     { code: 'DE', name: 'Germany' },
     { code: 'FR', name: 'France' },
     { code: 'JP', name: 'Japan' },
+    { code: 'BR', name: 'Brazil' },
   ];
 
   return (

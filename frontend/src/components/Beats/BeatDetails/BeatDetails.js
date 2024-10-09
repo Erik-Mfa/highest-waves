@@ -57,7 +57,7 @@ function BeatDetails() {
   if (!beat) return <div className="text-white text-center py-4">Beat not found</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-start justify-center pt-16 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-start pt-20 px-4">
       <div className="flex items-start bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-5xl border border-gray-700">
         {/* Left Side: Beat Image & Play Button */}
         <div className="flex-shrink-1 lg:w-1/2 mb-6 lg:mb-0 lg:mr-8 relative">
@@ -79,30 +79,35 @@ function BeatDetails() {
             </div>
           </div>
         </div>
-
+  
         {/* Right Side: Beat Info */}
         <div className="flex-1 lg:w-1/2 text-white text-center lg:text-left space-y-4">
           <h2 className="text-3xl lg:text-4xl font-extrabold tracking-wide text-teal-400">{beat.title}</h2>
-          <p className="text-lg text-gray-300">By: <span className="text-teal-400">{beat.owner.username}</span></p>
-          <p className="text-xl">
-            Price: 
-            <span className="text-teal-500 font-bold"> ${beat.price}</span>
-          </p>
+          <p className="text-lg text-gray-300">By <span className="text-teal-400">{beat.owner.username}</span></p>
+          <p className="text-xl"> ${beat.price}</p>
           <p className="text-sm text-gray-400">BPM: {beat.bpm}</p>
           <p className="text-sm text-gray-400">Tone: {beat.tone}</p>
-          <p className="text-md text-gray-300 border-t border-gray-700 pt-4">Description: {beat.description}</p>
-
+  
           {/* Add to Cart Button */}
           <button
             onClick={handleAddToCart}
-            className="w-full max-w-xs flex items-center justify-center space-x-2 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-5 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+            value="Add to Cart"
+            className="bg-teal-800 text-white text-lg px-4 py-3 rounded-lg hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2"
           >
-            <FaShoppingCart /> <span>Add to Cart</span>
+            <FaShoppingCart /> <span> Add to Cart</span>
           </button>
         </div>
       </div>
+  
+      {/* Beat Description: Centered and Responsive */}
+      <div className="w-full max-w-5xl mt-8 flex justify-center">
+        <p className="text-3xl lg:text-4xl text-teal-500 font-bold text-center lg:text-left max-w-3xl">
+          {beat.description}
+        </p>
+      </div>
     </div>
   );
+  
 }
 
 export default BeatDetails;

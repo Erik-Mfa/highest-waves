@@ -45,12 +45,9 @@ userSchema.pre('save', async function(next) {
 
 userSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
   try {
-    const userId = this._id; // Access the document's _id
+    const userId = this._id; 
 
-    // Delete all beats owned by this user
     await Beat.deleteMany({ owner: userId });
-
-    // Delete all carts associated with this user
     await Cart.deleteMany({ user: userId });
 
     next();

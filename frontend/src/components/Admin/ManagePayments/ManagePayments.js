@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { getOrders } from '../../../services/api/orders';
+import { getOrders, deleteOrders } from '../../../services/api/orders';
 import { handleRefund } from '../../../services/api/payment'; 
 import Loading from '../../Loading/Loading';
-import { FaCheckCircle, FaExclamationTriangle, FaTimesCircle, FaUndoAlt  } from 'react-icons/fa'; 
+import ConfirmMessage from '../../Messages/ConfirmMessage/ConfirmMessage';
+import { FaCheckCircle, FaExclamationTriangle, FaTimesCircle, FaUndoAlt, FaTrash  } from 'react-icons/fa'; 
 
 const ManagePayments = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false); 
-
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const fetchedOrders = await getOrders();
-        setOrders(fetchedOrders);
-      } catch (error) {
-        console.error('Error loading orders:', error);
-      }
-    };
-
-    fetchOrders();
-  }, []);
+  const [orderToDelete, setOrderToDelete] = useState(null); // State for selected order to delete
 
   const handleRefundClick = async (orderId) => {
     setLoading(true);
@@ -37,8 +26,58 @@ const ManagePayments = () => {
     }
   };
 
+  const handleDeleteOrder = async (orderId) => {
+    try {
+      const response = await deleteOrders(orderId);
+      if (response) {
+        setOrders(orders.filter((order) => order.id !== orderId)); 
+        fetchOrders();
+      } else {
+        console.error('Failed to delete order');
+      }
+    } catch (error) {
+      console.error('Error deleting order:', error);
+    }
+  };
+
+  const fetchOrders = async () => {
+    try {
+      const data = await getOrders();
+      setOrders(data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
+
+  const confirmDeleteOrder = (orderId) => {
+    setOrderToDelete(orderId);
+  };
+
+  const cancelDelete = () => {
+    setOrderToDelete(null);
+  };
+
+  const confirmDelete = async () => {
+    if (orderToDelete) {
+      await handleDeleteOrder(orderToDelete.id);
+      setOrderToDelete(null);
+    }
+  };
+  
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+  
   return (
     <div className="max-w-6xl mx-auto m-10 text-gray-200 rounded-lg shadow-lg">
+    {orderToDelete && (
+      <ConfirmMessage
+        message={`Are you sure that you want to delete order "${orderToDelete.id}"? All the information related will also be deleted`}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
+    )}
+
       <ul className="space-y-4">
         {orders.map((order) => (
           <li key={order._id} className="p-4 border border-gray-700 rounded-lg bg-gray-800 shadow-md">
@@ -92,7 +131,7 @@ const ManagePayments = () => {
                                 <h4 className="text-md font-semibold text-teal-300">{beat.title}</h4>
                                 <div className="text-sm space-y-1">
                                   <p><strong className="text-gray-400">Price:</strong> ${beat.price}</p>
-                                  <p><strong className="text-gray-400">Tone:</strong> {beat.description}</p>
+                                  <p><strong className="text-gray-400">Description:</strong> {beat.description}</p>
                                   <p><strong className="text-gray-400">Owner:</strong> {beat.owner.username}</p>
                                 </div>
                               </div>
@@ -149,6 +188,13 @@ const ManagePayments = () => {
                         ${order.price}
                       </p>
                     </div>
+
+                    <button
+                        onClick={() => confirmDeleteOrder(order)}
+                        className="text-red-500 p-2 rounded-full"
+                      >
+                        <FaTrash />
+                      </button>
 
                   </div>
             </div>

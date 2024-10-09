@@ -38,6 +38,7 @@ function PurchaseCart({ user }) {
   const cartIsEmpty = !Array.isArray(cartItems) || cartItems.length === 0;
 
   return (
+    
     <div className="bg-gray-900 text-white p-6 mt-4 rounded-lg shadow-xl w-full border border-gray-700">
       <h2 className="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">Your Cart</h2>
 

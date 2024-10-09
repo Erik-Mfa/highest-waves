@@ -1,6 +1,7 @@
 // ./models/Beat.js
 const mongoose = require('mongoose');
 const Cart = require('./Cart'); 
+const Order = require ('./Order')
 
 const beatSchema = new mongoose.Schema({
   id: {
@@ -48,10 +49,12 @@ const beatSchema = new mongoose.Schema({
   }]
 }, { timestamps: true });
 
-beatSchema.pre('remove', async function(next) {
+beatSchema.pre('findOneAndDelete', async function (next) {
   try {
-    await Cart.deleteMany({ beats: this.id });
-    
+    const beatId = this.getQuery()._id; 
+
+    await Cart.deleteMany({ beats: beatId });
+
     next();
   } catch (error) {
     next(error);
