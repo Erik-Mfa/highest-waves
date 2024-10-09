@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+const Order = require('./models/Order');
 
 const authRoutes = require('./routes/authRoute');
 const userRoutes = require('./routes/userRoute');
@@ -14,11 +15,13 @@ const cartRoutes = require('./routes/cartRoute');
 const tagRoutes = require('./routes/tagRoute');
 const paymentRoutes = require('./routes/paymentRoute');
 
-const Order = require('./models/Order');
-
 const app = express();
 
-// CORS configuration
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
+  });
+
 const corsOptions = {
     origin: 'http://localhost:3000', 
     credentials: true // This allows cookies to be sent
@@ -78,11 +81,10 @@ app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), asyn
             const refundedCharge = event.data.object;
             console.log('Charge has been refunded:', refundedCharge);
 
-            // You may need to retrieve the associated order if you stored the order ID in the charge metadata
-            const orderId = refundedCharge.metadata.order_id; // Assume you saved the order ID in metadata
+            const orderId = refundedCharge.metadata.order_id; 
             
             await Order.updateOne(
-                { stripeChargeId: refundedCharge.id }, // Match by charge ID
+                { stripeChargeId: refundedCharge.id }, 
                 { 
                     paymentStatus: 'Refunded', // Update the payment status
                     $push: { 
@@ -103,6 +105,14 @@ app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), asyn
 
 
 app.use(cookieParser());
+app.use((req, res, next) => {
+    res.cookie('yourCookie', 'value', {
+      httpOnly: true,  // Prevents access to the cookie via JavaScript
+      sameSite: 'strict' // Protects against CSRF
+    });
+    next();
+  });
+  
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); 
 

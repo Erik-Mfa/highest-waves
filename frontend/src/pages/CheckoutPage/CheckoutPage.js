@@ -111,9 +111,8 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        {/* Payment Form - hidden initially, shown with fade-in */}
         {showPaymentForm && (
-          <div className={`bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 mt-8 transition-opacity duration-700 opacity-0 ${showPaymentForm ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 mt-8 transition-opacity duration-700 opacity-100">
             <PaymentForm billingInfo={billingInfo} user={user} />
           </div>
         )}

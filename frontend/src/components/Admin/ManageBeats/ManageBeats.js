@@ -152,7 +152,7 @@ const ManageBeats = () => {
     <div className="p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg">
 
       {successMessage && (
-        <div className="mb-4 px-4 py-2 text-white bg-green-600 rounded-md transition-opacity duration-300 ease-in-out">
+        <div className="mb-8 px-4 py-2 text-white bg-green-600 rounded-md transition-opacity duration-300 ease-in-out">
           {successMessage}
         </div>
       )}
@@ -167,10 +167,10 @@ const ManageBeats = () => {
       </div>
 
       {isFormDropdownOpen && (
-        <form className="mb-4 mt-10 mx-12 border border-gray-600 py-10 rounded-lg bg-gray-800">
+        <form className="mb-8 mt-6 mx-12 py-10 rounded-lg bg-gray-800">
           {/* Title */}
-          <div className="mb-4 mx-10">
-            <label htmlFor="title" className="block text-sm font-medium text-white">
+          <div className="mb-8 mx-10">
+            <label htmlFor="title" className="block text-sm font-medium text-white mb-2">
               Title
             </label>
             <input
@@ -185,8 +185,8 @@ const ManageBeats = () => {
           </div>
 
           {/* Description */}
-          <div className="mb-4 mx-10">
-            <label htmlFor="description" className="block text-sm font-medium text-white">
+          <div className="mb-8 mx-10">
+            <label htmlFor="description" className="block text-sm font-medium text-white mb-2">
               Description
             </label>
             <textarea
@@ -200,8 +200,8 @@ const ManageBeats = () => {
           </div>
 
           {/* Price */}
-          <div className="mb-4 mx-10">
-            <label htmlFor="price" className="block text-sm font-medium text-white">
+          <div className="mb-8 mx-10">
+            <label htmlFor="price" className="block text-sm font-medium text-white mb-2">
               Price
             </label>
             <input
@@ -216,8 +216,8 @@ const ManageBeats = () => {
           </div>
 
           {/* BPM */}
-          <div className="mb-4 mx-10">
-            <label htmlFor="bpm" className="block text-sm font-medium text-white">
+          <div className="mb-8 mx-10">
+            <label htmlFor="bpm" className="block text-sm font-medium text-white mb-2">
               BPM
             </label>
             <input
@@ -232,8 +232,8 @@ const ManageBeats = () => {
           </div>
 
           {/* Tone */}
-          <div className="mb-4 mx-10">
-            <label htmlFor="tone" className="block text-sm font-medium text-white">
+          <div className="mb-8 mx-10">
+            <label htmlFor="tone" className="block text-sm font-medium text-white mb-2">
               Tone
             </label>
             <input
@@ -247,9 +247,12 @@ const ManageBeats = () => {
             {validationErrors.tone && <p className="text-red-500 text-sm">{validationErrors.tone}</p>}
           </div>
 
+
+          <div className='flex justify-center'>
+
           {/* Image */}
-          <div className="mb-4 mx-10">
-            <label htmlFor="image" className="block text-sm font-medium text-white">
+          <div className="mb-8 mx-10">
+            <label htmlFor="image" className="block text-sm font-medium text-white text-center p-2">
               Image
             </label>
             <div className="flex items-center">
@@ -262,16 +265,16 @@ const ManageBeats = () => {
                   onChange={handleImageChange}
                   className="hidden"
                   accept="image/*"
-                />
+                  />
               </label>
             </div>
             {validationErrors.image && <p className="text-red-500 text-sm">{validationErrors.image}</p>}
           </div>
 
           {/* Audio File */}
-          <div className="mb-4 mx-10">
-          <label htmlFor="audioURL" className="block text-sm font-medium text-white">
-            Audio File
+          <div className="mb-8 mx-10">
+          <label htmlFor="audioURL" className="block text-sm font-medium text-white text-center p-2">
+            Audio
           </label>
           <div className="flex items-center">
             <label className="flex items-center px-3 py-2 bg-gray-700 rounded-md shadow-sm cursor-pointer hover:bg-gray-600">
@@ -283,15 +286,18 @@ const ManageBeats = () => {
                 onChange={handleAudioChange}
                 className="hidden"
                 accept="audio/*"
-              />
+                />
             </label>
           </div>
           {validationErrors.audioURL && <p className="text-red-500 text-sm">{validationErrors.audioURL}</p>}
         </div>
 
+
+        </div>
+
         {/* Tags Dropdown */}
-        <div className="mb-4 mx-10">
-          <label htmlFor="tags" className="block text-sm font-medium text-white">
+        <div className="mb-8 mx-10">
+          <label htmlFor="tags" className="block text-sm font-medium text-white mb-2">
             Tags
           </label>
           <div className="relative">
@@ -323,7 +329,7 @@ const ManageBeats = () => {
         </div>
 
         {/* Create Beat */}
-        <div className="mb-4 mx-10">
+        <div className="mb-8 mx-10">
           <button
             type="button"
             onClick={handleCreateBeat}
@@ -369,7 +375,7 @@ const ManageBeats = () => {
                   
                   {/* Beat Information */}
                   <div className="flex flex-col text-left flex-grow">
-                    <h3 className="text-md font-semibold text-white mb-4">{beat.title}</h3>
+                    <h3 className="text-md font-semibold text-white mb-8">{beat.title}</h3>
                     <p className="text-sm text-gray-400">BPM: {beat.bpm}</p>
                     <p className="text-sm text-gray-400">Tone: {beat.tone}</p>
 

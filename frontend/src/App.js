@@ -1,6 +1,6 @@
 // src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store'; // Redux store
 import ProtectedRoute from './services/protectedRoute';
@@ -23,11 +23,21 @@ import PaymentSucessPage from './pages/PaymentSucessPage/PaymentSucessPage';
 import PaymentFailedPage from './pages/PaymentFailedPage/PaymentFailedPage';
 import PaymentErrorPage from './pages/PaymentErrorPage/PaymentErrorPage'
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to top
+  }, [pathname]);
+
+  return null;
+};
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
+      <ScrollToTop /> {/* Add this line here */}
         <div className="App">
           <Routes>
             {/* Routes that use the main layout */}

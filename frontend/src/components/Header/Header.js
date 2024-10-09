@@ -37,7 +37,7 @@ const Header = ({ user, admin }) => {
       <header className="fixed top-0 left-0 w-full bg-gray-900 text-white z-50 border-b-2 border-teal-950 shadow-header-shadow">
       <nav className="flex justify-between items-center p-2 px-12">
           {/* Left side of the header */}
-          <ul className="flex items-center space-x-6">
+          <ul className="flex items-center space-x-16">
             <Link to='/'>
               <img 
                 src='/assets/highestwaves-logo.png' 
@@ -59,8 +59,10 @@ const Header = ({ user, admin }) => {
             </li>
           </ul>
 
+
           {/* Right side of the header */}
-          <ul className="flex items-center space-x-6">
+          <ul className="flex items-center space-x-10">
+
             <li>
               <button 
                 onClick={() => setShowPurchaseCart(prev => !prev)} 
@@ -73,7 +75,7 @@ const Header = ({ user, admin }) => {
             {/* Welcome message */}
             {user && (
               <li className="text-white text-lg flex items-center">
-                <span className="mr-2">Welcome, {user.username}!</span> {/* Display user's name */}
+                <span className="mr-2" style={{ fontFamily: '"REM"' }}>Welcome, {user.username}!</span> {/* Display user's name */}
               </li>
             )}
 
@@ -95,16 +97,18 @@ const Header = ({ user, admin }) => {
                 </li>
               </>
             ) : (
-              <li className="relative flex items-center space-x-4">
+              <li className="relative flex items-center space-x-10">
                 <Link 
                   to="/login" 
                   className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
+                  style={{ fontFamily: '"REM"' }}
                 >
                   Login
                 </Link>
                 <Link 
-                  className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
                   to="/register" 
+                  className="bg-teal-800 text-white text-lg px-4 py-1 rounded-lg hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110"
+                  style={{ fontFamily: '"REM"' }}
                 >
                   Register
                 </Link>
