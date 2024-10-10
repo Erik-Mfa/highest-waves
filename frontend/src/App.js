@@ -12,7 +12,12 @@ import ManageBeats from './components/Admin/ManageBeats/ManageBeats';
 import ManageTags from './components/Admin/ManageTags/ManageTags';
 import ManageUsers from './components/Admin/ManageUsers/ManageUsers';
 import ManagePayments from './components/Admin/ManagePayments/ManagePayments';
+
 // Pages
+import SupportPage from './pages/SupportPage/SupportPage'
+import ContactPage from './pages/ContactPage/ContactPage'
+import TermsPage from './pages/TermsPage/TermsPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage/PrivacyPolicyPage';
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
@@ -45,6 +50,11 @@ function App() {
             <Route path="/beats/:id" element={<Layout><BeatDetailsPage /></Layout>} />
             <Route path="/login" element={<Layout><LoginPage /></Layout>} />
             <Route path="/register" element={<Layout><RegisterPage /></Layout>} />
+
+            <Route path="/support" element={<SupportPage />}/>
+            <Route path="/contact" element={<ContactPage />}/>
+            <Route path="/terms" element={<TermsPage />}/>
+            <Route path="/privacy" element={<PrivacyPolicyPage />}/>
 
             {/* Protected Admin routes */}
             <Route 
