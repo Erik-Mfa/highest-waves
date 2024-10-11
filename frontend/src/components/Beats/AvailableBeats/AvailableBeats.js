@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BeatList from './BeatList/BeatList';
 import FilterSidebar from './FilterSidebar/FilterSidebar';
-import Loading from '../../Loading/Loading'; // Correctly import Loading
 import './AvailableBeats.css'
 import { getBeats } from '../../../services/api/beats';
 import { getTags } from '../../../services/api/tags';
@@ -12,7 +11,6 @@ function AvailableBeats() {
   const [tags, setTags] = useState([]);
   const [users, setUsers] = useState([]);
   const [tones, setTones] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false); // State to handle mobile sidebar visibility
 
   const [filters, setFilters] = useState({
@@ -26,7 +24,6 @@ function AvailableBeats() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
         const [beatsResponse, tagsResponse] = await Promise.all([
           getBeats(), 
@@ -44,15 +41,11 @@ function AvailableBeats() {
         setTones(uniqueTones);
       } catch (error) {
         console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
-
-  if (loading) return <Loading />; // Replace with the Loading component
 
   return (
     <div className="min-h-screen sm:px-6 lg:px-8 p-20 bg-gradient-to-br from-black/50 to-transparent border-b-2 border-gray-700">

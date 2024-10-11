@@ -6,7 +6,7 @@ const PaymentSucessPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b  to-black">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-gray-900">
       <div className="bg-gray-800 shadow-lg rounded-lg p-8 md:p-12 max-w-xl text-center">
         <FaCheckCircle className="h-32 w-32 text-teal-400 mx-auto mb-8 animate-pulse" />
         

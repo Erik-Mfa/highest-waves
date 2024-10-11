@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  currentId: null,
   currentTrack: null,
   currentTitle: '',
   currentOwner: null,
@@ -20,6 +21,9 @@ const audioPlayerSlice = createSlice({
     },
     setCurrentTitle: (state, action) => {
       state.currentTitle = action.payload;
+    },
+    setCurrentId: (state, action) => {
+      state.currentId = action.payload;
     },
     setCurrentCover: (state, action) => {
       state.currentCover = action.payload;
@@ -43,6 +47,7 @@ const audioPlayerSlice = createSlice({
 });
 
 export const {
+  setCurrentId,
   setCurrentTrack,
   setCurrentTitle,
   setCurrentCover,

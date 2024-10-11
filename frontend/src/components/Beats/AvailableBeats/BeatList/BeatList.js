@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { playTrack, setCurrentTrack, setCurrentTitle, setCurrentOwner, setCurrentCover } from '../../../../store/audioPlayerSlice';
-import { setPlaylist, nextTrack, prevTrack, setCurrentIndex } from '../../../../store/playlistSlice';
+import { setCurrentId, setCurrentTrack, setCurrentTitle, setCurrentOwner, setCurrentCover, togglePlayPause } from '../../../../store/audioPlayerSlice'; // use togglePlayPause
+import { setPlaylist, setCurrentIndex } from '../../../../store/playlistSlice';
 import { useNavigate } from 'react-router-dom';
-import { FaPlay } from 'react-icons/fa';
+import { FaPlay, FaPause } from 'react-icons/fa'; // Import FaPause for the pause button
 import './BeatList.css';
 
 function BeatList({ beats, filters }) {
+  const [isImageLoaded, setImageLoaded] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
+  // Get the currently playing track and play state from Redux store
+  const currentTrack = useSelector((state) => state.audioPlayer.currentTrack);
+  const isPlaying = useSelector((state) => state.audioPlayer.isPlaying);
+  
   const filteredBeats = beats.filter((beat) => {
     const matchesPrice = beat.price >= filters.price.min && beat.price <= filters.price.max;
     const beatTagIds = beat.tags.map((tag) => tag.id);
@@ -38,8 +43,12 @@ function BeatList({ beats, filters }) {
     // Set the current track details
     dispatch(setCurrentTrack(`http://localhost:3001/${beat.audioURL}`));
     dispatch(setCurrentTitle(beat.title));
+    dispatch(setCurrentId(beat.id));
     dispatch(setCurrentOwner(beat.owner.username));
     dispatch(setCurrentCover(`http://localhost:3001/${beat.image}`));
+
+    // Toggle play/pause
+    dispatch(togglePlayPause());
   };
 
   return (
@@ -54,19 +63,31 @@ function BeatList({ beats, filters }) {
               >
               {/* Image Container */}
               <div className="relative">
+              {!isImageLoaded && (
+                <div className="absolute inset-0 bg-gray-700 animate-pulse rounded-md"></div>
+              )}
+
                 <div className="w-full pt-[100%] relative rounded-lg overflow-hidden">
                   <img
                     src={`http://localhost:3001/${beat.image}`}
                     alt={beat.title}
-                    className="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-60"
+                    className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-60 ${
+                      isImageLoaded ? "opacity-100" : "opacity-0"
+                    }`}
+                    onLoad={() => setImageLoaded(true)}
                   />
                   
-                  {/* Play Button */}
+                  {/* Play/Pause Button */}
                   <button
                     onClick={(e) => handlePlayTrack(e, beat)}
                     className="absolute top-1/2 left-1/2 mt-2 transform -translate-x-1/2 -translate-y-1/2 p-1.5 rounded-full text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 z-10"
                   >
-                    <FaPlay size={35} />
+                    {/* Conditionally render FaPlay or FaPause */}
+                    {currentTrack === `http://localhost:3001/${beat.audioURL}` && isPlaying ? (
+                      <FaPause size={35} />
+                    ) : (
+                      <FaPlay size={35} />
+                    )}
                   </button>
                   
                   {/* Black Overlay */}
@@ -89,8 +110,6 @@ function BeatList({ beats, filters }) {
       )}
     </div>
   );
-  
-  
 }
 
 export default BeatList;
