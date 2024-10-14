@@ -80,7 +80,7 @@ const ManagePayments = () => {
 
       <ul className="space-y-4">
         {orders.map((order) => (
-          <li key={order._id} className="p-4 border border-gray-700 rounded-lg bg-gray-800 shadow-md">
+          <li key={order._id} className="p-4 border border-gray-700 rounded-lg bg-gray-800 shadow-header-shadow">
             <h2 className="text-2xl flex items-center justify-center font-bold mb-4">
               <span className="text-gray-300">{order.id}</span>
             </h2>
@@ -191,8 +191,8 @@ const ManagePayments = () => {
 
                     <button
                         onClick={() => confirmDeleteOrder(order)}
-                        className="text-red-500 p-2 rounded-full"
-                      >
+                        className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
+                        >
                         <FaTrash />
                       </button>
 

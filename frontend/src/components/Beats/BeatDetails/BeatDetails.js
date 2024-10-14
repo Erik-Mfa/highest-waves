@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { isAuthenticated } from '../../../services/api/auth';
 import { getBeatById } from '../../../services/api/beats';
@@ -12,6 +12,7 @@ function BeatDetails() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFadeIn, setIsFadeIn] = useState(false);
+  const navigate = useNavigate();
 
   const { id: beatId } = useParams();
   const dispatch = useDispatch();
@@ -60,14 +61,38 @@ function BeatDetails() {
     }
   };
 
-  if (!beat) return <div className="text-white text-center py-4">Beat not found</div>;
+  // Handling loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="loader"></div> 
+        <p className="text-teal-400 text-xl">Loading... Please wait.</p>
+      </div>
+    );
+  }
+
+  // Handling no beat found or error
+  if (!beat && !isLoading) {
+    // Optionally redirect to beat list after 5 seconds
+    setTimeout(() => {
+      navigate("/beats");
+    }, 5000);
+
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <img src="/assets/images/error-beat.png" alt="Beat not found" className="w-64 h-64 mb-6" />
+        <p className="text-red-500 text-2xl font-bold">Oops, we couldn't find this beat.</p>
+        <a href="/beats" className="text-teal-400 hover:text-teal-500 mt-4">Explore more beats</a>
+      </div>
+    );
+  }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-start pt-20 px-4 ${isFadeIn ? 'fade-in-active' : 'fade-in'}`}>
-      <div className="flex items-start bg-gray-800 p-8 rounded-2xl w-full max-w-5xl border border-gray-700">
+    <div className={`min-h-screen bg-gradient-to-br from-sky-950 to-black flex flex-col items-center justify-start pt-20 px-4 ${isFadeIn ? 'fade-in-active' : 'fade-in'}`}>
+      <div className="flex items-start bg-gray-800 p-8 rounded-2xl w-full max-w-8xl border border-gray-700">
       
         {/* Left Side: Beat Image & Play Button */}
-        <div className="flex-shrink-1 lg:w-1/2 mb-6 lg:mb-0 lg:mr-8 relative">
+        <div className="flex-shrink-1 lg:w-1/1 mb-6 lg:mb-0 lg:mr-8 relative">
           <div 
             className="relative w-full h-[300px] lg:h-[400px] bg-gradient-to-br from-teal-800 to-gray-800 rounded-xl overflow-hidden cursor-pointer"
             onClick={handlePlayTrack}
@@ -94,8 +119,8 @@ function BeatDetails() {
         </div>
         
         {/* Right Side: Beat Info */}
-        <div className="flex-1 lg:w-1/2 text-white text-center lg:text-left space-y-6 lg:px-0">
-          <h2 className="text-4xl lg:text-5xl font-extrabold tracking-wide text-teal-400">
+        <div className="flex-2 lg:w-3/2 text-white text-center lg:text-left space-y-6 lg:px-0 p-6">
+          <h2 className="text-4xl lg:text-4xl font-extrabold tracking-wide text-white">
             {beat.title}
           </h2>
           <p className="text-lg text-gray-300 flex justify-center lg:justify-start items-center space-x-2">
@@ -103,21 +128,29 @@ function BeatDetails() {
             <span>{beat.owner.username}</span>
           </p>
           <div className="text-lg text-gray-300 flex justify-between items-center space-x-2">
-            <span className="text-5xl font-bold text-green-400">${beat.price}</span>
             <button
               onClick={handleAddToCart}
               className="bg-teal-800 text-white text-lg px-4 py-2 rounded-lg hover:bg-teal-700 hover:shadow-lg transition-all duration-300 transform hover:scale-110 flex items-center space-x-2"
             >
               <FaShoppingCart /> <span>Add to Cart</span>
             </button>
+            <span className="text-4xl font-bold text-cyan-300">${beat.price}</span>
           </div>
           <div className="w-full h-[1px] bg-gray-700"></div>
           <div className="flex justify-around lg:justify-start lg:space-x-10 text-gray-400">
             <div className="flex flex-col lg:items-start">
-              <span className="text-lg font-semibold text-white">BPM: {beat.bpm}</span>
+              <span 
+              className="text-2xl bg-cyan-800 px-2 rounded-lg text-white shadow-tag" 
+              style={{ fontFamily: '"Russo One"' }}>
+                BPM {beat.bpm}
+              </span>
             </div>
             <div className="flex flex-col lg:items-start">
-              <span className="text-lg font-semibold text-white">Tone: {beat.tone}</span>
+              <span 
+              className="text-2xl bg-cyan-800 px-2 rounded-lg text-white shadow-tag"
+              style={{ fontFamily: '"Russo One"' }}>
+                TONE {beat.tone}
+              </span>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import { FaPlay, FaPause, FaForward, FaBackward, FaRedo, FaVolumeUp, FaVolumeMute, FaRandom } from 'react-icons/fa'; // Added FaRandom
 import { setCurrentId, setCurrentTrack, setCurrentTitle, setCurrentCover, setCurrentOwner, togglePlayPause, setIsRepeating, setVolume, setIsShuffling } from '../../store/audioPlayerSlice';
@@ -176,7 +176,7 @@ const AudioPlayer = () => {
         <span className="text-xs text-gray-400">{formatTime(duration)}</span>
       </div>
   
-      <div className="flex items-center relative">
+      <div className="flex items-center relative px-2">
         
         {/* Image and Title Section */}
         <div className="flex items-center mt-2">
@@ -194,11 +194,21 @@ const AudioPlayer = () => {
           </div>
         </div>
   
-        {/* Centered Title and Owner Section */}
         <div className="ml-4 flex flex-col justify-center items-start">
-          <h3 className="text-sm font-semibold text-center w-full">{currentTitle}</h3>
-          <h3 className="text-xs text-gray-400 text-center">{currentOwner}</h3>
-        </div>
+        <Link 
+          to={`/beats/${currentId}`} 
+          className="text-sm font-semibold w-full cursor-pointer"
+          style={{ display: 'block', zIndex: 1 }}  // Ensure link is displayed properly
+        >
+          {currentTitle}
+        </Link>
+        <h3 
+          className="text-xs text-gray-400 text-center"
+          style={{ visibility: 'visible', position: 'relative' }}  // Ensure owner is visible
+        >
+          {currentOwner}
+        </h3>
+      </div>
   
         {/* Control Buttons Section */}
         <div className="flex-grow flex items-center justify-center absolute inset-x-0">
@@ -241,7 +251,7 @@ const AudioPlayer = () => {
         </div>
   
         {/* Volume and Mute Section */}
-        <div className="absolute right-0 flex items-center space-x-2">
+        <div className="absolute right-0 flex items-center space-x-2 px-2">
           <button 
             onClick={handleMuteToggle} 
             className="text-gray-400 hover:text-white"

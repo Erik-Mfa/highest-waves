@@ -149,7 +149,7 @@ const ManageBeats = () => {
   };
 
   return (
-    <div className="p-10 m-10 bg-gray-800 border border-gray-700 rounded-lg">
+    <div className="p-10 m-10 bg-gray-800 shadow-header-shadow rounded-lg">
 
       {successMessage && (
         <div className="mb-8 px-4 py-2 text-white bg-green-600 rounded-md transition-opacity duration-300 ease-in-out">
@@ -353,7 +353,7 @@ const ManageBeats = () => {
               return (
                 <div
                   key={beat.id}
-                  className="p-4 bg-gray-800 border border-gray-600 rounded-lg flex items-center hover:bg-gray-700 transition-colors duration-300 ease-in-out"
+                  className="p-4 bg-gray-800 border border-teal-600 rounded-lg flex items-center hover:bg-gray-700 transition-colors duration-300 ease-in-out"
                 >
 
                   {/* Image Container */}
@@ -385,8 +385,8 @@ const ManageBeats = () => {
 
                       <button
                         onClick={() => handleDeleteBeat(beat.id)}
-                        className="text-red-500 p-2 rounded-full"
-                      >
+                        className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
+                        >
                         <FaTrash />
                       </button>
                     </div>
