@@ -41,65 +41,86 @@ app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), asyn
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    switch (event.type) {
-        case 'payment_intent.succeeded': {
-            const successfulPaymentIntent = event.data.object;
-            console.log('PaymentIntent was successful!', successfulPaymentIntent);
-            
-            await Order.updateOne(
-                { stripePaymentIntentId: successfulPaymentIntent.id }, 
-                { 
-                    paymentStatus: 'Completed',
-                    paymentMethod: successfulPaymentIntent.payment_method,
-                    $push: { 
-                        paymentHistory: { status: 'Completed', message: 'Payment successful' }
-                    }
-                }
-            );
-            break;
-        }
-
-        case 'payment_intent.payment_failed': {
-            const failedPaymentIntent = event.data.object;
-            console.log('PaymentIntent has failed:', failedPaymentIntent);
-
-            const failureReason = failedPaymentIntent.last_payment_error?.message || 'Unknown reason';
-            await Order.updateOne(
-                { stripePaymentIntentId: failedPaymentIntent.id }, 
-                { 
-                    paymentStatus: 'Failed',
-                    paymentFailureReason: failureReason,
-                    $push: { 
-                        paymentHistory: { status: 'Failed', message: failureReason }
-                    }
-                }
-            );
-            break;
-        }
-
-        case 'charge.refunded': {
-            const refundedCharge = event.data.object;
-            console.log('Charge has been refunded:', refundedCharge);
-
-            const orderId = refundedCharge.metadata.order_id; 
-            
-            await Order.updateOne(
-                { stripeChargeId: refundedCharge.id }, 
-                { 
-                    paymentStatus: 'Refunded', // Update the payment status
-                    $push: { 
-                        paymentHistory: { status: 'Refunded', message: 'Charge refunded' }
-                    }
-                }
-            );
-            break;
-        }
-
-        default:
-            console.log(`Unhandled event type ${event.type}`);
-    }
-
+    // Acknowledge the webhook immediately
     res.status(200).send('Webhook received successfully');
+
+    // Process the event in the background
+    try {
+        console.log(`Handling event type: ${event.type}`);
+        switch (event.type) {
+            case 'payment_intent.succeeded': {
+                const successfulPaymentIntent = event.data.object;
+                console.log('PaymentIntent ID:', successfulPaymentIntent.id); // Log the payment intent ID
+                console.log('Payment method:', successfulPaymentIntent.payment_method); // Log payment method
+                
+                const result = await Order.updateOne(
+                    { stripePaymentIntentId: successfulPaymentIntent.id }, 
+                    { 
+                        paymentStatus: 'Completed',
+                        paymentMethod: successfulPaymentIntent.payment_method,
+                        $push: { 
+                            paymentHistory: { status: 'Completed', message: 'Payment successful' }
+                        }
+                    }
+                );
+            
+                console.log('Update result:', result); // Log the result of the update operation
+                break;
+            }
+            
+
+            case 'payment_intent.payment_failed': {
+                const failedPaymentIntent = event.data.object;
+                console.log('PaymentIntent has failed:', failedPaymentIntent);
+
+                const failureReason = failedPaymentIntent.last_payment_error?.message || 'Unknown reason';
+                await Order.updateOne(
+                    { stripePaymentIntentId: failedPaymentIntent.id }, 
+                    { 
+                        paymentStatus: 'Failed',
+                        paymentFailureReason: failureReason,
+                        $push: { 
+                            paymentHistory: { status: 'Failed', message: failureReason }
+                        }
+                    }
+                );
+                break;
+            }
+
+            case 'charge.refunded': {
+                const refundedCharge = event.data.object;
+                console.log('Refunded charge ID:', refundedCharge.id); // Log the Stripe charge ID
+                console.log('Refund metadata:', refundedCharge.metadata); // Log metadata to see if `order_id` is present
+                
+                // Check if the order ID is correctly passed from Stripe metadata
+                const orderId = refundedCharge.metadata.orderId; 
+                if (!orderId) {
+                    console.error('Order ID not found in metadata. Refund processing skipped.');
+                    break;
+                }
+                
+                console.log('Processing refund for Order ID:', orderId);
+            
+                // Perform the update in the database
+                const result = await Order.updateOne(
+                    { id: orderId }, 
+                    { 
+                        paymentStatus: 'Refunded', 
+                        $push: { 
+                            paymentHistory: { status: 'Refunded', message: 'Charge refunded' }
+                        }
+                    }
+                );
+                console.log('Refund update result:', result);
+                break;
+            }
+
+            default:
+                console.log(`Unhandled event type ${event.type}`);
+        }
+    } catch (error) {
+        console.error('Error processing webhook event:', error);
+    }
 });
 
 

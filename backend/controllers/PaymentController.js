@@ -31,7 +31,7 @@ class PaymentController {
         }
     }
 
-    // Change this to an arrow function
+    // It saves the order and creates the Stripe payment
     save = async (req, res) => {
         try {
             const { price, user, cart, billingInfo } = req.body;
