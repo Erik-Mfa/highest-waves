@@ -52,7 +52,7 @@ function PurchaseCart({ user }) {
               className="flex items-center justify-between p-4 mb-5 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-700"
             >
               <img
-                src={`http://localhost:3001/${item.beats.image}`}
+                src={`${process.env.REACT_APP_API_URL}/${item.beats.image}`}
                 alt={item.beats.title}
                 className="h-20 w-20 object-cover rounded-md border border-gray-600"
               />

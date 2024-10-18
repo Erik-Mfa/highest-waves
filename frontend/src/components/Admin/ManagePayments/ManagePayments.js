@@ -121,7 +121,7 @@ const ManagePayments = () => {
                               {/* Beat Image on Top */}
                               <div className="flex justify-center mb-2">
                                 <img
-                                  src={`http://localhost:3001/${beat.image}`}
+                                  src={`${process.env.REACT_APP_API_URL}/${beat.image}`}
                                   alt={beat.title}
                                   className="w-16 h-16 object-cover rounded-lg shadow-md"
                                 />

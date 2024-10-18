@@ -48,11 +48,11 @@ function BeatDetails() {
   };
 
   const handlePlayTrack = () => {
-    if (currentTrack !== `http://localhost:3001/${beat.audioURL}`) {
-      dispatch(setCurrentTrack(`http://localhost:3001/${beat.audioURL}`));
+    if (currentTrack !== `${process.env.REACT_APP_API_URL}/${beat.audioURL}`) {
+      dispatch(setCurrentTrack(`${process.env.REACT_APP_API_URL}/${beat.audioURL}`));
       dispatch(setCurrentTitle(beat.title));
       dispatch(setCurrentId(beat.id));
-      dispatch(setCurrentCover(`http://localhost:3001/${beat.image}`));
+      dispatch(setCurrentCover(`${process.env.REACT_APP_API_URL}/${beat.image}`));
       if (!isPlaying) {
         dispatch(togglePlayPause(true));
       }
@@ -99,7 +99,7 @@ function BeatDetails() {
           >
             {/* Image */}
             <img
-              src={`http://localhost:3001/${beat.image}`}
+              src={`${process.env.REACT_APP_API_URL}/${beat.image}`}
               alt={beat.title}
               className="w-full h-full object-cover"
               style={{ aspectRatio: '1/1' }}
@@ -108,7 +108,7 @@ function BeatDetails() {
             {/* Play/Pause button with hover effect */}
             <div className="absolute inset-0 flex justify-center items-center transition-all duration-[0.8s] ease-in-out">
               <div className="bg-black bg-opacity-60 hover:bg-opacity-0 w-full h-full flex justify-center items-center transition-all duration-[1.2s] ease-in-out">
-                {currentTrack === `http://localhost:3001/${beat.audioURL}` && isPlaying ? (
+                {currentTrack === `${process.env.REACT_APP_API_URL}/${beat.audioURL}` && isPlaying ? (
                   <FaPause size={64} className="text-teal-400 hover:text-teal-500 transform hover:scale-125 transition-all duration-[1.2s] ease-in-out" />
                 ) : (
                   <FaPlay size={64} className="text-teal-400 hover:text-teal-500 transform hover:scale-125 transition-all duration-[1.2s] ease-in-out" />

@@ -364,7 +364,7 @@ const ManageBeats = () => {
                     )}
 
                     <img
-                      src={`http://localhost:3001/${beat.image}`}
+                      src={`${process.env.REACT_APP_API_URL}/${beat.image}`}
                       alt="Cover Art"
                       className={`w-full h-full rounded-md object-cover transition-opacity duration-500 ${
                         isImageLoaded ? "opacity-100" : "opacity-0"

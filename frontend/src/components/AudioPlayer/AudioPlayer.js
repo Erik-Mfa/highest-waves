@@ -97,8 +97,8 @@ const AudioPlayer = () => {
     const nextTrackData = playlist[nextIndex];
 
     if (nextTrackData) {
-      const nextTrackURL = `http://localhost:3001/${nextTrackData.audioURL}`;
-      const nextCoverURL = `http://localhost:3001/${nextTrackData.image}`;
+      const nextTrackURL = `${process.env.REACT_APP_API_URL}/${nextTrackData.audioURL}`;
+      const nextCoverURL = `${process.env.REACT_APP_API_URL}/${nextTrackData.image}`;
       dispatch(setCurrentTrack(nextTrackURL));
       dispatch(setCurrentCover(nextCoverURL));
       dispatch(setCurrentOwner(nextTrackData.owner.username));
@@ -112,8 +112,8 @@ const AudioPlayer = () => {
     const prevIndex = (currentIndex - 1 + playlist.length) % playlist.length;
     const prevTrackData = playlist[prevIndex];
     if (prevTrackData) {
-      const prevTrackURL = `http://localhost:3001/${prevTrackData.audioURL}`;
-      const prevCoverURL = `http://localhost:3001/${prevTrackData.image}`;
+      const prevTrackURL = `${process.env.REACT_APP_API_URL}/${prevTrackData.audioURL}`;
+      const prevCoverURL = `${process.env.REACT_APP_API_URL}/${prevTrackData.image}`;
       dispatch(setCurrentTrack(prevTrackURL));
       dispatch(setCurrentCover(prevCoverURL));
       dispatch(setCurrentOwner(prevTrackData.owner.username));

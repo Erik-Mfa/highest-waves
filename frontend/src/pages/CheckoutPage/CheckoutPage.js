@@ -92,7 +92,7 @@ const CheckoutPage = () => {
                     className="flex items-center justify-between p-4 bg-gray-800 rounded-lg shadow-md border border-gray-600 hover:shadow-lg transition-shadow"
                   >
                     <img
-                      src={`http://localhost:3001/${item.beats.image}`}
+                      src={`${process.env.REACT_APP_API_URL}/${item.beats.image}`}
                       alt={item.beats.title}
                       className="h-20 w-20 object-cover rounded-md border border-gray-500"
                     />

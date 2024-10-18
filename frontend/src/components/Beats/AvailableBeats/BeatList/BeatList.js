@@ -41,11 +41,11 @@ function BeatList({ beats, filters }) {
     dispatch(setCurrentIndex(trackIndex));
 
     // Set the current track details
-    dispatch(setCurrentTrack(`http://localhost:3001/${beat.audioURL}`));
+    dispatch(setCurrentTrack(`${process.env.REACT_APP_API_URL}/${beat.audioURL}`));
     dispatch(setCurrentTitle(beat.title));
     dispatch(setCurrentId(beat.id));
     dispatch(setCurrentOwner(beat.owner.username));
-    dispatch(setCurrentCover(`http://localhost:3001/${beat.image}`));
+    dispatch(setCurrentCover(`${process.env.REACT_APP_API_URL}/${beat.image}`));
 
     // Toggle play/pause
     dispatch(togglePlayPause());
@@ -69,7 +69,7 @@ function BeatList({ beats, filters }) {
 
                 <div className="w-full pt-[100%] relative rounded-lg overflow-hidden">
                   <img
-                    src={`http://localhost:3001/${beat.image}`}
+                    src={`${process.env.REACT_APP_API_URL}/${beat.image}`}
                     alt={beat.title}
                     className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-60 ${
                       isImageLoaded ? "opacity-100" : "opacity-0"
@@ -83,7 +83,7 @@ function BeatList({ beats, filters }) {
                     className="absolute top-1/2 left-1/2 mt-2 transform -translate-x-1/2 -translate-y-1/2 p-1.5 rounded-full text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 z-10"
                   >
                     {/* Conditionally render FaPlay or FaPause */}
-                    {currentTrack === `http://localhost:3001/${beat.audioURL}` && isPlaying ? (
+                    {currentTrack === `${process.env.REACT_APP_API_URL}/${beat.audioURL}` && isPlaying ? (
                       <FaPause size={35} />
                     ) : (
                       <FaPlay size={35} />

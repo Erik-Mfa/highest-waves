@@ -3,12 +3,12 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3001/api/', 
+  baseURL: `${process.env.REACT_APP_API_URL}/api/`, 
 });
 
 export const handleRefund = async (orderId) => {
     try {
-        const response = await fetch('http://localhost:3001/api/payment/refund', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/payment/refund`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const handleRefund = async (orderId) => {
 export const save = async (paymentInfo) => {
     try {
         const response = await instance.post(
-            'http://localhost:3001/api/payment/create-payment-intent',
+            `${process.env.REACT_APP_API_URL}/api/payment/create-payment-intent`,
                 paymentInfo,  // Send paymentInfo directly
             { withCredentials: true }
         );

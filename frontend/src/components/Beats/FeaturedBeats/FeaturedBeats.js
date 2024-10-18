@@ -46,10 +46,10 @@ function FeaturedBeats() {
     dispatch(setCurrentIndex(trackIndex));
 
     // Set the current track details
-    dispatch(setCurrentTrack(`http://localhost:3001/${beat.audioURL}`));
+    dispatch(setCurrentTrack(`${process.env.REACT_APP_API_URL}/${beat.audioURL}`));
     dispatch(setCurrentTitle(beat.title));
     dispatch(setCurrentId(beat.id));
-    dispatch(setCurrentCover(`http://localhost:3001/${beat.image}`));
+    dispatch(setCurrentCover(`${process.env.REACT_APP_API_URL}/${beat.image}`));
 
     // Toggle play/pause
     dispatch(togglePlayPause());
@@ -76,7 +76,7 @@ function FeaturedBeats() {
                   )}
 
                   <img
-                    src={`http://localhost:3001/${beat.image}`}
+                    src={`${process.env.REACT_APP_API_URL}/${beat.image}`}
                     alt={beat.title}
                     className={`w-full h-full object-cover rounded-lg ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
                     style={{ aspectRatio: '1 / 1' }}
@@ -88,7 +88,7 @@ function FeaturedBeats() {
                     className="absolute inset-0 flex items-center justify-center p-2 rounded-full text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
                   >
                     {/* Conditionally render FaPlay or FaPause */}
-                    {currentTrack === `http://localhost:3001/${beat.audioURL}` && isPlaying ? (
+                    {currentTrack === `${process.env.REACT_APP_API_URL}/${beat.audioURL}` && isPlaying ? (
                       <FaPause size={32} />
                     ) : (
                       <FaPlay size={32} />

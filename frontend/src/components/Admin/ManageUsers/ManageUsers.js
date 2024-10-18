@@ -295,7 +295,7 @@ const ManageUsers = () => {
         className="flex items-center justify-between mb-4 p-4 border border-gray-600 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors duration-300 ease-in-out"
       >
         <img
-          src={`http://localhost:3001/${user.image}`}
+          src={`${process.env.REACT_APP_API_URL}/${user.image}`}
           alt="User Avatar"
           className="w-20 h-20 rounded-full object-cover mr-4 border-2 border-cyan-600" // Adding a border around the image
         />

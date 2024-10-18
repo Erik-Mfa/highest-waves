@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 import {jwtDecode} from "jwt-decode";
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3001/api/', // Ensure this is correct
+  baseURL: `${process.env.REACT_APP_API_URL}/api/`, // Ensure this is correct
 });
 
 const cookies = new Cookies();
