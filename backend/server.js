@@ -23,7 +23,7 @@ app.use((err, req, res, next) => {
   });
 
 const corsOptions = {
-    origin: 'http://localhost:3000', 
+    origin: `${process.env.REACT_APP_API_URL}`, 
     credentials: true // This allows cookies to be sent
 };
 
