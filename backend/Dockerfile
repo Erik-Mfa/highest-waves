@@ -13,11 +13,12 @@ RUN npm install
 # Copy the rest of the application into the container
 COPY . .
 
+# Set default environment to development, but allow it to be overridden
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
+
 # Expose the port the app runs on (3000 for Express)
 EXPOSE 3001
-
-# Define environment variables if necessary (you can pass these during deployment too)
-ENV NODE_ENV=production
 
 # Run the command to start your application
 CMD ["npm", "start"]

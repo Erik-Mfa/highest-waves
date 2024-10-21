@@ -23,9 +23,12 @@ app.use((err, req, res, next) => {
   });
 
 const corsOptions = {
-    origin: 'http://localhost:3000', 
+    origin: process.env.FRONTEND_URL, 
     credentials: true // This allows cookies to be sent
 };
+
+console.log('Node enviroment: ', process.env.NODE_ENV);
+console.log(`${'Frontend started in ' + process.env.FRONTEND_URL + '!'}`)
 
 app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
     const sig = req.headers['stripe-signature'];
@@ -154,6 +157,6 @@ app.use('/api/tags', tagRoutes);
 app.use('/api/carts', cartRoutes);
 app.use('/api/orders', orderRoutes); 
 
-app.listen(3001, '0.0.0.0', () => console.log('Server running on port 3001'));
+app.listen(3001, '0.0.0.0', () => console.log("Backend started in 3001!"));
 
 module.exports = app;

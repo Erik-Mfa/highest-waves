@@ -13,6 +13,10 @@ RUN npm install
 # Copy the rest of the application files
 COPY . .
 
+# Build the React app (this is where the REACT_APP_ variables must be available)
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+
 # Build the application for production
 RUN npm run build
 

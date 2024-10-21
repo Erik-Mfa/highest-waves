@@ -1,0 +1,39 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: ${NODE_ENV} 
+      MONGO_URI: ${MONGO_URI}
+      JWT_SECRET: ${JWT_SECRET}
+      STRIPE_KEY: ${STRIPE_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASS: ${EMAIL_PASS}
+      FRONTEND_URL: ${FRONTEND_URL}
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_API_URL: http://localhost:3001
+    container_name: frontend
+    ports:
+      - "3000:80"
+    environment:
+        REACT_APP_API_URL: http://localhost:3001
+        NODE_ENV: ${NODE_ENV}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+# docker compose down
+
+# docker compose up --build -d
+# docker compose --env-file .env.production up --build -d
