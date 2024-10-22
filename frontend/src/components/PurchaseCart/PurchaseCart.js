@@ -1,6 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/prop-types */
-import Loading from '../Loading/Loading'
 import { FaTrash } from 'react-icons/fa'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -15,7 +14,6 @@ function PurchaseCart({ user }) {
   const dispatch = useDispatch()
 
   const cartItems = useSelector((state) => state.cart.items)
-  const loading = useSelector((state) => state.cart.loading)
 
   // Calculate total price safely
   const totalPrice = Array.isArray(cartItems)
@@ -38,13 +36,11 @@ function PurchaseCart({ user }) {
     }
   }
 
-  if (loading) return <Loading />
-
   // Unified check for cartItems
   const cartIsEmpty = !Array.isArray(cartItems) || cartItems.length === 0
 
   return (
-    <div className="mt-4 w-full rounded-lg border border-gray-700 bg-gray-900 p-6 text-white shadow-xl">
+    <div className="mt-4 w-full rounded-lg border border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900 p-6 text-white shadow-lg">
       <h2 className="mb-6 border-b border-gray-700 pb-3 text-3xl font-bold">
         Your Cart
       </h2>
@@ -65,21 +61,23 @@ function PurchaseCart({ user }) {
                 className="size-20 rounded-md border border-gray-600 object-cover"
               />
               <div className="ml-4 flex-1">
-                <h3 className="text-lg font-bold">{item.beats.title}</h3>
+                <h3 className="text-md font-bold">{item.beats.title}</h3>
                 <p className="text-md text-cyan-400">${item.beats.price}</p>
               </div>
               <button
                 onClick={() => handleRemoveFromCart(item.id)}
-                className="flex items-center justify-center rounded-full bg-red-600 p-2 text-white transition-all duration-300 ease-in-out hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="flex items-center justify-center rounded-full bg-red-600 p-2 
+                text-white transition-all duration-300 ease-in-out hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
               >
-                <FaTrash className="text-lg" />
+                <FaTrash className="text-sm" />
               </button>
             </div>
           ))}
 
           <div className="mt-8">
-            <p className="mb-4 text-lg font-bold">
-              Total: ${totalPrice.toFixed(2)}
+            <p className="my-4 border-t border-gray-700 pt-4 text-2xl font-bold text-green-400">
+              Total:{' '}
+              <span className="text-white">${totalPrice.toFixed(2)}</span>
             </p>
             <Link
               to={{
