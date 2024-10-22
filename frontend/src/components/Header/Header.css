@@ -1,5 +1,5 @@
 header {
-  background: linear-gradient(to left, #0a3e3e, #071D26);
+  background: linear-gradient(to left, #0a3e3e, #071d26);
   align-items: center;
   position: fixed;
   top: 0;
@@ -7,4 +7,3 @@ header {
   width: 100%;
   z-index: 50;
 }
-

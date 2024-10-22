@@ -34,7 +34,9 @@
 
 .marquee-content {
   display: flex;
-  width: calc(100% * 2); /* Adjust based on the number of items to avoid snapping */
+  width: calc(
+    100% * 2
+  ); /* Adjust based on the number of items to avoid snapping */
   animation: marquee 80s linear infinite;
 }
 

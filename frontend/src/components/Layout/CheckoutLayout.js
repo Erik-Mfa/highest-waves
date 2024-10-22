@@ -1,13 +1,8 @@
-// CheckoutLayout.js
-import React from 'react';
+import React from 'react'
 
+// eslint-disable-next-line react/prop-types
 const CheckoutLayout = ({ children }) => {
+  return <div className="checkout-layout">{children}</div>
+}
 
-  return (
-    <div className="checkout-layout">
-      {children}
-    </div>
-  );
-};
-
-export default CheckoutLayout;
+export default CheckoutLayout

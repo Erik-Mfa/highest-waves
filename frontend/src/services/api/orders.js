@@ -1,8 +1,9 @@
-import axios from 'axios';
+import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_API_URL}/api/`, 
-  });
+  // eslint-disable-next-line no-undef
+  baseURL: `${process.env.REACT_APP_API_URL}/api/`
+})
 
 export const saveOrder = async (userId, cartBeatIds) => {
   try {
@@ -10,35 +11,34 @@ export const saveOrder = async (userId, cartBeatIds) => {
       '/orders',
       {
         cart: cartBeatIds,
-        user: userId,
+        user: userId
       },
       { withCredentials: true }
-    );
-    return response.data;
+    )
+    return response.data
   } catch (error) {
-    console.error('Error during checkout:', error);
-    throw error;
+    console.error('Error during checkout:', error)
+    throw error
   }
-};
+}
 
 // Function to fetch orders
 export const getOrders = async () => {
   try {
-    const response = await instance.get('/orders', { withCredentials: true });
-    return response.data;
+    const response = await instance.get('/orders', { withCredentials: true })
+    return response.data
   } catch (error) {
-    console.error('Error fetching orders:', error);
-    throw error;
+    console.error('Error fetching orders:', error)
+    throw error
   }
-};
+}
 
 export const deleteOrders = async (orderId) => {
   try {
-    await instance.delete(`/orders/${orderId}`, { withCredentials: true });
-    return { success: true };
-
+    await instance.delete(`/orders/${orderId}`, { withCredentials: true })
+    return { success: true }
   } catch (error) {
-    console.error('Error deleting order:', error);
-    throw error;
+    console.error('Error deleting order:', error)
+    throw error
   }
-};
+}

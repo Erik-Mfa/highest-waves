@@ -1,7 +1,8 @@
-import React from 'react';
-import Select from 'react-select';
-import Slider from 'rc-slider'; // Import Slider
-import 'rc-slider/assets/index.css'; // Import default Slider styles
+/* eslint-disable react/prop-types */
+import React from 'react'
+import Select from 'react-select'
+import Slider from 'rc-slider' // Import Slider
+import 'rc-slider/assets/index.css' // Import default Slider styles
 
 function FilterSidebar({ filters, setFilters, tags, users, tones }) {
   // Handle slider change
@@ -9,8 +10,8 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
     setFilters({
       ...filters,
       price: { min: value[0], max: value[1] }
-    });
-  };
+    })
+  }
 
   // Define BPM options
   const bpmOptions = [
@@ -24,53 +25,63 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
     { label: '141-160', value: { min: 141, max: 160 } },
     { label: '161-180', value: { min: 161, max: 180 } },
     { label: '181-200', value: { min: 181, max: 200 } }
-  ];
+  ]
 
   return (
-    <div className="p-10 rounded-lg shadow-md h-full" style={{ backgroundColor: '#102D40' }}>
+    <div
+      className="h-full rounded-lg p-10 shadow-md"
+      style={{ backgroundColor: '#102D40' }}
+    >
       <div className="sticky top-20">
-      {/* Price Filter */}
-      <div className="mb-6">
-        <label className="block text-white mb-2">Price</label>
-            <div className="flex items-center space-x-2">
-              <div className="flex-1">
-                <Slider
-                  range
-                  value={[filters.price.min, filters.price.max]}
-                  min={0}
-                  max={300}
-                  step={1}
-                  onChange={handlePriceChange}
-                  trackStyle={{ backgroundColor: '#0FC2C0', height: 6 }}
-                  railStyle={{ backgroundColor: '#073D3A', height: 6 }}
-                  handleStyle={{
-                    borderColor: '#0FC2C0',  // Make handles more visible with a distinct color
-                    backgroundColor: '#0FC2C0',  // Distinct handle color
-                    height: 20,
-                    width: 20,
-                    opacity: 1,
-                    top: 3,
-                    zIndex: 2, // Ensure handles are on top of the bar
-                  }}
-                />
-                <div className="flex justify-between text-white mt-2">
-                  <span>${filters.price.min}</span>
-                  <span>${filters.price.max}</span>
-                </div>
+        {/* Price Filter */}
+        <div className="mb-6">
+          <label className="mb-2 block text-white">Price</label>
+          <div className="flex items-center space-x-2">
+            <div className="flex-1">
+              <Slider
+                range
+                value={[filters.price.min, filters.price.max]}
+                min={0}
+                max={300}
+                step={1}
+                onChange={handlePriceChange}
+                trackStyle={{ backgroundColor: '#0FC2C0', height: 6 }}
+                railStyle={{ backgroundColor: '#073D3A', height: 6 }}
+                handleStyle={{
+                  borderColor: '#0FC2C0', // Make handles more visible with a distinct color
+                  backgroundColor: '#0FC2C0', // Distinct handle color
+                  height: 20,
+                  width: 20,
+                  opacity: 1,
+                  top: 3,
+                  zIndex: 2 // Ensure handles are on top of the bar
+                }}
+              />
+              <div className="mt-2 flex justify-between text-white">
+                <span>${filters.price.min}</span>
+                <span>${filters.price.max}</span>
               </div>
             </div>
           </div>
+        </div>
 
         {/* BPM Filter */}
         <div className="mb-6">
-          <label className="block text-white mb-2">BPM</label>
+          <label className="mb-2 block text-white">BPM</label>
           <Select
             options={bpmOptions}
-            value={bpmOptions.find(option => 
-              `${option.value.min}-${option.value.max}` === `${filters.bpm.min}-${filters.bpm.max}`
+            value={bpmOptions.find(
+              (option) =>
+                `${option.value.min}-${option.value.max}` ===
+                `${filters.bpm.min}-${filters.bpm.max}`
             )}
             onChange={(selectedOption) => {
-              setFilters({ ...filters, bpm: selectedOption ? selectedOption.value : { min: 1, max: 200 } });
+              setFilters({
+                ...filters,
+                bpm: selectedOption
+                  ? selectedOption.value
+                  : { min: 1, max: 200 }
+              })
             }}
             className="basic-single"
             classNamePrefix="select"
@@ -80,37 +91,44 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 backgroundColor: '#102D40',
                 borderColor: '#0FC2C0',
                 borderRadius: '0.375rem',
-                padding: '5px',
+                padding: '5px'
               }),
               menu: (provided) => ({
                 ...provided,
-                backgroundColor: '#102D40',
+                backgroundColor: '#102D40'
               }),
               option: (provided, state) => ({
                 ...provided,
                 backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
                 color: '#ffffff',
-                padding: '5px',
+                padding: '5px'
               }),
               singleValue: (provided) => ({
                 ...provided,
-                color: '#ffffff',
+                color: '#ffffff'
               }),
               placeholder: (provided) => ({
                 ...provided,
-                color: '#ffffff',
-              }),
+                color: '#ffffff'
+              })
             }}
           />
         </div>
 
         {/* Tone Filter */}
         <div className="mb-6">
-          <label className="block text-white mb-2">Tone</label>
+          <label className="mb-2 block text-white">Tone</label>
           <Select
-            options={tones.map(tone => ({ label: tone, value: tone }))}
-            value={filters.tone ? { label: filters.tone, value: filters.tone } : null}
-            onChange={(selectedOption) => setFilters({ ...filters, tone: selectedOption ? selectedOption.value : '' })}
+            options={tones.map((tone) => ({ label: tone, value: tone }))}
+            value={
+              filters.tone ? { label: filters.tone, value: filters.tone } : null
+            }
+            onChange={(selectedOption) =>
+              setFilters({
+                ...filters,
+                tone: selectedOption ? selectedOption.value : ''
+              })
+            }
             className="basic-single"
             classNamePrefix="select"
             styles={{
@@ -119,50 +137,49 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 backgroundColor: '#102D40',
                 borderColor: '#0FC2C0',
                 borderRadius: '0.375rem',
-                padding: '5px',
+                padding: '5px'
               }),
               menu: (provided) => ({
                 ...provided,
-                backgroundColor: '#102D40',
+                backgroundColor: '#102D40'
               }),
               option: (provided, state) => ({
                 ...provided,
                 backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
                 color: '#ffffff',
-                padding: '5px',
+                padding: '5px'
               }),
               singleValue: (provided) => ({
                 ...provided,
-                color: '#ffffff',
+                color: '#ffffff'
               }),
               placeholder: (provided) => ({
                 ...provided,
-                color: '#ffffff',
-              }),
+                color: '#ffffff'
+              })
             }}
           />
         </div>
 
         {/* Tags Filter */}
         <div className="mb-6">
-          <label className="block text-white mb-2 font-semibold">Tags</label>
+          <label className="mb-2 block font-semibold text-white">Tags</label>
           <div className="flex flex-wrap ">
             {tags.map((tag) => (
               <button
                 key={tag.id}
-                className={`px-3 py-1 m-1 rounded-full border border-cyan-500 transition-transform transform duration-300 ease-in-out ${
+                className={`m-1 rounded-full border border-cyan-500 px-3 py-1 transition-transform duration-300 ease-in-out${
                   filters.tag.includes(tag.id)
                     ? 'bg-cyan-500 text-white hover:scale-105'
                     : 'border-cyan-500 text-gray-300 hover:scale-105'
                 }`}
-                
                 onClick={() => {
                   setFilters({
                     ...filters,
                     tag: filters.tag.includes(tag.id)
                       ? filters.tag.filter((id) => id !== tag.id)
                       : [...filters.tag, tag.id]
-                  });
+                  })
                 }}
               >
                 {tag.name}
@@ -173,11 +190,18 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
 
         {/* User Filter */}
         <div className="mb-8">
-          <label className="block text-white mb-2">Producer</label>
+          <label className="mb-2 block text-white">Producer</label>
           <Select
-            options={users.map(user => ({ label: user, value: user }))}
-            value={filters.user ? { label: filters.user, value: filters.user } : null}
-            onChange={(selectedOption) => setFilters({ ...filters, user: selectedOption ? selectedOption.value : '' })}
+            options={users.map((user) => ({ label: user, value: user }))}
+            value={
+              filters.user ? { label: filters.user, value: filters.user } : null
+            }
+            onChange={(selectedOption) =>
+              setFilters({
+                ...filters,
+                user: selectedOption ? selectedOption.value : ''
+              })
+            }
             className="basic-single"
             classNamePrefix="select"
             styles={{
@@ -186,47 +210,49 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 backgroundColor: '#102D40',
                 borderColor: '#0FC2C0',
                 borderRadius: '0.375rem',
-                padding: '5px',
+                padding: '5px'
               }),
               menu: (provided) => ({
                 ...provided,
-                backgroundColor: '#102D40',
+                backgroundColor: '#102D40'
               }),
               option: (provided, state) => ({
                 ...provided,
                 backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
                 color: '#ffffff',
-                padding: '5px',
+                padding: '5px'
               }),
               singleValue: (provided) => ({
                 ...provided,
-                color: '#ffffff',
+                color: '#ffffff'
               }),
               placeholder: (provided) => ({
                 ...provided,
-                color: '#ffffff',
-              }),
+                color: '#ffffff'
+              })
             }}
           />
         </div>
 
         {/* Reset Filters Button */}
         <button
-          className="w-full py-2 bg-transparent border border-red-700 text-white rounded hover:bg-red-700 transition"
-          onClick={() => setFilters({
-            price: { min: 0, max: 300 },
-            createdAt: '',
-            tag: [],
-            bpm: { min: 1, max: 200 },
-            tone: '',
-            user: ''
-          })}
+          className="w-full rounded border border-red-700 bg-transparent py-2 text-white transition hover:bg-red-700"
+          onClick={() =>
+            setFilters({
+              price: { min: 0, max: 300 },
+              createdAt: '',
+              tag: [],
+              bpm: { min: 1, max: 200 },
+              tone: '',
+              user: ''
+            })
+          }
         >
           Clear
         </button>
       </div>
     </div>
-  );
+  )
 }
 
-export default FilterSidebar;
+export default FilterSidebar

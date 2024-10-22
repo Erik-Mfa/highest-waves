@@ -1,33 +1,31 @@
-import React from 'react';
+import React from 'react'
 
+// eslint-disable-next-line react/prop-types
 const ConfirmMessage = ({ message, onConfirm, onCancel }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-md w-full">
-
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-full max-w-md rounded-lg bg-gray-800 p-6 text-white shadow-lg">
         {/* The message will be displayed here */}
-        <p className="text-lg mb-6">{message}</p>
-        
-        <div className="flex justify-between">
+        <p className="mb-6 text-lg">{message}</p>
 
+        <div className="flex justify-between">
           <button
             onClick={onCancel}
-            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-200"
+            className="rounded-md bg-gray-500 px-4 py-2 text-white transition duration-200 hover:bg-gray-600"
           >
             Cancel
           </button>
 
           <button
             onClick={onConfirm}
-            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-200"
+            className="rounded-md bg-red-600 px-4 py-2 text-white transition duration-200 hover:bg-red-700"
           >
             Confirm
           </button>
-
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ConfirmMessage;
+export default ConfirmMessage

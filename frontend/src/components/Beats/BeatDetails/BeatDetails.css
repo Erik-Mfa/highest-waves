@@ -1,11 +1,10 @@
 /* Add this to your CSS file */
 
 .fade-in {
-    opacity: 0;
-    transition: opacity 0.5s ease-in;
-  }
-  
-  .fade-in-active {
-    opacity: 1;
-  }
-  
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.fade-in-active {
+  opacity: 1;
+}

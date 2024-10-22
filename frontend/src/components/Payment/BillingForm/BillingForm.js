@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const countryList = [
   { code: 'US', name: 'United States' },
@@ -8,9 +8,10 @@ const countryList = [
   { code: 'DE', name: 'Germany' },
   { code: 'FR', name: 'France' },
   { code: 'JP', name: 'Japan' },
-  { code: 'BR', name: 'Brazil' },
-];
+  { code: 'BR', name: 'Brazil' }
+]
 
+// eslint-disable-next-line react/prop-types
 const BillingForm = ({ onBillingInfoChange }) => {
   const [billingInfo, setBillingInfo] = useState({
     name: '',
@@ -18,47 +19,51 @@ const BillingForm = ({ onBillingInfoChange }) => {
     city: '',
     country: '',
     postalCode: ''
-  });
+  })
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({})
 
   const handleBillingChange = (e) => {
-    const { name, value } = e.target;
-    const updatedInfo = { ...billingInfo, [name]: value };
-    setBillingInfo(updatedInfo);
-    onBillingInfoChange(updatedInfo);
-  };
+    const { name, value } = e.target
+    const updatedInfo = { ...billingInfo, [name]: value }
+    setBillingInfo(updatedInfo)
+    onBillingInfoChange(updatedInfo)
+  }
 
   const validateForm = () => {
-    const newErrors = {};
-    if (!billingInfo.name) newErrors.name = 'Name is required.';
-    if (!billingInfo.address) newErrors.address = 'Address is required.';
-    if (!billingInfo.city) newErrors.city = 'City is required.';
-    if (!billingInfo.country) newErrors.country = 'Country is required.';
-    if (!billingInfo.postalCode) newErrors.postalCode = 'Postal code is required.';
-    return newErrors;
-  };
+    const newErrors = {}
+    if (!billingInfo.name) newErrors.name = 'Name is required.'
+    if (!billingInfo.address) newErrors.address = 'Address is required.'
+    if (!billingInfo.city) newErrors.city = 'City is required.'
+    if (!billingInfo.country) newErrors.country = 'Country is required.'
+    if (!billingInfo.postalCode)
+      newErrors.postalCode = 'Postal code is required.'
+    return newErrors
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
+    e.preventDefault()
+    const validationErrors = validateForm()
     if (Object.keys(validationErrors).length === 0) {
       // Proceed with submission
-      console.log('Billing Info Submitted:', billingInfo);
-      setErrors({});
+      console.log('Billing Info Submitted:', billingInfo)
+      setErrors({})
     } else {
-      setErrors(validationErrors);
+      setErrors(validationErrors)
     }
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg shadow-md">
-      <h3 className="text-xl font-bold text-white mb-2">Billing Information</h3>
+    <form
+      onSubmit={handleSubmit}
+      className="rounded-lg bg-gray-800 p-6 shadow-md"
+    >
+      <h3 className="mb-2 text-xl font-bold text-white">Billing Information</h3>
       <input
         type="text"
         name="name"
         placeholder="Full Name"
-        className={`w-full p-3 mb-2 border ${errors.name ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
+        className={`mb-2 w-full border p-3 ${errors.name ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
         value={billingInfo.name}
         onChange={handleBillingChange}
       />
@@ -68,7 +73,7 @@ const BillingForm = ({ onBillingInfoChange }) => {
         type="text"
         name="address"
         placeholder="Address"
-        className={`w-full p-3 mb-2 border ${errors.address ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
+        className={`mb-2 w-full border p-3 ${errors.address ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
         value={billingInfo.address}
         onChange={handleBillingChange}
       />
@@ -79,7 +84,7 @@ const BillingForm = ({ onBillingInfoChange }) => {
           type="text"
           name="city"
           placeholder="City"
-          className={`w-1/2 p-3 mb-2 border ${errors.city ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
+          className={`mb-2 w-1/2 border p-3 ${errors.city ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
           value={billingInfo.city}
           onChange={handleBillingChange}
         />
@@ -89,18 +94,20 @@ const BillingForm = ({ onBillingInfoChange }) => {
           type="text"
           name="postalCode"
           placeholder="Postal Code"
-          className={`w-1/2 p-3 mb-2 border ${errors.postalCode ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
+          className={`mb-2 w-1/2 border p-3 ${errors.postalCode ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
           value={billingInfo.postalCode}
           onChange={handleBillingChange}
         />
-        {errors.postalCode && <p className="text-red-600">{errors.postalCode}</p>}
+        {errors.postalCode && (
+          <p className="text-red-600">{errors.postalCode}</p>
+        )}
       </div>
 
       <select
         name="country"
         value={billingInfo.country}
         onChange={handleBillingChange}
-        className={`w-full p-3 mb-2 border ${errors.country ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
+        className={`mb-2 w-full border p-3 ${errors.country ? 'border-red-600' : 'border-gray-600'} rounded-md bg-gray-700 text-white`}
       >
         <option value="">Select Country</option>
         {countryList.map((country) => (
@@ -110,9 +117,8 @@ const BillingForm = ({ onBillingInfoChange }) => {
         ))}
       </select>
       {errors.country && <p className="text-red-600">{errors.country}</p>}
-    
     </form>
-  );
-};
+  )
+}
 
-export default BillingForm;
+export default BillingForm

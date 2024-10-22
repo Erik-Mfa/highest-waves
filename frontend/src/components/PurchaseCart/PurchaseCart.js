@@ -1,46 +1,53 @@
-import Loading from '../Loading/Loading';
-import { FaTrash } from 'react-icons/fa';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCartItems, removeCartItem, setTotalAmount } from '../../store/cartSlice';
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/prop-types */
+import Loading from '../Loading/Loading'
+import { FaTrash } from 'react-icons/fa'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchCartItems,
+  removeCartItem,
+  setTotalAmount
+} from '../../store/cartSlice'
 
 function PurchaseCart({ user }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const cartItems = useSelector((state) => state.cart.items);
-  const loading = useSelector((state) => state.cart.loading);
-  
+  const cartItems = useSelector((state) => state.cart.items)
+  const loading = useSelector((state) => state.cart.loading)
+
   // Calculate total price safely
   const totalPrice = Array.isArray(cartItems)
     ? cartItems.reduce((total, item) => total + item.beats.price, 0)
-    : 0;
+    : 0
 
   useEffect(() => {
-    dispatch(setTotalAmount(totalPrice));
-  }, [dispatch, totalPrice]);
+    dispatch(setTotalAmount(totalPrice))
+  }, [dispatch, totalPrice])
 
   useEffect(() => {
     if (user && user.userId) {
-      dispatch(fetchCartItems(user.userId));
+      dispatch(fetchCartItems(user.userId))
     }
-  }, [user, dispatch]);
+  }, [user, dispatch])
 
   const handleRemoveFromCart = (cartId) => {
     if (user && user.userId) {
-      dispatch(removeCartItem(cartId));
+      dispatch(removeCartItem(cartId))
     }
-  };
+  }
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading />
 
   // Unified check for cartItems
-  const cartIsEmpty = !Array.isArray(cartItems) || cartItems.length === 0;
+  const cartIsEmpty = !Array.isArray(cartItems) || cartItems.length === 0
 
   return (
-    
-    <div className="bg-gray-900 text-white p-6 mt-4 rounded-lg shadow-xl w-full border border-gray-700">
-      <h2 className="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">Your Cart</h2>
+    <div className="mt-4 w-full rounded-lg border border-gray-700 bg-gray-900 p-6 text-white shadow-xl">
+      <h2 className="mb-6 border-b border-gray-700 pb-3 text-3xl font-bold">
+        Your Cart
+      </h2>
 
       {cartIsEmpty ? (
         <p className="text-lg text-gray-300">Your cart is empty.</p>
@@ -49,20 +56,21 @@ function PurchaseCart({ user }) {
           {cartItems.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between p-4 mb-5 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-700"
+              className="mb-5 flex items-center justify-between rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-md transition-shadow hover:shadow-lg"
             >
               <img
+                // eslint-disable-next-line no-undef
                 src={`${process.env.REACT_APP_API_URL}/${item.beats.image}`}
                 alt={item.beats.title}
-                className="h-20 w-20 object-cover rounded-md border border-gray-600"
+                className="size-20 rounded-md border border-gray-600 object-cover"
               />
-              <div className="flex-1 ml-4">
+              <div className="ml-4 flex-1">
                 <h3 className="text-lg font-bold">{item.beats.title}</h3>
                 <p className="text-md text-cyan-400">${item.beats.price}</p>
               </div>
               <button
                 onClick={() => handleRemoveFromCart(item.id)}
-                className="bg-red-600 text-white hover:bg-red-700 transition-all duration-300 ease-in-out p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center"
+                className="flex items-center justify-center rounded-full bg-red-600 p-2 text-white transition-all duration-300 ease-in-out hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
               >
                 <FaTrash className="text-lg" />
               </button>
@@ -70,12 +78,14 @@ function PurchaseCart({ user }) {
           ))}
 
           <div className="mt-8">
-            <p className="text-lg font-bold mb-4">Total: ${totalPrice.toFixed(2)}</p>
+            <p className="mb-4 text-lg font-bold">
+              Total: ${totalPrice.toFixed(2)}
+            </p>
             <Link
               to={{
-                pathname: "/checkout",
+                pathname: '/checkout'
               }}
-              className="w-full py-4 px-6 border border-transparent rounded-md shadow-md text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 ease-in-out transform hover:scale-105 text-center block"
+              className="block w-full rounded-md border border-transparent bg-cyan-600 px-6 py-4 text-center text-sm font-medium text-white shadow-md transition-all duration-300 ease-in-out hover:scale-105 hover:bg-cyan-700"
             >
               Proceed to Checkout
             </Link>
@@ -83,7 +93,7 @@ function PurchaseCart({ user }) {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default PurchaseCart;
+export default PurchaseCart

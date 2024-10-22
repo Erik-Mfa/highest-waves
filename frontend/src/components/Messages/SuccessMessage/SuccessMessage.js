@@ -1,27 +1,28 @@
-import React from 'react';
+import React from 'react'
 
+// eslint-disable-next-line react/prop-types
 const SuccessMessage = ({ message, onProceed, onClose }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white text-black p-6 rounded-lg shadow-lg max-w-md w-full">
-        <p className="text-lg mb-6 font-bold text-green-600">{message}</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-full max-w-md rounded-lg bg-white p-6 text-black shadow-lg">
+        <p className="mb-6 text-lg font-bold text-green-600">{message}</p>
         <div className="flex justify-between">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-200"
+            className="rounded-md bg-gray-500 px-4 py-2 text-white transition duration-200 hover:bg-gray-600"
           >
             Close
           </button>
           <button
             onClick={onProceed}
-            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-200"
+            className="rounded-md bg-green-600 px-4 py-2 text-white transition duration-200 hover:bg-green-700"
           >
             Proceed
           </button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SuccessMessage;
+export default SuccessMessage
