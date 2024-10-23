@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
+const rateLimit = require('express-rate-limit');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const Order = require('./models/Order');
 
@@ -26,6 +27,15 @@ const corsOptions = {
     origin: process.env.FRONTEND_URL, 
     credentials: true // This allows cookies to be sent
 };
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 requests per `windowMs`
+    message: {
+    status: 429, 
+    message: 'Too many login attempts, please try again after 15 minutes.'
+  },
+});
 
 console.log('Node enviroment: ', process.env.NODE_ENV);
 console.log(`${'Frontend started in ' + process.env.FRONTEND_URL + '!'}`)
@@ -150,7 +160,7 @@ app.use('/assets/users-images', express.static(path.join(__dirname, 'public/asse
 
 // Other API routes
 app.use('/api/payment', paymentRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', limiter, authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/beats', beatRoutes);
 app.use('/api/tags', tagRoutes);

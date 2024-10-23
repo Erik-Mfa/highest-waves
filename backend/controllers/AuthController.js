@@ -2,13 +2,32 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const upload = require('../services/multer/usersMulter')
+const axios = require('axios')
+
 
 class AuthController {
   
   async register(req, res) {
     try {
 
-          const { username, email, password, role } = req.body;
+          const { username, email, password, role, captchaToken } = req.body;
+
+          if (!captchaToken) {
+            return res.status(400).json({ success: false, message: 'CAPTCHA is required' })
+          }
+
+          console.log(captchaToken + 'fucking captcha')
+
+          // Send request to Google reCAPTCHA API to verify the token
+          const verifyResponse = await axios.post(
+            `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${captchaToken}`
+          )
+
+          const { success, score } = verifyResponse.data
+
+          if (!success) {
+            return res.status(400).json({ success: false, message: 'CAPTCHA verification failed' })
+          }
 
           // Check if user already exists
           const existingUser = await User.findOne({ email });
@@ -32,10 +51,8 @@ class AuthController {
           });
 
           // Save the new user
-          const result = await newUser.save();
-          res.status(201).json({ success: true });
-
-
+          const response = await newUser.save();
+          return { success: true, user: response }; // Return a success object
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: err.message });

@@ -9,25 +9,37 @@ const Login = () => {
     email: '',
     password: ''
   })
+  const [error, setError] = useState([])
   const navigate = useNavigate()
 
   const handleLogin = async () => {
-    const logged = await login(credentials)
+    try {
+      const logged = await login(credentials)
 
-    if (logged) {
-      navigate('/')
-      window.location.reload()
+      if (logged) {
+        navigate('/')
+        window.location.reload()
+      }
+    } catch (err) {
+      if (err.response && err.response.status === 429) {
+        setError('Too many login attempts. Please try again after 15 minutes.')
+      } else {
+        setError('Login failed. Please check your credentials.')
+      }
     }
   }
 
   return (
     <div className="flex min-h-screen bg-[#042326]">
       {/* Left side: Form (1/3 of the page) */}
-      <div className="mt-20 flex w-full animate-slide-in-left flex-col justify-start bg-[#042326] p-6 md:w-1/3">
+      <div className="animate-slide-in-left mt-20 flex w-full flex-col justify-start bg-[#042326] p-6 md:w-1/3">
         <div className="w-full rounded-lg border-2 border-[#0A3A40] p-8 shadow-lg">
           <h2 className="mb-8 text-center text-4xl font-bold tracking-wider text-white">
             SIGN IN
           </h2>
+          {error && (
+            <div className="mb-4 text-center text-red-500">{error}</div> // Display the error message
+          )}
           <form>
             <div className="mb-10">
               <label
