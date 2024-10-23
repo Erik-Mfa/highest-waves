@@ -1,65 +1,72 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const Beat = require('./Beat'); 
-const Cart = require('./Cart'); 
+const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+const Beat = require('./Beat')
+const Cart = require('./Cart')
 
-const userSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-    unique: true,
+const userSchema = new mongoose.Schema(
+  {
+    id: {
+      type: Number,
+      required: true,
+      unique: true
+    },
+    username: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    image: {
+      type: String,
+      default: 'assets/users-images/Standard-User.png'
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'customer'],
+      default: 'customer'
+    }
   },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    default: 'assets/users-images/Standard-User.png',
-  },
-  role: {
-    type: String,
-    enum: ['admin', 'customer'],
-    default: 'customer',
-  }
-}, { timestamps: true });
+  { timestamps: true }
+)
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
-    return next();
+    return next()
   }
-  const hashedPassword = await bcrypt.hash(this.password, 10);
-  this.password = hashedPassword;
-  next();
-});
+  const hashedPassword = await bcrypt.hash(this.password, 10)
+  this.password = hashedPassword
+  next()
+})
 
-userSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
-  try {
-    const userId = this._id; 
+userSchema.pre(
+  'deleteOne',
+  { document: true, query: false },
+  async function (next) {
+    try {
+      const userId = this._id
 
-    await Beat.deleteMany({ owner: userId });
-    await Cart.deleteMany({ user: userId });
+      await Beat.deleteMany({ owner: userId })
+      await Cart.deleteMany({ user: userId })
 
-    next();
-  } catch (error) {
-    next(error);
+      next()
+    } catch (error) {
+      next(error)
+    }
   }
-});
+)
 
-userSchema.methods.comparePassword = function(password) {
-  return bcrypt.compare(password, this.password);
-};
+userSchema.methods.comparePassword = function (password) {
+  return bcrypt.compare(password, this.password)
+}
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema)
 
-module.exports = User;
+module.exports = User
