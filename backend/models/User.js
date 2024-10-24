@@ -32,6 +32,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['admin', 'customer'],
       default: 'customer'
+    },
+    // New fields for password reset functionality
+    resetToken: {
+      type: String,
+      default: null
+    },
+    resetTokenExpiry: {
+      type: Date,
+      default: null
     }
   },
   { timestamps: true }

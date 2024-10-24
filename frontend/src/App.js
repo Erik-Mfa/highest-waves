@@ -31,6 +31,8 @@ import CheckoutPage from './pages/CheckoutPage/CheckoutPage'
 import PaymentSucessPage from './pages/PaymentSucessPage/PaymentSucessPage'
 import PaymentFailedPage from './pages/PaymentFailedPage/PaymentFailedPage'
 import PaymentErrorPage from './pages/PaymentErrorPage/PaymentErrorPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage/ResetPasswordPage'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -81,6 +83,12 @@ function App() {
                   <RegisterPage />
                 </Layout>
               }
+            />
+
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route
+              path="/reset-password/:token"
+              element={<ResetPasswordPage />}
             />
 
             <Route path="/support" element={<SupportPage />} />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { register, login } from '../../../services/api/auth'
 import { useNavigate, Link } from 'react-router-dom'
+import { FaEye, FaEyeSlash } from 'react-icons/fa' // Import eye icons
 import ReCAPTCHA from 'react-google-recaptcha'
 
 const RegisterForm = () => {
@@ -10,6 +11,8 @@ const RegisterForm = () => {
     password: '',
     confirmPassword: ''
   })
+  const [showPassword, setShowPassword] = useState(false) // State to toggle password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [error, setError] = useState('') // State for error messages
   const [validationError, setValidationError] = useState('') // State for password validation errors
   const [captchaToken, setCaptchaToken] = useState(null) //reCAPTCHA
@@ -144,16 +147,32 @@ const RegisterForm = () => {
               >
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                value={credentials.password}
-                onChange={(e) => {
-                  setCredentials({ ...credentials, password: e.target.value })
-                  validatePassword(e.target.value) // Validate password on change
-                }}
-                className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  value={credentials.password}
+                  onChange={(e) => {
+                    setCredentials({ ...credentials, password: e.target.value })
+                    validatePassword(e.target.value) // Validate password on change
+                  }}
+                  className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-3"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <FaEyeSlash className="text-white" />
+                  ) : (
+                    <FaEye className="text-white" />
+                  )}
+                </button>
+              </div>
+              {validationError && (
+                <div className="text-red-500">{validationError}</div>
+              )}
             </div>
 
             <div className="mb-8">
@@ -163,18 +182,31 @@ const RegisterForm = () => {
               >
                 Confirm Password
               </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                value={credentials.confirmPassword}
-                onChange={(e) =>
-                  setCredentials({
-                    ...credentials,
-                    confirmPassword: e.target.value
-                  })
-                }
-                className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-              />
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  id="confirmPassword"
+                  value={credentials.confirmPassword}
+                  onChange={(e) =>
+                    setCredentials({
+                      ...credentials,
+                      confirmPassword: e.target.value
+                    })
+                  }
+                  className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-3"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? (
+                    <FaEyeSlash className="text-white" />
+                  ) : (
+                    <FaEye className="text-white" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <div className="flex justify-center p-4">

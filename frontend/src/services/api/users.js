@@ -44,3 +44,31 @@ export const deleteUser = async (userId) => {
     return { success: false, error }
   }
 }
+
+// Forgot Password API: Sends a reset password link to the user's email
+export const forgotPassword = async (email) => {
+  try {
+    const response = await instance.post('/users/forgot-password', { email })
+    alert('Reset password email sent!')
+    return response.data
+  } catch (error) {
+    console.error('Error sending reset password email:', error)
+    alert('Error sending email. Please try again.')
+    throw error
+  }
+}
+
+// Reset Password API: Handles the actual password reset using the token
+export const resetPassword = async (password, token) => {
+  try {
+    const response = await instance.post(`/users/reset-password/${token}`, {
+      password: password
+    })
+    alert('Password reset successful!')
+    return response.data
+  } catch (error) {
+    console.error('Error resetting password:', error)
+    alert('Error resetting password. Please try again.')
+    throw error
+  }
+}

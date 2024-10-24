@@ -8,5 +8,7 @@ router.get('/', authorize, UserController.find)
 router.get('/:id', authorize, UserController.findById) // Protected route
 router.put('/:id', authorize, UserController.update) // Protected route
 router.delete('/:id', authorize, isAdmin, UserController.delete) // Protected route
+router.post('/forgot-password', UserController.forgot)
+router.post('/reset-password/:token', UserController.reset)
 
 module.exports = router
