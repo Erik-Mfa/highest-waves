@@ -89,7 +89,16 @@ const RegisterForm = () => {
   return (
     <div className="flex min-h-screen bg-[#042326]">
       {/* Left side: Form (1/3 of the page) */}
-      <div className="animate-slide-in-left mt-10 flex w-full flex-col justify-start bg-[#042326] p-6 md:w-1/3">
+      <div className="animate-slide-in-left flex w-full flex-col justify-start bg-[#042326] p-8 md:w-1/3">
+        <div className="flex justify-center pb-4 text-center">
+          <Link to="/">
+            <img
+              src="/assets/highestwaves-logo.png"
+              alt="Highest Waves Logo"
+              className="w-64 transition-transform duration-200 hover:scale-105"
+            />
+          </Link>
+        </div>
         <h2 className="mb-8 text-center text-3xl font-bold tracking-wider text-white">
           Create an account
         </h2>

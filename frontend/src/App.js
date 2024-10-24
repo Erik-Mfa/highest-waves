@@ -60,6 +60,7 @@ function App() {
                 </Layout>
               }
             />
+
             <Route
               path="/beats/:id"
               element={
@@ -68,22 +69,9 @@ function App() {
                 </Layout>
               }
             />
-            <Route
-              path="/login"
-              element={
-                <Layout>
-                  <LoginPage />
-                </Layout>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <Layout>
-                  <RegisterPage />
-                </Layout>
-              }
-            />
+
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
 
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route
