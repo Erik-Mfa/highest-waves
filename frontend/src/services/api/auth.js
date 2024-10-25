@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode'
 
 const instance = axios.create({
   // eslint-disable-next-line no-undef
-  baseURL: `${process.env.REACT_APP_API_URL}/api/` // Ensure this is correct
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api/` // Ensure this is correct
 })
 
 const cookies = new Cookies()

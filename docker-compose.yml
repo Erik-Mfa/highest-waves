@@ -14,18 +14,24 @@ services:
       EMAIL_USER: ${EMAIL_USER}
       EMAIL_PASS: ${EMAIL_PASS}
       FRONTEND_URL: ${FRONTEND_URL}
+    env_file:
+      - ./.env  # Reference the root .env file
+    networks:
+      - app-network
 
   frontend:
     build:
       context: ./frontend
       args:
-        REACT_APP_API_URL: http://localhost:3001
+        REACT_APP_BACKEND_URL: http://localhost:3001
     container_name: frontend
     ports:
       - "3000:80"
     environment:
-        REACT_APP_API_URL: http://localhost:3001
-        NODE_ENV: ${NODE_ENV}
+      REACT_APP_BACKEND_URL: http://localhost:3001
+      NODE_ENV: ${NODE_ENV}
+    env_file:
+      - ./frontend/.env  # Reference the root .env file
     networks:
       - app-network
 

@@ -131,8 +131,8 @@ const AudioPlayer = () => {
     const nextTrackData = playlist[nextIndex]
 
     if (nextTrackData) {
-      const nextTrackURL = `${process.env.REACT_APP_API_URL}/${nextTrackData.audioURL}`
-      const nextCoverURL = `${process.env.REACT_APP_API_URL}/${nextTrackData.image}`
+      const nextTrackURL = `${process.env.REACT_APP_BACKEND_URL}/${nextTrackData.audioURL}`
+      const nextCoverURL = `${process.env.REACT_APP_BACKEND_URL}/${nextTrackData.image}`
       dispatch(setCurrentTrack(nextTrackURL))
       dispatch(setCurrentCover(nextCoverURL))
       dispatch(setCurrentOwner(nextTrackData.owner.username))
@@ -146,8 +146,8 @@ const AudioPlayer = () => {
     const prevIndex = (currentIndex - 1 + playlist.length) % playlist.length
     const prevTrackData = playlist[prevIndex]
     if (prevTrackData) {
-      const prevTrackURL = `${process.env.REACT_APP_API_URL}/${prevTrackData.audioURL}`
-      const prevCoverURL = `${process.env.REACT_APP_API_URL}/${prevTrackData.image}`
+      const prevTrackURL = `${process.env.REACT_APP_BACKEND_URL}/${prevTrackData.audioURL}`
+      const prevCoverURL = `${process.env.REACT_APP_BACKEND_URL}/${prevTrackData.image}`
       dispatch(setCurrentTrack(prevTrackURL))
       dispatch(setCurrentCover(prevCoverURL))
       dispatch(setCurrentOwner(prevTrackData.owner.username))

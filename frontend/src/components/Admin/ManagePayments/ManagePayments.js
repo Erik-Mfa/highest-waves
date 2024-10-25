@@ -157,7 +157,7 @@ const ManagePayments = () => {
                         <div className="mb-2 flex justify-center">
                           <img
                             // eslint-disable-next-line no-undef
-                            src={`${process.env.REACT_APP_API_URL}/${beat.image}`}
+                            src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
                             alt={beat.title}
                             className="size-16 rounded-lg object-cover shadow-md"
                           />

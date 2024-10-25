@@ -86,7 +86,7 @@ const ManageUsers = () => {
             >
               <img
                 // eslint-disable-next-line no-undef
-                src={`${process.env.REACT_APP_API_URL}/${user.image}`}
+                src={`${process.env.REACT_APP_BACKEND_URL}/${user.image}`}
                 alt="User Avatar"
                 className="mr-4 size-20 rounded-full border-2 border-cyan-600 object-cover" // Adding a border around the image
               />

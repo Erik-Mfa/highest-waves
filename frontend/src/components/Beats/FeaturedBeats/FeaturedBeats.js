@@ -54,18 +54,20 @@ function FeaturedBeats() {
 
     // Set the current track details
     dispatch(
-      setCurrentTrack(`${process.env.REACT_APP_API_URL}/${beat.audioURL}`)
+      setCurrentTrack(`${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}`)
     )
     dispatch(setCurrentTitle(beat.title))
     dispatch(setCurrentId(beat.id))
-    dispatch(setCurrentCover(`${process.env.REACT_APP_API_URL}/${beat.image}`))
+    dispatch(
+      setCurrentCover(`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`)
+    )
 
     // Toggle play/pause
     dispatch(togglePlayPause())
   }
 
   return (
-    <div className="relative bg-black py-10 pt-4 shadow-fade-lg">
+    <div className="shadow-fade-lg relative bg-black py-10 pt-4">
       <h2
         className="mb-4 text-center text-2xl font-bold text-white"
         style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}
@@ -88,7 +90,7 @@ function FeaturedBeats() {
                   )}
 
                   <img
-                    src={`${process.env.REACT_APP_API_URL}/${beat.image}`}
+                    src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
                     alt={beat.title}
                     className={`size-full rounded-lg object-cover ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
                     style={{ aspectRatio: '1 / 1' }}
@@ -101,7 +103,7 @@ function FeaturedBeats() {
                   >
                     {/* Conditionally render FaPlay or FaPause */}
                     {currentTrack ===
-                      `${process.env.REACT_APP_API_URL}/${beat.audioURL}` &&
+                      `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
                     isPlaying ? (
                       <FaPause size={32} />
                     ) : (

@@ -60,12 +60,14 @@ function BeatList({ beats, filters }) {
 
     // Set the current track details
     dispatch(
-      setCurrentTrack(`${process.env.REACT_APP_API_URL}/${beat.audioURL}`)
+      setCurrentTrack(`${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}`)
     )
     dispatch(setCurrentTitle(beat.title))
     dispatch(setCurrentId(beat.id))
     dispatch(setCurrentOwner(beat.owner.username))
-    dispatch(setCurrentCover(`${process.env.REACT_APP_API_URL}/${beat.image}`))
+    dispatch(
+      setCurrentCover(`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`)
+    )
 
     // Toggle play/pause
     dispatch(togglePlayPause())
@@ -89,7 +91,7 @@ function BeatList({ beats, filters }) {
 
                 <div className="relative w-full overflow-hidden rounded-lg pt-[100%]">
                   <img
-                    src={`${process.env.REACT_APP_API_URL}/${beat.image}`}
+                    src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
                     alt={beat.title}
                     className={`absolute left-0 top-0 size-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-60 ${
                       isImageLoaded ? 'opacity-100' : 'opacity-0'
@@ -104,7 +106,7 @@ function BeatList({ beats, filters }) {
                   >
                     {/* Conditionally render FaPlay or FaPause */}
                     {currentTrack ===
-                      `${process.env.REACT_APP_API_URL}/${beat.audioURL}` &&
+                      `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
                     isPlaying ? (
                       <FaPause size={35} />
                     ) : (

@@ -56,7 +56,7 @@ function PurchaseCart({ user }) {
             >
               <img
                 // eslint-disable-next-line no-undef
-                src={`${process.env.REACT_APP_API_URL}/${item.beats.image}`}
+                src={`${process.env.REACT_APP_BACKEND_URL}/${item.beats.image}`}
                 alt={item.beats.title}
                 className="size-20 rounded-md border border-gray-600 object-cover"
               />

@@ -56,14 +56,16 @@ function BeatDetails() {
   }
 
   const handlePlayTrack = () => {
-    if (currentTrack !== `${process.env.REACT_APP_API_URL}/${beat.audioURL}`) {
+    if (
+      currentTrack !== `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}`
+    ) {
       dispatch(
-        setCurrentTrack(`${process.env.REACT_APP_API_URL}/${beat.audioURL}`)
+        setCurrentTrack(`${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}`)
       )
       dispatch(setCurrentTitle(beat.title))
       dispatch(setCurrentId(beat.id))
       dispatch(
-        setCurrentCover(`${process.env.REACT_APP_API_URL}/${beat.image}`)
+        setCurrentCover(`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`)
       )
       if (!isPlaying) {
         dispatch(togglePlayPause(true))
@@ -120,7 +122,7 @@ function BeatDetails() {
           >
             {/* Image */}
             <img
-              src={`${process.env.REACT_APP_API_URL}/${beat.image}`}
+              src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
               alt={beat.title}
               className="size-full object-cover"
               style={{ aspectRatio: '1/1' }}
@@ -130,7 +132,7 @@ function BeatDetails() {
             <div className="absolute inset-0 flex items-center justify-center transition-all duration-[0.8s] ease-in-out">
               <div className="flex size-full items-center justify-center bg-black bg-opacity-60 transition-all duration-[1.2s] ease-in-out hover:bg-opacity-0">
                 {currentTrack ===
-                  `${process.env.REACT_APP_API_URL}/${beat.audioURL}` &&
+                  `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
                 isPlaying ? (
                   <FaPause
                     size={64}
@@ -171,7 +173,7 @@ function BeatDetails() {
           <div className="flex justify-around text-gray-400 lg:justify-start lg:space-x-10">
             <div className="flex flex-col lg:items-start">
               <span
-                className="rounded-lg bg-cyan-800 px-2 text-2xl text-white shadow-tag"
+                className="shadow-tag rounded-lg bg-cyan-800 px-2 text-2xl text-white"
                 style={{ fontFamily: '"Russo One"' }}
               >
                 BPM {beat.bpm}
@@ -179,7 +181,7 @@ function BeatDetails() {
             </div>
             <div className="flex flex-col lg:items-start">
               <span
-                className="rounded-lg bg-cyan-800 px-2 text-2xl text-white shadow-tag"
+                className="shadow-tag rounded-lg bg-cyan-800 px-2 text-2xl text-white"
                 style={{ fontFamily: '"Russo One"' }}
               >
                 TONE {beat.tone}
