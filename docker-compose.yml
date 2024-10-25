@@ -15,31 +15,37 @@ services:
       EMAIL_PASS: ${EMAIL_PASS}
       FRONTEND_URL: ${FRONTEND_URL}
     env_file:
-      - ./.env  # Reference the root .env file
+      - ./.env
     networks:
       - app-network
+    image: erikmfa/highest-waves-backend:latest
 
   frontend:
     build:
       context: ./frontend
       args:
-        REACT_APP_BACKEND_URL: http://localhost:3001
+        REACT_APP_BACKEND_URL: http://backend:3001
     container_name: frontend
     ports:
       - "3000:80"
     environment:
-      REACT_APP_BACKEND_URL: http://localhost:3001
+      REACT_APP_BACKEND_URL: http://backend:3001
       NODE_ENV: ${NODE_ENV}
     env_file:
-      - ./frontend/.env  # Reference the root .env file
+      - ./frontend/.env
+    networks:
+      - app-network
+    image: erikmfa/highest-waves-frontend:latest  
+
+  stripe-cli:
+    image: stripe/stripe-cli:latest
+    container_name: stripe-cli
+    command: listen --forward-to http://backend:3001/api/payment/webhook  # Adjust for your backend URL
+    ports:
+      - "1000:1000"  # Optional: expose the CLI for remote debugging
     networks:
       - app-network
 
 networks:
   app-network:
     driver: bridge
-
-# docker compose down
-
-# docker compose up --build -d
-# docker compose --env-file .env.production up --build -d
