@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-require('dotenv').config({ path: '../.env' });  // Adjust the path if necessary
+require('dotenv').config({ path: '../.env' }) // Adjust the path if necessary
 require('./database/mongodb')
 const express = require('express')
 const cookieParser = require('cookie-parser')

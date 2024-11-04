@@ -114,7 +114,6 @@ class UserController {
     const { token } = req.params // Extract token from route parameters
     const newPassword = req.body // Get newPassword from request body
 
-    
     // Find user with the reset token
     const user = await User.findOne({
       resetToken: token,

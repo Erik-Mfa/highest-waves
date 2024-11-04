@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -9,22 +8,27 @@ class AuthController {
     try {
       const { username, email, password, role, captchaToken } = req.body
 
+      // Check if captchaToken is provided
       if (!captchaToken) {
         return res
           .status(400)
           .json({ success: false, message: 'CAPTCHA is required' })
       }
 
-      console.log(captchaToken + 'fucking captcha')
-
       // Send request to Google reCAPTCHA API to verify the token
       const verifyResponse = await axios.post(
-        `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${captchaToken}`
+        'https://www.google.com/recaptcha/api/siteverify',
+        null, // Passing null for the body
+        {
+          params: {
+            secret: process.env.CAPTCHA_SECRET, // Using params to clean up the URL
+            response: captchaToken
+          }
+        }
       )
 
-      const { success } = verifyResponse.data
-
-      if (!success) {
+      // Check the success of the verification
+      if (!verifyResponse.data.success) {
         return res
           .status(400)
           .json({ success: false, message: 'CAPTCHA verification failed' })
@@ -32,8 +36,11 @@ class AuthController {
 
       // Check if user already exists
       const existingUser = await User.findOne({ email })
-      if (existingUser)
-        return res.status(400).json({ message: 'Email already exists' })
+      if (existingUser) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'Email already exists' })
+      }
 
       // Find the highest user ID and increment it
       const max = await User.findOne({}).sort({ id: -1 })
@@ -44,22 +51,25 @@ class AuthController {
         ? `assets/users-images/${req.file.filename}`
         : 'assets/users-images/Standard-User.png'
 
+      // Hash the password before saving (ensure bcrypt is properly set up)
+      const hashedPassword = await bcrypt.hash(password, 10)
+
       // Create a new user
       const newUser = new User({
         id: newId,
         username,
         email,
         image: imageFile,
-        password,
+        password: hashedPassword, // Save the hashed password
         role
       })
 
       // Save the new user
       const response = await newUser.save()
-      return { success: true, user: response } // Return a success object
+      return res.status(201).json({ success: true, user: response }) // Return a success object
     } catch (err) {
-      console.error(err)
-      res.status(500).json({ message: err.message })
+      console.error('Registration error:', err.message, err.stack) // More detailed logging
+      return res.status(500).json({ success: false, message: err.message })
     }
   }
 

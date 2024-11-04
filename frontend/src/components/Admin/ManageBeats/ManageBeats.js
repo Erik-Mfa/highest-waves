@@ -45,7 +45,7 @@ const ManageBeats = () => {
       <div className="mx-10 flex justify-center">
         <button
           onClick={toggleForm}
-          className="rounded-lg bg-teal-800 px-8 py-2 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50"
+          className="rounded-lg  px-8 py-2 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50"
         >
           Create Beat
         </button>
