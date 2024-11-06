@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { login } from '../../../services/api/auth'
 import { useNavigate, Link } from 'react-router-dom'
 import { FaEye, FaEyeSlash } from 'react-icons/fa' // Import eye icons
+import ReCAPTCHA from 'react-google-recaptcha'
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -12,11 +13,26 @@ const Login = () => {
   })
   const [showPassword, setShowPassword] = useState(false) // State to toggle password visibility
   const [error, setError] = useState([])
+  const [captchaToken, setCaptchaToken] = useState(null) //reCAPTCHA
   const navigate = useNavigate()
 
+  const handleCaptcha = (token) => {
+    setCaptchaToken(token)
+  }
+
   const handleLogin = async () => {
+    if (!captchaToken) {
+      setError('Please complete the Captcha')
+      return
+    }
+
     try {
-      const logged = await login(credentials)
+      const logged = await login({
+        username: credentials.username,
+        email: credentials.email,
+        password: credentials.password,
+        captchaToken
+      })
 
       if (logged) {
         navigate('/')
@@ -118,6 +134,13 @@ const Login = () => {
                   )}
                 </button>
               </div>
+            </div>
+
+            <div className="flex justify-center p-4">
+              <ReCAPTCHA
+                sitekey="6LdhImoqAAAAAEzZyQrQ-eK5HnhSqsMbk1DW9YMh"
+                onChange={handleCaptcha}
+              />
             </div>
 
             <button

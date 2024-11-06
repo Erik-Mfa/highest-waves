@@ -1,14 +1,16 @@
-const axios = require('axios');
-const bcrypt = require('bcryptjs');
-const User = require('../../models/User');
-const { register } = require('../../controllers/AuthController');
+const axios = require('axios')
+const bcrypt = require('bcryptjs')
+const User = require('../../models/User')
+const { register } = require('../../controllers/AuthController')
 
-jest.mock('axios');
-jest.mock('bcryptjs');
-jest.mock('../../models/User'); // Mock the User model
+jest.mock('axios')
+jest.mock('bcryptjs', () => ({
+  hash: jest.fn() // Mock the bcrypt.hash function
+}));
+jest.mock('../../models/User') // Mock the User model
 
 describe('User Registration API', () => {
-  let req, res;
+  let req, res
 
   beforeEach(() => {
     req = {
@@ -16,64 +18,56 @@ describe('User Registration API', () => {
         username: 'testuser',
         email: 'testuser@example.com',
         password: 'password123',
-        role: 'customer',
-        captchaToken: 'fake-captcha-token',
+        captchaToken: 'fake-captcha-token'
       },
       file: {
-        filename: 'profile.png',
-      },
-    };
+        filename: 'profile.png'
+      }
+    }
 
     res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+      json: jest.fn()
+    }
 
-    bcrypt.hash.mockResolvedValue('hashedPassword123'); // Mock bcrypt hashing
-    axios.post.mockResolvedValue({ data: { success: true } }); // Mock reCAPTCHA verification response
+    bcrypt.hash.mockResolvedValue('hashedPassword123') // Mock bcrypt hashing
+    axios.post.mockResolvedValue({ data: { success: true } }) // Mock reCAPTCHA verification response
 
     // Mock User.findOne to handle the sort chain
     User.findOne.mockImplementation((query) => {
       if (Object.keys(query).length === 0) {
         // Handle the case where User.findOne({}) is called to find the max ID
         return {
-          sort: jest.fn().mockResolvedValue({ id: 1 }), // Mock sorting behavior
-        };
+          sort: jest.fn().mockResolvedValue({ id: 1 }) // Mock sorting behavior
+        }
       }
-      return Promise.resolve(null); // Otherwise, no existing user found
-    });
-    
+      return Promise.resolve(null) // Otherwise, no existing user found
+    })
+
     User.prototype.save.mockResolvedValue({
-      id: 2,
       username: 'testuser',
       email: 'testuser@example.com',
-      image: 'assets/users-images/profile.png',
-      role: 'customer',
-    });
-  });
+    })
+  })
 
   afterEach(() => {
-    jest.clearAllMocks();
-  });
+    jest.clearAllMocks()
+  })
 
   it('should register a new user successfully', async () => {
-    await register(req, res);
+    await register(req, res)
 
-    expect(bcrypt.hash).toHaveBeenCalledWith('password123', 10);
-    expect(User.prototype.save).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(201);
+    expect(bcrypt.hash).toHaveBeenCalledWith('password123', 10)
+    expect(User.prototype.save).toHaveBeenCalled()
+    expect(res.status).toHaveBeenCalledWith(201)
     expect(res.json).toHaveBeenCalledWith({
       success: true,
       user: {
-        id: 2,
         username: 'testuser',
         email: 'testuser@example.com',
-        image: 'assets/users-images/profile.png',
-        role: 'customer',
-      },
-    });
-  });
-
+      }
+    })
+  })
 
   it('should return an error if CAPTCHA verification fails', async () => {
     axios.post.mockResolvedValue({ data: { success: false } })
@@ -125,5 +119,3 @@ describe('User Registration API', () => {
     })
   })
 })
-
-
