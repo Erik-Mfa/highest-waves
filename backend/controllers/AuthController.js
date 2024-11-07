@@ -81,7 +81,7 @@ class AuthController {
     try {
       const { email, password, captchaToken } = req.body
 
-            // Check if captchaToken is provided
+      // Check if captchaToken is provided
       if (!captchaToken) {
         return res
           .status(400)
