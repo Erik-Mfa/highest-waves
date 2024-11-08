@@ -1,4 +1,4 @@
-const { logout } = require('../../controllers/AuthController'); // Import the logout function from your controller
+const { logout } = require('../../controllers/AuthController'); 
 const httpMocks = require('node-mocks-http'); // For mocking the request and response objects
 
 describe('Logout Functionality', () => {
