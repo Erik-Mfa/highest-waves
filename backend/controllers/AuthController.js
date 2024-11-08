@@ -131,8 +131,10 @@ class AuthController {
   }
 
   async logout(req, res) {
-    res.clearCookie('token')
-    res.status(200).json({ message: 'Logout successful' })
+    if (req.cookies && req.cookies.token) {
+      res.clearCookie('token');
+    }
+    res.status(200).json({ message: 'Logout successful' });
   }
 
   async forgot(req, res) {
