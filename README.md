@@ -1,17 +1,18 @@
-#SSH AWS INSTANCE------
+# SSH AWS INSTANCE------
 ssh -i ~/.ssh/key.pem ec2-user
 
-#DOCKER------
+# DOCKER------
 docker compose up --build -d
 docker compose --env-file .env.production up --build -d
 docker ps (check)
 
-#ESLINT/PRETTIER------
+# ESLINT/PRETTIER
 npm run lint
 npm run format
 
-#AWS INSTANCE USER DATA SCRIPT------
-#!/bin/bash
+# AWS INSTANCE USER DATA SCRIPT
+!/bin/bash
+
 # Update the package repository
 apt-get update -y
 
