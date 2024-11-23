@@ -25,10 +25,10 @@ systemctl enable docker
 # Install Docker Compose using apt
 apt-get install -y docker-compose
 
-# Install Git -
+# Install Git 
 apt-get install -y git
 
-#DOCKER COMPOSE------
+# DOCKER COMPOSE------
 services:
   backend:
     build:
@@ -65,7 +65,7 @@ networks:
     driver: bridge
 
 
-.env
+# .env
 NODE_ENV=development (standard mode)
 MONGO_URI=mongodb+srv://Erik-Mfa:password@db.f86cf9k.mongodb.net/db
 JWT_SECRET=rizzo
