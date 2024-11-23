@@ -1,33 +1,33 @@
 # SSH AWS INSTANCE------
-ssh -i ~/.ssh/key.pem ec2-user
+##ssh -i ~/.ssh/key.pem ec2-user
 
 # DOCKER------
-docker compose up --build -d
-docker compose --env-file .env.production up --build -d
-docker ps (check)
+##docker compose up --build -d
+##docker compose --env-file .env.production up --build -d
+##docker ps (check)              
 
 # ESLINT/PRETTIER
-npm run lint
-npm run format
+##npm run lint
+##npm run format
 
 # AWS INSTANCE USER DATA SCRIPT
-!/bin/bash
+##!/bin/bash
 
 # Update the package repository
-apt-get update -y
+##apt-get update -y
 
 # Install Docker
-apt-get install -y docker.io
+##apt-get install -y docker.io
 
 # Start Docker service
-systemctl start docker
-systemctl enable docker
+##systemctl start docker
+##systemctl enable docker
 
 # Install Docker Compose using apt
-apt-get install -y docker-compose
+##apt-get install -y docker-compose
 
 # Install Git 
-apt-get install -y git
+##apt-get install -y git
 
 # DOCKER COMPOSE------
 services:
@@ -70,14 +70,14 @@ networks:
 NODE_ENV=development (standard mode)
 MONGO_URI=mongodb+srv://Erik-Mfa:password@db.f86cf9k.mongodb.net/db
 JWT_SECRET=rizzo
-STRIPE_KEY=sk_test_51PzRyiCs5p2rt7wpo8RchnDcRQBvWFchEAbHUriZ8aCS74JlgbK58tmWFIG3vHuwCeNvntvcKfXR6jiDWByk7xLt006JCXk2RE
-STRIPE_WEBHOOK_SECRET=whsec_38a4b5eacaac4c7bd209216d0328510889675981fe3e46cd446aa74c4e3f0be2
+STRIPE_KEY=sk_test
+STRIPE_WEBHOOK_SECRET=whsec
 EMAIL_USER=erik@gmail.com   
 EMAIL_PASS=ckeovllgecbmtesu
 FRONTEND_URL=http://localhost:3000
 
 # NEED TO GENERATE A NEW ONE FOR THE NEW DOMAIN
-# reCAPTCHA site (frontend)
-6LdhImoqAAAAAEzZyQrQ-eK5HnhSqsMbk1DW9YMh
-# reCAPTCHA secret (backend)
-6LdhImoqAAAAAPBnGnwz_hJZZmT3xkPHE8JRK8Vo
+### reCAPTCHA site (frontend)
+##6LdhImoqAAAAAEzZyQrQ
+### reCAPTCHA secret (backend)
+##6LdhImoqAAAAAPBnGnwz
