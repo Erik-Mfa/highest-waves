@@ -75,8 +75,8 @@ EMAIL_USER=erik@gmail.com
 EMAIL_PASS=ckeovllgecbmtesu
 FRONTEND_URL=http://localhost:3000
 
-***NEED TO GENERATE A NEW ONE FOR THE NEW DOMAIN
-#reCAPTCHA site (frontend)
+# NEED TO GENERATE A NEW ONE FOR THE NEW DOMAIN
+# reCAPTCHA site (frontend)
 6LdhImoqAAAAAEzZyQrQ-eK5HnhSqsMbk1DW9YMh
-#reCAPTCHA secret (backend)
+# reCAPTCHA secret (backend)
 6LdhImoqAAAAAPBnGnwz_hJZZmT3xkPHE8JRK8Vo
