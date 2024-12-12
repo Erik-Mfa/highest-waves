@@ -11,11 +11,11 @@ const RegisterForm = () => {
     password: '',
     confirmPassword: ''
   })
-  const [showPassword, setShowPassword] = useState(false) // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [error, setError] = useState('') // State for error messages
-  const [validationError, setValidationError] = useState('') // State for password validation errors
-  const [captchaToken, setCaptchaToken] = useState(null) //reCAPTCHA
+  const [error, setError] = useState('')
+  const [validationError, setValidationError] = useState('')
+  const [captchaToken, setCaptchaToken] = useState(null)
   const navigate = useNavigate()
 
   const handleCaptcha = (token) => {
@@ -36,7 +36,7 @@ const RegisterForm = () => {
       setValidationError('Please complete the CAPTCHA')
       return false
     } else {
-      setValidationError('') // Clear the validation error if the password is valid
+      setValidationError('')
       return true
     }
   }
@@ -48,7 +48,7 @@ const RegisterForm = () => {
     }
 
     if (!validatePassword(credentials.password)) {
-      return // Exit if password validation fails
+      return
     }
 
     try {
@@ -62,19 +62,12 @@ const RegisterForm = () => {
       console.log('Registration response:', response)
 
       if (response && response.success) {
-        console.log('Attempting to log in user...')
         const loggedIn = await login({
           email: credentials.email,
           password: credentials.password
         })
-        console.log('Login response:', loggedIn)
 
-        if (loggedIn) {
-          console.log('User logged in successfully')
-          navigate('/')
-        } else {
-          console.log('Login failed after registration')
-        }
+        if (loggedIn) navigate('/')
       }
     } catch (err) {
       if (err.response && err.response.status === 429) {
@@ -82,178 +75,152 @@ const RegisterForm = () => {
       } else {
         setError('Registration failed. Please try again.')
       }
-      console.error('Error occurred:', err)
     }
   }
 
   return (
-    <div className="flex min-h-screen bg-[#042326]">
-      {/* Left side: Form (1/3 of the page) */}
-      <div className="animate-slide-in-left flex w-full flex-col justify-start bg-[#042326] p-8 md:w-1/3">
-        <div className="flex justify-center pb-4 text-center">
+    <div className="flex min-h-screen items-center justify-center ">
+      <div className="w-full max-w-lg p-6 bg-[#0A3A40] rounded-lg shadow-lg">
+        <div className="flex justify-center mb-4">
           <Link to="/">
             <img
               src="/assets/highestwaves-logo.png"
               alt="Highest Waves Logo"
-              className="w-64 transition-transform duration-200 hover:scale-105"
+              className="w-40 transition-transform duration-200 hover:scale-105"
             />
           </Link>
         </div>
-        <h2 className="mb-8 text-center text-3xl font-bold tracking-wider text-white">
+        <h2 className="text-center text-2xl font-bold text-white mb-6">
           Create an account
         </h2>
-        <div className="w-full rounded-lg border-2 border-[#0A3A40] p-8 shadow-lg">
-          {error && (
-            <div className="mb-4 text-center text-red-500">{error}</div>
-          )}
-          {validationError && (
-            <div className="mb-4 text-center text-yellow-500">
-              {validationError}
-            </div> // Display the password validation error
-          )}
 
-          <form>
-            <div className="mb-8">
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium text-white"
-              >
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                value={credentials.username}
-                onChange={(e) =>
-                  setCredentials({ ...credentials, username: e.target.value })
-                }
-                className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-              />
-            </div>
-
-            <div className="mb-8">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-white"
-              >
-                E-mail
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={credentials.email}
-                onChange={(e) =>
-                  setCredentials({ ...credentials, email: e.target.value })
-                }
-                className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-              />
-            </div>
-
-            <div className="mb-8">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-white"
-              >
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  value={credentials.password}
-                  onChange={(e) => {
-                    setCredentials({ ...credentials, password: e.target.value })
-                    validatePassword(e.target.value) // Validate password on change
-                  }}
-                  className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-                />
-                <button
-                  type="button"
-                  className="absolute right-3 top-3"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <FaEyeSlash className="text-white" />
-                  ) : (
-                    <FaEye className="text-white" />
-                  )}
-                </button>
-              </div>
-              {validationError && (
-                <div className="text-red-500">{validationError}</div>
-              )}
-            </div>
-
-            <div className="mb-8">
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-white"
-              >
-                Confirm Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  id="confirmPassword"
-                  value={credentials.confirmPassword}
-                  onChange={(e) =>
-                    setCredentials({
-                      ...credentials,
-                      confirmPassword: e.target.value
-                    })
-                  }
-                  className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-                />
-                <button
-                  type="button"
-                  className="absolute right-3 top-3"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <FaEyeSlash className="text-white" />
-                  ) : (
-                    <FaEye className="text-white" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            <div className="flex justify-center p-4">
-              <ReCAPTCHA
-                sitekey="6LdhImoqAAAAAEzZyQrQ-eK5HnhSqsMbk1DW9YMh"
-                onChange={handleCaptcha}
-              />
-            </div>
-
-            <button
-              type="button"
-              onClick={handleRegister}
-              className="mt-6 w-full rounded-md border border-transparent bg-gradient-to-r from-[#1D7373] to-[#0F5959] px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105"
-            >
-              Register
-            </button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-400">Already have an account?</p>
-            <Link
-              to="/login"
-              className="font-medium text-[#1D7373] transition-colors duration-200 hover:text-[#107361]"
-            >
-              Login here
-            </Link>
+        {error && <div className="mb-4 text-red-500 text-center">{error}</div>}
+        {validationError && (
+          <div className="mb-4 text-yellow-500 text-center">
+            {validationError}
           </div>
-        </div>
-      </div>
+        )}
 
-      {/* Right side: Background Image (2/3 of the page) */}
-      <div className="relative w-full overflow-hidden md:w-2/3">
-        <img
-          src="/assets/rizzo-edits.jpeg"
-          alt="Background"
-          className="size-full max-h-screen object-cover opacity-80"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#042326] opacity-60"></div>
+        <form className="space-y-4">
+          <div>
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-white"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              value={credentials.username}
+              onChange={(e) =>
+                setCredentials({ ...credentials, username: e.target.value })
+              }
+              className="w-full mt-1 rounded-md bg-[#0A3A40] text-white border border-[#107361] px-3 py-2 focus:border-[#1D7373] focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-white"
+            >
+              E-mail
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={credentials.email}
+              onChange={(e) =>
+                setCredentials({ ...credentials, email: e.target.value })
+              }
+              className="w-full mt-1 rounded-md bg-[#0A3A40] text-white border border-[#107361] px-3 py-2 focus:border-[#1D7373] focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-white"
+            >
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={credentials.password}
+                onChange={(e) => {
+                  setCredentials({ ...credentials, password: e.target.value })
+                  validatePassword(e.target.value)
+                }}
+                className="w-full mt-1 rounded-md bg-[#0A3A40] text-white border border-[#107361] px-3 py-2 focus:border-[#1D7373] focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-2 right-3 text-white"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-white"
+            >
+              Confirm Password
+            </label>
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? 'text' : 'password'}
+                id="confirmPassword"
+                value={credentials.confirmPassword}
+                onChange={(e) =>
+                  setCredentials({
+                    ...credentials,
+                    confirmPassword: e.target.value
+                  })
+                }
+                className="w-full mt-1 rounded-md bg-[#0A3A40] text-white border border-[#107361] px-3 py-2 focus:border-[#1D7373] focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute top-2 right-3 text-white"
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex justify-center mt-4">
+            <ReCAPTCHA
+              sitekey="6LdhImoqAAAAAEzZyQrQ-eK5HnhSqsMbk1DW9YMh"
+              onChange={handleCaptcha}
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleRegister}
+            className="w-full bg-gradient-to-r from-[#1D7373] to-[#0F5959] text-white py-2 rounded-md mt-4 hover:scale-105 transition-all"
+          >
+            Register
+          </button>
+        </form>
+
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-400">Already have an account?</p>
+          <Link
+            to="/login"
+            className="text-[#1D7373] hover:text-[#107361] font-medium"
+          >
+            Login here
+          </Link>
+        </div>
       </div>
     </div>
   )
