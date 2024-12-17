@@ -48,67 +48,153 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <ScrollToTop /> {/* Add this line here */}
-        <div className="App">
-          <Routes>
-            {/* Routes that use the main layout */}
-            <Route
-              path="/"
-              element={
-                <Layout>
-                  <HomePage />
-                </Layout>
-              }
-            />
+        <ScrollToTop />
 
-            <Route
-              path="/beats/:id"
-              element={
-                <Layout>
-                  <BeatDetailsPage />
-                </Layout>
-              }
-            />
+        <Routes>
+          {/* Routes without Footer */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
 
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route
-              path="/reset-password/:token"
-              element={<ResetPasswordPage />}
-            />
-
-            <Route path="/support" element={<SupportPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/terms" element={<TermsPage />} />
-            <Route path="/privacy" element={<PrivacyPolicyPage />} />
-
-            {/* Protected Admin routes */}
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute roles={['admin']}>
+          {/* Routes with Footer */}
+          <Route
+            path="/"
+            element={
+              <>
+                <div className="App">
                   <Layout>
-                    <AdminPage />
+                    <HomePage />
                   </Layout>
-                </ProtectedRoute>
-              }
-            >
-              <Route path="manage-beats" element={<ManageBeats />} />
-              <Route path="manage-users" element={<ManageUsers />} />
-              <Route path="manage-tags" element={<ManageTags />} />
-              <Route path="manage-payments" element={<ManagePayments />} />
-            </Route>
+                </div>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/beats/:id"
+            element={
+              <>
+                <div className="App">
+                  <Layout>
+                    <BeatDetailsPage />
+                  </Layout>
+                </div>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <>
+                <ForgotPasswordPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/reset-password/:token"
+            element={
+              <>
+                <ResetPasswordPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <>
+                <SupportPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <>
+                <ContactPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/terms"
+            element={
+              <>
+                <TermsPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/privacy"
+            element={
+              <>
+                <PrivacyPolicyPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <>
+                <CheckoutPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/success"
+            element={
+              <>
+                <PaymentSucessPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/failed"
+            element={
+              <>
+                <PaymentFailedPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/error"
+            element={
+              <>
+                <PaymentErrorPage />
+                <Footer />
+              </>
+            }
+          />
 
-            {/* Payment page with Checkout Layout */}
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/success" element={<PaymentSucessPage />} />
-            <Route path="/failed" element={<PaymentFailedPage />} />
-            <Route path="/error" element={<PaymentErrorPage />} />
-          </Routes>
-          <Footer />
-        </div>
+          {/* Admin routes */}
+          <Route
+            path="/admin"
+            element={
+              <>
+                <div className="App">
+                  <ProtectedRoute roles={['admin']}>
+                    <Layout>
+                      <AdminPage />
+                    </Layout>
+                  </ProtectedRoute>
+                </div>
+                <Footer />
+              </>
+            }
+          >
+            <Route path="manage-beats" element={<ManageBeats />} />
+            <Route path="manage-users" element={<ManageUsers />} />
+            <Route path="manage-tags" element={<ManageTags />} />
+            <Route path="manage-payments" element={<ManagePayments />} />
+          </Route>
+        </Routes>
       </Router>
     </Provider>
   )

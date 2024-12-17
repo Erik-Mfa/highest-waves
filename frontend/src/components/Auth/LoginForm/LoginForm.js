@@ -49,21 +49,20 @@ const Login = () => {
 
   return (
     <div className="flex min-h-screen bg-[#042326]">
-      {/* Left side: Form (1/3 of the page) */}
-      <div className="animate-slide-in-left flex w-full flex-col justify-start bg-[#042326] p-8 md:w-1/3">
+      <div className="animate-slide-in-left mx-auto p-10">
+        <h2 className="text-center text-3xl font-extrabold text-white">
+          Sign In
+        </h2>
         <div className="flex justify-center pb-4 text-center">
           <Link to="/">
             <img
               src="/assets/highestwaves-logo.png"
               alt="Highest Waves Logo"
-              className="w-64 transition-transform duration-200 hover:scale-105"
+              className="w-40 transition-transform duration-200 hover:scale-105"
             />
           </Link>
         </div>
 
-        <h2 className="mb-8 text-center text-4xl font-bold tracking-wider text-white">
-          Sign In
-        </h2>
         <div className="w-full rounded-lg border-2 border-[#0A3A40] p-8 shadow-lg">
           {error && (
             <div className="mb-4 text-center text-red-500">{error}</div> // Display the error message
@@ -136,21 +135,21 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="flex justify-center p-4">
-              <ReCAPTCHA
-                sitekey="6LdhImoqAAAAAEzZyQrQ-eK5HnhSqsMbk1DW9YMh"
-                onChange={handleCaptcha}
-              />
-            </div>
-
             <button
               type="button"
               onClick={handleLogin}
-              className="mt-6 w-full rounded-md border border-transparent bg-gradient-to-r from-[#1D7373] to-[#0F5959] px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:from-[#107361] hover:to-[#0F5959]"
+              className="w-full rounded-md border border-transparent bg-gradient-to-r from-[#1D7373] to-[#0F5959] px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:from-[#107361] hover:to-[#0F5959]"
             >
               Continue
             </button>
           </form>
+
+          <div className="flex justify-center mt-8">
+            <ReCAPTCHA
+              sitekey="6LdhImoqAAAAAEzZyQrQ-eK5HnhSqsMbk1DW9YMh"
+              onChange={handleCaptcha}
+            />
+          </div>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-400">Don't have an account?</p>
@@ -170,17 +169,6 @@ const Login = () => {
             </Link>
           </div>
         </div>
-      </div>
-
-      {/* Right side: Background Image (2/3 of the page) */}
-      <div className="relative w-full overflow-hidden md:w-2/3">
-        <img
-          src="/assets/rizzo-edits.jpeg"
-          alt="Background"
-          className="size-full max-h-screen object-cover opacity-80"
-        />
-        {/* Overlay for neon effect */}
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#042326] opacity-60"></div>
       </div>
     </div>
   )

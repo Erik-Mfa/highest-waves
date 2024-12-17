@@ -3,7 +3,7 @@ import RegisterForm from '../../components/Auth/RegisterForm/RegisterForm'
 
 const RegisterPage = () => {
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="bg-[#042326]">
       <RegisterForm />
     </div>
   )

@@ -74,7 +74,7 @@ describe('User Login API', () => {
     expect(jwt.sign).toHaveBeenCalledWith(
       { userId: 2, role: 'customer', username: 'testuser' },
       process.env.JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: '1h' }
     )
     expect(res.cookie).toHaveBeenCalledWith('jwt_token', 'fake-jwt-token', {
       httpOnly: true

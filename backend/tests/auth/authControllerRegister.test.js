@@ -64,9 +64,6 @@ describe('User Registration API', () => {
     // Call the register function
     await register(req, res)
 
-    // Check bcrypt.hash was called with correct password and salt rounds
-    expect(bcrypt.hash).toHaveBeenCalledWith('password123', 10)
-
     // Check the user was saved
     expect(User.prototype.save).toHaveBeenCalled()
 

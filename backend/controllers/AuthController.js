@@ -105,13 +105,7 @@ class AuthController {
       }
 
       const user = await User.findOne({ email })
-      console.log(user)
-      console.log(user.password)
       if (!user) return res.status(400).json({ message: 'User not found' })
-      //SENHA ESTA SENDO SALVA ERRADA, NO REGISTER, O USER PASSWORD DEVERIA FUNCIONAR POIS JA FOI TESTADO
-      const teste = 'A!'
-      const cu = await bcrypt.compare(teste, user.password)
-      console.log('A senha foi salva de boas: ' + cu)
 
       const isMatch = await bcrypt.compare(password, user.password)
 
