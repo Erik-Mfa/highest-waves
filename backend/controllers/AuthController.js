@@ -97,6 +97,11 @@ class AuthController {
         }
       )
 
+      // To check the generated token from Postman or whatever,
+      // solve the Captcha on the browser and 
+      // get the token from the first fuction after done with the Captcha 
+      // and just add the captchaToken in the request with the token form the browser
+
       // Check the success of the verification
       if (!verifyResponse.data.success) {
         return res

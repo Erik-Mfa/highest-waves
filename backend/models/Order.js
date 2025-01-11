@@ -6,10 +6,17 @@ const orderSchema = new mongoose.Schema(
     price: Number,
     beats: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Beat',
-        required: true
-      }
+        beat: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Beat',
+          required: true,
+        },
+        license: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'License',
+          required: true, // Each beat must be associated with a license
+        },
+      },
     ],
     user: {
       type: mongoose.Schema.Types.ObjectId,

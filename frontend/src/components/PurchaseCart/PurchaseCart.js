@@ -16,6 +16,7 @@ function PurchaseCart({ user }) {
   const cartItems = useSelector((state) => state.cart.items)
 
   // Calculate total price safely
+  // Somehow need to calculate the new price with the license 
   const totalPrice = Array.isArray(cartItems)
     ? cartItems.reduce((total, item) => total + item.beats.price, 0)
     : 0

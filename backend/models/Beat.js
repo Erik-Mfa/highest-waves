@@ -48,7 +48,13 @@ const beatSchema = new mongoose.Schema(
         ref: 'Tag',
         required: true
       }
-    ]
+    ],
+    licenses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'License',
+      },
+    ],
   },
   { timestamps: true }
 )

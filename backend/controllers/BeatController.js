@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 const Beat = require('../models/Beat')
 const Tag = require('../models/Tag')
+const License = require('../models/License')
 const User = require('../models/User')
 const fs = require('fs')
 const path = require('path')
@@ -84,7 +85,7 @@ class BeatController {
 
   async update(req, res) {
     try {
-      const { title, description, price, image, audioURL, owner, tags } =
+      const { title, description, price, image, audioURL, owner, tags, licenses } =
         req.body
 
       const id = req.params.id
@@ -97,6 +98,9 @@ class BeatController {
       const tag = await Tag.find({ id: tags })
       if (!tag) return res.status(400).json({ message: 'Invalid tags' })
 
+      const license = await License.find({ id: licenses })
+      if (!license) return res.status(400).json({ message: 'Invalid licenses' })
+        
       beat.title = title || beat.title
       beat.description = description || beat.description
       beat.price = price || beat.price
@@ -104,6 +108,7 @@ class BeatController {
       beat.audioURL = audioURL || beat.audioURL
       beat.owner = user
       beat.tags = tag
+      beat.licenses = license
 
       const updatedBeat = await beat.save()
       res.status(200).json(updatedBeat)
