@@ -24,6 +24,10 @@ const licenseSchema = new mongoose.Schema(
       type: String,
       required: true, // Terms of the license in plain text or as a URL to a file
     },
+    icon: {
+      type: String,
+      unique: true
+    }
   },
   { timestamps: true }
 );

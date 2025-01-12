@@ -10,7 +10,7 @@ const path = require('path')
 class BeatController {
   async find(req, res) {
     try {
-      const beats = await Beat.find().populate('owner').populate('tags') // Populate owner and tags
+      const beats = await Beat.find().populate('owner').populate('tags').populate('licenses') 
       res.status(200).json(beats)
     } catch (err) {
       console.error(err)
@@ -22,7 +22,7 @@ class BeatController {
     try {
       const id = req.params.id
 
-      const beat = await Beat.findOne({ id }).populate('owner').populate('tags')
+      const beat = await Beat.findOne({ id }).populate('owner').populate('tags').populate('licenses')
       if (!beat) return res.status(404).json({ message: 'Beat not found' })
       res.status(200).json(beat)
     } catch (err) {

@@ -7,6 +7,7 @@ import { isAuthenticated } from '../../../services/api/auth'
 import { getBeatById } from '../../../services/api/beats'
 import { addToCartAndUpdate } from '../../../store/cartSlice'
 import { FaPlay, FaPause, FaShoppingCart } from 'react-icons/fa' // Import FaPause
+import ChooseLicenseMessage from '../../Messages/ChooseLicenseMessage/ChooseLicenseMessage'
 import {
   setCurrentId,
   setCurrentTrack,
@@ -20,6 +21,7 @@ function BeatDetails() {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isFadeIn, setIsFadeIn] = useState(false)
+  const [purchase, setPurchase] = useState(false)
   const navigate = useNavigate()
 
   const { id: beatId } = useParams()
@@ -52,6 +54,8 @@ function BeatDetails() {
       return
     }
 
+    setPurchase(true)
+
     dispatch(addToCartAndUpdate({ beatId: beat.id, userId: user.userId }))
   }
 
@@ -72,6 +76,17 @@ function BeatDetails() {
       }
     } else {
       dispatch(togglePlayPause()) // Toggle if it's the same track
+    }
+  }
+
+  const cancelDelete = () => {
+    setPurchase(false)
+  }
+
+  const confirmDelete = async () => {
+    if (userToDelete) {
+      await handleDeleteUser(userToDelete.id)
+      setUserToDelete(null)
     }
   }
 
@@ -113,6 +128,13 @@ function BeatDetails() {
 <div
   className={`flex min-h-screen flex-col items-center justify-start bg-gradient-to-br from-sky-950 to-black p-20 pt-16 ${isFadeIn ? 'fade-in-active' : 'fade-in'}`}
 >
+  {purchase && (
+    <ChooseLicenseMessage
+      onConfirm={confirmDelete}
+      onCancel={cancelDelete}
+      id={beat.id}
+    />
+  )}
   {/* Beat Description */}
   <div className="mb-8 flex w-full max-w-5xl justify-center">
     <blockquote className="mt-4 max-w-3xl border-teal-500 text-center text-3xl font-bold italic text-teal-500 lg:text-center lg:text-4xl">
