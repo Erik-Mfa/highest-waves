@@ -5,6 +5,7 @@ import { getBeatById } from "../../../services/api/beats";
 // eslint-disable-next-line react/prop-types
 const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
   const [beat, setBeats] = useState([]);
+  const [selectedLicense, setSelectedLicense] = useState(null); // State for selected license
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,11 +39,26 @@ const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
               beat.licenses.map((license, index) => (
                 <div
                   key={license._id || index}
-                  className="flex flex-col items-center space-y-2 rounded-md bg-gray-700 p-4 shadow-md transition duration-200 hover:bg-gray-600"
+                  className={`flex flex-col items-center space-y-2 rounded-md p-4 shadow-md transition duration-200 hover:bg-gray-600 ${
+                    selectedLicense === license._id ? "bg-teal-700" : "bg-gray-700"
+                  }`} 
+                  onClick={() => setSelectedLicense(license._id)} // Update selected license
                 >
                   <div>{iconMapper[license.icon] || null}</div> {/* Render mapped icon or null */}
-                  <span className="text-lg font-semibold text-teal-400">{license.name}</span>
-                  <p className="text-sm text-gray-300 text-center">{license.description}</p>
+                  <span
+                    className={`text-lg font-semibold ${
+                      selectedLicense === license._id ? "text-white" : "text-teal-400"
+                    }`} // Change text color when selected
+                  >
+                    {license.name}
+                  </span>
+                  <p
+                    className={`text-sm text-center ${
+                      selectedLicense === license._id ? "text-gray-200" : "text-gray-300"
+                    }`} // Change description color when selected
+                  >
+                    {license.description}
+                  </p>
                 </div>
               ))
             ) : (
@@ -58,8 +74,13 @@ const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
               Cancel
             </button>
             <button
-              onClick={onConfirm}
-              className="rounded-md bg-red-600 px-4 py-2 text-white transition duration-200 hover:bg-red-700"
+              onClick={() => onConfirm(selectedLicense)} // Pass selected license to confirm
+              className={`rounded-md px-4 py-2 text-white transition duration-200 ${
+                selectedLicense
+                  ? "bg-red-600 hover:bg-red-700"
+                  : "bg-gray-400 cursor-not-allowed"
+              }`} // Disable button if no license is selected
+              disabled={!selectedLicense} // Disable button if no license is selected
             >
               Confirm
             </button>

@@ -14,6 +14,8 @@ class OrderController {
           }
         })
         .populate('user')
+
+        console.log(result)
       res.status(200).json(result)
     } catch (error) {
       console.error('Error finding orders:', error)

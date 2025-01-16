@@ -45,7 +45,6 @@ export const logout = async () => {
   }
 }
 
-//ALWAYS RETRIEVE THE USER FROM THE TOKEN
 export const isAuthenticated = async () => {
   const cookie = await cookies.get('jwt_token')
 
@@ -55,11 +54,16 @@ export const isAuthenticated = async () => {
 
   try {
     const decoded = jwtDecode(cookie)
-    const user = decoded
+    const currentTime = Date.now() / 1000 // Current time in seconds
 
-    return user
+    if (decoded.exp < currentTime) {
+      console.warn('JWT token has expired')
+      return false
+    }
+
+    return decoded
   } catch (error) {
-    console.error('ERROR DECODING JWT TOKEN:', error.message)
+    console.error('Error decoding JWT token:', error.message)
     return false
   }
 }

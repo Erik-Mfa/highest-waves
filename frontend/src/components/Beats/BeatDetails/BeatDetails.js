@@ -8,6 +8,8 @@ import { getBeatById } from '../../../services/api/beats'
 import { addToCartAndUpdate } from '../../../store/cartSlice'
 import { FaPlay, FaPause, FaShoppingCart } from 'react-icons/fa' // Import FaPause
 import ChooseLicenseMessage from '../../Messages/ChooseLicenseMessage/ChooseLicenseMessage'
+import CannotPurchaseMessage from '../../Messages/CannotPurchaseMessage /CannotPurchaseMessage'
+
 import {
   setCurrentId,
   setCurrentTrack,
@@ -49,14 +51,7 @@ function BeatDetails() {
   }, [beatId])
 
   const handleAddToCart = async () => {
-    if (!user) {
-      alert('You must be logged in to add items to your cart.')
-      return
-    }
-
     setPurchase(true)
-
-    dispatch(addToCartAndUpdate({ beatId: beat.id, userId: user.userId }))
   }
 
   const handlePlayTrack = () => {
@@ -83,11 +78,12 @@ function BeatDetails() {
     setPurchase(false)
   }
 
-  const confirmDelete = async () => {
-    if (userToDelete) {
-      await handleDeleteUser(userToDelete.id)
-      setUserToDelete(null)
-    }
+  const confirmPurchase = (selectedLicense) => {
+    //NEEDS TO GET THE LICENSE CHOSEN!!!
+    if (selectedLicense) {
+      dispatch(addToCartAndUpdate({ beatId: beat.id, userId: user.userId }))
+      // Closes the panel 
+      setPurchase(false)    }
   }
 
   // Handling loading state
@@ -128,13 +124,21 @@ function BeatDetails() {
 <div
   className={`flex min-h-screen flex-col items-center justify-start bg-gradient-to-br from-sky-950 to-black p-20 pt-16 ${isFadeIn ? 'fade-in-active' : 'fade-in'}`}
 >
-  {purchase && (
+  
+
+{purchase && (
+  user ? (
     <ChooseLicenseMessage
-      onConfirm={confirmDelete}
+      onConfirm={confirmPurchase}
       onCancel={cancelDelete}
       id={beat.id}
     />
-  )}
+  ) : (
+    <CannotPurchaseMessage
+      onCancel={cancelDelete}
+    />
+  )
+)}
   {/* Beat Description */}
   <div className="mb-8 flex w-full max-w-5xl justify-center">
     <blockquote className="mt-4 max-w-3xl border-teal-500 text-center text-3xl font-bold italic text-teal-500 lg:text-center lg:text-4xl">
@@ -200,7 +204,7 @@ function BeatDetails() {
       <div className="flex justify-around text-gray-400 lg:justify-start lg:space-x-10">
         <div className="flex flex-col lg:items-start">
           <span
-            className="shadow-tag rounded-lg bg-cyan-800 px-2 text-1xl text-white"
+            className="shadow-tag rounded-lg px-2 text-1xl text-white"
             style={{ fontFamily: '"Russo One"' }}
           >
             BPM {beat.bpm}
@@ -208,7 +212,7 @@ function BeatDetails() {
         </div>
         <div className="flex flex-col lg:items-start">
           <span
-            className="shadow-tag rounded-lg bg-cyan-800 px-2 text-1xl text-white"
+            className="shadow-tag rounded-lg px-2 text-1xl text-white"
             style={{ fontFamily: '"Russo One"' }}
           >
             TONE {beat.tone}
