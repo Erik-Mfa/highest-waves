@@ -6,7 +6,7 @@ A full-stack web application for selling and managing beats, built with React, N
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/highest-waves.git
+git clone https://github.com/Erik-Mfa/highest-waves.git
 cd highest-waves
 ```
 
