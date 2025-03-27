@@ -273,11 +273,3 @@ sudo certbot certificates
 docker volume ls
 docker volume inspect beats-assets
 ```
-
-## 📝 License
-
-[Your License Here]
-
-## 👥 Contributing
-
-[Your Contribution Guidelines]
