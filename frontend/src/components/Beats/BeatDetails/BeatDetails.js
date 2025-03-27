@@ -8,7 +8,7 @@ import { getBeatById } from '../../../services/api/beats'
 import { addToCartAndUpdate } from '../../../store/cartSlice'
 import { FaPlay, FaPause, FaShoppingCart } from 'react-icons/fa' // Import FaPause
 import ChooseLicenseMessage from '../../Messages/ChooseLicenseMessage/ChooseLicenseMessage'
-import CannotPurchaseMessage from '../../Messages/CannotPurchaseMessage /CannotPurchaseMessage'
+import CannotPurchaseMessage from '../../Messages/CannotPurchaseMessage/CannotPurchaseMessage'
 
 import {
   setCurrentId,

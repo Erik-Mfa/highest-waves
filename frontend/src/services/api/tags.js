@@ -1,8 +1,10 @@
 /* eslint-disable no-undef */
 import axios from 'axios'
+import { isAuthenticated } from './auth'
+import { isAdmin } from './auth'
 
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api/`
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}`  // Use relative path instead of full URL
 })
 
 // Create a tag
@@ -31,7 +33,7 @@ export const getTags = async () => {
     return response.data
   } catch (error) {
     console.error('Error fetching tags:', error)
-    return { success: false, error }
+    return [] // Return empty array instead of error object
   }
 }
 

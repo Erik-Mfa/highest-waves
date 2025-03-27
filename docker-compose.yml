@@ -19,17 +19,23 @@ services:
     networks:
       - app-network
     image: erikmfa/highest-waves-backend:latest
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   frontend:
     build:
       context: ./frontend
       args:
-        REACT_APP_BACKEND_URL: http://localhost:3001
+        REACT_APP_BACKEND_URL: /api
     container_name: frontend
     ports:
       - "3000:80"
     environment:
-      REACT_APP_BACKEND_URL: http://localhost:3001
+      REACT_APP_BACKEND_URL: /api
       NODE_ENV: ${NODE_ENV}
     env_file:
       - ./frontend/.env
@@ -40,12 +46,21 @@ services:
   stripe-cli:
     image: stripe/stripe-cli:latest
     container_name: stripe-cli
-    command: listen --forward-to http://localhost:3001/api/payment/webhook  # Adjust for your backend URL
+    command: listen --forward-to http://backend:3001/api/payment/webhook
     ports:
-      - "1000:1000"  # Optional: expose the CLI for remote debugging
+      - "1000:1000"
     networks:
       - app-network
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      - STRIPE_API_KEY=${STRIPE_KEY}
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  beats-assets:
+    driver: local

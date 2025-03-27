@@ -21,13 +21,13 @@ ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
 RUN npm run build
 
 # Step 2: Serve the application
-FROM nginx:alpine
+FROM nginx:latest
 
 # Copy the built application from the previous stage
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose the port that NGINX is listening on
-EXPOSE 3000
+EXPOSE 80
 
-# Start NGINX
+# Start NGINX with the default configuration
 CMD ["nginx", "-g", "daemon off;"]

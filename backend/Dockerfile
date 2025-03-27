@@ -1,20 +1,18 @@
 # Use an official Node runtime as a parent image
-FROM node:18
+FROM node:18-alpine
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json into the container
+# Copy package files first for better caching
 COPY package*.json ./
+RUN npm ci
 
-# Install any needed dependencies
-RUN npm install
-
-# Copy the rest of the application into the container
+# Copy application files
 COPY . .
 
-# Set default environment to development, but allow it to be overridden
-ARG NODE_ENV=development
+# Set environment
+ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
 # Expose the port the app runs on (3000 for Express)

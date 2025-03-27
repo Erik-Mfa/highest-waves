@@ -75,64 +75,62 @@ function BeatList({ beats, filters }) {
 
   return (
     <div className="relative">
-      {filteredBeats.length > 0 ? (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredBeats.map((beat) => (
-            <div
-              key={beat.id}
-              className="group relative w-full cursor-pointer overflow-hidden rounded-lg transition-transform hover:scale-105"
-              onClick={() => handleBeatClick(beat.id)}
-            >
-              {/* Image Container */}
-              <div className="relative">
-                {!isImageLoaded && (
-                  <div className="absolute inset-0 animate-pulse rounded-md bg-gray-700"></div>
-                )}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {filteredBeats.map((beat) => (
+          <div
+            key={beat.id}
+            className="group relative w-full cursor-pointer overflow-hidden rounded-lg bg-gray-800/30 p-3 transition-all duration-300 hover:bg-gray-800/50 hover:shadow-lg"
+            onClick={() => handleBeatClick(beat.id)}
+          >
+            {/* Image Container */}
+            <div className="relative">
+              {!isImageLoaded && (
+                <div className="absolute inset-0 animate-pulse rounded-lg bg-gray-700"></div>
+              )}
 
-                <div className="relative w-full overflow-hidden rounded-lg pt-[100%]">
-                  <img
-                    src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
-                    alt={beat.title}
-                    className={`absolute left-0 top-0 size-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-60 ${
-                      isImageLoaded ? 'opacity-100' : 'opacity-0'
-                    }`}
-                    onLoad={() => setImageLoaded(true)}
-                  />
+              <div className="relative w-full overflow-hidden rounded-lg pt-[100%]">
+                <img
+                  src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
+                  alt={beat.title}
+                  className={`absolute left-0 top-0 size-full object-cover transition-all duration-300 ${
+                    isImageLoaded ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  onLoad={() => setImageLoaded(true)}
+                />
 
-                  {/* Play/Pause Button */}
-                  <button
-                    onClick={(e) => handlePlayTrack(e, beat)}
-                    className="absolute left-1/2 top-1/2 z-10 mt-2 -translate-x-1/2 -translate-y-1/2 rounded-full p-1.5 text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
-                  >
-                    {/* Conditionally render FaPlay or FaPause */}
-                    {currentTrack ===
-                      `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
-                    isPlaying ? (
-                      <FaPause size={35} />
-                    ) : (
-                      <FaPlay size={35} />
-                    )}
-                  </button>
+                {/* Play/Pause Button */}
+                <button
+                  onClick={(e) => handlePlayTrack(e, beat)}
+                  className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/50 p-4 text-cyan-400 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 group-active:opacity-100"
+                >
+                  {currentTrack ===
+                    `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
+                  isPlaying ? (
+                    <FaPause size={24} className="sm:text-3xl" />
+                  ) : (
+                    <FaPlay size={24} className="sm:text-3xl" />
+                  )}
+                </button>
 
-                  {/* Black Overlay */}
-                  <div className="absolute bottom-0 left-0 w-full translate-y-full bg-black bg-opacity-60 p-2 text-white transition-transform duration-500 ease-out group-hover:translate-y-0">
-                    <p className="text-sm">by {beat.owner.username}</p>
-                    <h3 className="">{beat.price}$</h3>
-                  </div>
+                {/* Beat Info Overlay */}
+                <div className="absolute bottom-0 left-0 w-full translate-y-full bg-black/70 p-2 text-white backdrop-blur-sm transition-transform duration-300 ease-out group-hover:translate-y-0 group-active:translate-y-0">
+                  <p className="text-sm font-medium">by {beat.owner.username}</p>
+                  <h3 className="text-lg font-bold">${beat.price}</h3>
                 </div>
               </div>
-
-              {/* Title */}
-              <div className="mt-2 px-2 text-center">
-                <h3 className="text-md truncate font-semibold text-white">
-                  {beat.title}
-                </h3>
-              </div>
             </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-white">No beats available.</p>
+
+            {/* Title */}
+            <div className="mt-3 px-1">
+              <h3 className="truncate text-center text-base font-semibold text-white sm:text-lg">
+                {beat.title}
+              </h3>
+            </div>
+          </div>
+        ))}
+      </div>
+      {filteredBeats.length === 0 && (
+        <p className="mt-4 text-center text-lg text-white">No beats available.</p>
       )}
     </div>
   )

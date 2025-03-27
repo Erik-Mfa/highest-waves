@@ -7,3 +7,99 @@ header {
   width: 100%;
   z-index: 50;
 }
+
+/* Header styles */
+.shadow-header-shadow {
+  background: linear-gradient(to right, #0f766e, #134e4a);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Font styles */
+.font-rem {
+  font-family: 'REM', sans-serif;
+}
+
+/* Mobile menu animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Mobile menu backdrop */
+.bg-gray-900\/95 {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Purchase cart responsive width */
+@media (max-width: 640px) {
+  .purchase-cart {
+    width: 100%;
+  }
+}
+
+/* Button hover effects */
+button:active,
+a:active {
+  transform: scale(0.95);
+}
+
+/* Mobile menu button */
+.mobile-menu-button {
+  transition: transform 0.2s ease;
+}
+
+.mobile-menu-button:active {
+  transform: scale(0.9);
+}
+
+/* Logo responsive sizing */
+@media (max-width: 640px) {
+  .logo {
+    width: 80px;
+  }
+}
+
+/* Navigation spacing */
+@media (max-width: 768px) {
+  .nav-spacing {
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Mobile menu items */
+.mobile-menu-item {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.mobile-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Purchase cart slide animation */
+.purchase-cart-slide {
+  transition: transform 0.3s ease-in-out;
+}
+
+.purchase-cart-slide.open {
+  transform: translateX(0);
+}
+
+.purchase-cart-slide.closed {
+  transform: translateX(100%);
+}

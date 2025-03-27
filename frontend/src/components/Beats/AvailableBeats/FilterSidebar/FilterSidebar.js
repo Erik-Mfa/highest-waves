@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import Select from 'react-select'
-import Slider from 'rc-slider' // Import Slider
-import 'rc-slider/assets/index.css' // Import default Slider styles
+import Slider from 'rc-slider'
+import 'rc-slider/assets/index.css'
 
 function FilterSidebar({ filters, setFilters, tags, users, tones }) {
-  // Handle slider change
   const handlePriceChange = (value) => {
     setFilters({
       ...filters,
@@ -13,7 +12,6 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
     })
   }
 
-  // Define BPM options
   const bpmOptions = [
     { label: '1-20', value: { min: 1, max: 20 } },
     { label: '21-40', value: { min: 21, max: 40 } },
@@ -27,47 +25,82 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
     { label: '181-200', value: { min: 181, max: 200 } }
   ]
 
+  const selectStyles = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: '#102D40',
+      borderColor: '#0FC2C0',
+      borderRadius: '0.5rem',
+      padding: '2px',
+      boxShadow: 'none',
+      '&:hover': {
+        borderColor: '#0FC2C0'
+      }
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: '#102D40',
+      borderRadius: '0.5rem',
+      overflow: 'hidden'
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
+      color: '#ffffff',
+      padding: '8px 12px',
+      '&:hover': {
+        backgroundColor: state.isSelected ? '#0FC2C0' : '#0a1f2f'
+      }
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: '#ffffff'
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: '#ffffff'
+    })
+  }
+
   return (
-    <div
-      className="h-full rounded-lg p-10 shadow-md"
-      style={{ backgroundColor: '#102D40' }}
-    >
-      <div className="sticky top-20">
+    <div className="rounded-lg bg-[#102D40]/90 p-4 shadow-lg backdrop-blur-sm sm:p-6">
+      <div className="space-y-4">
         {/* Price Filter */}
-        <div className="mb-6">
-          <label className="mb-2 block text-white">Price</label>
-          <div className="flex items-center space-x-2">
-            <div className="flex-1">
-              <Slider
-                range
-                value={[filters.price.min, filters.price.max]}
-                min={0}
-                max={300}
-                step={1}
-                onChange={handlePriceChange}
-                trackStyle={{ backgroundColor: '#0FC2C0', height: 6 }}
-                railStyle={{ backgroundColor: '#073D3A', height: 6 }}
-                handleStyle={{
-                  borderColor: '#0FC2C0', // Make handles more visible with a distinct color
-                  backgroundColor: '#0FC2C0', // Distinct handle color
-                  height: 20,
-                  width: 20,
-                  opacity: 1,
-                  top: 3,
-                  zIndex: 2 // Ensure handles are on top of the bar
-                }}
-              />
-              <div className="mt-2 flex justify-between text-white">
-                <span>${filters.price.min}</span>
-                <span>${filters.price.max}</span>
-              </div>
+        <div className="mb-4">
+          <label className="mb-2 block text-sm font-medium text-white">
+            Price Range
+          </label>
+          <div className="px-2">
+            <Slider
+              range
+              value={[filters.price.min, filters.price.max]}
+              min={0}
+              max={300}
+              step={1}
+              onChange={handlePriceChange}
+              trackStyle={{ backgroundColor: '#0FC2C0', height: 4 }}
+              railStyle={{ backgroundColor: '#073D3A', height: 4 }}
+              handleStyle={{
+                borderColor: '#0FC2C0',
+                backgroundColor: '#0FC2C0',
+                height: 16,
+                width: 16,
+                marginTop: -6,
+                boxShadow: '0 0 0 2px #102D40'
+              }}
+            />
+            <div className="mt-2 flex justify-between text-sm text-white">
+              <span>${filters.price.min}</span>
+              <span>${filters.price.max}</span>
             </div>
           </div>
         </div>
 
         {/* BPM Filter */}
-        <div className="mb-6">
-          <label className="mb-2 block text-white">BPM</label>
+        <div className="mb-4">
+          <label className="mb-2 block text-sm font-medium text-white">
+            BPM Range
+          </label>
           <Select
             options={bpmOptions}
             value={bpmOptions.find(
@@ -75,49 +108,25 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 `${option.value.min}-${option.value.max}` ===
                 `${filters.bpm.min}-${filters.bpm.max}`
             )}
-            onChange={(selectedOption) => {
+            onChange={(selectedOption) =>
               setFilters({
                 ...filters,
                 bpm: selectedOption
                   ? selectedOption.value
                   : { min: 1, max: 200 }
               })
-            }}
+            }
+            styles={selectStyles}
             className="basic-single"
             classNamePrefix="select"
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                backgroundColor: '#102D40',
-                borderColor: '#0FC2C0',
-                borderRadius: '0.375rem',
-                padding: '5px'
-              }),
-              menu: (provided) => ({
-                ...provided,
-                backgroundColor: '#102D40'
-              }),
-              option: (provided, state) => ({
-                ...provided,
-                backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
-                color: '#ffffff',
-                padding: '5px'
-              }),
-              singleValue: (provided) => ({
-                ...provided,
-                color: '#ffffff'
-              }),
-              placeholder: (provided) => ({
-                ...provided,
-                color: '#ffffff'
-              })
-            }}
           />
         </div>
 
         {/* Tone Filter */}
-        <div className="mb-6">
-          <label className="mb-2 block text-white">Tone</label>
+        <div className="mb-4">
+          <label className="mb-2 block text-sm font-medium text-white">
+            Tone
+          </label>
           <Select
             options={tones.map((tone) => ({ label: tone, value: tone }))}
             value={
@@ -129,49 +138,25 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 tone: selectedOption ? selectedOption.value : ''
               })
             }
+            styles={selectStyles}
             className="basic-single"
             classNamePrefix="select"
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                backgroundColor: '#102D40',
-                borderColor: '#0FC2C0',
-                borderRadius: '0.375rem',
-                padding: '5px'
-              }),
-              menu: (provided) => ({
-                ...provided,
-                backgroundColor: '#102D40'
-              }),
-              option: (provided, state) => ({
-                ...provided,
-                backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
-                color: '#ffffff',
-                padding: '5px'
-              }),
-              singleValue: (provided) => ({
-                ...provided,
-                color: '#ffffff'
-              }),
-              placeholder: (provided) => ({
-                ...provided,
-                color: '#ffffff'
-              })
-            }}
           />
         </div>
 
         {/* Tags Filter */}
-        <div className="mb-6">
-          <label className="mb-2 block font-semibold text-white">Tags</label>
-          <div className="flex flex-wrap ">
+        <div className="mb-4">
+          <label className="mb-2 block text-sm font-medium text-white">
+            Tags
+          </label>
+          <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <button
                 key={tag.id}
-                className={`m-1 rounded-full border border-cyan-500 px-3 py-1 transition-transform duration-300 ease-in-out${
+                className={`rounded-full px-3 py-1.5 text-sm transition-all duration-200 ${
                   filters.tag.includes(tag.id)
-                    ? 'bg-cyan-500 text-white hover:scale-105'
-                    : 'border-cyan-500 text-gray-300 hover:scale-105'
+                    ? 'bg-cyan-500 text-white'
+                    : 'border border-cyan-500 text-cyan-400 hover:bg-cyan-500/20'
                 }`}
                 onClick={() => {
                   setFilters({
@@ -188,9 +173,11 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
           </div>
         </div>
 
-        {/* User Filter */}
-        <div className="mb-8">
-          <label className="mb-2 block text-white">Producer</label>
+        {/* Producer Filter */}
+        <div className="mb-4">
+          <label className="mb-2 block text-sm font-medium text-white">
+            Producer
+          </label>
           <Select
             options={users.map((user) => ({ label: user, value: user }))}
             value={
@@ -202,41 +189,15 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 user: selectedOption ? selectedOption.value : ''
               })
             }
+            styles={selectStyles}
             className="basic-single"
             classNamePrefix="select"
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                backgroundColor: '#102D40',
-                borderColor: '#0FC2C0',
-                borderRadius: '0.375rem',
-                padding: '5px'
-              }),
-              menu: (provided) => ({
-                ...provided,
-                backgroundColor: '#102D40'
-              }),
-              option: (provided, state) => ({
-                ...provided,
-                backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
-                color: '#ffffff',
-                padding: '5px'
-              }),
-              singleValue: (provided) => ({
-                ...provided,
-                color: '#ffffff'
-              }),
-              placeholder: (provided) => ({
-                ...provided,
-                color: '#ffffff'
-              })
-            }}
           />
         </div>
 
-        {/* Reset Filters Button */}
+        {/* Reset Button */}
         <button
-          className="w-full rounded border border-red-700 bg-transparent py-2 text-white transition hover:bg-red-700"
+          className="mt-6 w-full rounded-lg border border-red-500 bg-transparent px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-red-500/20"
           onClick={() =>
             setFilters({
               price: { min: 0, max: 300 },
@@ -248,7 +209,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
             })
           }
         >
-          Clear
+          Reset Filters
         </button>
       </div>
     </div>

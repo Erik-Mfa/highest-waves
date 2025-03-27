@@ -169,15 +169,15 @@ app.options('*', cors(corsOptions))
 
 // Static file serving
 app.use(
-  '/assets/beats-logos',
+  '/api/assets/beats-logos',
   express.static(path.join(__dirname, 'public/assets/beats-logos'))
 )
 app.use(
-  '/assets/beats-audios',
+  '/api/assets/beats-audios',
   express.static(path.join(__dirname, 'public/assets/beats-audios'))
 )
 app.use(
-  '/assets/users-images',
+  '/api/assets/users-images',
   express.static(path.join(__dirname, 'public/assets/users-images'))
 )
 
