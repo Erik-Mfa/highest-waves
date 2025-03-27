@@ -60,7 +60,3 @@ services:
 networks:
   app-network:
     driver: bridge
-
-volumes:
-  beats-assets:
-    driver: local
