@@ -1,5 +1,3 @@
-/* eslint-disable tailwindcss/migration-from-tailwind-2 */
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { FaShoppingCart, FaMusic, FaBars, FaTimes } from 'react-icons/fa'
