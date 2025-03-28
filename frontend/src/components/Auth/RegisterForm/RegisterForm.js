@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { register, login } from '../../../services/api/auth'
 import { useNavigate, Link } from 'react-router-dom'
-import { FaEye, FaEyeSlash } from 'react-icons/fa' // Import eye icons
+import { FaEye, FaEyeSlash, FaEnvelope, FaUser, FaLock } from 'react-icons/fa'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 const RegisterForm = () => {
@@ -16,6 +16,7 @@ const RegisterForm = () => {
   const [error, setError] = useState('')
   const [validationError, setValidationError] = useState('')
   const [captchaToken, setCaptchaToken] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleCaptcha = (token) => {
@@ -51,6 +52,7 @@ const RegisterForm = () => {
       return
     }
 
+    setIsLoading(true)
     try {
       console.log('Attempting to register user...')
       const response = await register({
@@ -75,43 +77,48 @@ const RegisterForm = () => {
       } else {
         setError('Registration failed. Please try again.')
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
-    <div className="flex min-h-screen bg-[#042326]">
-      <div className="animate-slide-in-left mx-auto p-10">
-        <h2 className="text-center text-3xl font-extrabold text-white">
-          Create an account
-        </h2>
-        <div className="flex justify-center pb-4 text-center">
-          <Link to="/">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#042326] to-[#0A3A40] p-4">
+      <div className="w-full max-w-md transform space-y-8 rounded-2xl bg-white/5 p-8 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:bg-white/10">
+        <div className="text-center">
+          <Link to="/" className="inline-block">
             <img
               src="/assets/highestwaves-logo.png"
               alt="Highest Waves Logo"
-              className="w-40 transition-transform duration-300 hover:scale-110 drop-shadow-md"
+              className="mx-auto h-20 w-auto transform transition-transform duration-300 hover:scale-105"
             />
           </Link>
+          <h2 className="mt-6 text-3xl font-bold tracking-tight text-white">
+            Create your account
+          </h2>
+          <p className="mt-2 text-sm text-gray-300">
+            Join our community of music creators
+          </p>
         </div>
-        <div className="w-full rounded-lg border-2 border-[#0A3A40] p-8 shadow-lg">
-          {error && (
-            <div className="mb-4 text-red-400 text-center bg-red-900 bg-opacity-20 p-2 rounded-md">
-              {error}
-            </div>
-          )}
-          {validationError && (
-            <div className="mb-4 text-yellow-400 text-center bg-yellow-900 bg-opacity-20 p-2 rounded-md">
-              {validationError}
-            </div>
-          )}
-          <form>
-            <div className="mb-10">
-              <label
-                htmlFor="username"
-                className="block text-sm font-semibold text-white"
-              >
-                Username
-              </label>
+
+        {error && (
+          <div className="rounded-lg bg-red-500/10 p-4 text-center text-sm text-red-400 backdrop-blur-sm">
+            {error}
+          </div>
+        )}
+
+        {validationError && (
+          <div className="rounded-lg bg-yellow-500/10 p-4 text-center text-sm text-yellow-400 backdrop-blur-sm">
+            {validationError}
+          </div>
+        )}
+
+        <form className="mt-8 space-y-6">
+          <div className="space-y-4">
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <FaUser className="h-5 w-5 text-gray-400" />
+              </div>
               <input
                 type="text"
                 id="username"
@@ -119,17 +126,15 @@ const RegisterForm = () => {
                 onChange={(e) =>
                   setCredentials({ ...credentials, username: e.target.value })
                 }
-                className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-                />
+                className="block w-full rounded-lg border border-gray-600 bg-white/5 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#1D7373] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50"
+                placeholder="Username"
+              />
             </div>
 
-            <div className="mb-10">
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-white"
-              >
-                E-mail
-              </label>
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <FaEnvelope className="h-5 w-5 text-gray-400" />
+              </div>
               <input
                 type="email"
                 id="email"
@@ -137,92 +142,123 @@ const RegisterForm = () => {
                 onChange={(e) =>
                   setCredentials({ ...credentials, email: e.target.value })
                 }
-                className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-                />
+                className="block w-full rounded-lg border border-gray-600 bg-white/5 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#1D7373] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50"
+                placeholder="Email address"
+              />
             </div>
 
-            <div className="mb-10">
-              <label
-                htmlFor="password"
-                className="block text-sm font-semibold text-white"
-              >
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  value={credentials.password}
-                  onChange={(e) => {
-                    setCredentials({ ...credentials, password: e.target.value })
-                    validatePassword(e.target.value)
-                  }}
-                  className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute top-3 right-3 text-white"
-                >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <FaLock className="h-5 w-5 text-gray-400" />
               </div>
-            </div>
-
-            <div className="mb-10">
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-semibold text-white"
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={credentials.password}
+                onChange={(e) => {
+                  setCredentials({ ...credentials, password: e.target.value })
+                  validatePassword(e.target.value)
+                }}
+                className="block w-full rounded-lg border border-gray-600 bg-white/5 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#1D7373] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50"
+                placeholder="Password"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+                onClick={() => setShowPassword(!showPassword)}
               >
-                Confirm Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  id="confirmPassword"
-                  value={credentials.confirmPassword}
-                  onChange={(e) =>
-                    setCredentials({
-                      ...credentials,
-                      confirmPassword: e.target.value
-                    })
-                  }
-                  className="mt-1 block w-full rounded-md border border-[#107361] bg-[#0A3A40] px-4 py-2 text-white shadow-sm focus:border-[#1D7373] focus:outline-none focus:ring-[#1D7373] sm:text-sm"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute top-3 right-3 text-white"
-                >
-                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
-              </div>
+                {showPassword ? (
+                  <FaEyeSlash className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                ) : (
+                  <FaEye className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                )}
+              </button>
             </div>
 
-            <button
-              type="button"
-              onClick={handleRegister}
-              className="w-full rounded-md border border-transparent bg-gradient-to-r from-[#1D7373] to-[#0F5959] px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:from-[#107361] hover:to-[#0F5959]"
-            >
-              Sign Up
-            </button>
-          </form>
-          <div className="flex justify-center mt-8">
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <FaLock className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type={showConfirmPassword ? 'text' : 'password'}
+                id="confirmPassword"
+                value={credentials.confirmPassword}
+                onChange={(e) =>
+                  setCredentials({
+                    ...credentials,
+                    confirmPassword: e.target.value
+                  })
+                }
+                className="block w-full rounded-lg border border-gray-600 bg-white/5 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#1D7373] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50"
+                placeholder="Confirm Password"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <FaEyeSlash className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                ) : (
+                  <FaEye className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex justify-center">
             <ReCAPTCHA
               sitekey="6LdhImoqAAAAAEzZyQrQ-eK5HnhSqsMbk1DW9YMh"
               onChange={handleCaptcha}
             />
           </div>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-400">Already have an account?</p>
+          <button
+            type="button"
+            onClick={handleRegister}
+            disabled={isLoading}
+            className="group relative flex w-full transform justify-center rounded-lg bg-gradient-to-r from-[#1D7373] to-[#0F5959] px-4 py-3 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.02] hover:from-[#107361] hover:to-[#0F5959] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isLoading ? (
+              <span className="flex items-center">
+                <svg
+                  className="mr-2 h-5 w-5 animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Creating account...
+              </span>
+            ) : (
+              'Create Account'
+            )}
+          </button>
+        </form>
+
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-400">
+            Already have an account?{' '}
             <Link
               to="/login"
-              className="text-[#1D7373] hover:text-[#107361] font-medium"
+              className="font-medium text-[#1D7373] transition-colors duration-200 hover:text-[#107361]"
             >
-              Login here
+              Sign in here
             </Link>
-          </div>
+          </p>
         </div>
       </div>
     </div>

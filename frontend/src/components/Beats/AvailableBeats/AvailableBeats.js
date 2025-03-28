@@ -4,7 +4,7 @@ import FilterSidebar from './FilterSidebar/FilterSidebar'
 import './AvailableBeats.css'
 import { getBeats } from '../../../services/api/beats'
 import { getTags } from '../../../services/api/tags'
-import { FaBars } from 'react-icons/fa'
+import { FaBars, FaTimes } from 'react-icons/fa'
 
 function AvailableBeats() {
   const [beats, setBeats] = useState([])
@@ -52,51 +52,73 @@ function AvailableBeats() {
     <div className="min-h-screen border-b-2 border-gray-700 bg-gradient-to-br from-black/50 to-transparent px-4 py-8 sm:px-6 md:px-8 lg:px-12">
       <div className="mx-auto max-w-7xl">
         <div className="lg:flex lg:space-x-8">
-          {/* Sidebar for larger screens */}
+          {/* Desktop Filter Sidebar - Sticky */}
           <div className="hidden lg:block lg:w-1/4">
-            <FilterSidebar
-              filters={filters}
-              setFilters={setFilters}
-              tags={tags}
-              users={users}
-              tones={tones}
-            />
+            <div className="sticky top-24">
+              <FilterSidebar
+                filters={filters}
+                setFilters={setFilters}
+                tags={tags}
+                users={users}
+                tones={tones}
+              />
+            </div>
           </div>
 
           {/* Main content */}
           <div className="w-full lg:w-3/4">
-            {/* Mobile Hamburger Button */}
+            {/* Mobile Filter Button */}
             <div className="mb-6 flex items-center justify-between lg:hidden">
+              <h2 className="text-2xl font-bold text-white sm:text-3xl">
+                Available Beats
+              </h2>
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center rounded-lg bg-gray-800 px-4 py-2 text-xl text-white focus:outline-none"
+                className="flex items-center rounded-lg bg-white/10 px-4 py-2 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
               >
-                <FaBars
-                  className={`mr-2 transition-transform duration-300 ${
-                    showFilters ? 'rotate-90' : 'rotate-0'
-                  }`}
-                />
-                <span>Filters</span>
+                {showFilters ? (
+                  <>
+                    <FaTimes className="mr-2" />
+                    <span>Close</span>
+                  </>
+                ) : (
+                  <>
+                    <FaBars className="mr-2" />
+                    <span>Filters</span>
+                  </>
+                )}
               </button>
             </div>
 
-            {/* Mobile Filter Sidebar */}
+            {/* Mobile Filter Sidebar - Fixed when open */}
             {showFilters && (
-              <div className="mb-6 rounded-lg bg-gray-800/50 p-4 backdrop-blur-sm lg:hidden">
-                <FilterSidebar
-                  filters={filters}
-                  setFilters={setFilters}
-                  tags={tags}
-                  users={users}
-                  tones={tones}
-                />
+              <div className="fixed inset-0 z-50 bg-black/80 lg:hidden">
+                <div className="h-full overflow-y-auto p-4">
+                  <div className="mb-4 flex items-center justify-between">
+                    <h3 className="text-xl font-bold text-white">Filters</h3>
+                    <button
+                      onClick={() => setShowFilters(false)}
+                      className="rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                    >
+                      <FaTimes size={20} />
+                    </button>
+                  </div>
+                  <FilterSidebar
+                    filters={filters}
+                    setFilters={setFilters}
+                    tags={tags}
+                    users={users}
+                    tones={tones}
+                  />
+                </div>
               </div>
             )}
 
-            {/* Available Beats - Large Screens and Mobile */}
-            <h2 className="mb-6 text-2xl font-bold text-white sm:text-3xl">
+            {/* Desktop Title */}
+            <h2 className="mb-6 hidden text-2xl font-bold text-white lg:block sm:text-3xl">
               Available Beats
             </h2>
+
             <BeatList beats={beats} filters={filters} />
           </div>
         </div>
