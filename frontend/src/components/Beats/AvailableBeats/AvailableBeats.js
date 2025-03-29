@@ -49,7 +49,7 @@ function AvailableBeats() {
   }, [])
 
   return (
-    <div className="min-h-screen border-b-2 border-gray-700 bg-gradient-to-br from-black/50 to-transparent px-4 py-8 sm:px-6 md:px-8 lg:px-12">
+    <div className="min-h-screen  bg-gradient-to-br from-black/50 to-transparent px-4 py-8 sm:px-6 md:px-8 lg:px-12">
       <div className="mx-auto max-w-7xl">
         <div className="lg:flex lg:space-x-8">
           {/* Desktop Filter Sidebar - Sticky */}

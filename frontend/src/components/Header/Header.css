@@ -10,7 +10,7 @@ header {
 
 /* Header styles */
 .shadow-header-shadow {
-  background: linear-gradient(to right, #0f766e, #134e4a);
+  background: linear-gradient(to right, #0e5e57, #073a37);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }

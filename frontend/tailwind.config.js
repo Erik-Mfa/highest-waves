@@ -14,10 +14,16 @@ export const theme = {
       'slide-in-left': {
         '0%': { transform: 'translateX(-100%)' },
         '70%': { transform: 'translateX(0)' }
+      },
+      'spin-reverse': {
+        '0%': { transform: 'rotate(360deg)' },
+        '100%': { transform: 'rotate(0deg)' }
       }
     },
     animation: {
-      'slide-in-left': 'slide-in-left 1s ease-out forwards'
+      'slide-in-left': 'slide-in-left 1s ease-out forwards',
+      'spin-slow': 'spin 3s linear infinite',
+      'spin-reverse-slow': 'spin-reverse 3s linear infinite',
     },
     colors: {
       'dark-teal': '#054a49', // Dark teal
