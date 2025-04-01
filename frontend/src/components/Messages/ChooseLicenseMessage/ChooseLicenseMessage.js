@@ -4,13 +4,14 @@ import { getBeatById } from "../../../services/api/beats";
 
 // eslint-disable-next-line react/prop-types
 const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
-  const [beat, setBeats] = useState([]);
-  const [selectedLicense, setSelectedLicense] = useState(null); // State for selected license
+  const [beat, setBeats] = useState(null);
+  const [selectedLicense, setSelectedLicense] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const beatResponse = await getBeatById(id);
+        console.log('Fetched beat data:', beatResponse);
         setBeats(beatResponse);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -18,15 +19,34 @@ const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
-  console.log(beat);
+  const handleLicenseSelect = (license) => {
+    console.log('Selected license:', license);
+    setSelectedLicense(license);
+  };
+
+  const handleConfirm = () => {
+    console.log('Confirming purchase with license:', selectedLicense);
+    onConfirm(selectedLicense);
+  };
 
   // Map icons dynamically based on license type
   const iconMapper = {
     diamond: <FaGem className="text-teal-400 text-2xl" />,
     gold: <FaCrown className="text-yellow-400 text-2xl" />,
     premium: <FaStar className="text-purple-400 text-2xl" />,
+  };
+
+  const calculatePrice = (license) => {
+    if (!beat || !license) return 0;
+    const price = beat.price * (license.priceMultiplier || 1);
+    console.log('Calculated price:', { 
+      basePrice: beat.price, 
+      multiplier: license.priceMultiplier, 
+      finalPrice: price 
+    });
+    return price.toFixed(2);
   };
 
   return (
@@ -36,28 +56,27 @@ const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
           <p className="text-lg font-semibold text-gray-300">Available Licenses:</p>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {beat?.licenses?.length > 0 ? (
-              beat.licenses.map((license, index) => (
+              beat.licenses.map((license) => (
                 <div
-                  key={license._id || index}
-                  className={`flex flex-col items-center space-y-2 rounded-md p-4 shadow-md transition duration-200 hover:bg-gray-600 ${
-                    selectedLicense === license._id ? "bg-teal-700" : "bg-gray-700"
+                  key={license._id}
+                  className={`flex cursor-pointer flex-col items-center space-y-2 rounded-md p-4 shadow-md transition duration-200 hover:bg-gray-600 ${
+                    selectedLicense?._id === license._id ? "bg-teal-700" : "bg-gray-700"
                   }`} 
-                  onClick={() => setSelectedLicense(license._id)} // Update selected license
+                  onClick={() => handleLicenseSelect(license)}
                 >
-                  <div>{iconMapper[license.icon] || null}</div> {/* Render mapped icon or null */}
-                  <span
-                    className={`text-lg font-semibold ${
-                      selectedLicense === license._id ? "text-white" : "text-teal-400"
-                    }`} // Change text color when selected
-                  >
+                  <div>{iconMapper[license.icon] || null}</div>
+                  <span className={`text-lg font-semibold ${
+                    selectedLicense?._id === license._id ? "text-white" : "text-teal-400"
+                  }`}>
                     {license.name}
                   </span>
-                  <p
-                    className={`text-sm text-center ${
-                      selectedLicense === license._id ? "text-gray-200" : "text-gray-300"
-                    }`} // Change description color when selected
-                  >
+                  <p className={`text-sm text-center ${
+                    selectedLicense?._id === license._id ? "text-gray-200" : "text-gray-300"
+                  }`}>
                     {license.description}
+                  </p>
+                  <p className="mt-2 text-xl font-bold text-teal-400">
+                    ${calculatePrice(license)}
                   </p>
                 </div>
               ))
@@ -66,7 +85,7 @@ const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
             )}
           </div>
 
-          <div className="flex justify-between mt-6">
+          <div className="mt-6 flex justify-between">
             <button
               onClick={onCancel}
               className="rounded-md bg-gray-500 px-4 py-2 text-white transition duration-200 hover:bg-gray-600"
@@ -74,15 +93,15 @@ const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
               Cancel
             </button>
             <button
-              onClick={() => onConfirm(selectedLicense)} // Pass selected license to confirm
+              onClick={handleConfirm}
               className={`rounded-md px-4 py-2 text-white transition duration-200 ${
                 selectedLicense
-                  ? "bg-red-600 hover:bg-red-700"
+                  ? "bg-teal-600 hover:bg-teal-700"
                   : "bg-gray-400 cursor-not-allowed"
-              }`} // Disable button if no license is selected
-              disabled={!selectedLicense} // Disable button if no license is selected
+              }`}
+              disabled={!selectedLicense}
             >
-              Confirm
+              Confirm (${calculatePrice(selectedLicense)})
             </button>
           </div>
         </div>

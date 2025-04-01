@@ -47,6 +47,7 @@ export const logout = async () => {
 
 export const isAuthenticated = async () => {
   const cookie = await cookies.get('jwt_token')
+  console.log('JWT token from cookie:', cookie)
 
   if (!cookie) {
     return false
@@ -54,6 +55,7 @@ export const isAuthenticated = async () => {
 
   try {
     const decoded = jwtDecode(cookie)
+    console.log('Decoded JWT token:', decoded)
     const currentTime = Date.now() / 1000 // Current time in seconds
 
     if (decoded.exp < currentTime) {

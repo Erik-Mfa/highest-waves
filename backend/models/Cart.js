@@ -12,9 +12,18 @@ const cartSchema = new mongoose.Schema(
       ref: 'Beat',
       required: true
     },
+    license: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'License',
+      required: true
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      required: true
+    },
+    finalPrice: {
+      type: Number,
       required: true
     }
   },

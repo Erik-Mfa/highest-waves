@@ -5,12 +5,13 @@ import Loading from '../../components/Loading/Loading'
 import { Elements } from '@stripe/react-stripe-js'
 import { stripePromise } from '../../services/stripe'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCartItems, setTotalAmount } from '../../store/cartSlice'
+import { fetchCartItems } from '../../store/cartSlice'
 import { isAuthenticated } from '../../services/api/auth'
 
 const CheckoutPage = () => {
   const dispatch = useDispatch()
   const cartItems = useSelector((state) => state.cart.items)
+  const totalAmount = useSelector((state) => state.cart.totalAmount)
   const loading = useSelector((state) => state.cart.loading)
   const [user, setUser] = useState(null)
   const [billingInfo, setBillingInfo] = useState({
@@ -21,7 +22,7 @@ const CheckoutPage = () => {
     postalCode: ''
   })
 
-  const [showPaymentForm, setShowPaymentForm] = useState(false) // State to toggle payment form visibility
+  const [showPaymentForm, setShowPaymentForm] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,17 +38,9 @@ const CheckoutPage = () => {
     fetchData()
   }, [])
 
-  const totalPrice = Array.isArray(cartItems)
-    ? cartItems.reduce((total, item) => total + item.beats.price, 0)
-    : 0
-
   useEffect(() => {
-    dispatch(setTotalAmount(totalPrice))
-  }, [dispatch, totalPrice])
-
-  useEffect(() => {
-    if (user && user.userId) {
-      dispatch(fetchCartItems(user.userId))
+    if (user && user.id) {
+      dispatch(fetchCartItems(user.id))
     }
   }, [user, dispatch])
 
@@ -55,10 +48,9 @@ const CheckoutPage = () => {
   const cartIsEmpty = !Array.isArray(cartItems) || cartItems.length === 0
 
   const handleBillingInfoChange = (updatedInfo) => {
-    setBillingInfo(updatedInfo) // Update billingInfo state when changed in BillingForm
+    setBillingInfo(updatedInfo)
   }
 
-  // Function to handle showing the payment form
   const handleProceedToPayment = () => {
     setShowPaymentForm(true)
   }
@@ -88,7 +80,7 @@ const CheckoutPage = () => {
               <div className="space-y-4">
                 {cartItems.map((item) => (
                   <div
-                    key={item.id}
+                    key={item._id}
                     className="flex items-center justify-between rounded-lg border border-gray-600 bg-gray-800 p-4 shadow-md transition-shadow hover:shadow-lg"
                   >
                     <img
@@ -102,7 +94,7 @@ const CheckoutPage = () => {
                         {item.beats.title}
                       </h3>
                       <p className="text-md text-cyan-400">
-                        ${item.beats.price}
+                        ${item.finalPrice}
                       </p>
                     </div>
                   </div>
@@ -110,7 +102,7 @@ const CheckoutPage = () => {
 
                 <div className="mt-8 text-white">
                   <p className="mb-4 text-xl font-bold">
-                    Total: ${totalPrice.toFixed(2)}
+                    Total: ${totalAmount.toFixed(2)}
                   </p>
                 </div>
               </div>

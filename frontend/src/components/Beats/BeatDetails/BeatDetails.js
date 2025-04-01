@@ -24,6 +24,7 @@ function BeatDetails() {
   const [isLoading, setIsLoading] = useState(true)
   const [isFadeIn, setIsFadeIn] = useState(false)
   const [purchase, setPurchase] = useState(false)
+  const [selectedLicense, setSelectedLicense] = useState(null)
   const navigate = useNavigate()
 
   const { id: beatId } = useParams()
@@ -36,6 +37,7 @@ function BeatDetails() {
     const fetchBeatDetails = async () => {
       try {
         const userToken = await isAuthenticated()
+        console.log('User token from isAuthenticated:', userToken)
         const beatData = await getBeatById(beatId)
         setBeat(beatData)
         setUser(userToken)
@@ -50,7 +52,10 @@ function BeatDetails() {
     fetchBeatDetails()
   }, [beatId])
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (license = null) => {
+    if (license) {
+      setSelectedLicense(license)
+    }
     setPurchase(true)
   }
 
@@ -70,7 +75,7 @@ function BeatDetails() {
         dispatch(togglePlayPause(true))
       }
     } else {
-      dispatch(togglePlayPause()) // Toggle if it's the same track
+      dispatch(togglePlayPause())
     }
   }
 
@@ -79,11 +84,32 @@ function BeatDetails() {
   }
 
   const confirmPurchase = (selectedLicense) => {
-    //NEEDS TO GET THE LICENSE CHOSEN!!!
-    if (selectedLicense) {
-      dispatch(addToCartAndUpdate({ beatId: beat.id, userId: user.userId }))
-      // Closes the panel 
-      setPurchase(false)    }
+    if (selectedLicense && user) {
+      console.log('User data in confirmPurchase:', user)
+      console.log('Confirming purchase with data:', {
+        beat,
+        user,
+        selectedLicense,
+        beatId: beat._id,
+        userId: user.userId,
+        licenseId: selectedLicense._id
+      });
+      
+      const finalPrice = beat.price * (selectedLicense.priceMultiplier || 1);
+      console.log('Calculated final price:', {
+        basePrice: beat.price,
+        multiplier: selectedLicense.priceMultiplier,
+        finalPrice
+      });
+
+      dispatch(addToCartAndUpdate({ 
+        beat: beat._id,
+        user: user.userId,
+        license: selectedLicense._id,
+        finalPrice
+      }))
+      setPurchase(false)
+    }
   }
 
   // Handling loading state
@@ -191,7 +217,7 @@ function BeatDetails() {
       </p>
       <div className="flex items-center justify-between space-x-2 text-lg text-gray-300">
         <button
-          onClick={handleAddToCart}
+          onClick={() => handleAddToCart(selectedLicense)}
           className="flex items-center space-x-2 rounded-lg bg-teal-800 px-4 py-2 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg"
         >
           <FaShoppingCart /> <span>Add to Cart</span>

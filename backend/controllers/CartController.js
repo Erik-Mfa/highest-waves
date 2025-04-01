@@ -2,6 +2,7 @@
 const Cart = require('../models/Cart')
 const User = require('../models/User')
 const Beat = require('../models/Beat')
+const License = require('../models/License')
 
 class CartController {
   async find(req, res) {
@@ -16,28 +17,40 @@ class CartController {
 
   async save(req, res) {
     try {
-      const { price, user, beat } = req.body
+      const { beat, user, licenseId, finalPrice } = req.body
+      console.log('Received cart data:', { beat, user, licenseId, finalPrice })
 
       const max = await Cart.findOne({}).sort({ id: -1 })
       const newId = max == null ? 1 : max.id + 1
 
       const findUser = await User.findOne({ id: user })
       if (!findUser) {
+        console.log('User not found:', user)
         return res.status(404).json({ message: 'User not found' })
       }
 
-      const findBeat = await Beat.findOne({ id: beat })
+      const findBeat = await Beat.findOne({ _id: beat })
       if (!findBeat) {
+        console.log('Beat not found:', beat)
         return res.status(400).json({ message: 'Invalid beat provided' })
+      }
+
+      const findLicense = await License.findOne({ _id: licenseId })
+      if (!findLicense) {
+        console.log('License not found:', licenseId)
+        return res.status(400).json({ message: 'Invalid license provided' })
       }
 
       const cart = new Cart({
         id: newId,
         user: findUser._id,
-        beats: findBeat._id
+        beats: findBeat._id,
+        license: findLicense._id,
+        finalPrice
       })
 
       const result = await cart.save()
+      console.log('Saved cart:', result)
       return res.status(201).json(result)
     } catch (error) {
       console.error('Error saving cart:', error)

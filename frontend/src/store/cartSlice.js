@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getCarts, deleteCarts, addToCart } from '../services/api/carts' // Ensure correct path
+import { getCarts, deleteCarts, addToCart } from '../services/api/carts'
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
     items: [],
     loading: false,
-    totalAmount: 0, // Add totalAmount to the initial state
+    totalAmount: 0,
     error: null
   },
   reducers: {
@@ -15,15 +15,18 @@ const cartSlice = createSlice({
     },
     setCartItems(state, action) {
       state.items = action.payload
-    },
-    setTotalAmount(state, action) {
-      state.totalAmount = action.payload
-    },
-    addItem(state, action) {
-      state.items = action.payload
+      // Calculate total amount whenever items change
+      state.totalAmount = action.payload.reduce(
+        (total, item) => total + (item.finalPrice || 0),
+        0
+      )
     },
     removeItem(state, action) {
-      state.items = state.items.filter((item) => item.id !== action.payload)
+      state.items = state.items.filter(item => item.id !== action.payload)
+      state.totalAmount = state.items.reduce(
+        (total, item) => total + (item.finalPrice || 0),
+        0
+      )
     },
     setError(state, action) {
       state.error = action.payload
@@ -31,14 +34,7 @@ const cartSlice = createSlice({
   }
 })
 
-export const {
-  setLoading,
-  setCartItems,
-  addItem,
-  removeItem,
-  setError,
-  setTotalAmount
-} = cartSlice.actions
+export const { setLoading, setCartItems, removeItem, setError } = cartSlice.actions
 
 export default cartSlice.reducer
 
@@ -66,17 +62,14 @@ export const removeCartItem = (cartId) => async (dispatch) => {
   }
 }
 
-export const addToCartAndUpdate =
-  ({ beatId, userId }) =>
-  async (dispatch) => {
-    dispatch(setLoading(true))
-    try {
-      await addToCart(beatId, userId)
-      const updatedCart = await getCarts(userId)
-      dispatch(addItem(updatedCart))
-    } catch (error) {
-      dispatch(setError(error.message))
-    } finally {
-      dispatch(setLoading(false))
-    }
+export const addToCartAndUpdate = ({ beat, user, license, finalPrice }) => async (dispatch) => {
+  dispatch(setLoading(true))
+  try {
+    const response = await addToCart({ beat, user, licenseId: license, finalPrice })
+    dispatch(setCartItems(response))
+  } catch (error) {
+    dispatch(setError(error.message))
+  } finally {
+    dispatch(setLoading(false))
   }
+}
