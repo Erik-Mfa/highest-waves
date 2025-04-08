@@ -27,7 +27,18 @@ class LicenseController {
 
   async save(req, res) {
     try {
-      const { name, description, terms, icon } = req.body
+      const { 
+        name, 
+        description, 
+        basePrice, 
+        streamLimit, 
+        videoClipLimit, 
+        publishingRoyalty, 
+        masterRoyalty, 
+        isExclusive, 
+        terms, 
+        icon 
+      } = req.body
 
       const existingLicense = await License.findOne({ name })
       if (existingLicense)
@@ -36,7 +47,19 @@ class LicenseController {
       const max = await License.findOne({}).sort({ id: -1 })
       const newId = max == null ? 1 : max.id + 1
 
-      const license = new License({ id: newId, name, description, terms, icon })
+      const license = new License({ 
+        id: newId, 
+        name, 
+        description, 
+        basePrice, 
+        streamLimit, 
+        videoClipLimit, 
+        publishingRoyalty, 
+        masterRoyalty, 
+        isExclusive, 
+        terms, 
+        icon 
+      })
       const newLicense = await license.save()
       res.status(201).json({ success: true })
     } catch (err) {
@@ -47,7 +70,18 @@ class LicenseController {
 
   async update(req, res) {
     try {
-      const { name, description, terms, icon } = req.body
+      const { 
+        name, 
+        description, 
+        basePrice, 
+        streamLimit, 
+        videoClipLimit, 
+        publishingRoyalty, 
+        masterRoyalty, 
+        isExclusive, 
+        terms, 
+        icon 
+      } = req.body
       const id = req.params.id
 
       const license = await License.findOne({ id })
@@ -55,6 +89,12 @@ class LicenseController {
 
       license.name = name || license.name
       license.description = description || license.description
+      license.basePrice = basePrice || license.basePrice
+      license.streamLimit = streamLimit || license.streamLimit
+      license.videoClipLimit = videoClipLimit || license.videoClipLimit
+      license.publishingRoyalty = publishingRoyalty || license.publishingRoyalty
+      license.masterRoyalty = masterRoyalty || license.masterRoyalty
+      license.isExclusive = isExclusive !== undefined ? isExclusive : license.isExclusive
       license.terms = terms || license.terms
       license.icon = icon || license.icon
 

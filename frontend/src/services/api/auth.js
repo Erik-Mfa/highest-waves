@@ -3,16 +3,23 @@ import Cookies from 'universal-cookie'
 import { jwtDecode } from 'jwt-decode'
 
 const instance = axios.create({
-  // eslint-disable-next-line no-undef
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}` // Ensure this is correct
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
+  withCredentials: true
 })
 
 const cookies = new Cookies()
 
+const cookieOptions = {
+  path: '/',
+  maxAge: 86400,
+  sameSite: 'lax',
+  secure: process.env.NODE_ENV === 'production'
+}
+
 export const login = async (credentials) => {
   try {
     const response = await instance.post('/auth/login', credentials)
-    cookies.set('jwt_token', response.data.token, { path: '/', maxAge: 86400 })
+    cookies.set('jwt_token', response.data.token, cookieOptions)
     return response.data.token
   } catch (error) {
     console.error('LOGIN:', error.message)
@@ -23,8 +30,7 @@ export const login = async (credentials) => {
 export const register = async (credentials) => {
   try {
     const response = await instance.post('/auth/register', credentials)
-    cookies.set('jwt_token', response.data.token, { path: '/', maxAge: 86400 })
-
+    cookies.set('jwt_token', response.data.token, cookieOptions)
     return response.data.token
   } catch (error) {
     console.error('REGISTRATION FAILED:', error.message)
@@ -34,9 +40,7 @@ export const register = async (credentials) => {
 
 export const logout = async () => {
   try {
-    const cookies = new Cookies()
-    cookies.remove('jwt_token', { path: '/' })
-
+    cookies.remove('jwt_token', cookieOptions)
     window.location.assign('/')
     return false
   } catch (error) {
@@ -46,7 +50,7 @@ export const logout = async () => {
 }
 
 export const isAuthenticated = async () => {
-  const cookie = await cookies.get('jwt_token')
+  const cookie = cookies.get('jwt_token')
   console.log('JWT token from cookie:', cookie)
 
   if (!cookie) {
@@ -56,7 +60,7 @@ export const isAuthenticated = async () => {
   try {
     const decoded = jwtDecode(cookie)
     console.log('Decoded JWT token:', decoded)
-    const currentTime = Date.now() / 1000 // Current time in seconds
+    const currentTime = Date.now() / 1000
 
     if (decoded.exp < currentTime) {
       console.warn('JWT token has expired')
@@ -71,7 +75,7 @@ export const isAuthenticated = async () => {
 }
 
 export const isAdmin = async () => {
-  const cookie = await cookies.get('jwt_token')
+  const cookie = cookies.get('jwt_token')
 
   if (!cookie) {
     return false
@@ -79,14 +83,7 @@ export const isAdmin = async () => {
 
   try {
     const decoded = jwtDecode(cookie)
-    const role = decoded.role
-
-    // Check if the role is 'admin'
-    if (role === 'admin') {
-      return true
-    } else {
-      return false // If role is 'customer' or anything else, return false
-    }
+    return decoded.role === 'admin'
   } catch (error) {
     console.error('ERROR DECODING JWT TOKEN:', error.message)
     return false

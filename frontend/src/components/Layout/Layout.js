@@ -9,6 +9,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import PurchaseCart from '../PurchaseCart/PurchaseCart'
 import AudioPlayer from '../AudioPlayer/AudioPlayer'
+import { fetchCartItems } from '../../store/cartSlice'
 
 const Layout = ({ children }) => {
   const [showPurchaseCart, setShowPurchaseCart] = useState(false)
@@ -28,6 +29,11 @@ const Layout = ({ children }) => {
 
         setUser(authenticatedUser)
         setAdmin(isUserAdmin)
+
+        // If user is authenticated, fetch their cart
+        if (authenticatedUser) {
+          dispatch(fetchCartItems(authenticatedUser.userId))
+        }
       } catch (error) {
         console.error('Error fetching user/admin data:', error)
         setUser(null)
@@ -39,15 +45,27 @@ const Layout = ({ children }) => {
 
     // Periodic token validation (checks every 1 minute)
     const interval = setInterval(async () => {
-      const authenticatedUser = await isAuthenticated()
-      if (!authenticatedUser) {
+      try {
+        const authenticatedUser = await isAuthenticated()
+        if (!authenticatedUser) {
+          setUser(null)
+          setAdmin(false)
+        } else {
+          setUser(authenticatedUser)
+          const isUserAdmin = await isAdmin()
+          setAdmin(isUserAdmin)
+          // Refresh cart data when user is still authenticated
+          dispatch(fetchCartItems(authenticatedUser.userId))
+        }
+      } catch (error) {
+        console.error('Error in interval check:', error)
         setUser(null)
         setAdmin(false)
       }
     }, 60000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [dispatch])
 
   const handlePlayPause = () => {
     dispatch(togglePlayPause())
@@ -66,8 +84,11 @@ const Layout = ({ children }) => {
       <main className="pt-16">{children}</main>
 
       {/* Purchase Cart Modal */}
-      {showPurchaseCart && (
-        <PurchaseCart onClose={() => setShowPurchaseCart(false)} />
+      {showPurchaseCart && user && (
+        <PurchaseCart 
+          onClose={() => setShowPurchaseCart(false)} 
+          user={user}
+        />
       )}
 
       {/* Audio Player */}

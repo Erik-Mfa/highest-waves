@@ -123,7 +123,15 @@ class AuthController {
         { expiresIn: '1h' }
       )
 
-      res.cookie('jwt_token', token, { httpOnly: true })
+      // Update cookie settings to work across browsers
+      res.cookie('jwt_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'none', // Changed to 'none' for Edge compatibility
+        path: '/',
+        maxAge: 3600000, // 1 hour in milliseconds
+        domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : undefined
+      })
 
       res.status(200).json({ message: 'Login successful', token })
     } catch (err) {
@@ -133,9 +141,14 @@ class AuthController {
   }
 
   async logout(req, res) {
-    if (req.cookies && req.cookies.token) {
-      res.clearCookie('token')
-    }
+    res.cookie('jwt_token', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+      path: '/',
+      expires: new Date(0),
+      domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : undefined
+    })
     res.status(200).json({ message: 'Logout successful' })
   }
 

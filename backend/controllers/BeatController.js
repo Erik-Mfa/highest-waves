@@ -10,10 +10,29 @@ const path = require('path')
 class BeatController {
   async find(req, res) {
     try {
-      const beats = await Beat.find().populate('owner').populate('tags').populate('licenses') 
+      console.log('Finding all beats')
+
+      const beats = await Beat.find()
+        .populate({
+          path: 'owner',
+          model: 'User'
+        })
+        .populate({
+          path: 'tags',
+          model: 'Tag'
+        })
+        .populate({
+          path: 'licenses',
+          model: 'License',
+          select: 'id name description basePrice streamLimit videoClipLimit publishingRoyalty masterRoyalty isExclusive terms icon'
+        })
+
+      console.log('Found beats:', beats.length)
+      console.log('Sample beat licenses:', beats[0]?.licenses)
+
       res.status(200).json(beats)
     } catch (err) {
-      console.error(err)
+      console.error('Error in find:', err)
       res.status(500).json({ message: err.message })
     }
   }
@@ -21,12 +40,45 @@ class BeatController {
   async findById(req, res) {
     try {
       const id = req.params.id
+      console.log('Finding beat with id:', id)
 
-      const beat = await Beat.findOne({ id }).populate('owner').populate('tags').populate('licenses')
-      if (!beat) return res.status(404).json({ message: 'Beat not found' })
-      res.status(200).json(beat)
+      // First find the beat
+      let beat = await Beat.findOne({ id })
+      if (!beat) {
+        console.log('Beat not found')
+        return res.status(404).json({ message: 'Beat not found' })
+      }
+
+      // If beat has no licenses, try to update them
+      if (!beat.licenses || beat.licenses.length === 0) {
+        console.log('Beat has no licenses, updating...')
+        const licenses = await License.find()
+        if (licenses && licenses.length > 0) {
+          beat.licenses = licenses.map(license => license._id)
+          beat = await beat.save()
+          console.log('Updated beat with licenses:', beat.licenses)
+        }
+      }
+
+      // Now populate all fields
+      const populatedBeat = await Beat.findOne({ id })
+        .populate({
+          path: 'owner',
+          model: 'User'
+        })
+        .populate({
+          path: 'tags',
+          model: 'Tag'
+        })
+        .populate({
+          path: 'licenses',
+          model: 'License',
+          select: 'id name description basePrice streamLimit videoClipLimit publishingRoyalty masterRoyalty isExclusive terms icon'
+        })
+
+      res.status(200).json(populatedBeat)
     } catch (err) {
-      console.error(err)
+      console.error('Error in findById:', err)
       res.status(500).json({ message: err.message })
     }
   }
@@ -36,7 +88,6 @@ class BeatController {
       const {
         title,
         description,
-        price,
         bpm,
         tone,
         image,
@@ -54,6 +105,12 @@ class BeatController {
       const tag = await Tag.find({ id: tags })
       if (!tag) return res.status(400).json({ message: 'Invalid tags' })
 
+      // Get all available licenses
+      const licenses = await License.find()
+      if (!licenses || licenses.length === 0) {
+        return res.status(400).json({ message: 'No licenses available' })
+      }
+
       // Prepend "assets/" to the filenames
       const imageFile = req.files['image']
         ? `assets/beats-logos/${req.files['image'][0].filename}`
@@ -66,13 +123,13 @@ class BeatController {
         id: newId,
         title,
         description,
-        price,
         bpm,
         tone,
         image: imageFile,
         audioURL: audioFile,
         owner: user,
-        tags: tag
+        tags: tag,
+        licenses: licenses // Add all licenses to the beat
       })
 
       const result = await beat.save()
@@ -85,8 +142,7 @@ class BeatController {
 
   async update(req, res) {
     try {
-      const { title, description, price, image, audioURL, owner, tags, licenses } =
-        req.body
+      const { title, description, image, audioURL, owner, tags } = req.body
 
       const id = req.params.id
       const beat = await Beat.findOne({ id })
@@ -98,17 +154,20 @@ class BeatController {
       const tag = await Tag.find({ id: tags })
       if (!tag) return res.status(400).json({ message: 'Invalid tags' })
 
-      const license = await License.find({ id: licenses })
-      if (!license) return res.status(400).json({ message: 'Invalid licenses' })
+      // Get all available licenses if beat doesn't have any
+      if (!beat.licenses || beat.licenses.length === 0) {
+        const licenses = await License.find()
+        if (licenses && licenses.length > 0) {
+          beat.licenses = licenses
+        }
+      }
         
       beat.title = title || beat.title
       beat.description = description || beat.description
-      beat.price = price || beat.price
       beat.image = req.file ? req.file.path : beat.image
       beat.audioURL = audioURL || beat.audioURL
       beat.owner = user
       beat.tags = tag
-      beat.licenses = license
 
       const updatedBeat = await beat.save()
       res.status(200).json(updatedBeat)

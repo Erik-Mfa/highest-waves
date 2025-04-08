@@ -15,14 +15,33 @@ const licenseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    priceMultiplier: {
+    basePrice: {
       type: Number,
       required: true,
-      default: 1, // Multiplies the beat's base price
+    },
+    streamLimit: {
+      type: Number,
+      required: true,
+    },
+    videoClipLimit: {
+      type: Number,
+      required: true,
+    },
+    publishingRoyalty: {
+      type: Number,
+      required: true,
+    },
+    masterRoyalty: {
+      type: Number,
+      required: true,
+    },
+    isExclusive: {
+      type: Boolean,
+      default: false,
     },
     terms: {
       type: String,
-      required: true, // Terms of the license in plain text or as a URL to a file
+      required: true,
     },
     icon: {
       type: String,

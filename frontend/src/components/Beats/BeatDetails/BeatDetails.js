@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { isAuthenticated } from '../../../services/api/auth'
 import { getBeatById } from '../../../services/api/beats'
 import { addToCartAndUpdate } from '../../../store/cartSlice'
-import { FaPlay, FaPause, FaShoppingCart } from 'react-icons/fa' // Import FaPause
+import { FaPlay, FaPause, FaShoppingCart, FaCrown, FaStar, FaGem } from 'react-icons/fa'
 import ChooseLicenseMessage from '../../Messages/ChooseLicenseMessage/ChooseLicenseMessage'
 import CannotPurchaseMessage from '../../Messages/CannotPurchaseMessage/CannotPurchaseMessage'
 
@@ -25,6 +25,7 @@ function BeatDetails() {
   const [isFadeIn, setIsFadeIn] = useState(false)
   const [purchase, setPurchase] = useState(false)
   const [selectedLicense, setSelectedLicense] = useState(null)
+  const [cheapestPrice, setCheapestPrice] = useState(null)
   const navigate = useNavigate()
 
   const { id: beatId } = useParams()
@@ -40,9 +41,29 @@ function BeatDetails() {
         console.log('User token from isAuthenticated:', userToken)
         const beatData = await getBeatById(beatId)
         setBeat(beatData)
-        setUser(userToken)
+        
+        // Find the cheapest license price
+        if (beatData.licenses && Array.isArray(beatData.licenses) && beatData.licenses.length > 0) {
+          const validPrices = beatData.licenses
+            .map(license => license.basePrice)
+            .filter(price => price && !isNaN(parseFloat(price)))
+            .map(price => parseFloat(price));
+            
+          if (validPrices.length > 0) {
+            const lowestPrice = Math.min(...validPrices);
+            setCheapestPrice(lowestPrice);
+          }
+        }
+        
+        if (userToken && userToken.userId) {
+          setUser(userToken)
+        } else {
+          console.error('No valid user data found in token')
+          setUser(null)
+        }
       } catch (error) {
         console.error('Error fetching beat details:', error)
+        setUser(null)
       } finally {
         setIsLoading(false)
         setIsFadeIn(true)
@@ -84,30 +105,27 @@ function BeatDetails() {
   }
 
   const confirmPurchase = (selectedLicense) => {
-    if (selectedLicense && user) {
+    if (selectedLicense && user && user.userId) {
       console.log('User data in confirmPurchase:', user)
-      console.log('Confirming purchase with data:', {
-        beat,
-        user,
-        selectedLicense,
-        beatId: beat._id,
-        userId: user.userId,
-        licenseId: selectedLicense._id
-      });
+      console.log('Selected license:', selectedLicense)
       
-      const finalPrice = beat.price * (selectedLicense.priceMultiplier || 1);
-      console.log('Calculated final price:', {
-        basePrice: beat.price,
-        multiplier: selectedLicense.priceMultiplier,
-        finalPrice
-      });
+      // Calculate final price from the license basePrice
+      const finalPrice = parseFloat(selectedLicense.basePrice);
+      
+      if (isNaN(finalPrice)) {
+        console.error('Invalid price:', selectedLicense.basePrice);
+        return;
+      }
 
       dispatch(addToCartAndUpdate({ 
         beat: beat._id,
-        user: user.userId,
-        license: selectedLicense._id,
-        finalPrice
+        user: parseInt(user.userId),
+        license: parseInt(selectedLicense.id),
+        finalPrice: finalPrice
       }))
+      setPurchase(false)
+    } else {
+      console.error('Missing required data:', { user, selectedLicense })
       setPurchase(false)
     }
   }
@@ -215,6 +233,82 @@ function BeatDetails() {
         <span className="font-semibold text-teal-400">By:</span>
         <span>{beat.owner.username}</span>
       </p>
+
+      {/* License Icons */}
+      <div className="flex items-center justify-start space-x-4">
+        {beat.licenses && beat.licenses.map((license) => {
+          const licenseStyles = {
+            gold: {
+              icon: <FaCrown className="text-2xl text-yellow-400" />,
+              bg: "bg-yellow-600/20",
+              text: "text-yellow-400",
+              border: "border-yellow-400/30"
+            },
+            platinum: {
+              icon: <FaStar className="text-2xl text-purple-400" />,
+              bg: "bg-purple-600/20",
+              text: "text-purple-400",
+              border: "border-purple-400/30"
+            },
+            diamond: {
+              icon: <FaGem className="text-2xl text-teal-400" />,
+              bg: "bg-teal-600/20",
+              text: "text-teal-400",
+              border: "border-teal-400/30"
+            }
+          };
+
+          const style = licenseStyles[license.icon] || licenseStyles.gold;
+          
+          const formatStreamLimit = (limit) => {
+            if (limit === -1) return 'Unlimited';
+            return limit.toLocaleString();
+          };
+
+          const formatVideoLimit = (limit) => {
+            if (limit === -1) return 'Unlimited';
+            return limit;
+          };
+
+          return (
+            <div key={license.id} 
+              className={`flex flex-col rounded-lg ${style.bg} p-3 border ${style.border} min-w-[200px]`}
+            >
+              <div className="flex items-center space-x-2 mb-2">
+                {style.icon}
+                <span className={`text-sm font-bold ${style.text}`}>{license.name}</span>
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs text-gray-400">
+                  Streams: {formatStreamLimit(license.streamLimit)}
+                </p>
+                <p className="text-xs text-gray-400">
+                  Video Clips: {formatVideoLimit(license.videoClipLimit)}
+                </p>
+                {!license.isExclusive && (
+                  <>
+                    <p className="text-xs text-gray-400">
+                      Publishing: {license.publishingRoyalty}%
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      Master: {license.masterRoyalty}%
+                    </p>
+                  </>
+                )}
+                {license.isExclusive && (
+                  <p className={`text-xs ${style.text} font-bold`}>
+                    Exclusive Rights
+                  </p>
+                )}
+                <p className={`text-sm font-bold ${style.text} mt-2`}>
+                  ${license.basePrice}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
       <div className="flex items-center justify-between space-x-2 text-lg text-gray-300">
         <button
           onClick={() => handleAddToCart(selectedLicense)}
@@ -223,7 +317,7 @@ function BeatDetails() {
           <FaShoppingCart /> <span>Add to Cart</span>
         </button>
         <span className="text-4xl font-bold text-cyan-300">
-          ${beat.price}
+          {cheapestPrice ? `From $${cheapestPrice.toFixed(2)}` : 'Price not available'}
         </span>
       </div>
       <div className="h-px w-full bg-gray-700"></div>

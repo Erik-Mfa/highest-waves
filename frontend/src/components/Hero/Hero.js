@@ -20,18 +20,19 @@ const Hero = () => {
 
   return (
     <section
-      className="relative flex h-[95vh] items-center justify-end bg-cover bg-center text-white"
+      className="relative flex h-[95vh] items-center bg-cover bg-center text-white"
       style={{
         backgroundImage: "url('/assets/rizzo-e-compania.jpeg')",
         backgroundPosition: 'center top'
       }}
     >
       <div className="absolute inset-0 bg-black opacity-40"></div>
-      <div className="relative mr-24 text-right">
-        <h1 className="bg-gradient-to-r bg-clip-text text-7xl font-bold tracking-[0.2em] text-white">
-          Welcome to Highest Waves
+      <div className="relative w-full px-6 sm:px-12 lg:ml-24">
+        <h1 className="max-w-[12ch] text-7xl font-bold tracking-wide sm:text-8xl lg:text-9xl">
+          <span className="text-white">Welcome to</span><br />
+          <span className="text-cyan-500">Highest Waves</span>
         </h1>
-        <p className="mb-6 text-4xl tracking-widest">
+        <p className="mt-6 text-4xl tracking-wide text-gray-100 sm:text-5xl lg:text-6xl">
           Discover the best beats and sounds
         </p>
       </div>

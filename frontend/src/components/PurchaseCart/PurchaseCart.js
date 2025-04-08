@@ -8,7 +8,6 @@ import {
   fetchCartItems,
   removeCartItem
 } from '../../store/cartSlice'
-import Loading from '../Loading/Loading'
 
 function PurchaseCart({ user }) {
   const dispatch = useDispatch()
@@ -18,7 +17,6 @@ function PurchaseCart({ user }) {
   const error = useSelector((state) => state.cart.error)
   const [deletingItems, setDeletingItems] = useState(new Set())
 
-  // Fetch cart items when component mounts or user changes
   useEffect(() => {
     if (user && user.userId) {
       dispatch(fetchCartItems(user.userId))
@@ -42,10 +40,7 @@ function PurchaseCart({ user }) {
     }
   }
 
-  // Unified check for cartItems
-  const cartIsEmpty = !Array.isArray(cartItems) || cartItems.length === 0
-
-  if (loading && cartIsEmpty) {
+  if (loading) {
     return (
       <div className="mt-4 w-full rounded-lg border border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900 p-6 text-white shadow-lg">
         <h2 className="mb-6 border-b border-gray-700 pb-3 text-3xl font-bold">
@@ -57,7 +52,6 @@ function PurchaseCart({ user }) {
             <div className="ml-4 flex-1">
               <div className="h-4 w-3/4 rounded bg-gray-700"></div>
               <div className="mt-2 h-3 w-1/2 rounded bg-gray-700"></div>
-              <div className="mt-2 h-3 w-1/4 rounded bg-gray-700"></div>
             </div>
           </div>
         </div>
@@ -76,13 +70,16 @@ function PurchaseCart({ user }) {
     )
   }
 
+  // Filter out invalid items
+  const validItems = cartItems?.filter(item => item && item.beats) || []
+
   return (
     <div className="mt-4 w-full rounded-lg border border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900 p-6 text-white shadow-lg">
       <h2 className="mb-6 border-b border-gray-700 pb-3 text-3xl font-bold">
         Your Cart
       </h2>
 
-      {cartIsEmpty ? (
+      {validItems.length === 0 ? (
         <div className="text-center">
           <p className="text-lg text-gray-300">Your cart is empty.</p>
           <Link
@@ -94,7 +91,7 @@ function PurchaseCart({ user }) {
         </div>
       ) : (
         <div>
-          {cartItems.map((item) => (
+          {validItems.map((item) => (
             <div
               key={item.id}
               className={`mb-5 flex items-center justify-between rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-md transition-all duration-300 ${
@@ -107,23 +104,20 @@ function PurchaseCart({ user }) {
                   <div className="ml-4 flex-1">
                     <div className="h-4 w-3/4 rounded bg-gray-700"></div>
                     <div className="mt-2 h-3 w-1/2 rounded bg-gray-700"></div>
-                    <div className="mt-2 h-3 w-1/4 rounded bg-gray-700"></div>
                   </div>
                 </div>
               ) : (
                 <>
-                  <img
-                    // eslint-disable-next-line no-undef
-                    src={`${process.env.REACT_APP_BACKEND_URL}/${item.beats.image}`}
-                    alt={item.beats.title}
-                    className="size-20 rounded-md border border-gray-600 object-cover"
-                  />
+                  {item.beats?.image && (
+                    <img
+                      src={`${process.env.REACT_APP_BACKEND_URL}/${item.beats.image}`}
+                      alt={item.beats?.title || 'Beat'}
+                      className="size-20 rounded-md border border-gray-600 object-cover"
+                    />
+                  )}
                   <div className="ml-4 flex-1">
-                    <h3 className="text-md font-bold">{item.beats.title}</h3>
-                    <p className="text-sm text-gray-400">
-                      License: {item.license.name}
-                    </p>
-                    <p className="text-md text-cyan-400">${item.finalPrice}</p>
+                    <h3 className="text-md font-bold">{item.beats?.title || 'Untitled Beat'}</h3>
+                    <p className="text-md text-cyan-400">${item.finalPrice?.toFixed(2) || '0.00'}</p>
                   </div>
                   <button
                     onClick={() => handleRemoveFromCart(item.id)}
@@ -140,7 +134,7 @@ function PurchaseCart({ user }) {
 
           <div className="mt-8">
             <p className="my-4 border-t border-gray-700 pt-4 text-2xl font-bold text-green-400">
-              Total: <span className="text-white">${totalAmount.toFixed(2)}</span>
+              Total: <span className="text-white">${totalAmount?.toFixed(2) || '0.00'}</span>
             </p>
             <Link
               to="/checkout"
