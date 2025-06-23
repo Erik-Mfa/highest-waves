@@ -123,6 +123,9 @@ class AuthController {
         { expiresIn: '1h' }
       )
 
+      // Prevent browser from caching old cookies
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate')
+
       // Update cookie settings to work across browsers
       res.cookie('jwt_token', token, {
         httpOnly: true,

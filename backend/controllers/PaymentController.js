@@ -51,6 +51,7 @@ class PaymentController {
       // Find user's cart
       const findUserCart = await Cart.find({ user: findUser._id })
         .populate('beats')
+        .populate('license')
         .populate('user')
 
       if (!findUserCart || findUserCart.length === 0) {
@@ -59,13 +60,25 @@ class PaymentController {
           .json({ message: 'No carts found for this user', carts: [] })
       }
 
+      // Structure beats data to match Order schema
+      const beatsData = findUserCart.map(cartItem => ({
+        beat: cartItem.beats._id,
+        license: cartItem.license._id
+      }))
+
+      console.log('Beats data structured:', JSON.stringify(beatsData, null, 2))
+
       const cartItems = findUserCart
         .flatMap((cart) => (cart.beats ? [cart.beats._id.toString()] : []))
         .join(',')
 
       // Create payment intent with Stripe
+      console.log('Creating Stripe PaymentIntent...')
+      const amountInCents = Math.round(price * 100) // Fix floating point precision issues
+      console.log(`Price: $${price} -> Amount in cents: ${amountInCents}`)
+      
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: price * 100,
+        amount: amountInCents,
         currency: 'usd',
         payment_method_types: ['card'],
         metadata: {
@@ -74,12 +87,14 @@ class PaymentController {
           orderId: newId
         }
       })
+      console.log('Stripe PaymentIntent created:', paymentIntent.id)
 
       // Create a new order
+      console.log('Creating Order in database...')
       const newOrder = new Order({
         id: newId,
         price,
-        beats: cartItems.split(','),
+        beats: beatsData,
         user: findUser._id,
         billingInfo,
         paymentStatus: 'Pending',
@@ -87,13 +102,17 @@ class PaymentController {
       })
 
       await newOrder.save()
+      console.log('Order saved successfully with ID:', newOrder.id)
 
       // Clear user's cart after successful order
       await Cart.deleteMany({ user: findUser._id })
+      console.log('Cart cleared for user')
 
-      // Send confirmation email to the user
-      await this.sendConfirmationEmail(findUser.email, newOrder)
+      // Send confirmation email to the user (temporarily skip to avoid blocking)
+      // await this.sendConfirmationEmail(findUser.email, newOrder)
+      console.log('Skipping email for debugging...')
 
+      console.log('About to send response with clientSecret:', paymentIntent.client_secret)
       res.status(200).json({
         clientSecret: paymentIntent.client_secret,
         orderId: newOrder.id

@@ -20,11 +20,6 @@ services:
       - app-network
     image: erikmfa/highest-waves-backend:latest
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:3001/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   frontend:
     build:

@@ -21,8 +21,12 @@ const PaymentForm = ({ billingInfo, user }) => {
   const loading = useSelector((state) => state.cart.loading)
 
   const totalPrice = Array.isArray(cartItems)
-    ? cartItems.reduce((total, item) => total + item.beats.price, 0)
+    ? cartItems.reduce((total, item) => total + (item.finalPrice || 0), 0)
     : 0
+
+  // Debug logging
+  console.log('Cart items:', cartItems)
+  console.log('Total price calculated:', totalPrice)
 
   if (loading) return <Loading />
 
@@ -40,6 +44,8 @@ const PaymentForm = ({ billingInfo, user }) => {
         cart: cartItems,
         billingInfo
       }
+
+      console.log('Payment info being sent:', paymentInfo)
 
       const { clientSecret } = await save(paymentInfo)
 

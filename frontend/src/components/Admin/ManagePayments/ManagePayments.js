@@ -14,14 +14,14 @@ import {
 const ManagePayments = () => {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(false)
-  const [orderToDelete, setOrderToDelete] = useState(null) // State for selected order to delete
+  const [orderToDelete, setOrderToDelete] = useState(null)
+  const [error, setError] = useState(null)
 
   const handleRefundClick = async (orderId) => {
     setLoading(true)
     try {
       const message = await handleRefund(orderId)
       alert(message)
-
       const updatedOrders = await getOrders()
       setOrders(updatedOrders)
     } catch (error) {
@@ -50,8 +50,10 @@ const ManagePayments = () => {
     try {
       const data = await getOrders()
       setOrders(data)
+      setError(null)
     } catch (error) {
       console.error('Error fetching orders:', error)
+      setError('Failed to fetch orders')
     }
   }
 
@@ -73,6 +75,10 @@ const ManagePayments = () => {
   useEffect(() => {
     fetchOrders()
   }, [])
+
+  if (error) {
+    return <div className="text-red-500 p-4">{error}</div>
+  }
 
   return (
     <div className="m-10 mx-auto max-w-6xl rounded-lg text-gray-200 shadow-lg">
@@ -101,15 +107,15 @@ const ManagePayments = () => {
                   <div className="text-md space-y-2">
                     <p className="text-white">
                       <strong className="text-teal-500">User:</strong>{' '}
-                      {order.user.username}
+                      {order.user?.username || 'N/A'}
                     </p>
                     <p className="text-white">
                       <strong className="text-teal-500">Email:</strong>{' '}
-                      {order.user.email}
+                      {order.user?.email || 'N/A'}
                     </p>
                     <p className="text-white">
                       <strong className="text-teal-500">Created At:</strong>{' '}
-                      {new Date(order.createdAt).toLocaleString()}
+                      {order.createdAt ? new Date(order.createdAt).toLocaleString() : 'N/A'}
                     </p>
                   </div>
                 </div>
@@ -122,23 +128,23 @@ const ManagePayments = () => {
                   <div className="text-md space-y-2">
                     <p className="text-white">
                       <strong className="text-teal-500">Name:</strong>{' '}
-                      {order.billingInfo.name}
+                      {order.billingInfo?.name || 'N/A'}
                     </p>
                     <p className="text-white">
                       <strong className="text-teal-500">Address:</strong>{' '}
-                      {order.billingInfo.address}
+                      {order.billingInfo?.address || 'N/A'}
                     </p>
                     <p className="text-white">
                       <strong className="text-teal-500">City:</strong>{' '}
-                      {order.billingInfo.city}
+                      {order.billingInfo?.city || 'N/A'}
                     </p>
                     <p className="text-white">
                       <strong className="text-teal-500">Postal Code:</strong>{' '}
-                      {order.billingInfo.postalCode}
+                      {order.billingInfo?.postalCode || 'N/A'}
                     </p>
                     <p className="text-white">
                       <strong className="text-teal-500">Country:</strong>{' '}
-                      {order.billingInfo.country}
+                      {order.billingInfo?.country || 'N/A'}
                     </p>
                   </div>
                 </div>
@@ -148,7 +154,7 @@ const ManagePayments = () => {
               <div>
                 <div className="md:col-span-2 md:ml-auto">
                   <ul className="space-y-6">
-                    {order.beats.map((beat) => (
+                    {order.beats?.map((beat) => (
                       <li
                         key={beat._id}
                         className="relative rounded-lg border border-gray-600 bg-gray-700 p-4 shadow-lg"
@@ -156,7 +162,6 @@ const ManagePayments = () => {
                         {/* Beat Image on Top */}
                         <div className="mb-2 flex justify-center">
                           <img
-                            // eslint-disable-next-line no-undef
                             src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
                             alt={beat.title}
                             className="size-16 rounded-lg object-cover shadow-md"
@@ -180,7 +185,7 @@ const ManagePayments = () => {
                             </p>
                             <p>
                               <strong className="text-gray-400">Owner:</strong>{' '}
-                              {beat.owner.username}
+                              {beat.owner?.username || 'N/A'}
                             </p>
                           </div>
                         </div>
@@ -193,19 +198,19 @@ const ManagePayments = () => {
               {/* Column 3: Payment Information */}
               <div className="flex h-full flex-col space-y-6">
                 {/* Payment Status with Icons */}
-                <p className=" items-center justify-items-stretch">
+                <p className="items-center justify-items-stretch">
                   <span
                     className={`text-sm font-bold px-3 py-1 ml-2 rounded-full flex items-center 
                         ${
                           order.paymentStatus === 'Completed'
                             ? 'bg-teal-800 text-green-100'
                             : order.paymentStatus === 'Pending'
-                              ? 'bg-yellow-600 text-yellow-900'
-                              : order.paymentStatus === 'Failed'
-                                ? 'bg-red-800 text-red-100'
-                                : order.paymentStatus === 'Refunded'
-                                  ? 'bg-teal-700 text-teal-100'
-                                  : 'bg-sky-800'
+                            ? 'bg-yellow-600 text-yellow-900'
+                            : order.paymentStatus === 'Failed'
+                            ? 'bg-red-800 text-red-100'
+                            : order.paymentStatus === 'Refunded'
+                            ? 'bg-teal-700 text-teal-100'
+                            : 'bg-sky-800'
                         }`}
                   >
                     {order.paymentStatus === 'Completed' && (
@@ -220,27 +225,32 @@ const ManagePayments = () => {
                     {order.paymentStatus === 'Refunded' && (
                       <FaUndoAlt className="mr-1" />
                     )}
-                    <span>{order.paymentStatus}</span>
+                    <span>{order.paymentStatus || 'Unknown'}</span>
                   </span>
                 </p>
 
                 {/* Payment History */}
                 <ul className="space-y-2">
-                  {order.paymentHistory.map((entry, index) => (
+                  {order.paymentHistory?.map((entry, index) => (
                     <li
                       key={index}
-                      className={`text-sm ${entry.status === 'Completed' ? 'text-green-300' : 'text-red-300'}`}
+                      className={`text-sm ${
+                        entry.status === 'Completed' ? 'text-green-300' : 'text-red-300'
+                      }`}
                     >
                       {new Date(entry.date).toLocaleString()}:{' '}
                       <strong>{entry.status}</strong> - {entry.message}
                     </li>
                   ))}
                 </ul>
+
                 <button
                   onClick={() => handleRefundClick(order.id)}
                   className={`bg-teal-700 text-white text-lg px-4 py-2 rounded-lg 
                         hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all 
-                        duration-300 transform hover:scale-110 ${loading ? 'cursor-not-allowed opacity-50' : ''}`}
+                        duration-300 transform hover:scale-110 ${
+                          loading ? 'cursor-not-allowed opacity-50' : ''
+                        }`}
                   disabled={loading}
                 >
                   {loading ? <Loading /> : 'Refund'}
@@ -249,7 +259,7 @@ const ManagePayments = () => {
                 <div className="flex items-center">
                   {/* Price Display */}
                   <p className="my-2 mr-auto text-3xl font-extrabold text-teal-400 md:text-4xl">
-                    ${order.price}
+                    ${order.price || '0.00'}
                   </p>
                 </div>
 

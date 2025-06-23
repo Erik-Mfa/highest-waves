@@ -191,6 +191,6 @@ app.use('/api/licenses', licenseRoutes)
 app.use('/api/carts', cartRoutes)
 app.use('/api/orders', orderRoutes)
 
-app.listen(3001, '0.0.0.0', () => console.log('Backend started in 3001!'))
+app.listen(3001, '0.0.0.0', () => console.log(`${'Backend started in ' + process.env.REACT_APP_BACKEND_URL + '!'}`))
 
 module.exports = app

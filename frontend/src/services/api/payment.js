@@ -4,23 +4,13 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}`
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
+  withCredentials: true
 })
 
 export const handleRefund = async (orderId) => {
   try {
-    const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/api/payment/refund`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ orderId }),
-        credentials: 'include'
-      }
-    )
-
+    const response = await instance.post('/payment/refund', { orderId })
     return response.data
   } catch (error) {
     console.error('Error processing refund:', error)
@@ -30,11 +20,7 @@ export const handleRefund = async (orderId) => {
 
 export const save = async (paymentInfo) => {
   try {
-    const response = await instance.post(
-      `${process.env.REACT_APP_BACKEND_URL}/api/payment/create-payment-intent`,
-      paymentInfo, // Send paymentInfo directly
-      { withCredentials: true }
-    )
+    const response = await instance.post('/payment/create-payment-intent', paymentInfo)
     return response.data
   } catch (error) {
     console.error('Error creating payment intent:', error)

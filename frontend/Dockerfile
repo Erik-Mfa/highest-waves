@@ -26,6 +26,9 @@ FROM nginx:latest
 # Copy the built application from the previous stage
 COPY --from=build /app/build /usr/share/nginx/html
 
+# Copy custom nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose the port that NGINX is listening on
 EXPOSE 80
 
