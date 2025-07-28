@@ -1,5 +1,5 @@
 header {
-  background: linear-gradient(to left, #0a3e3e, #071d26);
+  background: #e2e8ed;
   align-items: center;
   position: fixed;
   top: 0;
@@ -10,7 +10,7 @@ header {
 
 /* Header styles */
 .shadow-header-shadow {
-  background: linear-gradient(to right, #0e5e57, #073a37);
+  background-color: #e2e8ed;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }

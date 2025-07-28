@@ -37,20 +37,20 @@ const Header = ({ user, admin }) => {
   return (
     <>
       {/* Header */}
-      <header className="shadow-header-shadow fixed left-0 top-0 z-50 w-full border-b-2 border-teal-950 bg-gray-900 text-white">
+      <header className="shadow-header-shadow fixed left-0 top-0 z-50 w-full bordeFr-b-2 border-teal-950 text-black">
         <nav className="relative flex items-center justify-between px-4 py-2 sm:px-6 lg:px-12">
           {/* Logo */}
           <Link to="/" className="z-10">
             <img
               src="/assets/highestwaves-logo.png"
               alt="Highest Waves Logo"
-              className="w-20 transition-transform duration-200 hover:scale-105 sm:w-24 lg:w-28"
+              className="w-20 transition-transform duration-200 hover:scale-105 sm:w-24 lg:w-64"
             />
           </Link>
 
           {/* Desktop Navigation */}
           <ul className="hidden items-center space-x-8 lg:flex">
-            <li className="text-lg text-white transition-transform duration-200 hover:scale-110">
+            <li className="text-lg text-black transition-transform duration-200 hover:scale-110">
               <button
                 onClick={() => handleNavigation('/', 'beats-section')}
                 className="flex items-center font-rem"
@@ -59,7 +59,7 @@ const Header = ({ user, admin }) => {
                 Explore
               </button>
             </li>
-            <li className="text-lg text-white transition-transform duration-200 hover:scale-110">
+            <li className="text-lg text-black transition-transform duration-200 hover:scale-110">
               <button
                 onClick={() => handleNavigation('/', 'about-section')}
                 className="font-rem"
@@ -74,7 +74,7 @@ const Header = ({ user, admin }) => {
             <li>
               <button
                 onClick={() => setShowPurchaseCart((prev) => !prev)}
-                className="flex items-center text-lg text-white transition-transform duration-200 hover:scale-110"
+                className="flex items-center text-lg text-black transition-transform duration-200 hover:scale-110"
               >
                 <FaShoppingCart size={24} />
               </button>
@@ -82,12 +82,24 @@ const Header = ({ user, admin }) => {
 
             {user ? (
               <>
-                <li className="text-lg text-white">
+                <li className="text-lg text-black">
                   <span className="font-rem">Welcome, {user.username}!</span>
                 </li>
                 {admin && (
                   <Link
-                    className="transform rounded-lg bg-teal-800 px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 font-rem"
+                    className="transform rounded-lg px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
+                    style={{ 
+                      backgroundColor: '#3876AE',
+                      boxShadow: 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.boxShadow = 'none'
+                    }}
                     to="/admin"
                   >
                     Admin
@@ -96,7 +108,19 @@ const Header = ({ user, admin }) => {
                 <li>
                   <button
                     onClick={handleLogout}
-                    className="transform rounded-lg bg-teal-800 px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 font-rem"
+                    className="transform rounded-lg px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
+                    style={{ 
+                      backgroundColor: '#3876AE',
+                      boxShadow: 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.boxShadow = 'none'
+                    }}
                   >
                     Logout
                   </button>
@@ -106,13 +130,37 @@ const Header = ({ user, admin }) => {
               <li className="flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="transform rounded-lg bg-teal-800 px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 font-rem"
+                  className="transform rounded-lg px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
+                  style={{ 
+                    backgroundColor: '#3876AE',
+                    boxShadow: 'none'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = '#2d5a8a'
+                    e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = '#3876AE'
+                    e.target.style.boxShadow = 'none'
+                  }}
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="transform rounded-lg bg-teal-800 px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 font-rem"
+                  className="transform rounded-lg px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
+                  style={{ 
+                    backgroundColor: '#3876AE',
+                    boxShadow: 'none'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = '#2d5a8a'
+                    e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = '#3876AE'
+                    e.target.style.boxShadow = 'none'
+                  }}
                 >
                   Register
                 </Link>
@@ -124,13 +172,13 @@ const Header = ({ user, admin }) => {
           <div className="flex items-center space-x-4 lg:hidden">
             <button
               onClick={() => setShowPurchaseCart((prev) => !prev)}
-              className="text-white"
+              className="text-black"
             >
               <FaShoppingCart size={24} />
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white focus:outline-none"
+              className="text-black focus:outline-none"
             >
               {isMobileMenuOpen ? (
                 <FaTimes size={24} />
@@ -169,7 +217,19 @@ const Header = ({ user, admin }) => {
                   {admin && (
                     <Link
                       to="/admin"
-                      className="transform rounded-lg bg-teal-800 px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 font-rem"
+                      className="transform rounded-lg px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
+                      style={{ 
+                        backgroundColor: '#3876AE',
+                        boxShadow: 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#2d5a8a'
+                        e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#3876AE'
+                        e.target.style.boxShadow = 'none'
+                      }}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Admin
@@ -177,7 +237,19 @@ const Header = ({ user, admin }) => {
                   )}
                   <button
                     onClick={handleLogout}
-                    className="transform rounded-lg bg-teal-800 px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 font-rem"
+                    className="transform rounded-lg px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
+                    style={{ 
+                      backgroundColor: '#3876AE',
+                      boxShadow: 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.boxShadow = 'none'
+                    }}
                   >
                     Logout
                   </button>
@@ -186,14 +258,38 @@ const Header = ({ user, admin }) => {
                 <div className="flex flex-col space-y-4">
                   <Link
                     to="/login"
-                    className="transform rounded-lg bg-teal-800 px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 font-rem"
+                    className="transform rounded-lg px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
+                    style={{ 
+                      backgroundColor: '#3876AE',
+                      boxShadow: 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.boxShadow = 'none'
+                    }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
-                    className="transform rounded-lg bg-teal-800 px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50 font-rem"
+                    className="transform rounded-lg px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
+                    style={{ 
+                      backgroundColor: '#3876AE',
+                      boxShadow: 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.boxShadow = 'none'
+                    }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Register
@@ -207,7 +303,7 @@ const Header = ({ user, admin }) => {
 
       {/* Purchase Cart */}
       <div
-        className={`fixed right-0 top-0 z-40 mt-14 h-full w-full transform overflow-y-auto rounded-l-lg bg-teal-950 p-4 shadow-lg transition-transform duration-500 ease-in-out sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] ${
+        className={`fixed right-0 top-0 z-40 mt-14 h-full w-full transform overflow-y-auto rounded-l-lg p-4 transition-transform duration-500 ease-in-out sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] ${
           showPurchaseCart ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

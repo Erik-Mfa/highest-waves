@@ -1,0 +1,153 @@
+/* PurchaseCart Component Styles */
+
+.purchase-cart-container {
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.purchase-cart-title {
+  border-bottom-color: #6b7280 !important;
+}
+
+.purchase-cart-item {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(5px) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.purchase-cart-item:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.purchase-cart-button {
+  background: linear-gradient(135deg, #3876AE 0%, #2d5a8a 100%) !important;
+  box-shadow: 0 4px 15px rgba(56, 118, 174, 0.3) !important;
+  transition: all 0.3s ease-in-out !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.purchase-cart-button:hover {
+  background: linear-gradient(135deg, #2d5a8a 0%, #1e3a5a 100%) !important;
+  box-shadow: 0 8px 25px rgba(56, 118, 174, 0.4) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+}
+
+.purchase-cart-button:active {
+  transform: scale(0.98) !important;
+}
+
+/* Loading skeleton styles */
+.purchase-cart-skeleton {
+  background-color: #6b7280 !important;
+}
+
+.purchase-cart-skeleton-item {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+/* Error state */
+.purchase-cart-error {
+  background-color: rgba(220, 38, 38, 0.1) !important;
+  border-color: rgba(220, 38, 38, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Empty cart message */
+.purchase-cart-empty {
+  color: #d1d5db !important;
+}
+
+/* Cart item details */
+.purchase-cart-item-title {
+  color: #ffffff !important;
+}
+
+.purchase-cart-item-price {
+  color: #9ca3af !important;
+}
+
+.purchase-cart-item-license {
+  color: #9ca3af !important;
+}
+
+/* Remove button */
+.purchase-cart-remove-btn {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+  color: #ffffff !important;
+  transition: all 0.3s ease-in-out !important;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.purchase-cart-remove-btn:hover {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4) !important;
+}
+
+.purchase-cart-remove-btn:active {
+  transform: scale(0.98) !important;
+}
+
+/* Total section */
+.purchase-cart-total {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(5px) !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  margin: 16px 0 !important;
+}
+
+.purchase-cart-total-text {
+  color: #ffffff !important;
+}
+
+.purchase-cart-total-amount {
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
+
+/* Checkout button */
+.purchase-cart-checkout-btn {
+  background: linear-gradient(135deg, #3876AE 0%, #2d5a8a 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(56, 118, 174, 0.3) !important;
+  transition: all 0.3s ease-in-out !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  font-weight: 600 !important;
+}
+
+.purchase-cart-checkout-btn:hover {
+  background: linear-gradient(135deg, #2d5a8a 0%, #1e3a5a 100%) !important;
+  box-shadow: 0 8px 25px rgba(56, 118, 174, 0.4) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+}
+
+.purchase-cart-checkout-btn:active {
+  transform: scale(0.98) !important;
+}
+
+/* Continue shopping button */
+.purchase-cart-continue-btn {
+  background-color: transparent !important;
+  color: #3876AE !important;
+  border: 2px solid #3876AE !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.purchase-cart-continue-btn:hover {
+  background-color: #3876AE !important;
+  color: #ffffff !important;
+  transform: scale(1.05) !important;
+}
+
+.purchase-cart-continue-btn:active {
+  transform: scale(0.98) !important;
+} 

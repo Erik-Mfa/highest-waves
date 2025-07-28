@@ -24,6 +24,7 @@ const orderSchema = new mongoose.Schema(
       required: true
     },
     billingInfo: {
+      email: { type: String, required: true },
       name: { type: String, required: true },
       address: { type: String, required: true },
       city: { type: String, required: true },

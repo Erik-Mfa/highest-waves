@@ -1,0 +1,305 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# Highest Waves - Brand Design System
+
+## 🎨 Brand Identity Overview
+
+**Highest Waves** is a premium beat marketplace that embodies the essence of sound waves, musical creativity, and digital innovation. Our brand represents the intersection of technology and artistry, creating a sophisticated platform for music creators worldwide.
+
+### Brand Personality
+- **Creative & Innovative**: Pushing boundaries in music production
+- **Professional & Sophisticated**: Premium quality and reliability
+- **Introspective & Authentic**: Deep connection to musical expression
+- **Technological & Modern**: Cutting-edge digital solutions
+
+### Target Audience
+- **Primary**: Rappers, singers, beatmakers, music producers
+- **Secondary**: Music labels, content creators, brands seeking sonic identity
+- **Tertiary**: Music enthusiasts, aspiring artists, industry professionals
+
+---
+
+## 🎯 Color Palette
+
+### Primary Colors
+Our color system reinforces a modern, nocturnal, and technological identity with clear contrast touches:
+
+```css
+/* Deep Foundation Colors */
+--brand-black: #0B1420;        /* Deep black (background, base) */
+--brand-neutral: #0B0C0C;      /* Solid neutral black */
+
+/* Depth & Structure */
+--brand-petroleum: #0E2947;    /* Petroleum dark blue (depth) */
+--brand-medium: #124D82;       /* Medium blue (interaction & emphasis) */
+
+/* Interactive Elements */
+--brand-light: #3876AE;        /* Light blue (details, buttons) */
+
+/* Contrast & Accessibility */
+--brand-contrast: #E9F2F1;     /* Light gray-green (soft contrast) */
+```
+
+### Color Usage Guidelines
+
+#### Background Hierarchy
+- **Primary Background**: `#0B1420` - Main application background
+- **Secondary Background**: `#0E2947` - Cards, modals, sections
+- **Interactive Background**: `#124D82` - Hover states, active elements
+- **Accent Background**: `#3876AE` - Buttons, CTAs, highlights
+
+#### Text Colors
+- **Primary Text**: `#E9F2F1` - Main content, headings
+- **Secondary Text**: `#3876AE` - Subheadings, labels
+- **Muted Text**: `#124D82` - Captions, metadata
+- **Interactive Text**: `#E9F2F1` - Buttons, links
+
+#### Accessibility
+- **Contrast Ratio**: Minimum 4.5:1 for all text combinations
+- **Focus States**: Use `#3876AE` for focus indicators
+- **Error States**: Use `#DC2626` (red) for errors and warnings
+
+---
+
+## 🔤 Typography System
+
+### Primary Font: Aloevera
+A clean, light, readable, and contemporary typeface that embodies smoothness and fluidity - perfect for representing "sound waves."
+
+#### Font Weights
+```css
+--font-light: 300;      /* Subtle elements, captions */
+--font-regular: 400;    /* Body text, descriptions */
+--font-medium: 500;     /* Subheadings, labels */
+--font-semibold: 600;   /* Section headings */
+--font-bold: 700;       /* Main headings, CTAs */
+```
+
+#### Type Scale
+```css
+/* Display Text */
+--text-display: 4rem/1.1;      /* Hero headlines */
+--text-h1: 3rem/1.2;           /* Page titles */
+--text-h2: 2.25rem/1.3;        /* Section headings */
+--text-h3: 1.875rem/1.4;       /* Subsection headings */
+--text-h4: 1.5rem/1.5;         /* Card titles */
+
+/* Body Text */
+--text-body-lg: 1.125rem/1.6;  /* Large body text */
+--text-body: 1rem/1.6;         /* Standard body text */
+--text-body-sm: 0.875rem/1.6;  /* Small body text */
+
+/* UI Elements */
+--text-button: 0.875rem/1.4;   /* Button text */
+--text-caption: 0.75rem/1.5;   /* Captions, metadata */
+```
+
+#### Typography Guidelines
+- **Line Height**: 1.6 for body text, 1.2-1.4 for headings
+- **Letter Spacing**: -0.02em for headings, 0 for body text
+- **Font Stack**: Aloevera, -apple-system, BlinkMacSystemFont, sans-serif
+
+---
+
+## 🎵 Logo Design System
+
+### Logo Variations
+
+#### Primary Logo (Suggestion 1)
+**Solid, Clean Design with Icon and Wordmark**
+- **Icon**: Abstract sound wave visualization
+- **Wordmark**: "Highest Waves" in Aloevera font
+- **Layout**: Horizontal and vertical arrangements
+- **Usage**: Primary brand applications, headers, business cards
+
+#### Secondary Logo (Suggestion 2)
+**Application Variations and Compositions**
+- **Icon Only**: For small spaces, favicons, social media
+- **Wordmark Only**: For text-heavy applications
+- **Stacked Layout**: For vertical applications
+- **Minimal Version**: For dark backgrounds
+
+### Logo Specifications
+
+#### Clear Space
+- Minimum clear space: 1x the height of the "H" in "Highest"
+- Never place elements closer than this distance
+
+#### Minimum Size
+- **Print**: 0.5 inches height minimum
+- **Digital**: 32px height minimum
+- **Favicon**: 16px x 16px
+
+#### Logo Colors
+- **Primary**: White on dark backgrounds
+- **Secondary**: `#3876AE` on light backgrounds
+- **Monochrome**: Black or white only when necessary
+
+---
+
+## 🎨 Visual Elements
+
+### Iconography
+- **Style**: Minimal, geometric, sound wave-inspired
+- **Weight**: 2px stroke for consistency
+- **Corner Radius**: 2px for soft, modern feel
+- **Color**: `#3876AE` for primary icons, `#E9F2F1` for secondary
+
+### Imagery Style
+- **Photography**: Dark, moody, studio environments
+- **Illustrations**: Abstract sound waves, musical elements
+- **Graphics**: Geometric patterns, wave forms
+- **Mood**: Nocturnal, sophisticated, creative
+
+### Patterns & Textures
+- **Wave Patterns**: Subtle sound wave backgrounds
+- **Grid Systems**: Digital, technological feel
+- **Gradients**: From `#0B1420` to `#0E2947`
+- **Noise**: Subtle texture for depth
+
+---
+
+## 📱 Application Guidelines
+
+### Digital Applications
+
+#### Website Design
+- **Background**: `#0B1420` primary, `#0E2947` secondary
+- **Cards**: `#0E2947` with subtle transparency
+- **Buttons**: `#3876AE` primary, `#124D82` secondary
+- **Text**: `#E9F2F1` for readability
+
+#### Mobile App
+- **Navigation**: Dark theme with `#0B1420` background
+- **Cards**: `#0E2947` with rounded corners
+- **Interactive Elements**: `#3876AE` with hover states
+- **Status Bars**: Dark mode for consistency
+
+#### Social Media
+- **Profile Pictures**: Logo icon on `#0B1420` background
+- **Cover Images**: Abstract wave patterns
+- **Post Templates**: Dark theme with brand colors
+- **Stories**: Animated wave elements
+
+### Print Applications
+
+#### Business Cards
+- **Background**: `#0B1420` with subtle texture
+- **Logo**: White version
+- **Text**: `#E9F2F1` for contact information
+- **Accent**: `#3876AE` for highlights
+
+#### Marketing Materials
+- **Brochures**: Dark theme with wave patterns
+- **Posters**: Bold typography with brand colors
+- **Stickers**: Logo variations for different surfaces
+
+---
+
+## 🎯 Brand Voice & Messaging
+
+### Tone of Voice
+- **Professional yet Creative**: Expert knowledge with artistic flair
+- **Innovative**: Cutting-edge technology and forward-thinking
+- **Authentic**: Genuine passion for music and creators
+- **Inspiring**: Motivational and empowering
+
+### Key Messages
+- **Primary**: "Catch the wave, drop the beat"
+- **Secondary**: "Premium beats for premium creators"
+- **Tertiary**: "Where sound meets innovation"
+
+### Content Guidelines
+- **Headlines**: Bold, confident, musical references
+- **Body Copy**: Clear, informative, inspiring
+- **CTAs**: Action-oriented, benefit-focused
+- **Error Messages**: Helpful, encouraging, solution-focused
+
+---
+
+## 🔧 Implementation Guidelines
+
+### CSS Variables
+```css
+:root {
+  /* Brand Colors */
+  --brand-black: #0B1420;
+  --brand-neutral: #0B0C0C;
+  --brand-petroleum: #0E2947;
+  --brand-medium: #124D82;
+  --brand-light: #3876AE;
+  --brand-contrast: #E9F2F1;
+  
+  /* Typography */
+  --font-family: 'Aloevera', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+```
+
+### Component Guidelines
+- **Buttons**: Use `--brand-light` for primary, `--brand-medium` for secondary
+- **Cards**: Use `--brand-petroleum` background with `--radius-md`
+- **Forms**: Use `--brand-contrast` text on `--brand-black` background
+- **Navigation**: Use `--brand-light` for active states
+
+---
+
+## 📋 Brand Assets Checklist
+
+### Required Assets
+- [ ] Primary logo (horizontal and vertical)
+- [ ] Icon-only logo
+- [ ] Wordmark-only logo
+- [ ] Favicon (16x16, 32x32, 48x48)
+- [ ] Social media profile pictures
+- [ ] Email signature template
+- [ ] Business card design
+- [ ] PowerPoint template
+- [ ] Letterhead design
+
+### File Formats
+- **Vector**: SVG, AI, EPS
+- **Raster**: PNG (transparent background), JPG
+- **Print**: PDF, TIFF (high resolution)
+
+---
+
+## 🎵 Brand Evolution
+
+### Future Considerations
+- **Animation**: Sound wave animations for digital applications
+- **3D Elements**: Depth and dimension for premium feel
+- **Interactive Elements**: Hover effects and micro-interactions
+- **Accessibility**: Enhanced contrast and screen reader support
+
+### Brand Monitoring
+- **Consistency**: Regular audits of brand application
+- **Feedback**: User testing for brand perception
+- **Updates**: Annual review and refinement of brand elements
+- **Documentation**: Keep brand guidelines updated and accessible
+
+---
+
+*This brand design system ensures consistency, professionalism, and recognition across all touchpoints while maintaining the creative and technological essence of Highest Waves.* 

@@ -8,6 +8,7 @@ import {
   fetchCartItems,
   removeCartItem
 } from '../../store/cartSlice'
+import './PurchaseCart.css'
 
 function PurchaseCart({ user }) {
   const dispatch = useDispatch()
@@ -42,16 +43,16 @@ function PurchaseCart({ user }) {
 
   if (loading) {
     return (
-      <div className="mt-4 w-full rounded-lg border border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900 p-6 text-white shadow-lg">
-        <h2 className="mb-6 border-b border-gray-700 pb-3 text-3xl font-bold">
+      <div className="mt-4 w-full rounded-lg border p-6 text-white shadow-lg purchase-cart-container">
+        <h2 className="mb-6 border-b pb-3 text-3xl font-bold purchase-cart-title">
           Your Cart
         </h2>
         <div className="animate-pulse">
-          <div className="mb-5 flex items-center justify-between rounded-lg border border-gray-700 bg-gray-800 p-4">
-            <div className="size-20 rounded-md bg-gray-700"></div>
+          <div className="mb-5 flex items-center justify-between rounded-lg border p-4 purchase-cart-skeleton-item">
+            <div className="size-20 rounded-md purchase-cart-skeleton"></div>
             <div className="ml-4 flex-1">
-              <div className="h-4 w-3/4 rounded bg-gray-700"></div>
-              <div className="mt-2 h-3 w-1/2 rounded bg-gray-700"></div>
+              <div className="h-4 w-3/4 rounded purchase-cart-skeleton"></div>
+              <div className="mt-2 h-3 w-1/2 rounded purchase-cart-skeleton"></div>
             </div>
           </div>
         </div>
@@ -61,8 +62,8 @@ function PurchaseCart({ user }) {
 
   if (error) {
     return (
-      <div className="mt-4 w-full rounded-lg border border-red-700 bg-gradient-to-r from-gray-800 to-gray-900 p-6 text-white shadow-lg">
-        <h2 className="mb-6 border-b border-gray-700 pb-3 text-3xl font-bold">
+      <div className="mt-4 w-full rounded-lg border border-red-600 p-6 text-white shadow-lg purchase-cart-error">
+        <h2 className="mb-6 border-b pb-3 text-3xl font-bold purchase-cart-title">
           Your Cart
         </h2>
         <p className="text-red-400">Error loading cart: {error}</p>
@@ -74,17 +75,17 @@ function PurchaseCart({ user }) {
   const validItems = cartItems?.filter(item => item && item.beats) || []
 
   return (
-    <div className="mt-4 w-full rounded-lg border border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900 p-6 text-white shadow-lg">
-      <h2 className="mb-6 border-b border-gray-700 pb-3 text-3xl font-bold">
+    <div className="mt-4 w-full rounded-lg border p-6 text-white shadow-lg purchase-cart-container">
+      <h2 className="mb-6 border-b pb-3 text-3xl font-bold purchase-cart-title">
         Your Cart
       </h2>
 
       {validItems.length === 0 ? (
         <div className="text-center">
-          <p className="text-lg text-gray-300">Your cart is empty.</p>
+          <p className="text-lg purchase-cart-empty">Your cart is empty.</p>
           <Link
             to="/beats"
-            className="mt-4 inline-block rounded-md border border-transparent bg-cyan-600 px-6 py-4 text-sm font-medium text-white shadow-md transition-all duration-300 ease-in-out hover:scale-105 hover:bg-cyan-700"
+            className="mt-4 inline-block rounded-md border border-transparent px-6 py-4 text-sm font-medium text-white purchase-cart-button"
           >
             Browse Beats
           </Link>
@@ -94,7 +95,7 @@ function PurchaseCart({ user }) {
           {validItems.map((item) => (
             <div
               key={item.id}
-              className={`mb-5 flex items-center justify-between rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-md transition-all duration-300 ${
+              className={`mb-5 flex items-center justify-between rounded-lg border p-4 shadow-md transition-all duration-300 purchase-cart-item ${
                 deletingItems.has(item.id) ? 'opacity-50' : ''
               }`}
             >
@@ -116,14 +117,14 @@ function PurchaseCart({ user }) {
                     />
                   )}
                   <div className="ml-4 flex-1">
-                    <h3 className="text-md font-bold">{item.beats?.title || 'Untitled Beat'}</h3>
-                    <p className="text-md text-cyan-400">${item.finalPrice?.toFixed(2) || '0.00'}</p>
+                    <h3 className="text-md font-bold purchase-cart-item-title">{item.beats?.title || 'Untitled Beat'}</h3>
+                    <p className="text-md purchase-cart-item-price">${item.finalPrice?.toFixed(2) || '0.00'}</p>
                   </div>
                   <button
                     onClick={() => handleRemoveFromCart(item.id)}
                     disabled={deletingItems.has(item.id)}
-                    className="flex items-center justify-center rounded-full bg-red-600 p-2 
-                    text-white transition-all duration-300 ease-in-out hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50"
+                    className="flex items-center justify-center rounded-full p-2 
+                    focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50 purchase-cart-remove-btn"
                   >
                     <FaTrash className="text-sm" />
                   </button>
@@ -133,12 +134,12 @@ function PurchaseCart({ user }) {
           ))}
 
           <div className="mt-8">
-            <p className="my-4 border-t border-gray-700 pt-4 text-2xl font-bold text-green-400">
-              Total: <span className="text-white">${totalAmount?.toFixed(2) || '0.00'}</span>
+            <p className="my-4 border-t pt-4 text-2xl font-bold purchase-cart-total purchase-cart-total-text">
+              Total: <span className="purchase-cart-total-amount">${totalAmount?.toFixed(2) || '0.00'}</span>
             </p>
             <Link
               to="/checkout"
-              className="block w-full rounded-md border border-transparent bg-cyan-600 px-6 py-4 text-center text-sm font-medium text-white shadow-md transition-all duration-300 ease-in-out hover:scale-105 hover:bg-cyan-700"
+              className="block w-full rounded-md border border-transparent px-6 py-4 text-center text-sm font-medium text-white purchase-cart-checkout-btn"
             >
               Proceed to Checkout
             </Link>

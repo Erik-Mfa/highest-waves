@@ -27,13 +27,13 @@ const Hero = () => {
       }}
     >
       <div className="absolute inset-0 bg-black opacity-40"></div>
-      <div className="relative w-full px-6 sm:px-12 lg:ml-24">
-        <h1 className="max-w-[12ch] text-7xl font-bold tracking-wide sm:text-8xl lg:text-9xl">
+      <div className="relative w-full px-6 sm:px-12 lg:ml-20">
+        <h1 className="max-w-[12ch] text-4xl font-bold tracking-wide sm:text-7xl lg:text-8xl">
           <span className="text-white">Welcome to</span><br />
           <span className="text-cyan-500">Highest Waves</span>
         </h1>
         <p className="mt-6 text-4xl tracking-wide text-gray-100 sm:text-5xl lg:text-6xl">
-          Discover the best beats and sounds
+          Catch the wave, drop the beat
         </p>
       </div>
 
