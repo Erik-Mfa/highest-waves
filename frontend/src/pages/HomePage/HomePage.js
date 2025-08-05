@@ -8,7 +8,7 @@ function HomePage() {
   return (
     <div className="home-page">
       <Hero />
-      <main className="bg-slate-900">
+      <main>
         <div id="beats-section">
           <FeaturedBeats />
           <AvailableBeats />

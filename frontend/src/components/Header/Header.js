@@ -37,8 +37,8 @@ const Header = ({ user, admin }) => {
   return (
     <>
       {/* Header */}
-      <header className="shadow-header-shadow fixed left-0 top-0 z-50 w-full bordeFr-b-2 border-teal-950 text-black">
-        <nav className="relative flex items-center justify-between px-4 py-2 sm:px-6 lg:px-12">
+      <header className="shadow-header-shadow fixed left-0 top-0 z-50 w-full border-b-2" style={{ borderColor: 'var(--brand-petroleum)' }}>
+        <nav className="relative flex items-center justify-between px-4 py-2 sm:px-6 lg:px-12" style={{ color: 'var(--brand-black)' }}>
           {/* Logo */}
           <Link to="/" className="z-10">
             <img
@@ -50,7 +50,7 @@ const Header = ({ user, admin }) => {
 
           {/* Desktop Navigation */}
           <ul className="hidden items-center space-x-8 lg:flex">
-            <li className="text-lg text-black transition-transform duration-200 hover:scale-110">
+            <li className="text-lg transition-transform duration-200 hover:scale-110" style={{ color: 'var(--brand-black)' }}>
               <button
                 onClick={() => handleNavigation('/', 'beats-section')}
                 className="flex items-center font-rem"
@@ -59,7 +59,7 @@ const Header = ({ user, admin }) => {
                 Explore
               </button>
             </li>
-            <li className="text-lg text-black transition-transform duration-200 hover:scale-110">
+            <li className="text-lg transition-transform duration-200 hover:scale-110" style={{ color: 'var(--brand-black)' }}>
               <button
                 onClick={() => handleNavigation('/', 'about-section')}
                 className="font-rem"
@@ -74,7 +74,8 @@ const Header = ({ user, admin }) => {
             <li>
               <button
                 onClick={() => setShowPurchaseCart((prev) => !prev)}
-                className="flex items-center text-lg text-black transition-transform duration-200 hover:scale-110"
+                className="flex items-center text-lg transition-transform duration-200 hover:scale-110"
+                style={{ color: 'var(--brand-black)' }}
               >
                 <FaShoppingCart size={24} />
               </button>
@@ -82,22 +83,22 @@ const Header = ({ user, admin }) => {
 
             {user ? (
               <>
-                <li className="text-lg text-black">
+                <li className="text-lg" style={{ color: 'var(--brand-black)' }}>
                   <span className="font-rem">Welcome, {user.username}!</span>
                 </li>
                 {admin && (
                   <Link
                     className="transform rounded-lg px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
                     style={{ 
-                      backgroundColor: '#3876AE',
+                      backgroundColor: 'var(--brand-light)',
                       boxShadow: 'none'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.backgroundColor = 'var(--brand-medium)'
                       e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.backgroundColor = 'var(--brand-light)'
                       e.target.style.boxShadow = 'none'
                     }}
                     to="/admin"
@@ -110,15 +111,15 @@ const Header = ({ user, admin }) => {
                     onClick={handleLogout}
                     className="transform rounded-lg px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
                     style={{ 
-                      backgroundColor: '#3876AE',
+                      backgroundColor: 'var(--brand-light)',
                       boxShadow: 'none'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.backgroundColor = 'var(--brand-medium)'
                       e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.backgroundColor = 'var(--brand-light)'
                       e.target.style.boxShadow = 'none'
                     }}
                   >
@@ -132,15 +133,15 @@ const Header = ({ user, admin }) => {
                   to="/login"
                   className="transform rounded-lg px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
                   style={{ 
-                    backgroundColor: '#3876AE',
+                    backgroundColor: 'var(--brand-light)',
                     boxShadow: 'none'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#2d5a8a'
+                    e.target.style.backgroundColor = 'var(--brand-medium)'
                     e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#3876AE'
+                    e.target.style.backgroundColor = 'var(--brand-light)'
                     e.target.style.boxShadow = 'none'
                   }}
                 >
@@ -150,15 +151,15 @@ const Header = ({ user, admin }) => {
                   to="/register"
                   className="transform rounded-lg px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
                   style={{ 
-                    backgroundColor: '#3876AE',
+                    backgroundColor: 'var(--brand-light)',
                     boxShadow: 'none'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#2d5a8a'
+                    e.target.style.backgroundColor = 'var(--brand-medium)'
                     e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#3876AE'
+                    e.target.style.backgroundColor = 'var(--brand-light)'
                     e.target.style.boxShadow = 'none'
                   }}
                 >
@@ -172,13 +173,14 @@ const Header = ({ user, admin }) => {
           <div className="flex items-center space-x-4 lg:hidden">
             <button
               onClick={() => setShowPurchaseCart((prev) => !prev)}
-              className="text-black"
+              style={{ color: 'var(--brand-black)' }}
             >
               <FaShoppingCart size={24} />
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-black focus:outline-none"
+              className="focus:outline-none"
+              style={{ color: 'var(--brand-black)' }}
             >
               {isMobileMenuOpen ? (
                 <FaTimes size={24} />
@@ -190,9 +192,10 @@ const Header = ({ user, admin }) => {
 
           {/* Mobile Menu */}
           <div
-            className={`fixed inset-0 z-40 bg-gray-900/95 backdrop-blur-sm transition-transform duration-300 lg:hidden ${
+            className={`fixed inset-0 z-40 backdrop-blur-sm transition-transform duration-300 lg:hidden ${
               isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
             }`}
+            style={{ background: 'rgba(11, 20, 32, 0.95)' }}
           >
             <div className="flex h-full flex-col items-center justify-center space-y-8 p-4">
               <button
@@ -219,15 +222,15 @@ const Header = ({ user, admin }) => {
                       to="/admin"
                       className="transform rounded-lg px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
                       style={{ 
-                        backgroundColor: '#3876AE',
+                        backgroundColor: 'var(--brand-light)',
                         boxShadow: 'none'
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = '#2d5a8a'
+                        e.target.style.backgroundColor = 'var(--brand-medium)'
                         e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = '#3876AE'
+                        e.target.style.backgroundColor = 'var(--brand-light)'
                         e.target.style.boxShadow = 'none'
                       }}
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -239,15 +242,15 @@ const Header = ({ user, admin }) => {
                     onClick={handleLogout}
                     className="transform rounded-lg px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
                     style={{ 
-                      backgroundColor: '#3876AE',
+                      backgroundColor: 'var(--brand-light)',
                       boxShadow: 'none'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.backgroundColor = 'var(--brand-medium)'
                       e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.backgroundColor = 'var(--brand-light)'
                       e.target.style.boxShadow = 'none'
                     }}
                   >
@@ -260,15 +263,15 @@ const Header = ({ user, admin }) => {
                     to="/login"
                     className="transform rounded-lg px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
                     style={{ 
-                      backgroundColor: '#3876AE',
+                      backgroundColor: 'var(--brand-light)',
                       boxShadow: 'none'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.backgroundColor = 'var(--brand-medium)'
                       e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.backgroundColor = 'var(--brand-light)'
                       e.target.style.boxShadow = 'none'
                     }}
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -279,15 +282,15 @@ const Header = ({ user, admin }) => {
                     to="/register"
                     className="transform rounded-lg px-6 py-2 text-xl text-white transition-all duration-300 hover:scale-110 hover:shadow-lg font-rem"
                     style={{ 
-                      backgroundColor: '#3876AE',
+                      backgroundColor: 'var(--brand-light)',
                       boxShadow: 'none'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#2d5a8a'
+                      e.target.style.backgroundColor = 'var(--brand-medium)'
                       e.target.style.boxShadow = '0 10px 25px -5px rgba(56, 118, 174, 0.5)'
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = '#3876AE'
+                      e.target.style.backgroundColor = 'var(--brand-light)'
                       e.target.style.boxShadow = 'none'
                     }}
                     onClick={() => setIsMobileMenuOpen(false)}

@@ -1,10 +1,356 @@
-/* Add this to your CSS file */
+/* BeatDetails Component Styles */
+
+.beat-details-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--brand-black) 0%, var(--brand-petroleum) 50%, var(--brand-medium) 100%);
+  padding: 6rem 0 4rem;
+}
+
+.beat-details-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.beat-details-card {
+  background: rgba(14, 41, 71, 0.3);
+  border: 1px solid rgba(56, 118, 174, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.beat-details-header {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.beat-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(56, 118, 174, 0.3);
+  transition: all 0.3s ease;
+}
+
+.beat-image:hover {
+  transform: scale(1.02);
+  border-color: var(--brand-light);
+}
+
+.beat-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.beat-title {
+  color: var(--brand-contrast);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.beat-producer {
+  color: var(--brand-light);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.beat-metadata {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.beat-meta-item {
+  background: rgba(11, 20, 32, 0.4);
+  border: 1px solid rgba(56, 118, 174, 0.2);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+}
+
+.beat-meta-label {
+  color: var(--brand-medium);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.beat-meta-value {
+  color: var(--brand-contrast);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.beat-description {
+  background: rgba(11, 20, 32, 0.3);
+  border: 1px solid rgba(56, 118, 174, 0.2);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.beat-description h3 {
+  color: var(--brand-contrast);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.beat-description p {
+  color: var(--brand-medium);
+  line-height: 1.6;
+}
+
+.beat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.beat-tag {
+  background: rgba(56, 118, 174, 0.2);
+  color: var(--brand-contrast);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid rgba(56, 118, 174, 0.3);
+  transition: all 0.3s ease;
+}
+
+.beat-tag:hover {
+  background: rgba(56, 118, 174, 0.4);
+  border-color: var(--brand-light);
+}
+
+.beat-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.play-button-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--brand-light), var(--brand-medium));
+  border: none;
+  border-radius: 50%;
+  color: var(--brand-contrast);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(56, 118, 174, 0.3);
+}
+
+.play-button-large:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(56, 118, 174, 0.4);
+}
+
+.add-to-cart-large {
+  flex: 1;
+  background: linear-gradient(135deg, var(--brand-light), var(--brand-medium));
+  color: var(--brand-contrast);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(56, 118, 174, 0.3);
+}
+
+.add-to-cart-large:hover {
+  background: linear-gradient(135deg, var(--brand-medium), var(--brand-petroleum));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(56, 118, 174, 0.4);
+}
+
+.licenses-section {
+  background: rgba(11, 20, 32, 0.3);
+  border: 1px solid rgba(56, 118, 174, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.licenses-title {
+  color: var(--brand-contrast);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.licenses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.license-card {
+  background: rgba(14, 41, 71, 0.4);
+  border: 1px solid rgba(56, 118, 174, 0.3);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.license-card:hover {
+  background: rgba(18, 77, 130, 0.4);
+  border-color: var(--brand-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(56, 118, 174, 0.2);
+}
+
+.license-card.selected {
+  background: linear-gradient(135deg, rgba(56, 118, 174, 0.3), rgba(18, 77, 130, 0.3));
+  border-color: var(--brand-light);
+  box-shadow: 0 0 0 2px rgba(56, 118, 174, 0.5);
+}
+
+.license-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.license-name {
+  color: var(--brand-contrast);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.license-price {
+  color: var(--brand-light);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.license-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.license-features li {
+  color: var(--brand-medium);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(56, 118, 174, 0.1);
+  font-size: 0.875rem;
+}
+
+.license-features li:last-child {
+  border-bottom: none;
+}
+
+.license-features li::before {
+  content: "✓";
+  color: var(--brand-light);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
 
 .fade-in {
   opacity: 0;
-  transition: opacity 0.5s ease-in;
+  animation: fadeIn 0.6s ease-in-out forwards;
 }
 
 .fade-in-active {
   opacity: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading skeleton */
+.loading-skeleton {
+  background: rgba(18, 77, 130, 0.3);
+  border-radius: var(--radius-md);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .beat-details-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .beat-image {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .beat-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .beat-details-content {
+    padding: 0 1rem;
+  }
+  
+  .beat-details-card,
+  .licenses-section {
+    padding: 1.5rem;
+  }
+  
+  .beat-image {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .beat-title {
+    font-size: 1.75rem;
+  }
+  
+  .beat-metadata {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .beat-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .licenses-grid {
+    grid-template-columns: 1fr;
+  }
 }

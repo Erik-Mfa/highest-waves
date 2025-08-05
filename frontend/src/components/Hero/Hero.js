@@ -26,13 +26,13 @@ const Hero = () => {
         backgroundPosition: 'center top'
       }}
     >
-      <div className="absolute inset-0 bg-black opacity-40"></div>
+      <div className="absolute inset-0" style={{ backgroundColor: 'var(--brand-black)', opacity: 0.6 }}></div>
       <div className="relative w-full px-6 sm:px-12 lg:ml-20">
         <h1 className="max-w-[12ch] text-4xl font-bold tracking-wide sm:text-7xl lg:text-8xl">
-          <span className="text-white">Welcome to</span><br />
-          <span className="text-cyan-500">Highest Waves</span>
+          <span style={{ color: 'var(--brand-contrast)' }}>Welcome to</span><br />
+          <span style={{ color: 'var(--brand-light)' }}>Highest Waves</span>
         </h1>
-        <p className="mt-6 text-4xl tracking-wide text-gray-100 sm:text-5xl lg:text-6xl">
+        <p className="mt-6 text-4xl tracking-wide sm:text-5xl lg:text-6xl" style={{ color: 'var(--brand-contrast)' }}>
           Catch the wave, drop the beat
         </p>
       </div>
@@ -50,13 +50,19 @@ const Hero = () => {
       <div className="absolute bottom-10 left-5 flex space-x-4">
         <a
           href="https://www.instagram.com/highestwavess/"
-          className="text-white hover:text-fuchsia-600"
+          className="text-white transition-colors duration-200"
+          style={{ '&:hover': { color: 'var(--brand-light)' } }}
+          onMouseEnter={(e) => e.target.style.color = 'var(--brand-light)'}
+          onMouseLeave={(e) => e.target.style.color = 'white'}
         >
           <FaInstagram size={24} />
         </a>
         <a
           href="https://twitter.com"
-          className="text-white hover:text-teal-500"
+          className="text-white transition-colors duration-200"
+          style={{ '&:hover': { color: 'var(--brand-medium)' } }}
+          onMouseEnter={(e) => e.target.style.color = 'var(--brand-medium)'}
+          onMouseLeave={(e) => e.target.style.color = 'white'}
         >
           <FaTwitter size={24} />
         </a>

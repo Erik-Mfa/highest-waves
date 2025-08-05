@@ -1,69 +1,79 @@
-/* Ensure the container for the carousel is correctly positioned */
+/* FeaturedBeats Component Styles */
+
 .featured-beats-container {
   position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--brand-black) 0%, var(--brand-petroleum) 100%);
   overflow: hidden;
-  padding: 0 1rem;
+  padding: 1rem 0;
 }
 
-/* Shadow effect on both sides */
 .featured-beats-container::before,
 .featured-beats-container::after {
   content: '';
   position: absolute;
-  top: 0;
-  width: 15%;
-  height: 100%;
-  pointer-events: none; /* Ensure they don't interfere with clicks */
-  z-index: 1; /* Place them behind the content */
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.3;
+  z-index: 1;
 }
 
 .featured-beats-container::before {
-  left: 0;
-  background: linear-gradient(to right, rgb(0, 0, 0), transparent);
+  background: radial-gradient(circle, var(--brand-light) 0%, transparent 70%);
+  top: 20%;
+  left: 10%;
 }
 
 .featured-beats-container::after {
-  right: 0;
-  background: linear-gradient(to left, rgb(0, 0, 0), transparent);
+  background: radial-gradient(circle, var(--brand-medium) 0%, transparent 70%);
+  bottom: 20%;
+  right: 10%;
 }
 
 .marquee-container {
   position: relative;
-  width: 100%;
+  z-index: 10;
   overflow: hidden;
+  width: 100%;
 }
 
 .marquee-content {
   display: flex;
-  width: calc(100% * 2);
-  animation: marquee 80s linear infinite;
+  gap: 1rem;
+  animation: marquee 30s linear infinite;
 }
 
 .marquee-content > div {
-  flex: 0 0 auto;
-  width: 280px; /* Fixed width for mobile */
-  max-width: 100%;
-  margin-right: 1rem;
+  flex: 0 0 250px;
+  height: 300px;
 }
 
 @media (min-width: 640px) {
   .marquee-content > div {
-    width: 320px;
+    flex: 0 0 280px;
+    height: 350px;
   }
 }
 
 @media (min-width: 768px) {
   .featured-beats-container {
-    padding: 0 2rem;
+    padding: 1.5rem 0;
+  }
+  .marquee-content {
+    gap: 1.5rem;
   }
   .marquee-content > div {
-    width: 350px;
+    flex: 0 0 320px;
+    height: 400px;
   }
 }
 
 @media (min-width: 1024px) {
   .marquee-content > div {
-    width: 400px;
+    flex: 0 0 350px;
+    height: 420px;
   }
 }
 
@@ -72,35 +82,203 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%); /* Move left by half the container's width */
+    transform: translateX(calc(-100% - 1.5rem));
   }
 }
 
-/* Touch device optimizations */
+/* Hover pause animation */
 @media (hover: none) {
   .group:active .play-button {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-/* Play button styles */
 .play-button {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--brand-light), var(--brand-medium));
   border: none;
   border-radius: 50%;
+  color: var(--brand-contrast);
+  font-size: 1.5rem;
+  opacity: 0;
+  transition: all 0.3s ease;
   cursor: pointer;
-  z-index: 10; /* Ensure the play button is above the image */
-  opacity: 0; /* Initially hidden */
-  transition: opacity 0.3s ease;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 1rem;
+  z-index: 20;
+  box-shadow: 0 4px 15px rgba(56, 118, 174, 0.4);
 }
 
-/* Show play button on hover and touch */
 .group:hover .play-button,
-.group:active .play-button {
+.group:focus .play-button {
   opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.play-button:hover {
+  background: linear-gradient(135deg, var(--brand-medium), var(--brand-petroleum));
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 8px 25px rgba(56, 118, 174, 0.6);
+}
+
+.featured-beat-card {
+  background: rgba(14, 41, 71, 0.4);
+  border: 1px solid rgba(56, 118, 174, 0.2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.featured-beat-card:hover {
+  background: rgba(18, 77, 130, 0.5);
+  border-color: var(--brand-light);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(56, 118, 174, 0.3);
+}
+
+.featured-beat-image {
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.featured-beat-card:hover .featured-beat-image {
+  transform: scale(1.05);
+}
+
+.featured-beat-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 40%,
+    rgba(11, 20, 32, 0.7) 70%,
+    rgba(11, 20, 32, 0.9) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.featured-beat-card:hover .featured-beat-overlay {
+  opacity: 1;
+}
+
+.featured-beat-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  color: var(--brand-contrast);
+  z-index: 10;
+}
+
+.featured-beat-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--brand-contrast);
+  line-height: 1.3;
+}
+
+.featured-beat-producer {
+  font-size: 0.875rem;
+  color: var(--brand-light);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.featured-beat-price {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--brand-light);
+}
+
+.featured-beats-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+.featured-beats-title h2 {
+  color: var(--brand-contrast);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.featured-beats-title p {
+  color: var(--brand-medium);
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+/* Loading state */
+.featured-beat-skeleton {
+  background: rgba(18, 77, 130, 0.3);
+  border-radius: var(--radius-lg);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .featured-beats-container {
+    padding: 0.75rem 0;
+  }
+  
+  .featured-beats-title h2 {
+    font-size: 2.5rem;
+  }
+  
+  .marquee-content {
+    gap: 1rem;
+  }
+  
+  .play-button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+  
+  .featured-beat-info {
+    padding: 1rem;
+  }
+  
+  .featured-beat-title {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-beats-title h2 {
+    font-size: 2rem;
+  }
+  
+  .marquee-content > div {
+    flex: 0 0 250px;
+    height: 320px;
+  }
 }

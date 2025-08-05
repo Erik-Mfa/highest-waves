@@ -37,17 +37,32 @@ function BeatList({ beats, filters }) {
 
   const filteredBeats = beats.filter((beat) => {
     const beatPrice = getLowestLicensePrice(beat);
-    const matchesPrice =
-      beatPrice >= filters.price.min && beatPrice <= filters.price.max;
+    const matchesPrice = Array.isArray(filters.priceRange) 
+      ? beatPrice >= filters.priceRange[0] && beatPrice <= filters.priceRange[1]
+      : beatPrice >= (filters.price?.min || 0) && beatPrice <= (filters.price?.max || 300);
+      
     const beatTagIds = beat.tags.map((tag) => tag.id)
     const matchesTag =
-      filters.tag.length > 0
+      (filters.tags && filters.tags.length > 0)
+        ? filters.tags.every((tagId) => beatTagIds.includes(tagId))
+        : (filters.tag && filters.tag.length > 0)
         ? filters.tag.every((tagId) => beatTagIds.includes(tagId))
         : true
-    const matchesBpm =
-      beat.bpm >= filters.bpm.min && beat.bpm <= filters.bpm.max
+        
+    const bpmValue = parseInt(beat.bpm);
+    const matchesBpm = filters.bpmRange 
+      ? (filters.bpmRange === '60-90' && bpmValue >= 60 && bpmValue <= 90) ||
+        (filters.bpmRange === '91-120' && bpmValue >= 91 && bpmValue <= 120) ||
+        (filters.bpmRange === '121-150' && bpmValue >= 121 && bpmValue <= 150) ||
+        (filters.bpmRange === '151+' && bpmValue >= 151)
+      : filters.bpm 
+      ? bpmValue >= filters.bpm.min && bpmValue <= filters.bpm.max
+      : true;
+      
     const matchesTone = filters.tone ? beat.tone === filters.tone : true
-    const matchesUser = filters.user
+    const matchesUser = filters.producer
+      ? beat.owner.username === filters.producer
+      : filters.user
       ? beat.owner.username === filters.user
       : true
 

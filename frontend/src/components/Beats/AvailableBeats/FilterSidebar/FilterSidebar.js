@@ -8,21 +8,15 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
   const handlePriceChange = (value) => {
     setFilters({
       ...filters,
-      price: { min: value[0], max: value[1] }
+      priceRange: [value[0], value[1]]
     })
   }
 
   const bpmOptions = [
-    { label: '1-20', value: { min: 1, max: 20 } },
-    { label: '21-40', value: { min: 21, max: 40 } },
-    { label: '41-60', value: { min: 41, max: 60 } },
-    { label: '61-80', value: { min: 61, max: 80 } },
-    { label: '81-100', value: { min: 81, max: 100 } },
-    { label: '101-120', value: { min: 101, max: 120 } },
-    { label: '121-140', value: { min: 121, max: 140 } },
-    { label: '141-160', value: { min: 141, max: 160 } },
-    { label: '161-180', value: { min: 161, max: 180 } },
-    { label: '181-200', value: { min: 181, max: 200 } }
+    { label: '60-90', value: '60-90' },
+    { label: '91-120', value: '91-120' },
+    { label: '121-150', value: '121-150' },
+    { label: '151+', value: '151+' }
   ]
 
   const selectStyles = {
@@ -73,7 +67,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
           <div className="px-2">
             <Slider
               range
-              value={[filters.price.min, filters.price.max]}
+              value={filters.priceRange || [0, 300]}
               min={0}
               max={300}
               step={1}
@@ -90,8 +84,8 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
               }}
             />
             <div className="mt-2 flex justify-between text-sm text-white">
-              <span>${filters.price.min}</span>
-              <span>${filters.price.max}</span>
+              <span>${(filters.priceRange || [0, 300])[0]}</span>
+              <span>${(filters.priceRange || [0, 300])[1]}</span>
             </div>
           </div>
         </div>
@@ -103,22 +97,19 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
           </label>
           <Select
             options={bpmOptions}
-            value={bpmOptions.find(
-              (option) =>
-                `${option.value.min}-${option.value.max}` ===
-                `${filters.bpm.min}-${filters.bpm.max}`
-            )}
+            value={
+              filters.bpmRange ? { label: filters.bpmRange, value: filters.bpmRange } : null
+            }
             onChange={(selectedOption) =>
               setFilters({
                 ...filters,
-                bpm: selectedOption
-                  ? selectedOption.value
-                  : { min: 1, max: 200 }
+                bpmRange: selectedOption ? selectedOption.value : ''
               })
             }
             styles={selectStyles}
             className="basic-single"
             classNamePrefix="select"
+            placeholder="Select..."
           />
         </div>
 
@@ -141,6 +132,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
             styles={selectStyles}
             className="basic-single"
             classNamePrefix="select"
+            placeholder="Select..."
           />
         </div>
 
@@ -154,16 +146,17 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
               <button
                 key={tag.id}
                 className={`rounded-full px-3 py-1.5 text-sm transition-all duration-200 ${
-                  filters.tag.includes(tag.id)
+                  (filters.tags || []).includes(tag.id)
                     ? 'bg-cyan-500 text-white'
                     : 'border border-cyan-500 text-cyan-400 hover:bg-cyan-500/20'
                 }`}
                 onClick={() => {
+                  const currentTags = filters.tags || [];
                   setFilters({
                     ...filters,
-                    tag: filters.tag.includes(tag.id)
-                      ? filters.tag.filter((id) => id !== tag.id)
-                      : [...filters.tag, tag.id]
+                    tags: currentTags.includes(tag.id)
+                      ? currentTags.filter((id) => id !== tag.id)
+                      : [...currentTags, tag.id]
                   })
                 }}
               >
@@ -179,19 +172,20 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
             Producer
           </label>
           <Select
-            options={users.map((user) => ({ label: user, value: user }))}
+            options={users.map((username) => ({ label: username, value: username }))}
             value={
-              filters.user ? { label: filters.user, value: filters.user } : null
+              filters.producer ? { label: filters.producer, value: filters.producer } : null
             }
             onChange={(selectedOption) =>
               setFilters({
                 ...filters,
-                user: selectedOption ? selectedOption.value : ''
+                producer: selectedOption ? selectedOption.value : ''
               })
             }
             styles={selectStyles}
             className="basic-single"
             classNamePrefix="select"
+            placeholder="Select..."
           />
         </div>
 
@@ -200,12 +194,11 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
           className="mt-6 w-full rounded-lg border border-red-500 bg-transparent px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-red-500/20"
           onClick={() =>
             setFilters({
-              price: { min: 0, max: 300 },
-              createdAt: '',
-              tag: [],
-              bpm: { min: 1, max: 200 },
+              priceRange: [0, 300],
+              bpmRange: '',
               tone: '',
-              user: ''
+              tags: [],
+              producer: ''
             })
           }
         >

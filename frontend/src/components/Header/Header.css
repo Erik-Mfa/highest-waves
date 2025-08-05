@@ -1,5 +1,5 @@
 header {
-  background: #e2e8ed;
+  background: var(--brand-contrast);
   align-items: center;
   position: fixed;
   top: 0;
@@ -10,9 +10,9 @@ header {
 
 /* Header styles */
 .shadow-header-shadow {
-  background-color: #e2e8ed;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background-color: var(--brand-contrast);
+  box-shadow: 0 4px 6px -1px rgba(11, 20, 32, 0.1),
+    0 2px 4px -1px rgba(11, 20, 32, 0.06);
 }
 
 /* Font styles */
@@ -42,6 +42,7 @@ header {
 /* Mobile menu backdrop */
 .bg-gray-900\/95 {
   animation: fadeIn 0.3s ease-out;
+  background-color: rgba(11, 20, 32, 0.95) !important;
 }
 
 /* Purchase cart responsive width */
@@ -88,7 +89,7 @@ a:active {
 }
 
 .mobile-menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(56, 118, 174, 0.1);
 }
 
 /* Purchase cart slide animation */
