@@ -152,7 +152,7 @@ function BeatDetails() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="loader"></div>
-        <p className="text-xl text-teal-400">Loading... Please wait.</p>
+        <p className="text-xl text-brand-blue">Loading... Please wait.</p>
       </div>
     )
   }
@@ -174,7 +174,7 @@ function BeatDetails() {
         <p className="text-2xl font-bold text-red-500">
           Oops, we couldn't find this beat.
         </p>
-        <a href="/beats" className="mt-4 text-teal-400 hover:text-teal-500">
+        <a href="/beats" className="mt-4 text-brand-blue hover:text-brand-blue-dark">
           Explore more beats
         </a>
       </div>
@@ -283,11 +283,11 @@ function BeatDetails() {
               gradient: "from-slate-600/10 to-slate-800/10"
             },
             diamond: {
-              icon: <FaGem className="text-2xl text-teal-400" />,
-              text: "text-teal-400",
-              border: "border-teal-400/30",
-              borderSelected: "border-teal-400/60",
-              gradient: "from-teal-600/10 to-teal-800/10"
+              icon: <FaGem className="text-2xl text-brand-blue" />,
+              text: "text-brand-blue",
+              border: "border-brand-blue/30",
+              borderSelected: "border-brand-blue/60",
+              gradient: "from-brand-blue/10 to-brand-blue-dark/10"
             },
             exclusive: {
               icon: <FaCrown className="text-2xl text-purple-400" />,

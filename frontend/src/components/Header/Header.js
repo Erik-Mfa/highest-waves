@@ -37,7 +37,7 @@ const Header = ({ user, admin }) => {
   return (
     <>
       {/* Header */}
-      <header className="shadow-header-shadow fixed left-0 top-0 z-50 w-full border-b-2" style={{ borderColor: 'var(--brand-petroleum)' }}>
+      <header className="shadow-header-shadow fixed left-0 top-0 z-50 w-full">
         <nav className="relative flex items-center justify-between px-4 py-2 sm:px-6 lg:px-12" style={{ color: 'var(--brand-black)' }}>
           {/* Logo */}
           <Link to="/" className="z-10">

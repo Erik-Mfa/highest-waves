@@ -51,13 +51,13 @@ const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
       borderSelected: "border-slate-400/60"
     },
     diamond: {
-      icon: <FaGem className="text-2xl text-teal-400" />,
-      color: "text-teal-400",
-      bg: "bg-teal-600/20",
-      border: "border-teal-400/30",
-      gradient: "from-teal-600/10 to-teal-800/10",
-      bgSelected: "bg-teal-600/40",
-      borderSelected: "border-teal-400/60"
+      icon: <FaGem className="text-2xl text-brand-blue" />,
+      color: "text-brand-blue",
+      bg: "bg-brand-blue/20",
+      border: "border-brand-blue/30",
+      gradient: "from-brand-blue/10 to-brand-blue-dark/10",
+      bgSelected: "bg-brand-blue/40",
+      borderSelected: "border-brand-blue/60"
     },
     exclusive: {
       icon: <FaCrown className="text-2xl text-purple-400" />,
@@ -158,7 +158,7 @@ const ChooseLicenseMessage = ({ onCancel, onConfirm, id }) => {
             onClick={handleConfirm}
             className={`rounded-lg px-6 py-3 font-medium transition-all ${
               selectedLicense
-                ? "bg-teal-600 text-white hover:bg-teal-500"
+                ? "bg-brand-blue text-white hover:bg-brand-blue-dark"
                 : "cursor-not-allowed bg-gray-600 text-gray-400"
             }`}
             disabled={!selectedLicense}

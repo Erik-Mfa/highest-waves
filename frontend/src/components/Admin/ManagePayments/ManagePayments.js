@@ -106,15 +106,15 @@ const ManagePayments = () => {
                 <div className="rounded-md bg-gray-800 p-4 shadow-md">
                   <div className="text-md space-y-2">
                     <p className="text-white">
-                      <strong className="text-teal-500">User:</strong>{' '}
+                      <strong className="text-brand-blue">User:</strong>{' '}
                       {order.user?.username || 'N/A'}
                     </p>
                     <p className="text-white">
-                      <strong className="text-teal-500">Email:</strong>{' '}
+                      <strong className="text-brand-blue">Email:</strong>{' '}
                       {order.user?.email || 'N/A'}
                     </p>
                     <p className="text-white">
-                      <strong className="text-teal-500">Created At:</strong>{' '}
+                      <strong className="text-brand-blue">Created At:</strong>{' '}
                       {order.createdAt ? new Date(order.createdAt).toLocaleString() : 'N/A'}
                     </p>
                   </div>
@@ -127,23 +127,23 @@ const ManagePayments = () => {
                   </h3>
                   <div className="text-md space-y-2">
                     <p className="text-white">
-                      <strong className="text-teal-500">Name:</strong>{' '}
+                      <strong className="text-brand-blue">Name:</strong>{' '}
                       {order.billingInfo?.name || 'N/A'}
                     </p>
                     <p className="text-white">
-                      <strong className="text-teal-500">Address:</strong>{' '}
+                      <strong className="text-brand-blue">Address:</strong>{' '}
                       {order.billingInfo?.address || 'N/A'}
                     </p>
                     <p className="text-white">
-                      <strong className="text-teal-500">City:</strong>{' '}
+                      <strong className="text-brand-blue">City:</strong>{' '}
                       {order.billingInfo?.city || 'N/A'}
                     </p>
                     <p className="text-white">
-                      <strong className="text-teal-500">Postal Code:</strong>{' '}
+                      <strong className="text-brand-blue">Postal Code:</strong>{' '}
                       {order.billingInfo?.postalCode || 'N/A'}
                     </p>
                     <p className="text-white">
-                      <strong className="text-teal-500">Country:</strong>{' '}
+                      <strong className="text-brand-blue">Country:</strong>{' '}
                       {order.billingInfo?.country || 'N/A'}
                     </p>
                   </div>
@@ -169,7 +169,7 @@ const ManagePayments = () => {
                         </div>
                         {/* Beat Title and Details */}
                         <div className="space-y-2 text-center">
-                          <h4 className="text-md font-semibold text-teal-300">
+                          <h4 className="text-md font-semibold text-brand-blue">
                             {beat.title}
                           </h4>
                           <div className="space-y-1 text-sm">
@@ -203,13 +203,13 @@ const ManagePayments = () => {
                     className={`text-sm font-bold px-3 py-1 ml-2 rounded-full flex items-center 
                         ${
                           order.paymentStatus === 'Completed'
-                            ? 'bg-teal-800 text-green-100'
+                            ? 'bg-brand-blue-dark text-green-100'
                             : order.paymentStatus === 'Pending'
                             ? 'bg-yellow-600 text-yellow-900'
                             : order.paymentStatus === 'Failed'
                             ? 'bg-red-800 text-red-100'
                             : order.paymentStatus === 'Refunded'
-                            ? 'bg-teal-700 text-teal-100'
+                            ? 'bg-brand-blue text-brand-blue-dark'
                             : 'bg-sky-800'
                         }`}
                   >
@@ -246,8 +246,8 @@ const ManagePayments = () => {
 
                 <button
                   onClick={() => handleRefundClick(order.id)}
-                  className={`bg-teal-700 text-white text-lg px-4 py-2 rounded-lg 
-                        hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50 transition-all 
+                  className={`bg-brand-blue text-white text-lg px-4 py-2 rounded-lg 
+                        hover:bg-brand-blue-dark hover:shadow-lg hover:shadow-brand-blue/50 transition-all 
                         duration-300 transform hover:scale-110 ${
                           loading ? 'cursor-not-allowed opacity-50' : ''
                         }`}
@@ -258,7 +258,7 @@ const ManagePayments = () => {
 
                 <div className="flex items-center">
                   {/* Price Display */}
-                  <p className="my-2 mr-auto text-3xl font-extrabold text-teal-400 md:text-4xl">
+                  <p className="my-2 mr-auto text-3xl font-extrabold text-brand-blue md:text-4xl">
                     ${order.price || '0.00'}
                   </p>
                 </div>

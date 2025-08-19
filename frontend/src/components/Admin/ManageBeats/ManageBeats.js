@@ -45,7 +45,7 @@ const ManageBeats = () => {
       <div className="mx-10 flex justify-center">
         <button
           onClick={toggleForm}
-          className="rounded-lg  px-8 py-2 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50"
+          className="rounded-lg  px-8 py-2 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-brand-blue hover:shadow-lg hover:shadow-brand-blue/50"
         >
           Create Beat
         </button>
@@ -60,7 +60,7 @@ const ManageBeats = () => {
               return (
                 <div
                   key={beat.id}
-                  className="flex items-center rounded-lg border border-teal-600 bg-gray-800 p-4 transition-colors duration-300 ease-in-out hover:bg-gray-700"
+                  className="flex items-center rounded-lg border border-brand-blue bg-gray-800 p-4 transition-colors duration-300 ease-in-out hover:bg-gray-700"
                 >
                   {/* Image Container */}
                   <div className="relative mr-4 size-32 shrink-0">

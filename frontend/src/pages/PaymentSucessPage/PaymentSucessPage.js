@@ -8,9 +8,9 @@ const PaymentSucessPage = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-black to-gray-900">
       <div className="max-w-xl rounded-lg bg-gray-800 p-8 text-center shadow-lg md:p-12">
-        <FaCheckCircle className="mx-auto mb-8 size-32 animate-pulse text-teal-400" />
+        <FaCheckCircle className="mx-auto mb-8 size-32 animate-pulse text-brand-blue" />
 
-        <h1 className="mb-4 text-4xl font-bold text-teal-200">
+        <h1 className="mb-4 text-4xl font-bold text-brand-blue">
           Payment Successful!
         </h1>
         <p className="mb-4 text-lg text-gray-300">
@@ -23,7 +23,7 @@ const PaymentSucessPage = () => {
 
         <button
           onClick={() => navigate('/')}
-          className="rounded-md bg-teal-600 px-5 py-3 text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl"
+                      className="rounded-md bg-brand-blue px-5 py-3 text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl"
         >
           Go to Homepage
         </button>
@@ -31,7 +31,7 @@ const PaymentSucessPage = () => {
         <div className="py-6 text-sm text-gray-500">
           <p>
             Need help?{' '}
-            <Link to="/support" className="text-teal-400 hover:underline">
+                            <Link to="/support" className="text-brand-blue hover:underline">
               Contact Support
             </Link>
           </p>

@@ -69,7 +69,7 @@ const ManageUsers = () => {
       <div className="mx-10 mb-4 flex justify-center">
         <button
           onClick={toggleForm}
-          className="rounded-lg bg-teal-800 px-8 py-2 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/50"
+                      className="rounded-lg bg-brand-blue-dark px-8 py-2 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-brand-blue hover:shadow-lg hover:shadow-brand-blue/50"
         >
           Create User
         </button>

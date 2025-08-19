@@ -81,11 +81,11 @@ const BillingForm = ({ onBillingInfoChange }) => {
     <div className="rounded-2xl bg-gray-800/90 border border-gray-700/50 p-8 shadow-2xl backdrop-blur-sm">
       {/* Header with gradient */}
       <div className="flex items-center space-x-3 mb-8 pb-4 border-b border-gray-700/50">
-        <div className="p-3 rounded-xl bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border border-teal-400/30">
-          <FaUser className="text-2xl text-teal-400" />
+        <div className="p-3 rounded-xl bg-gradient-to-r from-brand-blue/20 to-brand-blue-dark/20 border border-brand-blue/30">
+          <FaUser className="text-2xl text-brand-blue" />
         </div>
         <div>
-          <h3 className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+          <h3 className="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
             Billing Information
           </h3>
           <p className="text-sm text-gray-400 mt-1">Secure payment details</p>
@@ -96,7 +96,7 @@ const BillingForm = ({ onBillingInfoChange }) => {
         {/* Email Field */}
         <div className="space-y-2">
           <label className="flex items-center space-x-2 text-sm font-medium text-gray-300">
-            <FaEnvelope className={`text-lg transition-colors duration-300 ${errors.email ? 'text-red-400' : 'text-teal-400'}`} />
+            <FaEnvelope className={`text-lg transition-colors duration-300 ${errors.email ? 'text-red-400' : 'text-brand-blue'}`} />
             <span>Email Address</span>
           </label>
           <div className="relative">
@@ -104,10 +104,10 @@ const BillingForm = ({ onBillingInfoChange }) => {
               type="email"
               name="email"
               placeholder="Enter your email address"
-              className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400/50 ${
+              className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 ${
                 errors.email 
                   ? 'border-red-500 focus:border-red-400' 
-                  : 'border-gray-600/50 focus:border-teal-400'
+                  : 'border-gray-600/50 focus:border-brand-blue'
               }`}
               value={billingInfo.email}
               onChange={handleBillingChange}
@@ -121,7 +121,7 @@ const BillingForm = ({ onBillingInfoChange }) => {
         {/* Name Field */}
         <div className="space-y-2">
           <label className="flex items-center space-x-2 text-sm font-medium text-gray-300">
-            <FaUser className={`text-lg transition-colors duration-300 ${errors.name ? 'text-red-400' : 'text-teal-400'}`} />
+            <FaUser className={`text-lg transition-colors duration-300 ${errors.name ? 'text-red-400' : 'text-brand-blue'}`} />
             <span>Full Name</span>
           </label>
           <div className="relative">
@@ -129,10 +129,10 @@ const BillingForm = ({ onBillingInfoChange }) => {
               type="text"
               name="name"
               placeholder="Enter your full name"
-              className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400/50 ${
+              className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 ${
                 errors.name 
                   ? 'border-red-500 focus:border-red-400' 
-                  : 'border-gray-600/50 focus:border-teal-400'
+                  : 'border-gray-600/50 focus:border-brand-blue'
               }`}
               value={billingInfo.name}
               onChange={handleBillingChange}
@@ -146,7 +146,7 @@ const BillingForm = ({ onBillingInfoChange }) => {
         {/* Address Field */}
         <div className="space-y-2">
           <label className="flex items-center space-x-2 text-sm font-medium text-gray-300">
-            <FaMapMarkerAlt className={`text-lg transition-colors duration-300 ${errors.address ? 'text-red-400' : 'text-teal-400'}`} />
+            <FaMapMarkerAlt className={`text-lg transition-colors duration-300 ${errors.address ? 'text-red-400' : 'text-brand-blue'}`} />
             <span>Street Address</span>
           </label>
           <div className="relative">
@@ -154,10 +154,10 @@ const BillingForm = ({ onBillingInfoChange }) => {
               type="text"
               name="address"
               placeholder="Enter your street address"
-              className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400/50 ${
+              className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 ${
                 errors.address 
                   ? 'border-red-500 focus:border-red-400' 
-                  : 'border-gray-600/50 focus:border-teal-400'
+                  : 'border-gray-600/50 focus:border-brand-blue'
               }`}
               value={billingInfo.address}
               onChange={handleBillingChange}
@@ -172,7 +172,7 @@ const BillingForm = ({ onBillingInfoChange }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <label className="flex items-center space-x-2 text-sm font-medium text-gray-300">
-              <FaCity className={`text-lg transition-colors duration-300 ${errors.city ? 'text-red-400' : 'text-teal-400'}`} />
+              <FaCity className={`text-lg transition-colors duration-300 ${errors.city ? 'text-red-400' : 'text-brand-blue'}`} />
               <span>City</span>
             </label>
             <div className="relative">
@@ -180,10 +180,10 @@ const BillingForm = ({ onBillingInfoChange }) => {
                 type="text"
                 name="city"
                 placeholder="Enter your city"
-                className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400/50 ${
+                className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 ${
                   errors.city 
                     ? 'border-red-500 focus:border-red-400' 
-                    : 'border-gray-600/50 focus:border-teal-400'
+                    : 'border-gray-600/50 focus:border-brand-blue'
                 }`}
                 value={billingInfo.city}
                 onChange={handleBillingChange}
@@ -196,7 +196,7 @@ const BillingForm = ({ onBillingInfoChange }) => {
 
           <div className="space-y-2">
             <label className="flex items-center space-x-2 text-sm font-medium text-gray-300">
-              <FaMailBulk className={`text-lg transition-colors duration-300 ${errors.postalCode ? 'text-red-400' : 'text-teal-400'}`} />
+              <FaMailBulk className={`text-lg transition-colors duration-300 ${errors.postalCode ? 'text-red-400' : 'text-brand-blue'}`} />
               <span>Postal Code</span>
             </label>
             <div className="relative">
@@ -204,10 +204,10 @@ const BillingForm = ({ onBillingInfoChange }) => {
                 type="text"
                 name="postalCode"
                 placeholder="Enter postal code"
-                className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400/50 ${
+                className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 ${
                   errors.postalCode 
                     ? 'border-red-500 focus:border-red-400' 
-                    : 'border-gray-600/50 focus:border-teal-400'
+                    : 'border-gray-600/50 focus:border-brand-blue'
                 }`}
                 value={billingInfo.postalCode}
                 onChange={handleBillingChange}
@@ -222,7 +222,7 @@ const BillingForm = ({ onBillingInfoChange }) => {
         {/* Country Selection */}
         <div className="space-y-2">
           <label className="flex items-center space-x-2 text-sm font-medium text-gray-300">
-            <FaGlobe className={`text-lg transition-colors duration-300 ${errors.country ? 'text-red-400' : 'text-teal-400'}`} />
+            <FaGlobe className={`text-lg transition-colors duration-300 ${errors.country ? 'text-red-400' : 'text-brand-blue'}`} />
             <span>Country</span>
           </label>
           <div className="relative">
@@ -230,10 +230,10 @@ const BillingForm = ({ onBillingInfoChange }) => {
               name="country"
               value={billingInfo.country}
               onChange={handleBillingChange}
-              className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400/50 ${
+              className={`w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 ${
                 errors.country 
                   ? 'border-red-500 focus:border-red-400' 
-                  : 'border-gray-600/50 focus:border-teal-400'
+                  : 'border-gray-600/50 focus:border-brand-blue'
               }`}
             >
               <option value="" className="bg-gray-800">Select Country</option>

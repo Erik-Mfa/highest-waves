@@ -8,7 +8,7 @@ export const theme = {
       tag: '0 2px 20px rgba(0, 0, 0, 0.7)', // Custom shadow for the header
       'audioplayer-shadow': '0 -4px 30px rgba(0, 0, 0, 0.7)', // Custom shadow for the audio player (top shadow)
       'neon-glow':
-        '0 0 15px rgba(10, 255, 153, 0.4), 0 0 50px rgba(15, 194, 192, 0.4)' // Neon green glow with reduced opacity
+        '0 0 15px rgba(56, 118, 174, 0.4), 0 0 50px rgba(18, 77, 130, 0.4)' // Brand blue glow with reduced opacity
     },
     keyframes: {
       'slide-in-left': {
@@ -26,12 +26,12 @@ export const theme = {
       'spin-reverse-slow': 'spin-reverse 3s linear infinite',
     },
     colors: {
-      'dark-teal': '#054a49', // Dark teal
-      'neon-green': '#0aff99', // Neon green
-      'neon-teal': '#08f7fe' // Vibrant neon teal
+      'brand-blue': '#3876AE', // Primary brand blue
+      'brand-blue-dark': '#124D82', // Darker brand blue
+      'brand-gray': '#6C757D' // Brand gray
     },
     backgroundImage: {
-      'admin-gradient': 'linear-gradient(135deg, #011414, )' // Gradient from teal to dark
+      'admin-gradient': 'linear-gradient(135deg, #0B1420, #124D82)' // Gradient from brand black to brand blue dark
     }
   }
 }

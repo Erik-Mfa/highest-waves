@@ -72,10 +72,10 @@ const CheckoutPage = () => {
         borderColor: "border-slate-400/30"
       },
       diamond: {
-        icon: <FaGem className="text-teal-400" />,
-        bgColor: "bg-teal-600/20",
-        textColor: "text-teal-400",
-        borderColor: "border-teal-400/30"
+        icon: <FaGem className="text-brand-blue" />,
+        bgColor: "bg-brand-blue/20",
+        textColor: "text-brand-blue",
+        borderColor: "border-brand-blue/30"
       },
       exclusive: {
         icon: <FaCrown className="text-purple-400" />,
@@ -93,7 +93,7 @@ const CheckoutPage = () => {
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-brand-blue to-brand-blue-dark bg-clip-text text-transparent mb-4">
               Checkout
             </h1>
             <p className="text-gray-300 text-lg">Complete your purchase and get your beats</p>
@@ -104,7 +104,7 @@ const CheckoutPage = () => {
             <div className="mb-8">
               <div className="rounded-2xl bg-gray-800/90 border border-gray-700/50 p-8 shadow-2xl backdrop-blur-sm">
                 <div className="flex items-center space-x-3 mb-6">
-                  <FaShoppingCart className="text-2xl text-teal-400" />
+                  <FaShoppingCart className="text-2xl text-brand-blue" />
                   <h2 className="text-2xl font-bold text-white">Your Order</h2>
                 </div>
                 
@@ -140,7 +140,7 @@ const CheckoutPage = () => {
                         )}
                         
                         <div className="text-right">
-                          <p className="text-xl font-bold text-teal-400">
+                          <p className="text-xl font-bold text-brand-blue">
                             ${item.finalPrice}
                           </p>
                         </div>
@@ -152,7 +152,7 @@ const CheckoutPage = () => {
                 <div className="mt-6 pt-6 border-t border-gray-600/50">
                   <div className="flex justify-between items-center">
                     <span className="text-xl font-bold text-white">Total:</span>
-                    <span className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
+                    <span className="text-3xl font-bold bg-gradient-to-r from-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
                       ${totalAmount.toFixed(2)}
                     </span>
                   </div>
@@ -168,7 +168,7 @@ const CheckoutPage = () => {
               <p className="text-gray-400 mb-6">Add some beats to your cart to continue</p>
               <a 
                 href="/beats" 
-                className="inline-flex items-center space-x-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-teal-600 hover:to-cyan-600 transition-all duration-300"
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white px-6 py-3 rounded-xl font-semibold hover:from-brand-blue-dark hover:to-brand-blue transition-all duration-300"
               >
                 <span>Browse Beats</span>
                 <FaArrowRight />
@@ -183,13 +183,13 @@ const CheckoutPage = () => {
                 {!showPaymentForm && (
                   <button
                     onClick={handleProceedToPayment}
-                    className="group relative mt-6 w-full overflow-hidden rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-600 p-1 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-teal-500/25"
+                    className="group relative mt-6 w-full overflow-hidden rounded-2xl bg-gradient-to-r from-brand-blue via-brand-blue-dark to-brand-blue p-1 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-brand-blue/25"
                   >
                     <div className="flex items-center justify-center space-x-3 rounded-xl bg-gray-900 px-8 py-4 transition-all duration-300 group-hover:bg-transparent">
-                      <span className="text-lg font-semibold text-teal-400 group-hover:text-white transition-colors duration-300">
+                      <span className="text-lg font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">
                         Proceed to Payment
                       </span>
-                      <FaArrowRight className="text-teal-400 group-hover:text-white transition-colors duration-300" />
+                      <FaArrowRight className="text-brand-blue group-hover:text-white transition-colors duration-300" />
                     </div>
                   </button>
                 )}

@@ -151,7 +151,7 @@ const PaymentForm = ({ billingInfo, user }) => {
   return (
     <div className="rounded-2xl bg-gray-800/90 border border-gray-700/50 p-8 shadow-2xl backdrop-blur-sm">
       <div className="flex items-center space-x-3 mb-6">
-        <FaShieldAlt className="text-2xl text-teal-400" />
+        <FaShieldAlt className="text-2xl text-brand-blue" />
         <h2 className="text-2xl font-bold text-white">Payment Information</h2>
       </div>
 
@@ -159,11 +159,11 @@ const PaymentForm = ({ billingInfo, user }) => {
         {/* Card Number */}
         <div className="space-y-2">
           <label className="flex items-center space-x-2 text-sm font-medium text-gray-300">
-            <FaCreditCard className="text-teal-400" />
+            <FaCreditCard className="text-brand-blue" />
             <span>Card Number</span>
           </label>
           <div className="relative">
-            <div className="rounded-xl border-2 border-gray-600/50 bg-gray-700/50 px-4 py-3 transition-all duration-300 focus-within:border-teal-400 focus-within:ring-2 focus-within:ring-teal-400/50">
+            <div className="rounded-xl border-2 border-gray-600/50 bg-gray-700/50 px-4 py-3 transition-all duration-300 focus-within:border-brand-blue focus-within:ring-2 focus-within:ring-brand-blue/50">
               <CardNumberElement options={cardElementOptions} />
             </div>
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -176,10 +176,10 @@ const PaymentForm = ({ billingInfo, user }) => {
           {/* Expiry Date */}
           <div className="space-y-2">
             <label className="flex items-center space-x-2 text-sm font-medium text-gray-300">
-              <FaCalendarAlt className="text-teal-400" />
+              <FaCalendarAlt className="text-brand-blue" />
               <span>Expiration Date</span>
             </label>
-            <div className="rounded-xl border-2 border-gray-600/50 bg-gray-700/50 px-4 py-3 transition-all duration-300 focus-within:border-teal-400 focus-within:ring-2 focus-within:ring-teal-400/50">
+            <div className="rounded-xl border-2 border-gray-600/50 bg-gray-700/50 px-4 py-3 transition-all duration-300 focus-within:border-brand-blue focus-within:ring-2 focus-within:ring-brand-blue/50">
               <CardExpiryElement options={cardElementOptions} />
             </div>
           </div>
@@ -187,20 +187,20 @@ const PaymentForm = ({ billingInfo, user }) => {
           {/* CVC */}
           <div className="space-y-2">
             <label className="flex items-center space-x-2 text-sm font-medium text-gray-300">
-              <FaLock className="text-teal-400" />
+              <FaLock className="text-brand-blue" />
               <span>CVC</span>
             </label>
-            <div className="rounded-xl border-2 border-gray-600/50 bg-gray-700/50 px-4 py-3 transition-all duration-300 focus-within:border-teal-400 focus-within:ring-2 focus-within:ring-teal-400/50">
+            <div className="rounded-xl border-2 border-gray-600/50 bg-gray-700/50 px-4 py-3 transition-all duration-300 focus-within:border-brand-blue focus-within:ring-2 focus-within:ring-brand-blue/50">
               <CardCvcElement options={cardElementOptions} />
             </div>
           </div>
         </div>
 
         {/* Security Notice */}
-        <div className="flex items-center space-x-3 rounded-xl bg-teal-900/20 border border-teal-400/20 p-4">
-          <FaShieldAlt className="text-teal-400 text-lg" />
+        <div className="flex items-center space-x-3 rounded-xl bg-brand-blue-dark/20 border border-brand-blue/20 p-4">
+          <FaShieldAlt className="text-brand-blue text-lg" />
           <div className="text-sm text-gray-300">
-            <p className="font-medium text-teal-400">Secure Payment</p>
+            <p className="font-medium text-brand-blue">Secure Payment</p>
             <p>Your payment information is encrypted and secure</p>
           </div>
         </div>
@@ -208,19 +208,19 @@ const PaymentForm = ({ billingInfo, user }) => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-600 p-1 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-teal-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-brand-blue via-brand-blue-dark to-brand-blue p-1 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-brand-blue/25 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!stripe || processing}
         >
           <div className="flex items-center justify-center space-x-3 rounded-xl bg-gray-900 px-8 py-4 transition-all duration-300 group-hover:bg-transparent group-disabled:bg-gray-800">
             {processing ? (
               <>
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-teal-400"></div>
-                <span className="text-lg font-semibold text-teal-400">Processing...</span>
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-brand-blue"></div>
+                <span className="text-lg font-semibold text-brand-blue">Processing...</span>
               </>
             ) : (
               <>
-                <FaCreditCard className="text-xl text-teal-400 group-hover:text-white transition-colors duration-300" />
-                <span className="text-lg font-semibold text-teal-400 group-hover:text-white transition-colors duration-300">
+                <FaCreditCard className="text-xl text-brand-blue group-hover:text-white transition-colors duration-300" />
+                <span className="text-lg font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">
                   Pay ${totalPrice.toFixed(2)}
                 </span>
               </>

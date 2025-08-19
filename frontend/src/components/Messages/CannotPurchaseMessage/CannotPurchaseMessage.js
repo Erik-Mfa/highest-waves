@@ -21,7 +21,7 @@ const CannotPurchaseMessage = ({ onCancel }) => {
 
         <Link
             to="/login"
-            className="transform rounded-lg bg-teal-800 px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-teal-700 hover:shadow-lg hover:shadow-teal-500/50"
+            className="transform rounded-lg bg-brand-blue-dark px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-brand-blue hover:shadow-lg hover:shadow-brand-blue/50"
             style={{ fontFamily: '"REM"' }}
         >
             Login
