@@ -83,8 +83,8 @@ const RegisterForm = () => {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#042326] to-[#0A3A40] p-4">
-      <div className="w-full max-w-md transform space-y-8 rounded-2xl bg-white/5 p-8 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:bg-white/10">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#0B1420] to-[#124D82] p-4">
+      <div className="w-full max-w-md transform space-y-8 rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:bg-white/15">
         <div className="text-center">
           <Link to="/" className="inline-block">
             <img
@@ -126,7 +126,7 @@ const RegisterForm = () => {
                 onChange={(e) =>
                   setCredentials({ ...credentials, username: e.target.value })
                 }
-                className="block w-full rounded-lg border border-gray-600 bg-white/5 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#1D7373] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50"
+                className="block w-full rounded-lg border border-gray-600 bg-white/10 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#3876AE] focus:outline-none focus:ring-2 focus:ring-[#3876AE] focus:ring-opacity-50"
                 placeholder="Username"
               />
             </div>
@@ -142,7 +142,7 @@ const RegisterForm = () => {
                 onChange={(e) =>
                   setCredentials({ ...credentials, email: e.target.value })
                 }
-                className="block w-full rounded-lg border border-gray-600 bg-white/5 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#1D7373] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50"
+                className="block w-full rounded-lg border border-gray-600 bg-white/10 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#3876AE] focus:outline-none focus:ring-2 focus:ring-[#3876AE] focus:ring-opacity-50"
                 placeholder="Email address"
               />
             </div>
@@ -159,7 +159,7 @@ const RegisterForm = () => {
                   setCredentials({ ...credentials, password: e.target.value })
                   validatePassword(e.target.value)
                 }}
-                className="block w-full rounded-lg border border-gray-600 bg-white/5 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#1D7373] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50"
+                className="block w-full rounded-lg border border-gray-600 bg-white/10 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#3876AE] focus:outline-none focus:ring-2 focus:ring-[#3876AE] focus:ring-opacity-50"
                 placeholder="Password"
               />
               <button
@@ -189,7 +189,7 @@ const RegisterForm = () => {
                     confirmPassword: e.target.value
                   })
                 }
-                className="block w-full rounded-lg border border-gray-600 bg-white/5 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#1D7373] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50"
+                className="block w-full rounded-lg border border-gray-600 bg-white/10 px-4 py-3 pl-10 text-white placeholder-gray-400 focus:border-[#3876AE] focus:outline-none focus:ring-2 focus:ring-[#3876AE] focus:ring-opacity-50"
                 placeholder="Confirm Password"
               />
               <button
@@ -217,7 +217,7 @@ const RegisterForm = () => {
             type="button"
             onClick={handleRegister}
             disabled={isLoading}
-            className="group relative flex w-full transform justify-center rounded-lg bg-gradient-to-r from-[#1D7373] to-[#0F5959] px-4 py-3 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.02] hover:from-[#107361] hover:to-[#0F5959] focus:outline-none focus:ring-2 focus:ring-[#1D7373] focus:ring-opacity-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg bg-[#3876AE] px-4 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#124D82] focus:outline-none focus:ring-2 focus:ring-[#3876AE] focus:ring-opacity-50 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? (
               <span className="flex items-center">
@@ -250,11 +250,11 @@ const RegisterForm = () => {
         </form>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-300">
             Already have an account?{' '}
             <Link
               to="/login"
-              className="font-medium text-[#1D7373] transition-colors duration-200 hover:text-[#107361]"
+              className="font-bold text-[#3876AE] transition-all duration-200 hover:text-[#124D82] hover:underline hover:scale-105 inline-block"
             >
               Sign in here
             </Link>
