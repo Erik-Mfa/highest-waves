@@ -1,0 +1,857 @@
+/* 
+  Highest Waves - Page Responsive Design Pattern
+  This file contains responsive design patterns specifically for page components
+*/
+
+/* ==========================================================================
+   PAGE CONTAINER PATTERNS
+   ========================================================================== */
+
+/* Base Page Container */
+.page-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Page Content Wrapper */
+.page-content-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .page-content-wrapper {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-content-wrapper {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-content-wrapper {
+    padding: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-content-wrapper {
+    padding: 3rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-content-wrapper {
+    padding: 4rem;
+  }
+}
+
+/* Page Section Container */
+.page-section {
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .page-section {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-section {
+    margin-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-section {
+    margin-bottom: 3.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-section {
+    margin-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-section {
+    margin-bottom: 4.5rem;
+  }
+}
+
+/* ==========================================================================
+   PAGE LAYOUT PATTERNS
+   ========================================================================== */
+
+/* Two Column Layout */
+.page-two-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .page-two-column {
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-two-column {
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-two-column {
+    flex-direction: row;
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-two-column {
+    gap: 3.5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-two-column {
+    gap: 4rem;
+  }
+}
+
+/* Sidebar Layout */
+.page-sidebar {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .page-sidebar {
+    width: 25%;
+    min-width: 280px;
+    max-width: 350px;
+  }
+}
+
+/* Main Content Layout */
+.page-main-content {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .page-main-content {
+    width: 75%;
+  }
+}
+
+/* ==========================================================================
+   PAGE TYPOGRAPHY PATTERNS
+   ========================================================================== */
+
+/* Page Title */
+.page-title {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+  color: var(--brand-contrast);
+  font-size: 2.25rem;
+  line-height: 1.2;
+}
+
+@media (min-width: 640px) {
+  .page-title {
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-title {
+    font-size: 3.5rem;
+    margin-bottom: 3.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-title {
+    font-size: 4rem;
+    margin-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-title {
+    font-size: 4.5rem;
+    margin-bottom: 4.5rem;
+  }
+}
+
+/* Page Subtitle */
+.page-subtitle {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  color: var(--brand-contrast);
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+@media (min-width: 640px) {
+  .page-subtitle {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-subtitle {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-subtitle {
+    font-size: 2.25rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-subtitle {
+    font-size: 2.5rem;
+    margin-bottom: 3.5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-subtitle {
+    font-size: 2.75rem;
+    margin-bottom: 4rem;
+  }
+}
+
+/* ==========================================================================
+   PAGE CARD PATTERNS
+   ========================================================================== */
+
+/* Page Card Container */
+.page-card {
+  background: rgba(11, 20, 32, 0.2);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 118, 174, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .page-card {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-card {
+    padding: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-card {
+    padding: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-card {
+    padding: 3.5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-card {
+    padding: 4rem;
+  }
+}
+
+/* Page Card Hover Effects */
+/* Removed hover effect - keeping static styling */
+
+/* ==========================================================================
+   PAGE SPACING PATTERNS
+   ========================================================================== */
+
+/* Page Padding */
+.page-padding-xs {
+  padding: 0.5rem;
+}
+
+.page-padding-sm {
+  padding: 1rem;
+}
+
+.page-padding-md {
+  padding: 1.5rem;
+}
+
+.page-padding-lg {
+  padding: 2rem;
+}
+
+.page-padding-xl {
+  padding: 2.5rem;
+}
+
+.page-padding-2xl {
+  padding: 3rem;
+}
+
+@media (min-width: 640px) {
+  .page-padding-xs {
+    padding: 0.75rem;
+  }
+  
+  .page-padding-sm {
+    padding: 1.25rem;
+  }
+  
+  .page-padding-md {
+    padding: 1.75rem;
+  }
+  
+  .page-padding-lg {
+    padding: 2.25rem;
+  }
+  
+  .page-padding-xl {
+    padding: 2.75rem;
+  }
+  
+  .page-padding-2xl {
+    padding: 3.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-padding-xs {
+    padding: 1rem;
+  }
+  
+  .page-padding-sm {
+    padding: 1.5rem;
+  }
+  
+  .page-padding-md {
+    padding: 2rem;
+  }
+  
+  .page-padding-lg {
+    padding: 2.5rem;
+  }
+  
+  .page-padding-xl {
+    padding: 3rem;
+  }
+  
+  .page-padding-2xl {
+    padding: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-padding-xs {
+    padding: 1.25rem;
+  }
+  
+  .page-padding-sm {
+    padding: 1.75rem;
+  }
+  
+  .page-padding-md {
+    padding: 2.25rem;
+  }
+  
+  .page-padding-lg {
+    padding: 2.75rem;
+  }
+  
+  .page-padding-xl {
+    padding: 3.25rem;
+  }
+  
+  .page-padding-2xl {
+    padding: 3.75rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-padding-xs {
+    padding: 1.5rem;
+  }
+  
+  .page-padding-sm {
+    padding: 2rem;
+  }
+  
+  .page-padding-md {
+    padding: 2.5rem;
+  }
+  
+  .page-padding-lg {
+    padding: 3rem;
+  }
+  
+  .page-padding-xl {
+    padding: 3.5rem;
+  }
+  
+  .page-padding-2xl {
+    padding: 4rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-padding-xs {
+    padding: 1.75rem;
+  }
+  
+  .page-padding-sm {
+    padding: 2.25rem;
+  }
+  
+  .page-padding-md {
+    padding: 2.75rem;
+  }
+  
+  .page-padding-lg {
+    padding: 3.25rem;
+  }
+  
+  .page-padding-xl {
+    padding: 3.75rem;
+  }
+  
+  .page-padding-2xl {
+    padding: 4.25rem;
+  }
+}
+
+/* Page Margin */
+.page-margin-xs {
+  margin: 0.5rem;
+}
+
+.page-margin-sm {
+  margin: 1rem;
+}
+
+.page-margin-md {
+  margin: 1.5rem;
+}
+
+.page-margin-lg {
+  margin: 2rem;
+}
+
+.page-margin-xl {
+  margin: 2.5rem;
+}
+
+.page-margin-2xl {
+  margin: 3rem;
+}
+
+@media (min-width: 640px) {
+  .page-margin-xs {
+    margin: 0.75rem;
+  }
+  
+  .page-margin-sm {
+    margin: 1.25rem;
+  }
+  
+  .page-margin-md {
+    margin: 1.75rem;
+  }
+  
+  .page-margin-lg {
+    margin: 2.25rem;
+  }
+  
+  .page-margin-xl {
+    margin: 2.75rem;
+  }
+  
+  .page-margin-2xl {
+    margin: 3.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-margin-xs {
+    margin: 1rem;
+  }
+  
+  .page-margin-sm {
+    margin: 1.5rem;
+  }
+  
+  .page-margin-md {
+    margin: 2rem;
+  }
+  
+  .page-margin-lg {
+    margin: 2.5rem;
+  }
+  
+  .page-margin-xl {
+    margin: 3rem;
+  }
+  
+  .page-margin-2xl {
+    margin: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-margin-xs {
+    margin: 1.25rem;
+  }
+  
+  .page-margin-sm {
+    margin: 1.75rem;
+  }
+  
+  .page-margin-md {
+    margin: 2.25rem;
+  }
+  
+  .page-margin-lg {
+    margin: 2.75rem;
+  }
+  
+  .page-margin-xl {
+    margin: 3.25rem;
+  }
+  
+  .page-margin-2xl {
+    margin: 3.75rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-margin-xs {
+    margin: 1.5rem;
+  }
+  
+  .page-margin-sm {
+    margin: 2rem;
+  }
+  
+  .page-margin-md {
+    margin: 2.5rem;
+  }
+  
+  .page-margin-lg {
+    margin: 3rem;
+  }
+  
+  .page-margin-xl {
+    margin: 3.5rem;
+  }
+  
+  .page-margin-2xl {
+    margin: 4rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-margin-xs {
+    margin: 1.75rem;
+  }
+  
+  .page-margin-sm {
+    margin: 2.25rem;
+  }
+  
+  .page-margin-md {
+    margin: 2.75rem;
+  }
+  
+  .page-margin-lg {
+    margin: 3.25rem;
+  }
+  
+  .page-margin-xl {
+    margin: 3.75rem;
+  }
+  
+  .page-margin-2xl {
+    margin: 4.25rem;
+  }
+}
+
+/* ==========================================================================
+   PAGE GRID PATTERNS
+   ========================================================================== */
+
+/* Page Grid System */
+.page-grid-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.page-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.page-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.page-grid-4 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .page-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .page-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .page-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .page-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-grid-1,
+  .page-grid-2,
+  .page-grid-3,
+  .page-grid-4 {
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-grid-1,
+  .page-grid-2,
+  .page-grid-3,
+  .page-grid-4 {
+    gap: 3.5rem;
+  }
+}
+
+/* ==========================================================================
+   PAGE BACKGROUND PATTERNS
+   ========================================================================== */
+
+/* Page Background with Gradient */
+.page-bg-gradient {
+  background: linear-gradient(135deg, var(--brand-black) 0%, var(--brand-petroleum) 50%, var(--brand-medium) 100%);
+}
+
+/* Page Background with Overlay */
+.page-bg-overlay {
+  position: relative;
+}
+
+.page-bg-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--brand-black);
+  opacity: 0.4;
+  z-index: 1;
+}
+
+.page-bg-overlay > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   PAGE UTILITY CLASSES
+   ========================================================================== */
+
+/* Page Centered Content */
+.page-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* Page Full Width */
+.page-full-width {
+  width: 100%;
+}
+
+/* Page Hidden on Mobile */
+.page-hidden-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .page-hidden-mobile {
+    display: block;
+  }
+}
+
+/* Page Hidden on Desktop */
+.page-hidden-desktop {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .page-hidden-desktop {
+    display: none;
+  }
+}
+
+/* Page Text Alignment */
+.page-text-center {
+  text-align: center;
+}
+
+.page-text-left {
+  text-align: left;
+}
+
+.page-text-right {
+  text-align: right;
+}
+
+/* Page Flex Utilities */
+.page-flex {
+  display: flex;
+}
+
+.page-flex-col {
+  flex-direction: column;
+}
+
+.page-flex-row {
+  flex-direction: row;
+}
+
+.page-items-center {
+  align-items: center;
+}
+
+.page-justify-center {
+  justify-content: center;
+}
+
+.page-justify-between {
+  justify-content: space-between;
+}
+
+.page-justify-around {
+  justify-content: space-around;
+}
+
+/* ==========================================================================
+   PAGE ANIMATION PATTERNS
+   ========================================================================== */
+
+/* Page Fade In */
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-fade-in {
+  animation: pageFadeIn 0.6s ease-out;
+}
+
+/* Page Slide In */
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.page-slide-in {
+  animation: pageSlideIn 0.6s ease-out;
+}
+
+/* Page Scale In */
+@keyframes pageScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.page-scale-in {
+  animation: pageScaleIn 0.6s ease-out;
+} 

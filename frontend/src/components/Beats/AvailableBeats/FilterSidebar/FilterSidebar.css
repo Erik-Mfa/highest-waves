@@ -1,1 +1,71 @@
+/* FilterSidebar Component - Blue Border Overrides */
 
+/* Override react-select default styling */
+.select__control {
+  border: 2px solid var(--brand-blue) !important;
+  border-color: var(--brand-blue) !important;
+  background-color: var(--brand-black) !important;
+  box-shadow: 0 0 8px rgba(56, 118, 174, 0.3) !important;
+}
+
+.select__control:hover {
+  border: 2px solid var(--brand-blue) !important;
+  border-color: var(--brand-blue) !important;
+  box-shadow: 0 0 12px rgba(56, 118, 174, 0.5) !important;
+}
+
+.select__control--is-focused {
+  border: 2px solid var(--brand-blue) !important;
+  border-color: var(--brand-blue) !important;
+  box-shadow: 0 0 12px rgba(56, 118, 174, 0.5) !important;
+}
+
+.select__control--menu-is-open {
+  border: 2px solid var(--brand-blue) !important;
+  border-color: var(--brand-blue) !important;
+}
+
+/* Ensure dropdown indicator is blue */
+.select__indicator-separator {
+  background-color: var(--brand-blue) !important;
+}
+
+.select__dropdown-indicator {
+  color: var(--brand-blue) !important;
+}
+
+.select__dropdown-indicator:hover {
+  color: var(--brand-blue) !important;
+}
+
+/* Menu styling */
+.select__menu {
+  background-color: var(--brand-black) !important;
+  border: 2px solid var(--brand-blue) !important;
+  box-shadow: 0 0 8px rgba(56, 118, 174, 0.3) !important;
+}
+
+/* Options styling */
+.select__option {
+  background-color: var(--brand-black) !important;
+  color: var(--brand-white) !important;
+}
+
+.select__option--is-selected {
+  background-color: var(--brand-blue) !important;
+  color: var(--brand-white) !important;
+}
+
+.select__option--is-focused {
+  background-color: var(--brand-blue-dark) !important;
+  color: var(--brand-white) !important;
+}
+
+/* Single value and placeholder */
+.select__single-value {
+  color: var(--brand-white) !important;
+}
+
+.select__placeholder {
+  color: var(--brand-gray) !important;
+}

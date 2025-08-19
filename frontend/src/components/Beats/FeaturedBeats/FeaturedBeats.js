@@ -28,7 +28,7 @@ function FeaturedBeats() {
     const fetchFeaturedBeats = async () => {
       try {
         const response = await getBeats()
-        const latestBeats = response.slice(0, 7) // Get the latest 7 beats
+        const latestBeats = response.slice(0, 10) // Increased from 7 to 10 beats
         setFeaturedBeats(latestBeats)
       } catch (error) {
         console.error('Error fetching featured beats:', error)
@@ -67,53 +67,48 @@ function FeaturedBeats() {
   }
 
   return (
-    <div className="shadow-fade-lg relative bg-black py-10 pt-4">
-      <h2
-        className="mb-4 text-center text-2xl font-bold text-white"
-        style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}
-      >
+    <div className="relative py-8 sm:py-12 md:py-16 lg:py-20">
+      <h2 className="page-title mb-8 sm:mb-10 md:mb-12">
         Featured Beats
       </h2>
 
-      <div className="relative overflow-hidden">
-        <div className="marquee-container featured-beats-container overflow-hidden">
-          <div className="marquee-content flex">
-            {featuredBeats.concat(featuredBeats).map((beat, index) => (
-              <div
-                key={`${beat.id}-${index}`}
-                className="group relative mr-5 inline-block overflow-hidden rounded-lg"
-                onClick={() => handleBeatClick(beat.id)}
-              >
-                <div className="group relative flex size-64 items-center justify-center rounded-lg transition-transform hover:scale-105">
-                  {!isImageLoaded && (
-                    <div className="absolute inset-0 animate-pulse rounded-md bg-gray-700"></div>
+      <div className="marquee-container pt-4 sm:pt-6 md:pt-8">
+        <div className="marquee-content">
+          {featuredBeats.concat(featuredBeats).map((beat, index) => (
+            <div
+              key={`${beat.id}-${index}`}
+              className="group relative mr-3 inline-block rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:z-50"
+              onClick={() => handleBeatClick(beat.id)}
+            >
+              <div className="relative flex size-48 items-center justify-center rounded-lg overflow-hidden sm:size-56 md:size-60 lg:size-64 xl:size-72">
+                {!isImageLoaded && (
+                  <div className="absolute inset-0 animate-pulse rounded-lg bg-gray-700"></div>
+                )}
+
+                <img
+                  src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
+                  alt={beat.title}
+                  className={`size-full rounded-lg object-cover ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  style={{ aspectRatio: '1 / 1' }}
+                  onLoad={() => setImageLoaded(true)}
+                />
+
+                <button
+                  onClick={(e) => handlePlayTrack(e, beat)}
+                  className="absolute inset-0 flex items-center justify-center rounded-lg p-2 text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+                >
+                  {/* Conditionally render FaPlay or FaPause */}
+                  {currentTrack ===
+                    `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
+                  isPlaying ? (
+                    <FaPause size={28} />
+                  ) : (
+                    <FaPlay size={28} />
                   )}
-
-                  <img
-                    src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
-                    alt={beat.title}
-                    className={`size-full rounded-lg object-cover ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                    style={{ aspectRatio: '1 / 1' }}
-                    onLoad={() => setImageLoaded(true)}
-                  />
-
-                  <button
-                    onClick={(e) => handlePlayTrack(e, beat)}
-                    className="absolute inset-0 flex items-center justify-center rounded-full p-2 text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
-                  >
-                    {/* Conditionally render FaPlay or FaPause */}
-                    {currentTrack ===
-                      `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
-                    isPlaying ? (
-                      <FaPause size={32} />
-                    ) : (
-                      <FaPlay size={32} />
-                    )}
-                  </button>
-                </div>
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

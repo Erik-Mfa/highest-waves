@@ -20,9 +20,6 @@ class CartController {
       const { beat, user, licenseId } = req.body
       console.log('Received cart data:', { beat, user, licenseId })
 
-      const max = await Cart.findOne({}).sort({ id: -1 })
-      const newId = max == null ? 1 : max.id + 1
-
       // Find user by numeric ID
       const findUser = await User.findOne({ id: parseInt(user) })
       if (!findUser) {
@@ -47,17 +44,35 @@ class CartController {
       // Calculate final price based on license
       const finalPrice = findLicense.basePrice
 
-      const cart = new Cart({
-        id: newId,
-        user: findUser._id,
-        beats: findBeat._id,
-        license: findLicense._id,
-        finalPrice
-      })
+      // Attempt to generate a unique incremental id with simple retry to avoid E11000 races
+      let attempts = 0
+      while (attempts < 3) {
+        const max = await Cart.findOne({}).sort({ id: -1 })
+        const newId = max == null ? 1 : (max.id || 0) + 1
 
-      const result = await cart.save()
-      console.log('Saved cart:', result)
-      return res.status(201).json(result)
+        const cart = new Cart({
+          id: newId,
+          user: findUser._id,
+          beats: findBeat._id,
+          license: findLicense._id,
+          finalPrice
+        })
+
+        try {
+          const result = await cart.save()
+          console.log('Saved cart:', result)
+          return res.status(201).json(result)
+        } catch (e) {
+          if (e && (e.code === 11000 || (e.message || '').includes('duplicate key')) && (e.message || '').includes('id_1')) {
+            // Retry with a fresh id
+            attempts += 1
+            continue
+          }
+          throw e
+        }
+      }
+
+      return res.status(500).json({ message: 'Internal server error', details: 'Failed to generate unique cart id' })
     } catch (error) {
       console.error('Error saving cart:', error)
       return res.status(500).json({ message: 'Internal server error', details: error.message })

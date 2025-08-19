@@ -1,37 +1,6 @@
-/* FeaturedBeats Component Styles */
+/* FeaturedBeats Component - Simplified Styles */
 
-.featured-beats-container {
-  position: relative;
-  min-height: 100vh;
-  background: linear-gradient(135deg, var(--brand-black) 0%, var(--brand-petroleum) 100%);
-  overflow: hidden;
-  padding: 1rem 0;
-}
-
-.featured-beats-container::before,
-.featured-beats-container::after {
-  content: '';
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.3;
-  z-index: 1;
-}
-
-.featured-beats-container::before {
-  background: radial-gradient(circle, var(--brand-light) 0%, transparent 70%);
-  top: 20%;
-  left: 10%;
-}
-
-.featured-beats-container::after {
-  background: radial-gradient(circle, var(--brand-medium) 0%, transparent 70%);
-  bottom: 20%;
-  right: 10%;
-}
-
+/* Marquee Animation */
 .marquee-container {
   position: relative;
   z-index: 10;
@@ -41,39 +10,50 @@
 
 .marquee-content {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   animation: marquee 30s linear infinite;
 }
 
 .marquee-content > div {
-  flex: 0 0 250px;
-  height: 300px;
+  flex: 0 0 200px;
+  height: 240px;
 }
 
 @media (min-width: 640px) {
   .marquee-content > div {
-    flex: 0 0 280px;
-    height: 350px;
+    flex: 0 0 220px;
+    height: 260px;
   }
 }
 
 @media (min-width: 768px) {
-  .featured-beats-container {
-    padding: 1.5rem 0;
-  }
   .marquee-content {
-    gap: 1.5rem;
+    gap: 1rem;
   }
   .marquee-content > div {
-    flex: 0 0 320px;
-    height: 400px;
+    flex: 0 0 240px;
+    height: 280px;
   }
 }
 
 @media (min-width: 1024px) {
   .marquee-content > div {
-    flex: 0 0 350px;
-    height: 420px;
+    flex: 0 0 260px;
+    height: 300px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .marquee-content > div {
+    flex: 0 0 280px;
+    height: 320px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .marquee-content > div {
+    flex: 0 0 300px;
+    height: 340px;
   }
 }
 
@@ -82,7 +62,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-100% - 1.5rem));
+    transform: translateX(calc(-100% - 1rem));
   }
 }
 
@@ -94,18 +74,19 @@
   }
 }
 
+/* Play Button */
 .play-button {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background: linear-gradient(135deg, var(--brand-light), var(--brand-medium));
   border: none;
   border-radius: 50%;
   color: var(--brand-contrast);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   opacity: 0;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -125,6 +106,7 @@
   box-shadow: 0 8px 25px rgba(56, 118, 174, 0.6);
 }
 
+/* Beat Card Styles */
 .featured-beat-card {
   background: rgba(14, 41, 71, 0.4);
   border: 1px solid rgba(56, 118, 174, 0.2);
@@ -141,6 +123,7 @@
   border-color: var(--brand-light);
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 20px 40px rgba(56, 118, 174, 0.3);
+  border-radius: var(--radius-lg);
 }
 
 .featured-beat-image {
@@ -148,10 +131,12 @@
   height: 60%;
   object-fit: cover;
   transition: all 0.3s ease;
+  border-radius: var(--radius-lg);
 }
 
 .featured-beat-card:hover .featured-beat-image {
   transform: scale(1.05);
+  border-radius: var(--radius-lg);
 }
 
 .featured-beat-overlay {
@@ -206,25 +191,17 @@
   color: var(--brand-light);
 }
 
-.featured-beats-title {
-  text-align: center;
-  margin-bottom: 1rem;
-  position: relative;
-  z-index: 10;
+/* Ensure rounded corners are maintained during hover for current JSX structure */
+.group:hover {
+  border-radius: var(--radius-lg);
 }
 
-.featured-beats-title h2 {
-  color: var(--brand-contrast);
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+.group:hover img {
+  border-radius: var(--radius-lg);
 }
 
-.featured-beats-title p {
-  color: var(--brand-medium);
-  font-size: 1.125rem;
-  font-weight: 500;
+.group:hover button {
+  border-radius: var(--radius-lg);
 }
 
 /* Loading state */
@@ -245,22 +222,14 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .featured-beats-container {
-    padding: 0.75rem 0;
-  }
-  
-  .featured-beats-title h2 {
-    font-size: 2.5rem;
-  }
-  
   .marquee-content {
-    gap: 1rem;
+    gap: 0.75rem;
   }
   
   .play-button {
-    width: 50px;
-    height: 50px;
-    font-size: 1.25rem;
+    width: 45px;
+    height: 45px;
+    font-size: 1.125rem;
   }
   
   .featured-beat-info {
@@ -273,12 +242,8 @@
 }
 
 @media (max-width: 480px) {
-  .featured-beats-title h2 {
-    font-size: 2rem;
-  }
-  
   .marquee-content > div {
-    flex: 0 0 250px;
-    height: 320px;
+    flex: 0 0 180px;
+    height: 220px;
   }
 }

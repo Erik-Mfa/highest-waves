@@ -1,14 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { isAuthenticated } from '../../../services/api/auth'
 import { getBeatById } from '../../../services/api/beats'
 import { addToCartAndUpdate } from '../../../store/cartSlice'
-import { FaPlay, FaPause, FaShoppingCart, FaCrown, FaStar, FaGem, FaMedal } from 'react-icons/fa'
+import { FaPlay, FaPause, FaShoppingCart, FaCrown, FaStar, FaGem, FaMedal, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import ChooseLicenseMessage from '../../Messages/ChooseLicenseMessage/ChooseLicenseMessage'
 import CannotPurchaseMessage from '../../Messages/CannotPurchaseMessage/CannotPurchaseMessage'
+// License details dropdown is rendered inline within each card
 
 import {
   setCurrentId,
@@ -26,6 +27,7 @@ function BeatDetails() {
   const [purchase, setPurchase] = useState(false)
   const [selectedLicense, setSelectedLicense] = useState(null)
   const [cheapestPrice, setCheapestPrice] = useState(null)
+  const licensesScrollerRef = useRef(null)
   const navigate = useNavigate()
 
   const { id: beatId } = useParams()
@@ -74,10 +76,15 @@ function BeatDetails() {
   }, [beatId])
 
   const handleAddToCart = async (license = null) => {
-    if (license) {
-      setSelectedLicense(license)
+    const chosenLicense = license || selectedLicense
+    if (!chosenLicense) {
+      return
     }
-    setPurchase(true)
+    if (!user) {
+      setPurchase(true)
+      return
+    }
+    confirmPurchase(chosenLicense)
   }
 
   const handlePlayTrack = () => {
@@ -130,6 +137,16 @@ function BeatDetails() {
     }
   }
 
+  const formatStreamLimit = (limit) => {
+    if (limit === -1) return 'Unlimited'
+    return Number(limit).toLocaleString()
+  }
+
+  const formatVideoLimit = (limit) => {
+    if (limit === -1) return 'Unlimited'
+    return limit
+  }
+
   // Handling loading state
   if (isLoading) {
     return (
@@ -165,53 +182,37 @@ function BeatDetails() {
   }
 
   return (
-<div
-  className={`flex min-h-screen flex-col items-center justify-start bg-gradient-to-br from-sky-950 to-black p-20 pt-16 ${isFadeIn ? 'fade-in-active' : 'fade-in'}`}
->
+    <div
+      className={`flex min-h-screen flex-col items-center justify-start bg-brand-gradient p-20 pt-16 ${isFadeIn ? 'fade-in-active' : 'fade-in'}`}
+    >
   
 
-{purchase && (
-  user ? (
-    <ChooseLicenseMessage
-      onConfirm={confirmPurchase}
-      onCancel={cancelDelete}
-      id={beat.id}
-    />
-  ) : (
-    <CannotPurchaseMessage
-      onCancel={cancelDelete}
-    />
-  )
+{purchase && !user && (
+  <CannotPurchaseMessage onCancel={cancelDelete} />
 )}
 
-  <div className="flex w-full items-start rounded-2xl border border-gray-700 bg-gray-800 p-10">
+      <div className="flex w-full items-stretch panel rounded-2xl">
     {/* Left Side: Beat Image & Play Button */}
-    <div className="flex w-1/3 items-start mr-10">
+    <div className="flex w-1/3 items-center justify-center mr-6 h-full">
       {/* Image */}
-      <div
-        className="relative w-full cursor-pointer rounded-2xl bg-gradient-to-br from-teal-800 to-gray-800 sticky top-4"
+        <div
+          className="relative w-full cursor-pointer bg-brand-gradient rounded-2xl my-auto flex items-center justify-center"
         onClick={handlePlayTrack}
       >
         {/* Play/Pause button with hover effect */}
-        <img
-          src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
-          alt={beat.title}
-          className="w-full aspect-square rounded-2xl object-cover"
-        />
-        <div className="absolute inset-0 rounded-2xl flex items-center justify-center transition-all duration-[0.8s] ease-in-out">
-          <div className="flex size-full items-center rounded-2xl justify-center bg-black bg-opacity-60 transition-all duration-[1.2s] ease-in-out hover:bg-opacity-0">
+            <img
+              src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
+              alt={beat.title}
+              className="w-full aspect-square object-cover rounded-2xl"
+            />
+            <div className="absolute inset-0 flex items-center justify-center transition-all duration-[0.8s] ease-in-out rounded-2xl">
+              <div className="flex size-full items-center justify-center bg-brand-overlay transition-all duration-[1.2s] ease-in-out hover:bg-opacity-0 rounded-2xl">
             {currentTrack ===
               `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
             isPlaying ? (
-              <FaPause
-                size={64}
-                className="text-teal-400 transition-all duration-[1.2s] ease-in-out hover:scale-125 hover:text-teal-500"
-              />
+                  <FaPause size={64} className="text-brand-light transition-all duration-[1.2s] ease-in-out hover:scale-125" />
             ) : (
-              <FaPlay
-                size={64}
-                className="text-teal-400 transition-all duration-[1.2s] ease-in-out hover:scale-125 hover:text-teal-500"
-              />
+                  <FaPlay size={64} className="text-brand-light transition-all duration-[1.2s] ease-in-out hover:scale-125" />
             )}
           </div>
         </div>
@@ -219,91 +220,173 @@ function BeatDetails() {
     </div>
 
     {/* Right Side: Beat Info */}
-    <div className="flex w-2/3 flex-col space-y-6 text-white">
+        <div className="flex w-2/3 flex-col space-y-6 text-brand-contrast">
       <div className="space-y-4">
-        <h2 className="text-3xl font-extrabold tracking-wide text-white">
+            <h2 className="text-3xl font-extrabold tracking-wide text-brand-contrast">
         {beat.title}
       </h2>
-        <p className="flex items-center space-x-2 text-lg text-gray-300">
-        <span className="font-semibold text-teal-400">By:</span>
+            <p className="flex items-center space-x-2 text-lg text-brand-contrast">
+              <span className="font-semibold text-brand-light">By:</span>
         <span>{beat.owner.username}</span>
       </p>
 
         {/* BPM and TONE - moved up here for better visibility */}
-        <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-6">
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-400">BPM:</span>
-            <span className="bg-teal-600/20 border border-teal-400/30 rounded-lg px-3 py-1 text-lg font-bold text-teal-400">
+                <span className="text-sm text-brand-contrast">BPM:</span>
+                <span className="badge text-lg">
               {beat.bpm}
             </span>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-400">TONE:</span>
-            <span className="bg-teal-600/20 border border-teal-400/30 rounded-lg px-3 py-1 text-lg font-bold text-teal-400">
+                <span className="text-sm text-brand-contrast">TONE:</span>
+                <span className="badge text-lg">
               {beat.tone}
             </span>
           </div>
         </div>
       </div>
 
-      {/* License Icons */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 my-6">
+      {/* Licenses Row (single row with horizontal scroll on small screens) */}
+      <div className="relative my-1 edges-fade border-y border-white/10 py-1">
+        {/* Scroll Left Button */}
+        <button
+          type="button"
+          aria-label="Scroll licenses left"
+          onClick={() => {
+            const el = licensesScrollerRef.current
+            if (el) {
+              el.scrollBy({ left: -Math.round(el.clientWidth * 0.8), behavior: 'smooth' })
+            }
+          }}
+          className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 z-20 h-12 w-12 items-center justify-center text-brand-light transition-transform duration-300 hover:scale-110"
+        >
+          <FaChevronLeft size={28} />
+        </button>
+
+        {/* Scrollable Row */}
+        <div ref={licensesScrollerRef} className="licenses-row flex w-full gap-3 lg:gap-4 overflow-x-auto no-scrollbar smooth-scroll snap-x snap-mandatory px-6 lg:px-8">
         {beat.licenses && beat.licenses.map((license) => {
           const licenseStyles = {
             gold: {
               icon: <FaMedal className="text-2xl text-yellow-400" />,
-              bg: "bg-yellow-600/20",
               text: "text-yellow-400",
               border: "border-yellow-400/30",
+              borderSelected: "border-yellow-400/60",
               gradient: "from-yellow-600/10 to-yellow-800/10"
             },
             platinum: {
               icon: <FaStar className="text-2xl text-slate-400" />,
-              bg: "bg-slate-600/20",
               text: "text-slate-400",
               border: "border-slate-400/30",
+              borderSelected: "border-slate-400/60",
               gradient: "from-slate-600/10 to-slate-800/10"
             },
             diamond: {
               icon: <FaGem className="text-2xl text-teal-400" />,
-              bg: "bg-teal-600/20",
               text: "text-teal-400",
               border: "border-teal-400/30",
+              borderSelected: "border-teal-400/60",
               gradient: "from-teal-600/10 to-teal-800/10"
             },
             exclusive: {
               icon: <FaCrown className="text-2xl text-purple-400" />,
-              bg: "bg-purple-600/20",
               text: "text-purple-400",
               border: "border-purple-400/30",
+              borderSelected: "border-purple-400/60",
               gradient: "from-purple-600/10 to-purple-800/10"
             }
-          };
+          }
+          const style = licenseStyles[license.icon] || licenseStyles.gold
+          const isSelected = selectedLicense?.id === license.id
+          const isCompressed = !!selectedLicense && selectedLicense.id !== license.id
 
-          const style = licenseStyles[license.icon] || licenseStyles.gold;
-          
-          const formatStreamLimit = (limit) => {
-            if (limit === -1) return 'Unlimited';
-            return limit.toLocaleString();
-          };
+          return (
+            <div
+              key={license.id}
+              onClick={() => setSelectedLicense(license)}
+              className={`relative overflow-hidden rounded-xl bg-gradient-to-br ${style.gradient} backdrop-blur-sm border transform-gpu cursor-pointer smooth-transition-long will-change-transform scale-fade-in gpu-smooth snap-start ${
+                isSelected
+                  ? `z-10 border-2 ${style.borderSelected} p-4 lg:p-4 min-h-[240px] min-w-[380px]`
+                  : isCompressed
+                  ? `${style.border} p-2 h-[100px] min-w-[160px] flex flex-col justify-center`
+                  : `${style.border} p-2 h-[100px] min-w-[160px] flex flex-col justify-center`
+              }`}
+            >
+              <div className={`flex items-center justify-between mb-2 transition-opacity duration-500 opacity-100`}>
+                {style.icon}
+                <span className={`text-base font-bold ${style.text}`}>${license.basePrice}</span>
+              </div>
+              <h3 className={`text-base font-bold ${style.text} transition-opacity duration-500 opacity-100`}>{license.name}</h3>
 
-          const formatVideoLimit = (limit) => {
-            if (limit === -1) return 'Unlimited';
-            return limit;
-          };
+              {/* Inline overlay details (no layout push) */}
+              {isSelected && (
+                <div
+                  className={`absolute left-0 right-0 bottom-0 bg-gradient-to-t from-black/85 to-black/40 backdrop-blur-md p-3 lg:p-3 border-t ${style.border} max-h-[18rem] min-h-[120px] overflow-y-auto z-20 smooth-transition-long will-change-transform scale-fade-in gpu-smooth`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-brand-contrast font-semibold text-xs md:text-sm">{license.name}</h4>
+                    <span className={`${style.text} font-bold text-xs md:text-sm`}>${Number(license.basePrice).toFixed(2)}</span>
+                  </div>
 
+                  {license.description && (
+                    <p className="text-xs md:text-sm text-brand-contrast/90 mb-2 leading-snug">{license.description}</p>
+                  )}
+                  <div className="grid grid-cols-2 gap-2 text-xs md:text-sm">
+                    <div className={`flex items-center justify-between bg-black/25 p-2 rounded-md border ${style.border}`}>
+                      <span className="text-brand-contrast/80">Streams</span>
+                      <span className={`${style.text} font-semibold`}>{formatStreamLimit(license.streamLimit)}</span>
+                    </div>
+                    <div className={`flex items-center justify-between bg-black/25 p-2 rounded-md border ${style.border}`}>
+                      <span className="text-brand-contrast/80">Video Clips</span>
+                      <span className={`${style.text} font-semibold`}>{formatVideoLimit(license.videoClipLimit)}</span>
+                    </div>
+                    <div className={`flex items-center justify-between bg-black/25 p-2 rounded-md border ${style.border}`}>
+                      <span className="text-brand-contrast/80">Publishing</span>
+                      <span className={`${style.text} font-semibold`}>{license.publishingRoyalty}%</span>
+                    </div>
+                    <div className={`flex items-center justify-between bg-black/25 p-2 rounded-md border ${style.border}`}>
+                      <span className="text-brand-contrast/80">Master</span>
+                      <span className={`${style.text} font-semibold`}>{license.masterRoyalty}%</span>
+                    </div>
+                  </div>
+                  {license.terms && (
+                    <p className="mt-2 text-[10px] md:text-xs text-brand-contrast/70">Terms: {license.terms}</p>
+                  )}
+                </div>
+              )}
+            </div>
+          )
         })}
+        </div>
+
+        {/* Scroll Right Button */}
+        <button
+          type="button"
+          aria-label="Scroll licenses right"
+          onClick={() => {
+            const el = licensesScrollerRef.current
+            if (el) {
+              el.scrollBy({ left: Math.round(el.clientWidth * 0.8), behavior: 'smooth' })
+            }
+          }}
+          className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 z-20 h-12 w-12 items-center justify-center text-brand-light transition-transform duration-300 hover:scale-110"
+        >
+          <FaChevronRight size={28} />
+        </button>
       </div>
 
+      {/* Selected License Details are shown inline via dropdown inside the chosen card */}
+
       {/* Call-to-Action Section */}
-      <div className="mt-8 rounded-2xl bg-gradient-to-r from-teal-900/30 to-cyan-900/30 border border-teal-400/20 p-6">
+        <div className="mt-8 panel bg-brand-gradient p-6 rounded-2xl">
         <div className="flex items-center justify-between">
           <div className="flex flex-col space-y-3">
-            <h3 className="text-xl font-bold text-white">Ready to get this beat?</h3>
-            <p className="text-gray-300">Choose a license above and add to your cart</p>
+              <h3 className="text-xl font-bold text-brand-contrast">Ready to get this beat?</h3>
+              <p className="text-brand-contrast">Choose a license above and add to your cart</p>
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-400">Starting from</span>
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
+                <span className="text-sm text-brand-contrast">Starting from</span>
+                <span className="text-2xl font-bold text-brand-light">
                 {cheapestPrice ? `$${cheapestPrice.toFixed(2)}` : 'Price not available'}
               </span>
             </div>
@@ -311,15 +394,16 @@ function BeatDetails() {
           
         <button
           onClick={() => handleAddToCart(selectedLicense)}
-            className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-600 p-1 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-teal-500/25"
+          disabled={!selectedLicense}
+          className={`px-8 py-4 ${selectedLicense ? 'btn-primary' : 'bg-gray-700 text-gray-400 cursor-not-allowed'}`}
         >
-            <div className="flex items-center space-x-3 rounded-xl bg-gray-900 px-8 py-4 transition-all duration-300 group-hover:bg-transparent">
-              <FaShoppingCart className="text-xl text-teal-400 group-hover:text-white transition-colors duration-300" />
-              <span className="text-lg font-semibold text-teal-400 group-hover:text-white transition-colors duration-300">
-                Add to Cart
-          </span>
-        </div>
-          </button>
+          <div className="flex items-center space-x-3">
+            <FaShoppingCart className={`text-xl ${selectedLicense ? 'text-brand-contrast' : 'text-gray-400'}`} />
+            <span className={`text-lg font-semibold ${selectedLicense ? 'text-brand-contrast' : 'text-gray-400'}`}>
+              {selectedLicense ? 'Add to Cart' : 'Select a License'}
+            </span>
+          </div>
+        </button>
         </div>
       </div>
     </div>

@@ -44,7 +44,7 @@ const Header = ({ user, admin }) => {
             <img
               src="/assets/highestwaves-logo.png"
               alt="Highest Waves Logo"
-              className="w-20 transition-transform duration-200 hover:scale-105 sm:w-24 lg:w-64"
+              className="w-20 transition-transform duration-200 hover:scale-105 sm:w-24 lg:w-48"
             />
           </Link>
 

@@ -45,44 +45,32 @@ function AvailableBeats() {
   }, [])
 
   return (
-    <div className="available-beats-container">
-      {/* Background layers */}
-      <div className="background-layer"></div>
-      <div className="animated-grid"></div>
-      
-      {/* Glow effects */}
-      <div className="glow-effects">
-        <div className="glow-effect glow-purple"></div>
-        <div className="glow-effect glow-blue"></div>
-        <div className="glow-effect glow-pink"></div>
-      </div>
-
-      {/* Main content */}
-      <div className="content-container">
-        <div className="glass-card">
-          <h1 
-            className="mb-8 text-center text-4xl font-bold md:text-5xl lg:text-6xl"
-            style={{ color: 'var(--brand-contrast)' }}
-          >
-            Available Beats
-          </h1>
+    <div className="page-content-wrapper">
+      <div className="page-card relative overflow-hidden" style={{
+        background: 'rgba(14, 41, 71, 0.3)',
+        border: '1px solid rgba(56, 118, 174, 0.2)',
+        backdropFilter: 'blur(20px)',
+        borderRadius: 'var(--radius-lg)'
+      }}>
+        <h1 className="page-title">
+          Available Beats
+        </h1>
+        
+        <div className="page-two-column">
+          {/* Filter Sidebar */}
+          <div className="page-sidebar">
+            <FilterSidebar 
+              filters={filters} 
+              setFilters={setFilters} 
+              tags={tags}
+              users={users}
+              tones={tones}
+            />
+          </div>
           
-          <div className="flex flex-col gap-4 lg:gap-6 lg:flex-row">
-            {/* Filter Sidebar */}
-            <div className="w-full lg:w-1/4">
-              <FilterSidebar 
-                filters={filters} 
-                setFilters={setFilters} 
-                tags={tags}
-                users={users}
-                tones={tones}
-              />
-            </div>
-            
-            {/* Beat List */}
-            <div className="w-full lg:w-3/4">
-              <BeatList beats={beats} filters={filters} />
-            </div>
+          {/* Beat List */}
+          <div className="page-main-content">
+            <BeatList beats={beats} filters={filters} />
           </div>
         </div>
       </div>

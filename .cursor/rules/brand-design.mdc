@@ -1,9 +1,3 @@
----
-description:
-globs:
-alwaysApply: false
----
-
 # Highest Waves - Brand Design System
 
 ## 🎨 Brand Identity Overview
@@ -15,6 +9,7 @@ alwaysApply: false
 - **Professional & Sophisticated**: Premium quality and reliability
 - **Introspective & Authentic**: Deep connection to musical expression
 - **Technological & Modern**: Cutting-edge digital solutions
+- **Soft & Clean**: Minimalist approach with refined aesthetics
 
 ### Target Audience
 - **Primary**: Rappers, singers, beatmakers, music producers
@@ -26,37 +21,38 @@ alwaysApply: false
 ## 🎯 Color Palette
 
 ### Primary Colors
-Our color system reinforces a modern, nocturnal, and technological identity with clear contrast touches:
+Our color system balances sophistication with accessibility, featuring a mix of deep blues and clean neutrals:
 
 ```css
-/* Deep Foundation Colors */
---brand-black: #0B1420;        /* Deep black (background, base) */
---brand-neutral: #0B0C0C;      /* Solid neutral black */
+/* Primary Brand Colors */
+--brand-blue: #3876AE;        /* Primary blue - main brand color */
+--brand-blue-dark: #124D82;   /* Darker blue - depth and contrast */
+--brand-black: #0B1420;       /* Deep black - primary background */
+--brand-black-alt: #0B1420;   /* Alternative black - secondary background */
+--brand-neutral: #0B0C0C;     /* Pure neutral black - accents */
 
-/* Depth & Structure */
---brand-petroleum: #0E2947;    /* Petroleum dark blue (depth) */
---brand-medium: #124D82;       /* Medium blue (interaction & emphasis) */
-
-/* Interactive Elements */
---brand-light: #3876AE;        /* Light blue (details, buttons) */
-
-/* Contrast & Accessibility */
---brand-contrast: #E9F2F1;     /* Light gray-green (soft contrast) */
+/* Supporting Colors */
+--brand-white: #FFFFFF;       /* Pure white - text and highlights */
+--brand-gray-light: #F8F9FA;  /* Light gray - secondary backgrounds */
+--brand-gray: #6C757D;        /* Medium gray - muted text */
+--brand-gray-dark: #495057;   /* Dark gray - borders and dividers */
 ```
 
 ### Color Usage Guidelines
 
 #### Background Hierarchy
 - **Primary Background**: `#0B1420` - Main application background
-- **Secondary Background**: `#0E2947` - Cards, modals, sections
+- **Secondary Background**: `#0B1420` - Cards, modals, sections
 - **Interactive Background**: `#124D82` - Hover states, active elements
 - **Accent Background**: `#3876AE` - Buttons, CTAs, highlights
+- **Light Background**: `#FFFFFF` - Contrast sections, cards
 
 #### Text Colors
-- **Primary Text**: `#E9F2F1` - Main content, headings
+- **Primary Text**: `#FFFFFF` - Main content, headings on dark backgrounds
 - **Secondary Text**: `#3876AE` - Subheadings, labels
 - **Muted Text**: `#124D82` - Captions, metadata
-- **Interactive Text**: `#E9F2F1` - Buttons, links
+- **Dark Text**: `#0B1420` - Text on light backgrounds
+- **Interactive Text**: `#FFFFFF` - Buttons, links
 
 #### Accessibility
 - **Contrast Ratio**: Minimum 4.5:1 for all text combinations
@@ -67,8 +63,11 @@ Our color system reinforces a modern, nocturnal, and technological identity with
 
 ## 🔤 Typography System
 
-### Primary Font: Aloevera
-A clean, light, readable, and contemporary typeface that embodies smoothness and fluidity - perfect for representing "sound waves."
+### Primary Font: Aloevera Display
+A clean, modern, and sophisticated typeface that embodies the premium nature of our brand.
+
+### Secondary Font: Drugs
+A distinctive, creative typeface for special headings and brand elements.
 
 #### Font Weights
 ```css
@@ -82,42 +81,55 @@ A clean, light, readable, and contemporary typeface that embodies smoothness and
 #### Type Scale
 ```css
 /* Display Text */
---text-display: 4rem/1.1;      /* Hero headlines */
---text-h1: 3rem/1.2;           /* Page titles */
---text-h2: 2.25rem/1.3;        /* Section headings */
---text-h3: 1.875rem/1.4;       /* Subsection headings */
---text-h4: 1.5rem/1.5;         /* Card titles */
+--text-display: 4rem/1.1;      /* Hero headlines - Aloevera Display */
+--text-h1: 3rem/1.2;           /* Page titles - Aloevera Display */
+--text-h2: 2.25rem/1.3;        /* Section headings - Aloevera Display */
+--text-h3: 1.875rem/1.4;       /* Subsection headings - Aloevera Display */
+--text-h4: 1.5rem/1.5;         /* Card titles - Aloevera Display */
 
 /* Body Text */
---text-body-lg: 1.125rem/1.6;  /* Large body text */
---text-body: 1rem/1.6;         /* Standard body text */
---text-body-sm: 0.875rem/1.6;  /* Small body text */
+--text-body-lg: 1.125rem/1.6;  /* Large body text - Aloevera Display */
+--text-body: 1rem/1.6;         /* Standard body text - Aloevera Display */
+--text-body-sm: 0.875rem/1.6;  /* Small body text - Aloevera Display */
 
 /* UI Elements */
---text-button: 0.875rem/1.4;   /* Button text */
---text-caption: 0.75rem/1.5;   /* Captions, metadata */
+--text-button: 0.875rem/1.4;   /* Button text - Aloevera Display */
+--text-caption: 0.75rem/1.5;   /* Captions, metadata - Aloevera Display */
+
+/* Special Elements */
+--text-brand: 2rem/1.2;        /* Brand elements - Drugs font */
+--text-accent: 1.5rem/1.3;     /* Accent text - Drugs font */
 ```
 
 #### Typography Guidelines
 - **Line Height**: 1.6 for body text, 1.2-1.4 for headings
 - **Letter Spacing**: -0.02em for headings, 0 for body text
-- **Font Stack**: Aloevera, -apple-system, BlinkMacSystemFont, sans-serif
+- **Font Stack**: 
+  - Aloevera Display: 'Aloevera Display', -apple-system, BlinkMacSystemFont, sans-serif
+  - Drugs: 'Drugs', 'Aloevera Display', -apple-system, BlinkMacSystemFont, sans-serif
 
 ---
 
 ## 🎵 Logo Design System
 
-### Logo Variations
+### Logo Analysis
+Based on the current logo located at `frontend/public/assets/highestwaves-logo.png`:
 
-#### Primary Logo (Suggestion 1)
-**Solid, Clean Design with Icon and Wordmark**
-- **Icon**: Abstract sound wave visualization
-- **Wordmark**: "Highest Waves" in Aloevera font
-- **Layout**: Horizontal and vertical arrangements
-- **Usage**: Primary brand applications, headers, business cards
+#### Primary Logo Components
+- **Icon**: Stylized "D" shape with DJ turntable/mixer elements
+  - Dark blue/navy main body (`#124D82`)
+  - Light blue details (`#3876AE`)
+  - Vertical faders with circular knobs
+  - Square buttons/pads
+  - Circular vinyl record element
+  - Curved line suggesting groove/arm
+- **Wordmark**: "HighestWaves" in two-tone treatment
+  - "Highest" in dark blue (`#124D82`)
+  - "Waves" in light blue (`#3876AE`)
+  - Clean, modern sans-serif typeface
 
-#### Secondary Logo (Suggestion 2)
-**Application Variations and Compositions**
+#### Logo Variations
+- **Primary**: Full logo with icon and wordmark
 - **Icon Only**: For small spaces, favicons, social media
 - **Wordmark Only**: For text-heavy applications
 - **Stacked Layout**: For vertical applications
@@ -135,31 +147,39 @@ A clean, light, readable, and contemporary typeface that embodies smoothness and
 - **Favicon**: 16px x 16px
 
 #### Logo Colors
-- **Primary**: White on dark backgrounds
-- **Secondary**: `#3876AE` on light backgrounds
-- **Monochrome**: Black or white only when necessary
+- **Primary**: Original two-tone blue on white/light backgrounds
+- **Secondary**: White version on dark backgrounds
+- **Monochrome**: Single color versions when necessary
 
 ---
 
 ## 🎨 Visual Elements
 
+### Design Philosophy
+- **Soft & Clean**: Minimalist approach with refined aesthetics
+- **Balanced Contrast**: Mix of white and black with strategic color accents
+- **Premium Feel**: Sophisticated, professional appearance
+- **Musical Identity**: Subtle references to music production and sound 
+waves
+- **Logo definitions**: so the style should follow the logo design style/standard on frontend\public\assets\highestwaves-logo.png
+
 ### Iconography
 - **Style**: Minimal, geometric, sound wave-inspired
 - **Weight**: 2px stroke for consistency
-- **Corner Radius**: 2px for soft, modern feel
-- **Color**: `#3876AE` for primary icons, `#E9F2F1` for secondary
+- **Corner Radius**: 4px for soft, modern feel
+- **Color**: `#3876AE` for primary icons, `#124D82` for secondary
 
 ### Imagery Style
-- **Photography**: Dark, moody, studio environments
+- **Photography**: Clean, professional studio environments
 - **Illustrations**: Abstract sound waves, musical elements
 - **Graphics**: Geometric patterns, wave forms
-- **Mood**: Nocturnal, sophisticated, creative
+- **Mood**: Sophisticated, creative, balanced
 
 ### Patterns & Textures
 - **Wave Patterns**: Subtle sound wave backgrounds
-- **Grid Systems**: Digital, technological feel
-- **Gradients**: From `#0B1420` to `#0E2947`
-- **Noise**: Subtle texture for depth
+- **Grid Systems**: Clean, organized layouts
+- **Gradients**: Subtle transitions between brand colors
+- **Noise**: Minimal texture for depth when needed
 
 ---
 
@@ -168,34 +188,34 @@ A clean, light, readable, and contemporary typeface that embodies smoothness and
 ### Digital Applications
 
 #### Website Design
-- **Background**: `#0B1420` primary, `#0E2947` secondary
-- **Cards**: `#0E2947` with subtle transparency
+- **Background**: Mix of `#0B1420` and `#FFFFFF` for balance
+- **Cards**: `#FFFFFF` with subtle shadows on dark backgrounds
 - **Buttons**: `#3876AE` primary, `#124D82` secondary
-- **Text**: `#E9F2F1` for readability
+- **Text**: `#FFFFFF` on dark backgrounds, `#0B1420` on light backgrounds
 
 #### Mobile App
-- **Navigation**: Dark theme with `#0B1420` background
-- **Cards**: `#0E2947` with rounded corners
+- **Navigation**: Clean, minimal with brand colors
+- **Cards**: White or dark with rounded corners
 - **Interactive Elements**: `#3876AE` with hover states
-- **Status Bars**: Dark mode for consistency
+- **Status Bars**: Adaptive to background
 
 #### Social Media
-- **Profile Pictures**: Logo icon on `#0B1420` background
-- **Cover Images**: Abstract wave patterns
-- **Post Templates**: Dark theme with brand colors
+- **Profile Pictures**: Logo icon on brand background
+- **Cover Images**: Clean, minimal with brand elements
+- **Post Templates**: Balanced white/black with brand colors
 - **Stories**: Animated wave elements
 
 ### Print Applications
 
 #### Business Cards
-- **Background**: `#0B1420` with subtle texture
-- **Logo**: White version
-- **Text**: `#E9F2F1` for contact information
+- **Background**: `#FFFFFF` with brand accents
+- **Logo**: Original two-tone version
+- **Text**: `#0B1420` for contact information
 - **Accent**: `#3876AE` for highlights
 
 #### Marketing Materials
-- **Brochures**: Dark theme with wave patterns
-- **Posters**: Bold typography with brand colors
+- **Brochures**: Clean layout with brand colors
+- **Posters**: Bold typography with balanced design
 - **Stickers**: Logo variations for different surfaces
 
 ---
@@ -206,7 +226,7 @@ A clean, light, readable, and contemporary typeface that embodies smoothness and
 - **Professional yet Creative**: Expert knowledge with artistic flair
 - **Innovative**: Cutting-edge technology and forward-thinking
 - **Authentic**: Genuine passion for music and creators
-- **Inspiring**: Motivational and empowering
+- **Clean & Sophisticated**: Refined, premium approach
 
 ### Key Messages
 - **Primary**: "Catch the wave, drop the beat"
@@ -227,15 +247,19 @@ A clean, light, readable, and contemporary typeface that embodies smoothness and
 ```css
 :root {
   /* Brand Colors */
+  --brand-blue: #3876AE;
+  --brand-blue-dark: #124D82;
   --brand-black: #0B1420;
+  --brand-black-alt: #0B1420;
   --brand-neutral: #0B0C0C;
-  --brand-petroleum: #0E2947;
-  --brand-medium: #124D82;
-  --brand-light: #3876AE;
-  --brand-contrast: #E9F2F1;
+  --brand-white: #FFFFFF;
+  --brand-gray-light: #F8F9FA;
+  --brand-gray: #6C757D;
+  --brand-gray-dark: #495057;
   
   /* Typography */
-  --font-family: 'Aloevera', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-primary: 'Aloevera Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-secondary: 'Drugs', 'Aloevera Display', -apple-system, BlinkMacSystemFont, sans-serif;
   
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -259,17 +283,17 @@ A clean, light, readable, and contemporary typeface that embodies smoothness and
 ```
 
 ### Component Guidelines
-- **Buttons**: Use `--brand-light` for primary, `--brand-medium` for secondary
-- **Cards**: Use `--brand-petroleum` background with `--radius-md`
-- **Forms**: Use `--brand-contrast` text on `--brand-black` background
-- **Navigation**: Use `--brand-light` for active states
+- **Buttons**: Use `--brand-blue` for primary, `--brand-blue-dark` for secondary
+- **Cards**: Use `--brand-white` background with `--radius-md` on dark backgrounds
+- **Forms**: Use `--brand-white` text on `--brand-black` background
+- **Navigation**: Use `--brand-blue` for active states
 
 ---
 
 ## 📋 Brand Assets Checklist
 
 ### Required Assets
-- [ ] Primary logo (horizontal and vertical)
+- [x] Primary logo (horizontal and vertical) - `frontend/public/assets/highestwaves-logo.png`
 - [ ] Icon-only logo
 - [ ] Wordmark-only logo
 - [ ] Favicon (16x16, 32x32, 48x48)
@@ -290,7 +314,7 @@ A clean, light, readable, and contemporary typeface that embodies smoothness and
 
 ### Future Considerations
 - **Animation**: Sound wave animations for digital applications
-- **3D Elements**: Depth and dimension for premium feel
+- **3D Elements**: Subtle depth for premium feel
 - **Interactive Elements**: Hover effects and micro-interactions
 - **Accessibility**: Enhanced contrast and screen reader support
 
@@ -302,4 +326,8 @@ A clean, light, readable, and contemporary typeface that embodies smoothness and
 
 ---
 
-*This brand design system ensures consistency, professionalism, and recognition across all touchpoints while maintaining the creative and technological essence of Highest Waves.* 
+*This brand design system ensures consistency, professionalism, and recognition across all touchpoints while maintaining the creative and technological essence of Highest Waves with a clean, sophisticated approach.*
+description:
+globs:
+alwaysApply: false
+---

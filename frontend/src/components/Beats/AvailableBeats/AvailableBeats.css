@@ -1,145 +1,17 @@
+/* AvailableBeats Component - Simplified Styles */
+
+/* Component-specific styles that complement the page responsive pattern */
 .available-beats-container {
-  position: relative;
-  min-height: 100vh;
-  background: linear-gradient(135deg, var(--brand-black) 0%, var(--brand-petroleum) 50%, var(--brand-medium) 100%);
-  padding: 2rem 0;
-  overflow: hidden;
+  /* This class is kept for backward compatibility but not used in new structure */
 }
 
-.background-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  background: var(--brand-black);
-  opacity: 0.4;
+/* Custom styles for the AvailableBeats component if needed */
+.available-beats-title {
+  /* Component-specific title styles if needed */
 }
 
-.gradient-overlay {
-  background: linear-gradient(135deg, rgba(11, 20, 32, 0.8) 0%, rgba(14, 41, 71, 0.6) 50%, rgba(18, 77, 130, 0.4) 100%);
+.available-beats-content {
+  /* Component-specific content styles if needed */
 }
 
-.animated-grid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    linear-gradient(rgba(56, 118, 174, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56, 118, 174, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 20s linear infinite;
-  z-index: 0;
-}
-
-@keyframes gridMove {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(50px, 50px);
-  }
-}
-
-.glow-effects {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-}
-
-.glow-effect {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  filter: blur(40px);
-  opacity: 0.3;
-  animation: glowPulse 4s ease-in-out infinite;
-}
-
-.glow-purple {
-  background: radial-gradient(circle, var(--brand-light) 0%, transparent 70%);
-  top: 10%;
-  left: 10%;
-  animation-delay: 0s;
-}
-
-.glow-blue {
-  background: radial-gradient(circle, var(--brand-medium) 0%, transparent 70%);
-  top: 60%;
-  right: 15%;
-  animation-delay: 2s;
-}
-
-.glow-pink {
-  background: radial-gradient(circle, var(--brand-petroleum) 0%, transparent 70%);
-  bottom: 20%;
-  left: 50%;
-  animation-delay: 1s;
-}
-
-@keyframes glowPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.3;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.5;
-  }
-}
-
-@media (max-width: 768px) {
-  .animated-grid {
-    background-size: 30px 30px;
-  }
-  
-  .glow-effect {
-    width: 150px;
-    height: 150px;
-  }
-  
-  .glow-purple {
-    top: 5%;
-    left: 5%;
-  }
-  
-  .glow-blue {
-    top: 70%;
-    right: 5%;
-  }
-}
-
-.content-container {
-  position: relative;
-  z-index: 10;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-@media (min-width: 768px) {
-  .content-container {
-    padding: 0 2rem;
-  }
-}
-
-.glass-card {
-  background: rgba(11, 20, 32, 0.2);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(56, 118, 174, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.glass-card:hover {
-  background: rgba(14, 41, 71, 0.3);
-  border-color: rgba(56, 118, 174, 0.4);
-  transform: translateY(-2px);
-}
+/* Any additional component-specific styles can be added here */

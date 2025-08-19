@@ -1,0 +1,474 @@
+# Highest Waves - Padding Structure Guidelines
+
+## Overview
+This document defines the comprehensive padding and spacing structure for the Highest Waves project. All components must follow these patterns to ensure consistent spacing across all screen sizes and zoom levels.
+
+## Screen Size Breakpoints
+
+### Mobile First Approach
+- **Mobile**: 320px - 639px
+- **Small Tablet**: 640px - 767px  
+- **Tablet**: 768px - 1023px
+- **Desktop**: 1024px - 1279px
+- **Large Desktop**: 1280px - 1535px
+- **TV/Large Screens**: 1536px+
+
+## Core Spacing Scale
+
+### Base Spacing Units
+```css
+/* Base spacing scale (in rem) */
+--spacing-xs: 0.5rem;    /* 8px */
+--spacing-sm: 1rem;      /* 16px */
+--spacing-md: 1.5rem;    /* 24px */
+--spacing-lg: 2rem;      /* 32px */
+--spacing-xl: 2.5rem;    /* 40px */
+--spacing-2xl: 3rem;     /* 48px */
+--spacing-3xl: 3.5rem;   /* 56px */
+--spacing-4xl: 4rem;     /* 64px */
+```
+
+## Page Container Patterns
+
+### Page Content Wrapper
+```css
+.page-content-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem; /* Mobile */
+}
+
+/* Responsive padding */
+@media (min-width: 640px) { padding: 1.5rem; }
+@media (min-width: 768px) { padding: 2rem; }
+@media (min-width: 1024px) { padding: 2.5rem; }
+@media (min-width: 1280px) { padding: 3rem; }
+@media (min-width: 1536px) { padding: 4rem; }
+```
+
+### Page Section Spacing
+```css
+.page-section {
+  margin-bottom: 2rem; /* Mobile */
+}
+
+/* Responsive margins */
+@media (min-width: 640px) { margin-bottom: 2.5rem; }
+@media (min-width: 768px) { margin-bottom: 3rem; }
+@media (min-width: 1024px) { margin-bottom: 3.5rem; }
+@media (min-width: 1280px) { margin-bottom: 4rem; }
+@media (min-width: 1536px) { margin-bottom: 4.5rem; }
+```
+
+## Component Card Patterns
+
+### Page Card Container
+```css
+.page-card {
+  padding: 1.5rem; /* Mobile */
+  border-radius: 16px;
+  background: rgba(11, 20, 32, 0.2);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 118, 174, 0.2);
+}
+
+/* Responsive padding */
+@media (min-width: 640px) { padding: 2rem; }
+@media (min-width: 768px) { padding: 2.5rem; }
+@media (min-width: 1024px) { padding: 3rem; }
+@media (min-width: 1280px) { padding: 3.5rem; }
+@media (min-width: 1536px) { padding: 4rem; }
+```
+
+## Featured Beats Component Patterns
+
+### Marquee Container
+```css
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 1rem; /* Mobile */
+  animation: marquee 30s linear infinite;
+}
+
+/* Responsive gaps */
+@media (min-width: 768px) { gap: 1.5rem; }
+```
+
+### Beat Card Sizing
+```css
+.marquee-content > div {
+  flex: 0 0 250px; /* Mobile */
+  height: 300px;
+}
+
+/* Responsive sizing */
+@media (min-width: 640px) {
+  flex: 0 0 280px;
+  height: 350px;
+}
+@media (min-width: 768px) {
+  flex: 0 0 320px;
+  height: 400px;
+}
+@media (min-width: 1024px) {
+  flex: 0 0 350px;
+  height: 420px;
+}
+```
+
+### Beat Card Content
+```css
+.featured-beat-info {
+  padding: 1.5rem; /* Mobile */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  padding: 1rem;
+}
+```
+
+## Available Beats Component Patterns
+
+### Two Column Layout
+```css
+.page-two-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Mobile */
+}
+
+/* Responsive gaps */
+@media (min-width: 640px) { gap: 2rem; }
+@media (min-width: 768px) { gap: 2.5rem; }
+@media (min-width: 1024px) { 
+  flex-direction: row;
+  gap: 3rem;
+}
+@media (min-width: 1280px) { gap: 3.5rem; }
+@media (min-width: 1536px) { gap: 4rem; }
+```
+
+### Sidebar Layout
+```css
+.page-sidebar {
+  width: 100%; /* Mobile */
+}
+
+@media (min-width: 1024px) {
+  width: 25%;
+  min-width: 280px;
+  max-width: 350px;
+}
+```
+
+### Main Content Layout
+```css
+.page-main-content {
+  width: 100%; /* Mobile */
+}
+
+@media (min-width: 1024px) {
+  width: 75%;
+}
+```
+
+## Grid System Patterns
+
+### Responsive Grid
+```css
+.page-grid-1 { grid-template-columns: 1fr; gap: 1rem; }
+.page-grid-2 { grid-template-columns: 1fr; gap: 1rem; }
+.page-grid-3 { grid-template-columns: 1fr; gap: 1rem; }
+.page-grid-4 { grid-template-columns: 1fr; gap: 1rem; }
+
+/* Small tablets */
+@media (min-width: 640px) {
+  .page-grid-2, .page-grid-3, .page-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) {
+  .page-grid-3 { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .page-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .page-grid-4 { grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
+}
+
+/* Large screens */
+@media (min-width: 1280px) {
+  .page-grid-1, .page-grid-2, .page-grid-3, .page-grid-4 { gap: 3rem; }
+}
+
+/* TV/Large screens */
+@media (min-width: 1536px) {
+  .page-grid-1, .page-grid-2, .page-grid-3, .page-grid-4 { gap: 3.5rem; }
+}
+```
+
+## Typography Spacing Patterns
+
+### Page Titles
+```css
+.page-title {
+  margin-bottom: 2rem; /* Mobile */
+  font-size: 2.25rem;
+}
+
+/* Responsive margins and sizes */
+@media (min-width: 640px) {
+  margin-bottom: 2.5rem;
+  font-size: 2.5rem;
+}
+@media (min-width: 768px) {
+  margin-bottom: 3rem;
+  font-size: 3rem;
+}
+@media (min-width: 1024px) {
+  margin-bottom: 3.5rem;
+  font-size: 3.5rem;
+}
+@media (min-width: 1280px) {
+  margin-bottom: 4rem;
+  font-size: 4rem;
+}
+@media (min-width: 1536px) {
+  margin-bottom: 4.5rem;
+  font-size: 4.5rem;
+}
+```
+
+### Page Subtitles
+```css
+.page-subtitle {
+  margin-bottom: 1.5rem; /* Mobile */
+  font-size: 1.5rem;
+}
+
+/* Responsive margins and sizes */
+@media (min-width: 640px) {
+  margin-bottom: 2rem;
+  font-size: 1.75rem;
+}
+@media (min-width: 768px) {
+  margin-bottom: 2.5rem;
+  font-size: 2rem;
+}
+@media (min-width: 1024px) {
+  margin-bottom: 3rem;
+  font-size: 2.25rem;
+}
+@media (min-width: 1280px) {
+  margin-bottom: 3.5rem;
+  font-size: 2.5rem;
+}
+@media (min-width: 1536px) {
+  margin-bottom: 4rem;
+  font-size: 2.75rem;
+}
+```
+
+## Utility Classes
+
+### Padding Utilities
+```css
+.page-padding-xs { padding: 0.5rem; }
+.page-padding-sm { padding: 1rem; }
+.page-padding-md { padding: 1.5rem; }
+.page-padding-lg { padding: 2rem; }
+.page-padding-xl { padding: 2.5rem; }
+.page-padding-2xl { padding: 3rem; }
+
+/* Responsive padding utilities scale up with screen size */
+@media (min-width: 640px) {
+  .page-padding-xs { padding: 0.75rem; }
+  .page-padding-sm { padding: 1.25rem; }
+  .page-padding-md { padding: 1.75rem; }
+  .page-padding-lg { padding: 2.25rem; }
+  .page-padding-xl { padding: 2.75rem; }
+  .page-padding-2xl { padding: 3.25rem; }
+}
+/* Continue scaling for larger screens... */
+```
+
+### Margin Utilities
+```css
+.page-margin-xs { margin: 0.5rem; }
+.page-margin-sm { margin: 1rem; }
+.page-margin-md { margin: 1.5rem; }
+.page-margin-lg { margin: 2rem; }
+.page-margin-xl { margin: 2.5rem; }
+.page-margin-2xl { margin: 3rem; }
+
+/* Responsive margin utilities scale up with screen size */
+@media (min-width: 640px) {
+  .page-margin-xs { margin: 0.75rem; }
+  .page-margin-sm { margin: 1.25rem; }
+  .page-margin-md { margin: 1.75rem; }
+  .page-margin-lg { margin: 2.25rem; }
+  .page-margin-xl { margin: 2.75rem; }
+  .page-margin-2xl { margin: 3.25rem; }
+}
+/* Continue scaling for larger screens... */
+```
+
+## Zoom Level Considerations
+
+### Container Constraints
+```css
+/* Prevent horizontal overflow on zoom */
+.page-container {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensure content remains readable on zoom */
+.page-content-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  min-width: 320px; /* Minimum readable width */
+}
+```
+
+### Flexible Units
+```css
+/* Use rem for font sizes and spacing to scale with user zoom */
+.featured-beat-title {
+  font-size: 1.25rem; /* Scales with zoom */
+  line-height: 1.3;
+}
+
+/* Use viewport units sparingly and with fallbacks */
+.marquee-container {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+}
+```
+
+## Component-Specific Patterns
+
+### Audio Player
+```css
+/* Audio player should maintain consistent spacing */
+.audio-player {
+  padding: 1rem; /* Mobile */
+  margin: 1rem 0;
+}
+
+@media (min-width: 768px) {
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+```
+
+### Forms and Inputs
+```css
+/* Form elements should have consistent spacing */
+.form-group {
+  margin-bottom: 1rem; /* Mobile */
+}
+
+.form-input {
+  padding: 0.75rem; /* Mobile */
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .form-group { margin-bottom: 1.5rem; }
+  .form-input { 
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+  }
+}
+```
+
+### Buttons
+```css
+/* Button spacing should be consistent */
+.btn {
+  padding: 0.75rem 1.5rem; /* Mobile */
+  margin: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .btn {
+    padding: 1rem 2rem;
+    margin: 0.75rem;
+  }
+}
+```
+
+## Implementation Guidelines
+
+### 1. Mobile First
+Always start with mobile styles and use `@media (min-width: ...)` to scale up.
+
+### 2. Consistent Spacing
+Use the defined spacing scale and utility classes for consistency.
+
+### 3. Flexible Layouts
+Use flexbox and grid with responsive breakpoints to ensure layouts adapt properly.
+
+### 4. Zoom Compatibility
+- Use `rem` units for fonts and spacing
+- Avoid fixed pixel widths for containers
+- Test zoom levels from 50% to 200%
+
+### 5. Performance
+- Use CSS custom properties for consistent values
+- Minimize media query repetition
+- Use efficient selectors
+
+### 6. Accessibility
+- Ensure sufficient touch targets (minimum 44px)
+- Maintain readable text sizes at all zoom levels
+- Provide adequate contrast ratios
+
+## Testing Checklist
+
+### Screen Sizes
+- [ ] Mobile (320px - 639px)
+- [ ] Small Tablet (640px - 767px)
+- [ ] Tablet (768px - 1023px)
+- [ ] Desktop (1024px - 1279px)
+- [ ] Large Desktop (1280px - 1535px)
+- [ ] TV/Large Screens (1536px+)
+
+### Zoom Levels
+- [ ] 50% zoom
+- [ ] 75% zoom
+- [ ] 100% zoom (default)
+- [ ] 125% zoom
+- [ ] 150% zoom
+- [ ] 200% zoom
+
+### Components
+- [ ] Featured Beats marquee
+- [ ] Available Beats grid
+- [ ] Filter sidebar
+- [ ] Page cards
+- [ ] Typography
+- [ ] Forms and inputs
+- [ ] Buttons and interactive elements
+description:
+globs:
+alwaysApply: false
+---

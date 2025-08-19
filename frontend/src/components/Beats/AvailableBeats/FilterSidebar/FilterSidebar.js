@@ -20,44 +20,66 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
   ]
 
   const selectStyles = {
-    control: (provided) => ({
+    control: (provided, state) => ({
       ...provided,
-      backgroundColor: '#102D40',
-      borderColor: '#0FC2C0',
+      backgroundColor: '#0B1420',
+      border: '2px solid #3876AE !important',
+      borderColor: '#3876AE !important',
       borderRadius: '0.5rem',
       padding: '2px',
-      boxShadow: 'none',
+      boxShadow: '0 0 8px rgba(56, 118, 174, 0.3)',
+      minHeight: '38px',
       '&:hover': {
-        borderColor: '#0FC2C0'
+        border: '2px solid #3876AE !important',
+        borderColor: '#3876AE !important',
+        boxShadow: '0 0 12px rgba(56, 118, 174, 0.5)'
+      },
+      '&:focus-within': {
+        border: '2px solid #3876AE !important',
+        borderColor: '#3876AE !important',
+        boxShadow: '0 0 12px rgba(56, 118, 174, 0.5)'
       }
     }),
     menu: (provided) => ({
       ...provided,
-      backgroundColor: '#102D40',
+      backgroundColor: '#0B1420',
       borderRadius: '0.5rem',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      border: '2px solid #3876AE',
+      boxShadow: '0 0 8px rgba(56, 118, 174, 0.3)'
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected ? '#0FC2C0' : '#102D40',
-      color: '#ffffff',
+      backgroundColor: state.isSelected ? '#3876AE' : '#0B1420',
+      color: '#FFFFFF',
       padding: '8px 12px',
       '&:hover': {
-        backgroundColor: state.isSelected ? '#0FC2C0' : '#0a1f2f'
+        backgroundColor: state.isSelected ? '#3876AE' : '#124D82'
       }
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: '#ffffff'
+      color: '#FFFFFF'
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: '#ffffff'
+      color: '#6C757D'
+    }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      backgroundColor: '#3876AE'
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: '#3876AE',
+      '&:hover': {
+        color: '#3876AE'
+      }
     })
   }
 
   return (
-    <div className="rounded-lg bg-[#102D40]/90 p-4 shadow-lg backdrop-blur-sm sm:p-6">
+    <div className="rounded-lg bg-[#0B1420]/90 p-4 shadow-lg backdrop-blur-sm sm:p-6 border border-[#3876AE]" style={{ boxShadow: '0 0 15px rgba(56, 118, 174, 0.4)' }}>
       <div className="space-y-4">
         {/* Price Filter */}
         <div className="mb-4">
@@ -72,15 +94,15 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
               max={300}
               step={1}
               onChange={handlePriceChange}
-              trackStyle={{ backgroundColor: '#0FC2C0', height: 4 }}
-              railStyle={{ backgroundColor: '#073D3A', height: 4 }}
+              trackStyle={{ backgroundColor: '#3876AE', height: 4 }}
+              railStyle={{ backgroundColor: '#124D82', height: 4 }}
               handleStyle={{
-                borderColor: '#0FC2C0',
-                backgroundColor: '#0FC2C0',
+                borderColor: '#3876AE',
+                backgroundColor: '#3876AE',
                 height: 16,
                 width: 16,
                 marginTop: -6,
-                boxShadow: '0 0 0 2px #102D40'
+                boxShadow: '0 0 8px rgba(56, 118, 174, 0.6)'
               }}
             />
             <div className="mt-2 flex justify-between text-sm text-white">
@@ -147,9 +169,14 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
                 key={tag.id}
                 className={`rounded-full px-3 py-1.5 text-sm transition-all duration-200 ${
                   (filters.tags || []).includes(tag.id)
-                    ? 'bg-cyan-500 text-white'
-                    : 'border border-cyan-500 text-cyan-400 hover:bg-cyan-500/20'
+                    ? 'bg-[#3876AE] text-white'
+                    : 'border border-[#3876AE] text-[#3876AE] hover:bg-[#3876AE]/20'
                 }`}
+                style={{
+                  boxShadow: (filters.tags || []).includes(tag.id) 
+                    ? '0 0 8px rgba(56, 118, 174, 0.6)' 
+                    : '0 0 4px rgba(56, 118, 174, 0.3)'
+                }}
                 onClick={() => {
                   const currentTags = filters.tags || [];
                   setFilters({
@@ -192,6 +219,7 @@ function FilterSidebar({ filters, setFilters, tags, users, tones }) {
         {/* Reset Button */}
         <button
           className="mt-6 w-full rounded-lg border border-red-500 bg-transparent px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-red-500/20"
+          style={{ boxShadow: '0 0 8px rgba(220, 38, 38, 0.3)' }}
           onClick={() =>
             setFilters({
               priceRange: [0, 300],

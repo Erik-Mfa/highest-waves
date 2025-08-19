@@ -4,7 +4,7 @@ import BeatDetails from '../../components/Beats/BeatDetails/BeatDetails'
 
 function BeatDetailsPage({ playTrack }) {
   return (
-    <div>
+    <div className="page-container page-bg-gradient">
       <BeatDetails playTrack={playTrack} />
     </div>
   )

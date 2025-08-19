@@ -102,7 +102,7 @@ function BeatList({ beats, filters }) {
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
         {filteredBeats.map((beat) => (
           <div
             key={beat.id}
@@ -128,14 +128,19 @@ function BeatList({ beats, filters }) {
                 {/* Play/Pause Button */}
                 <button
                   onClick={(e) => handlePlayTrack(e, beat)}
-                  className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 sm:p-4 text-cyan-400 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 group-active:opacity-100"
+                  aria-label={
+                    currentTrack === `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` && isPlaying
+                      ? 'Pause preview'
+                      : 'Play preview'
+                  }
+                  className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 bg-transparent p-0 text-cyan-400 opacity-0 transition-all duration-300 group-hover:opacity-100 group-active:opacity-100 hover:scale-110 focus:scale-110 focus:outline-none"
                 >
                   {currentTrack ===
                     `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
                   isPlaying ? (
-                    <FaPause size={20} className="sm:text-3xl" />
+                    <FaPause size={28} />
                   ) : (
-                    <FaPlay size={20} className="sm:text-3xl" />
+                    <FaPlay size={28} />
                   )}
                 </button>
 
