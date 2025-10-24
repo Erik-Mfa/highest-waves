@@ -101,9 +101,9 @@ function FeaturedBeats() {
                   {currentTrack ===
                     `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
                   isPlaying ? (
-                    <FaPause size={28} />
+                    <FaPause size={48} />
                   ) : (
-                    <FaPlay size={28} />
+                    <FaPlay size={48} />
                   )}
                 </button>
               </div>

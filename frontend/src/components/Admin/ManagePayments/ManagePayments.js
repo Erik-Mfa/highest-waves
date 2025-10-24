@@ -81,7 +81,16 @@ const ManagePayments = () => {
   }
 
   return (
-    <div className="m-10 mx-auto max-w-6xl rounded-lg text-gray-200 shadow-lg">
+    <div className="m-4 md:m-10 rounded-xl bg-white shadow-xl">
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-brand-blue to-brand-blue-dark rounded-t-xl p-8">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-white mb-2">Manage Payments</h1>
+          <p className="text-brand-gray-light opacity-90">Monitor and manage payment transactions ({orders.length} orders)</p>
+        </div>
+      </div>
+      
+      <div className="p-8">
       {orderToDelete && (
         <ConfirmMessage
           message={`Are you sure that you want to delete order "${orderToDelete.id}"? All the information related will also be deleted`}
@@ -90,190 +99,193 @@ const ManagePayments = () => {
         />
       )}
 
-      <ul className="space-y-4">
-        {orders.map((order) => (
-          <li
-            key={order._id}
-            className="shadow-header-shadow rounded-lg border border-gray-700 bg-gray-800 p-4"
-          >
-            <h2 className="mb-4 flex items-center justify-center text-2xl font-bold">
-              <span className="text-gray-300">{order.id}</span>
-            </h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {/* Column 1: Order Information */}
-              <div className="space-y-6 rounded-lg bg-gray-600 p-4 shadow-lg">
-                {/* Order Info Section */}
-                <div className="rounded-md bg-gray-800 p-4 shadow-md">
-                  <div className="text-md space-y-2">
-                    <p className="text-white">
-                      <strong className="text-brand-blue">User:</strong>{' '}
-                      {order.user?.username || 'N/A'}
-                    </p>
-                    <p className="text-white">
-                      <strong className="text-brand-blue">Email:</strong>{' '}
-                      {order.user?.email || 'N/A'}
-                    </p>
-                    <p className="text-white">
-                      <strong className="text-brand-blue">Created At:</strong>{' '}
-                      {order.createdAt ? new Date(order.createdAt).toLocaleString() : 'N/A'}
-                    </p>
+        {orders.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="text-6xl mb-4 text-brand-gray">💳</div>
+            <h3 className="text-xl font-semibold text-brand-black mb-2">No orders yet</h3>
+            <p className="text-brand-gray">Orders will appear here when customers make purchases</p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {orders.map((order) => (
+              <div
+                key={order._id}
+                className="bg-white border border-brand-gray-light rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+              >
+                {/* Order Header */}
+                <div className="bg-brand-gray-light p-4 border-b border-brand-gray-light">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl font-bold text-brand-black">
+                      Order #{order.id}
+                    </h2>
+                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                      order.paymentStatus === 'Completed'
+                        ? 'bg-green-100 text-green-800'
+                        : order.paymentStatus === 'Pending'
+                        ? 'bg-yellow-100 text-yellow-800'
+                        : order.paymentStatus === 'Failed'
+                        ? 'bg-red-100 text-red-800'
+                        : order.paymentStatus === 'Refunded'
+                        ? 'bg-blue-100 text-blue-800'
+                        : 'bg-gray-100 text-gray-800'
+                    }`}>
+                      {order.paymentStatus || 'Unknown'}
+                    </span>
                   </div>
                 </div>
-
-                {/* Billing Information Section */}
-                <div className="rounded-md bg-gray-800 p-4 shadow-md">
-                  <h3 className="mb-3 text-xl font-semibold">
-                    Billing Information
-                  </h3>
-                  <div className="text-md space-y-2">
-                    <p className="text-white">
-                      <strong className="text-brand-blue">Name:</strong>{' '}
-                      {order.billingInfo?.name || 'N/A'}
-                    </p>
-                    <p className="text-white">
-                      <strong className="text-brand-blue">Address:</strong>{' '}
-                      {order.billingInfo?.address || 'N/A'}
-                    </p>
-                    <p className="text-white">
-                      <strong className="text-brand-blue">City:</strong>{' '}
-                      {order.billingInfo?.city || 'N/A'}
-                    </p>
-                    <p className="text-white">
-                      <strong className="text-brand-blue">Postal Code:</strong>{' '}
-                      {order.billingInfo?.postalCode || 'N/A'}
-                    </p>
-                    <p className="text-white">
-                      <strong className="text-brand-blue">Country:</strong>{' '}
-                      {order.billingInfo?.country || 'N/A'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Column 2: Beat Information */}
-              <div>
-                <div className="md:col-span-2 md:ml-auto">
-                  <ul className="space-y-6">
-                    {order.beats?.map((beat) => (
-                      <li
-                        key={beat._id}
-                        className="relative rounded-lg border border-gray-600 bg-gray-700 p-4 shadow-lg"
-                      >
-                        {/* Beat Image on Top */}
-                        <div className="mb-2 flex justify-center">
-                          <img
-                            src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
-                            alt={beat.title}
-                            className="size-16 rounded-lg object-cover shadow-md"
-                          />
+                
+                <div className="p-6">
+                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                    {/* Column 1: Order Information */}
+                    <div className="space-y-4">
+                      {/* Order Info Section */}
+                      <div className="bg-brand-gray-light rounded-lg p-4">
+                        <h3 className="text-lg font-semibold text-brand-black mb-3">Order Details</h3>
+                        <div className="space-y-2">
+                          <p className="text-brand-black">
+                            <span className="font-medium text-brand-blue">User:</span>{' '}
+                            {order.user?.username || 'N/A'}
+                          </p>
+                          <p className="text-brand-black">
+                            <span className="font-medium text-brand-blue">Email:</span>{' '}
+                            {order.user?.email || 'N/A'}
+                          </p>
+                          <p className="text-brand-black">
+                            <span className="font-medium text-brand-blue">Created:</span>{' '}
+                            {order.createdAt ? new Date(order.createdAt).toLocaleString() : 'N/A'}
+                          </p>
                         </div>
-                        {/* Beat Title and Details */}
-                        <div className="space-y-2 text-center">
-                          <h4 className="text-md font-semibold text-brand-blue">
-                            {beat.title}
-                          </h4>
-                          <div className="space-y-1 text-sm">
-                            <p>
-                              <strong className="text-gray-400">Price:</strong>{' '}
-                              ${beat.price}
-                            </p>
-                            <p>
-                              <strong className="text-gray-400">
-                                Description:
-                              </strong>{' '}
-                              {beat.description}
-                            </p>
-                            <p>
-                              <strong className="text-gray-400">Owner:</strong>{' '}
-                              {beat.owner?.username || 'N/A'}
-                            </p>
+                      </div>
+
+                      {/* Billing Information Section */}
+                      <div className="bg-brand-gray-light rounded-lg p-4">
+                        <h3 className="text-lg font-semibold text-brand-black mb-3">
+                          Billing Information
+                        </h3>
+                        <div className="space-y-2">
+                          <p className="text-brand-black">
+                            <span className="font-medium text-brand-blue">Name:</span>{' '}
+                            {order.billingInfo?.name || 'N/A'}
+                          </p>
+                          <p className="text-brand-black">
+                            <span className="font-medium text-brand-blue">Address:</span>{' '}
+                            {order.billingInfo?.address || 'N/A'}
+                          </p>
+                          <p className="text-brand-black">
+                            <span className="font-medium text-brand-blue">City:</span>{' '}
+                            {order.billingInfo?.city || 'N/A'}
+                          </p>
+                          <p className="text-brand-black">
+                            <span className="font-medium text-brand-blue">Postal Code:</span>{' '}
+                            {order.billingInfo?.postalCode || 'N/A'}
+                          </p>
+                          <p className="text-brand-black">
+                            <span className="font-medium text-brand-blue">Country:</span>{' '}
+                            {order.billingInfo?.country || 'N/A'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Column 2: Beat Information */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-brand-black mb-4">Purchased Beats</h3>
+                      <div className="space-y-4">
+                        {order.beats?.map((beat) => (
+                          <div
+                            key={beat._id}
+                            className="bg-brand-gray-light rounded-lg p-4 border border-brand-gray-light"
+                          >
+                            <div className="flex items-center space-x-4">
+                              <img
+                                src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
+                                alt={beat.title}
+                                className="w-16 h-16 rounded-lg object-cover"
+                              />
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-brand-black mb-1">
+                                  {beat.title}
+                                </h4>
+                                <p className="text-sm text-brand-gray mb-2">
+                                  {beat.description}
+                                </p>
+                                <div className="flex items-center justify-between text-sm">
+                                  <span className="text-brand-blue font-semibold">
+                                    ${beat.price}
+                                  </span>
+                                  <span className="text-brand-gray">
+                                    by {beat.owner?.username || 'N/A'}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Column 3: Payment Actions */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-brand-black mb-4">Payment Actions</h3>
+
+                      {/* Payment History */}
+                      <div className="bg-brand-gray-light rounded-lg p-4">
+                        <h4 className="font-semibold text-brand-black mb-3">Payment History</h4>
+                        <div className="space-y-2">
+                          {order.paymentHistory?.map((entry, index) => (
+                            <div
+                              key={index}
+                              className={`text-sm p-2 rounded ${
+                                entry.status === 'Completed' 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : 'bg-red-100 text-red-800'
+                              }`}
+                            >
+                              <div className="font-medium">{entry.status}</div>
+                              <div className="text-xs opacity-75">
+                                {new Date(entry.date).toLocaleString()}
+                              </div>
+                              <div>{entry.message}</div>
+                            </div>
+                          ))}
                         </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+                      </div>
 
-              {/* Column 3: Payment Information */}
-              <div className="flex h-full flex-col space-y-6">
-                {/* Payment Status with Icons */}
-                <p className="items-center justify-items-stretch">
-                  <span
-                    className={`text-sm font-bold px-3 py-1 ml-2 rounded-full flex items-center 
-                        ${
-                          order.paymentStatus === 'Completed'
-                            ? 'bg-brand-blue-dark text-green-100'
-                            : order.paymentStatus === 'Pending'
-                            ? 'bg-yellow-600 text-yellow-900'
-                            : order.paymentStatus === 'Failed'
-                            ? 'bg-red-800 text-red-100'
-                            : order.paymentStatus === 'Refunded'
-                            ? 'bg-brand-blue text-brand-blue-dark'
-                            : 'bg-sky-800'
-                        }`}
-                  >
-                    {order.paymentStatus === 'Completed' && (
-                      <FaCheckCircle className="mr-1" />
-                    )}
-                    {order.paymentStatus === 'Pending' && (
-                      <FaExclamationTriangle className="mr-1" />
-                    )}
-                    {order.paymentStatus === 'Failed' && (
-                      <FaTimesCircle className="mr-1" />
-                    )}
-                    {order.paymentStatus === 'Refunded' && (
-                      <FaUndoAlt className="mr-1" />
-                    )}
-                    <span>{order.paymentStatus || 'Unknown'}</span>
-                  </span>
-                </p>
-
-                {/* Payment History */}
-                <ul className="space-y-2">
-                  {order.paymentHistory?.map((entry, index) => (
-                    <li
-                      key={index}
-                      className={`text-sm ${
-                        entry.status === 'Completed' ? 'text-green-300' : 'text-red-300'
-                      }`}
-                    >
-                      {new Date(entry.date).toLocaleString()}:{' '}
-                      <strong>{entry.status}</strong> - {entry.message}
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  onClick={() => handleRefundClick(order.id)}
-                  className={`bg-brand-blue text-white text-lg px-4 py-2 rounded-lg 
-                        hover:bg-brand-blue-dark hover:shadow-lg hover:shadow-brand-blue/50 transition-all 
-                        duration-300 transform hover:scale-110 ${
+                      <button
+                        onClick={() => handleRefundClick(order.id)}
+                        className={`w-full bg-brand-blue text-white px-4 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-brand-blue-dark hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-brand-blue/30 ${
                           loading ? 'cursor-not-allowed opacity-50' : ''
                         }`}
-                  disabled={loading}
-                >
-                  {loading ? <Loading /> : 'Refund'}
-                </button>
+                        disabled={loading}
+                      >
+                        {loading ? <Loading /> : 'Process Refund'}
+                      </button>
 
-                <div className="flex items-center">
-                  {/* Price Display */}
-                  <p className="my-2 mr-auto text-3xl font-extrabold text-brand-blue md:text-4xl">
-                    ${order.price || '0.00'}
-                  </p>
+                      {/* Price and Delete */}
+                      <div className="bg-brand-gray-light rounded-lg p-4">
+                        <div className="text-center mb-4">
+                          <div className="text-3xl font-bold text-brand-blue">
+                            ${order.price || '0.00'}
+                          </div>
+                          <div className="text-sm text-brand-gray">Total Amount</div>
+                        </div>
+                        
+                        <button
+                          onClick={() => confirmDeleteOrder(order)}
+                          className="w-full bg-red-500 text-white px-4 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-red-600 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-500/30 flex items-center justify-center space-x-2"
+                        >
+                          <FaTrash className="w-4 h-4" />
+                          <span>Delete Order</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                <button
-                  onClick={() => confirmDeleteOrder(order)}
-                  className="flex items-center justify-center rounded-full bg-red-600 p-2 text-white transition-all duration-300 ease-in-out hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-                >
-                  <FaTrash />
-                </button>
               </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

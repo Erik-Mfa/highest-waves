@@ -103,29 +103,40 @@ const CreateUserForm = ({ formOpen }) => {
   return (
     <div>
       {isFormDropdownOpen && (
-        <form className="mx-auto mb-4 max-w-md space-y-4 rounded-lg border border-gray-600 p-4">
-          {/* Username */}
-          <div className="mx-10 mb-4">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-white"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              placeholder="Enter username"
-              value={userDetails.username}
-              onChange={handleInputChange}
-              className={`mt-1 block w-full border px-4 py-2 ${validationErrors.username ? 'border-red-500' : 'border-gray-600'} rounded-md bg-gray-900 text-white shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-cyan-500 sm:text-sm`}
-            />
-            {validationErrors.username && (
-              <p className="text-sm text-red-500">
-                {validationErrors.username}
-              </p>
-            )}
+        <form className="mx-8 mb-8 bg-white border border-brand-gray-light rounded-xl shadow-lg overflow-hidden">
+          {/* Form Header */}
+          <div className="bg-gradient-to-r from-brand-blue-dark to-brand-blue p-6">
+            <h2 className="text-2xl font-bold text-white">Create New User</h2>
+            <p className="text-brand-gray-light opacity-90">Add a new user to the system</p>
           </div>
+          
+          <div className="p-8 space-y-6">
+            {/* Username */}
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-semibold text-brand-black mb-2"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+                value={userDetails.username}
+                onChange={handleInputChange}
+                className={`w-full px-4 py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 ${
+                  validationErrors.username 
+                    ? 'border-red-500 focus:ring-red-500/20' 
+                    : 'border-brand-gray-light focus:border-brand-blue focus:ring-brand-blue/20'
+                } bg-white text-brand-black placeholder-brand-gray`}
+              />
+              {validationErrors.username && (
+                <p className="text-sm text-red-500 mt-1">
+                  {validationErrors.username}
+                </p>
+              )}
+            </div>
 
           {/* Email */}
           <div className="mx-10 mb-4">
@@ -238,19 +249,22 @@ const CreateUserForm = ({ formOpen }) => {
             )}
           </div>
 
-          {/* Submit */}
-          <div className="mx-10 mb-4">
-            <button
-              type="button"
-              onClick={handleCreateUser}
-              className="w-full rounded-md border border-transparent bg-cyan-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition-all duration-300 ease-in-out hover:bg-cyan-700"
-            >
-              Create User
-            </button>
+            {/* Submit Button */}
+            <div className="pt-4 border-t border-brand-gray-light">
+              <button
+                type="button"
+                onClick={handleCreateUser}
+                className="w-full bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white px-6 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-brand-blue/30"
+              >
+                Create User
+              </button>
+            </div>
           </div>
           {/* Display validation errors */}
           {Object.keys(validationErrors).length > 0 && (
-            <UserRegisterError message="Please fix the errors above and try again." />
+            <div className="mx-8 mb-4">
+              <UserRegisterError message="Please fix the errors above and try again." />
+            </div>
           )}
         </form>
       )}

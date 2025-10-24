@@ -4,14 +4,10 @@ import { Outlet } from 'react-router-dom'
 
 function AdminPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-black via-gray-900 to-gray-900 text-white">
-      {' '}
-      {/* Dark gradient background */}
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-brand-gray-light via-white to-brand-gray-light">
       <AdminSidebar />
-      <div className="flex w-full flex-1 justify-center p-10 ">
-        <div className="w-full max-w-6xl rounded-lg bg-cyan-950 p-6 shadow-neon-glow ">
-          {' '}
-          {/* Neon glow around content */}
+      <div className="flex w-full flex-1 justify-center p-4 md:p-8">
+        <div className="w-full max-w-7xl">
           <Outlet />
         </div>
       </div>

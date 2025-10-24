@@ -56,7 +56,7 @@ const ManageUsers = () => {
   }
 
   return (
-    <div className="m-10 rounded-lg border border-gray-700 bg-gray-800 p-10 shadow-lg">
+    <div className="m-4 md:m-10 rounded-xl bg-white shadow-xl">
       {/* Confirm delete message */}
       {userToDelete && (
         <ConfirmMessage
@@ -66,48 +66,73 @@ const ManageUsers = () => {
         />
       )}
 
-      <div className="mx-10 mb-4 flex justify-center">
-        <button
-          onClick={toggleForm}
-                      className="rounded-lg bg-brand-blue-dark px-8 py-2 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-brand-blue hover:shadow-lg hover:shadow-brand-blue/50"
-        >
-          Create User
-        </button>
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-brand-blue to-brand-blue-dark rounded-t-xl p-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-white mb-2">Manage Users</h1>
+            <p className="text-brand-gray-light opacity-90">Create and manage user accounts ({users.length} users)</p>
+          </div>
+          <button
+            onClick={toggleForm}
+            className="bg-white text-brand-blue px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-white/30"
+          >
+            + Create User
+          </button>
+        </div>
       </div>
 
       <CreateUserForm formOpen={formOpen} />
 
-      <div className=" mx-auto max-w-3xl rounded-lg p-6 text-white shadow-lg">
-        <div className="space-y-4">
-          {users.map((user) => (
-            <div
-              key={user.id} // Assuming each user has a unique 'id'
-              className="mb-4 flex items-center justify-between rounded-lg border border-gray-600 bg-gray-800 p-4 transition-colors duration-300 ease-in-out hover:bg-gray-700"
-            >
-              <img
-                // eslint-disable-next-line no-undef
-                src={`${process.env.REACT_APP_BACKEND_URL}/${user.image}`}
-                alt="User Avatar"
-                className="mr-4 size-20 rounded-full border-2 border-cyan-600 object-cover" // Adding a border around the image
-              />
-              <div className="grow">
-                <h3 className="text-md font-semibold text-white">
-                  {user.username}
-                </h3>
-                <p className="text-sm text-gray-400">Email: {user.email}</p>
-                <p className="text-sm text-gray-400">Role: {user.role}</p>
-              </div>
-
-              <button
-                onClick={() => confirmDeleteUser(user)}
-                className="flex items-center justify-center rounded-full bg-red-600 p-2 text-white transition-all duration-300 ease-in-out hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-                aria-label={`Delete user ${user.username}`}
+      <div className="p-8">
+        {users.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="text-6xl mb-4 text-brand-gray">👥</div>
+            <h3 className="text-xl font-semibold text-brand-black mb-2">No users yet</h3>
+            <p className="text-brand-gray">Create your first user to get started</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {users.map((user) => (
+              <div
+                key={user.id}
+                className="group bg-white border border-brand-gray-light rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
-                <FaTrash className="text-lg" />
-              </button>
-            </div>
-          ))}
-        </div>
+                <div className="flex items-center space-x-4 mb-4">
+                  <img
+                    src={`${process.env.REACT_APP_BACKEND_URL}/${user.image}`}
+                    alt="User Avatar"
+                    className="w-16 h-16 rounded-full border-2 border-brand-blue object-cover"
+                  />
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-brand-black group-hover:text-brand-blue transition-colors duration-300">
+                      {user.username}
+                    </h3>
+                    <p className="text-sm text-brand-gray">{user.email}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between pt-4 border-t border-brand-gray-light">
+                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    user.role === 'admin' 
+                      ? 'bg-brand-blue text-white' 
+                      : 'bg-brand-gray-light text-brand-black'
+                  }`}>
+                    {user.role}
+                  </span>
+                  
+                  <button
+                    onClick={() => confirmDeleteUser(user)}
+                    className="bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-600 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-red-500/30"
+                    aria-label={`Delete user ${user.username}`}
+                  >
+                    <FaTrash className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
