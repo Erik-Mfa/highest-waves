@@ -120,19 +120,19 @@ const CreateBeatForm = ({ formOpen }) => {
   return (
     <div>
       {isFormDropdownOpen && (
-        <form className="mx-8 mb-8 bg-white border border-brand-gray-light rounded-xl shadow-lg overflow-hidden">
+        <form className="mx-auto mb-6 max-w-4xl bg-white border border-brand-gray-light rounded-xl shadow-lg overflow-hidden">
           {/* Form Header */}
-          <div className="bg-gradient-to-r from-brand-blue-dark to-brand-blue p-6">
-            <h2 className="text-2xl font-bold text-white">Create New Beat</h2>
-            <p className="text-brand-gray-light opacity-90">Fill in the details for your new beat</p>
+          <div className="bg-gradient-to-r from-brand-blue-dark to-brand-blue p-4">
+            <h2 className="text-xl font-bold text-white">Create New Beat</h2>
+            <p className="text-sm text-brand-gray-light opacity-90">Fill in the details for your new beat</p>
           </div>
           
-          <div className="p-8 space-y-6">
+          <div className="p-5 space-y-4">
             {/* Title */}
             <div>
               <label
                 htmlFor="title"
-                className="block text-sm font-semibold text-brand-black mb-2"
+                className="block text-xs font-semibold text-brand-blue-dark mb-1"
               >
                 Beat Title
               </label>
@@ -144,11 +144,11 @@ const CreateBeatForm = ({ formOpen }) => {
                 onChange={(e) =>
                   setBeatDetails({ ...beatDetails, title: e.target.value })
                 }
-                className={`w-full px-4 py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 ${
+                className={`w-full px-3 py-2 border rounded-md transition-all duration-300 focus:outline-none focus:ring-2 text-sm ${
                   validationErrors.title 
                     ? 'border-red-500 focus:ring-red-500/20' 
                     : 'border-brand-gray-light focus:border-brand-blue focus:ring-brand-blue/20'
-                } bg-white text-brand-black placeholder-brand-gray`}
+                } bg-white text-brand-blue-dark placeholder-brand-gray`}
               />
               {validationErrors.title && (
                 <p className="text-sm text-red-500 mt-1">{validationErrors.title}</p>
@@ -159,7 +159,7 @@ const CreateBeatForm = ({ formOpen }) => {
             <div>
               <label
                 htmlFor="description"
-                className="block text-sm font-semibold text-brand-black mb-2"
+                className="block text-xs font-semibold text-brand-blue-dark mb-1"
               >
                 Description
               </label>
@@ -170,12 +170,12 @@ const CreateBeatForm = ({ formOpen }) => {
                 onChange={(e) =>
                   setBeatDetails({ ...beatDetails, description: e.target.value })
                 }
-                rows={4}
-                className={`w-full px-4 py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 resize-none ${
+                rows={3}
+                className={`w-full px-3 py-2 border rounded-md transition-all duration-300 focus:outline-none focus:ring-2 resize-none text-sm ${
                   validationErrors.description 
                     ? 'border-red-500 focus:ring-red-500/20' 
                     : 'border-brand-gray-light focus:border-brand-blue focus:ring-brand-blue/20'
-                } bg-white text-brand-black placeholder-brand-gray`}
+                } bg-white text-brand-blue-dark placeholder-brand-gray`}
               />
               {validationErrors.description && (
                 <p className="text-sm text-red-500 mt-1">
@@ -185,12 +185,12 @@ const CreateBeatForm = ({ formOpen }) => {
             </div>
 
             {/* Price and BPM Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Price */}
               <div>
                 <label
                   htmlFor="price"
-                  className="block text-sm font-semibold text-brand-black mb-2"
+                  className="block text-xs font-semibold text-brand-blue-dark mb-1"
                 >
                   Price ($)
                 </label>
@@ -202,11 +202,11 @@ const CreateBeatForm = ({ formOpen }) => {
                   onChange={(e) =>
                     setBeatDetails({ ...beatDetails, price: e.target.value })
                   }
-                  className={`w-full px-4 py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 ${
+                  className={`w-full px-3 py-2 border rounded-md transition-all duration-300 focus:outline-none focus:ring-2 text-sm ${
                     validationErrors.price 
                       ? 'border-red-500 focus:ring-red-500/20' 
                       : 'border-brand-gray-light focus:border-brand-blue focus:ring-brand-blue/20'
-                  } bg-white text-brand-black placeholder-brand-gray`}
+                  } bg-white text-brand-blue-dark placeholder-brand-gray`}
                 />
                 {validationErrors.price && (
                   <p className="text-sm text-red-500 mt-1">{validationErrors.price}</p>
@@ -217,7 +217,7 @@ const CreateBeatForm = ({ formOpen }) => {
               <div>
                 <label
                   htmlFor="bpm"
-                  className="block text-sm font-semibold text-brand-black mb-2"
+                  className="block text-xs font-semibold text-brand-blue-dark mb-1"
                 >
                   BPM
                 </label>
@@ -229,11 +229,11 @@ const CreateBeatForm = ({ formOpen }) => {
                   onChange={(e) =>
                     setBeatDetails({ ...beatDetails, bpm: e.target.value })
                   }
-                  className={`w-full px-4 py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 ${
+                  className={`w-full px-3 py-2 border rounded-md transition-all duration-300 focus:outline-none focus:ring-2 text-sm ${
                     validationErrors.bpm 
                       ? 'border-red-500 focus:ring-red-500/20' 
                       : 'border-brand-gray-light focus:border-brand-blue focus:ring-brand-blue/20'
-                  } bg-white text-brand-black placeholder-brand-gray`}
+                  } bg-white text-brand-blue-dark placeholder-brand-gray`}
                 />
                 {validationErrors.bpm && (
                   <p className="text-sm text-red-500 mt-1">{validationErrors.bpm}</p>
@@ -245,7 +245,7 @@ const CreateBeatForm = ({ formOpen }) => {
             <div>
               <label
                 htmlFor="tone"
-                className="block text-sm font-semibold text-brand-black mb-2"
+                className="block text-xs font-semibold text-brand-blue-dark mb-1"
               >
                 Tone/Key
               </label>
@@ -257,11 +257,11 @@ const CreateBeatForm = ({ formOpen }) => {
                 onChange={(e) =>
                   setBeatDetails({ ...beatDetails, tone: e.target.value })
                 }
-                className={`w-full px-4 py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 ${
+                className={`w-full px-3 py-2 border rounded-md transition-all duration-300 focus:outline-none focus:ring-2 text-sm ${
                   validationErrors.tone 
                     ? 'border-red-500 focus:ring-red-500/20' 
                     : 'border-brand-gray-light focus:border-brand-blue focus:ring-brand-blue/20'
-                } bg-white text-brand-black placeholder-brand-gray`}
+                } bg-white text-brand-blue-dark placeholder-brand-gray`}
               />
               {validationErrors.tone && (
                 <p className="text-sm text-red-500 mt-1">{validationErrors.tone}</p>
@@ -269,18 +269,18 @@ const CreateBeatForm = ({ formOpen }) => {
             </div>
 
             {/* File Uploads */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Image */}
               <div>
-                <label className="block text-sm font-semibold text-brand-black mb-2">
+                <label className="block text-xs font-semibold text-brand-blue-dark mb-1">
                   Cover Image
                 </label>
-                <label className={`flex cursor-pointer items-center justify-center w-full px-4 py-6 border-2 border-dashed rounded-lg transition-all duration-300 hover:border-brand-blue hover:bg-brand-gray-light/50 ${
+                <label className={`flex cursor-pointer items-center justify-center w-full px-3 py-4 border-2 border-dashed rounded-md transition-all duration-300 hover:border-brand-blue hover:bg-brand-gray-light/50 ${
                   validationErrors.image ? 'border-red-500' : 'border-brand-gray-light'
                 }`}>
                   <div className="text-center">
-                    <FaImage className="mx-auto h-8 w-8 text-brand-gray mb-2" />
-                    <span className="text-sm text-brand-gray">
+                    <FaImage className="mx-auto h-6 w-6 text-brand-gray mb-1" />
+                    <span className="text-xs text-brand-gray">
                       {imageName === 'No file chosen' ? 'Choose image file' : imageName}
                     </span>
                   </div>
@@ -299,15 +299,15 @@ const CreateBeatForm = ({ formOpen }) => {
 
               {/* Audio File */}
               <div>
-                <label className="block text-sm font-semibold text-brand-black mb-2">
+                <label className="block text-xs font-semibold text-brand-blue-dark mb-1">
                   Audio File
                 </label>
-                <label className={`flex cursor-pointer items-center justify-center w-full px-4 py-6 border-2 border-dashed rounded-lg transition-all duration-300 hover:border-brand-blue hover:bg-brand-gray-light/50 ${
+                <label className={`flex cursor-pointer items-center justify-center w-full px-3 py-4 border-2 border-dashed rounded-md transition-all duration-300 hover:border-brand-blue hover:bg-brand-gray-light/50 ${
                   validationErrors.audioURL ? 'border-red-500' : 'border-brand-gray-light'
                 }`}>
                   <div className="text-center">
-                    <FaVideo className="mx-auto h-8 w-8 text-brand-gray mb-2" />
-                    <span className="text-sm text-brand-gray">
+                    <FaVideo className="mx-auto h-6 w-6 text-brand-gray mb-1" />
+                    <span className="text-xs text-brand-gray">
                       {audioName === 'No file chosen' ? 'Choose audio file' : audioName}
                     </span>
                   </div>
@@ -329,14 +329,14 @@ const CreateBeatForm = ({ formOpen }) => {
 
             {/* Tags Dropdown */}
             <div>
-              <label className="block text-sm font-semibold text-brand-black mb-2">
+              <label className="block text-xs font-semibold text-brand-blue-dark mb-1">
                 Tags ({beatDetails.tags.length} selected)
               </label>
               <div className="relative">
                 <button
                   type="button"
                   onClick={toggleTagsDropdown}
-                  className="w-full px-4 py-3 border border-brand-gray-light rounded-lg bg-white text-left text-brand-black transition-all duration-300 hover:border-brand-blue focus:outline-none focus:ring-4 focus:ring-brand-blue/20 flex items-center justify-between"
+                  className="w-full px-3 py-2 border border-brand-gray-light rounded-md bg-white text-left text-brand-blue-dark text-sm transition-all duration-300 hover:border-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue/20 flex items-center justify-between"
                 >
                   <span>Select Tags</span>
                   <FaChevronDown className={`transition-transform duration-300 ${
@@ -344,14 +344,14 @@ const CreateBeatForm = ({ formOpen }) => {
                   }`} />
                 </button>
                 {isTagsDropdownOpen && (
-                  <div className="absolute z-10 mt-2 w-full rounded-lg border border-brand-gray-light bg-white shadow-xl max-h-48 overflow-y-auto">
+                  <div className="absolute z-10 mt-1 w-full rounded-md border border-brand-gray-light bg-white shadow-xl max-h-40 overflow-y-auto">
                     {tags.map((tag) => (
                       <div
                         key={tag.id}
-                        className={`cursor-pointer px-4 py-3 transition-colors duration-200 ${
+                        className={`cursor-pointer px-3 py-2 text-sm transition-colors duration-200 ${
                           beatDetails.tags.includes(tag.id)
                             ? 'bg-brand-blue text-white'
-                            : 'text-brand-black hover:bg-brand-gray-light'
+                            : 'text-brand-blue-dark hover:bg-brand-gray-light'
                         }`}
                         onClick={() => handleTagSelect(tag.id)}
                       >
@@ -369,11 +369,11 @@ const CreateBeatForm = ({ formOpen }) => {
             </div>
 
             {/* Create Beat Button */}
-            <div className="pt-4 border-t border-brand-gray-light">
+            <div className="pt-3 border-t border-brand-gray-light">
               <button
                 type="button"
                 onClick={handleCreateBeat}
-                className="w-full bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white px-6 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-brand-blue/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white px-4 py-3 rounded-md font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/30 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Create Beat
               </button>
@@ -382,7 +382,7 @@ const CreateBeatForm = ({ formOpen }) => {
 
           {/* Form validation errors */}
           {Object.keys(validationErrors).length > 0 && (
-            <div className="mx-8 mb-4">
+            <div className="px-5 pb-4">
               <UserRegisterError message="Please fix the errors above and try again." />
             </div>
           )}

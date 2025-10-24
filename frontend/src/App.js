@@ -16,6 +16,7 @@ import ManageBeats from './components/Admin/ManageBeats/ManageBeats'
 import ManageTags from './components/Admin/ManageTags/ManageTags'
 import ManageUsers from './components/Admin/ManageUsers/ManageUsers'
 import ManagePayments from './components/Admin/ManagePayments/ManagePayments'
+import ManageLicenses from './components/Admin/ManageLicenses/ManageLicenses'
 
 // Pages
 import SupportPage from './pages/SupportPage/SupportPage'
@@ -192,6 +193,7 @@ function App() {
             <Route path="manage-beats" element={<ManageBeats />} />
             <Route path="manage-users" element={<ManageUsers />} />
             <Route path="manage-tags" element={<ManageTags />} />
+            <Route path="manage-licenses" element={<ManageLicenses />} />
             <Route path="manage-payments" element={<ManagePayments />} />
           </Route>
         </Routes>

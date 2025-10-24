@@ -33,6 +33,14 @@ const AdminSidebar = () => {
             </li>
             <li>
               <Link 
+                to="/admin/manage-licenses"
+                className="block px-4 md:px-6 py-3 rounded-lg bg-brand-blue text-white font-semibold transition-all duration-300 hover:bg-brand-blue-dark hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-brand-blue/30"
+              >
+                Licenses
+              </Link>
+            </li>
+            <li>
+              <Link 
                 to="/admin/manage-payments"
                 className="block px-4 md:px-6 py-3 rounded-lg bg-brand-blue text-white font-semibold transition-all duration-300 hover:bg-brand-blue-dark hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-brand-blue/30"
               >

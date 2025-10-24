@@ -1,31 +1,33 @@
 import React from 'react'
-import { Link } from 'react-router-dom'; // Ensure you have React Router setup
+import { Link } from 'react-router-dom'
 
 // eslint-disable-next-line react/prop-types
 const CannotPurchaseMessage = ({ onCancel }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-full max-w-md rounded-lg bg-gray-800 p-6 text-white shadow-lg">
-        {/* Message displayed for unauthenticated users */}
-        <p className="mb-6 text-lg text-center">
-          You need to be logged in to purchase this beat. Please log in or create an account to continue.
-        </p>
+        <div className="text-center mb-6">
+          <div className="text-6xl mb-4">🔒</div>
+          <h2 className="text-xl font-bold text-white mb-4">Login Required</h2>
+          <p className="text-white">
+            You need to be logged in to purchase this beat. Please log in or create an account to continue.
+          </p>
+        </div>
 
         <div className="flex justify-between">
           <button
             onClick={onCancel}
-            className="transform rounded-lg bg-red-800 px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-red-700 hover:shadow-lg hover:shadow-red-500/50"
+            className="rounded-md bg-gray-500 px-4 py-2 text-white transition duration-200 hover:bg-gray-600"
           >
             Cancel
           </button>
 
-        <Link
+          <Link
             to="/login"
-            className="transform rounded-lg bg-brand-blue-dark px-4 py-1 text-lg text-white transition-all duration-300 hover:scale-110 hover:bg-brand-blue hover:shadow-lg hover:shadow-brand-blue/50"
-            style={{ fontFamily: '"REM"' }}
-        >
+            className="rounded-md bg-brand-blue px-4 py-2 text-white transition duration-200 hover:bg-brand-blue-dark inline-flex items-center"
+          >
             Login
-        </Link>
+          </Link>
         </div>
       </div>
     </div>

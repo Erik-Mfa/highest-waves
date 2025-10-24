@@ -71,7 +71,7 @@ const ManageTags = () => {
 
         {/* Create Tag Form */}
         <div className="max-w-md mx-auto mb-8">
-          <h2 className="text-xl font-bold text-brand-black mb-4 text-center">Add New Tag</h2>
+          <h2 className="text-xl font-bold text-brand-blue mb-4 text-center">Add New Tag</h2>
           <form className="space-y-4">
             <div>
               <input
@@ -82,7 +82,7 @@ const ManageTags = () => {
                 onChange={(e) =>
                   setTagDetails({ ...tagDetails, name: e.target.value })
                 }
-                className="w-full px-4 py-3 border border-brand-gray-light rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:border-brand-blue focus:ring-brand-blue/20 bg-white text-brand-black placeholder-brand-gray"
+                className="w-full px-4 py-3 border border-brand-gray-light rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:border-brand-blue focus:ring-brand-blue/20 bg-white text-brand-blue-dark placeholder-brand-gray"
               />
             </div>
 
@@ -99,14 +99,14 @@ const ManageTags = () => {
 
         {/* Tags List */}
         <div>
-          <h3 className="text-xl font-bold text-brand-black mb-6 text-center">
+          <h3 className="text-xl font-bold text-brand-blue mb-6 text-center">
             Available Tags
           </h3>
           
           {tags.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-6xl mb-4 text-brand-gray">🏷️</div>
-              <h3 className="text-xl font-semibold text-brand-black mb-2">No tags yet</h3>
+              <h3 className="text-xl font-semibold text-brand-blue mb-2">No tags yet</h3>
               <p className="text-brand-gray">Create your first tag to get started</p>
             </div>
           ) : (
@@ -117,7 +117,7 @@ const ManageTags = () => {
                   className="group bg-white border border-brand-gray-light rounded-lg p-4 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-brand-black font-medium group-hover:text-brand-blue transition-colors duration-300">
+                    <span className="text-brand-blue-dark font-medium group-hover:text-brand-blue transition-colors duration-300">
                       {tag.name}
                     </span>
                     <button

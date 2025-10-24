@@ -82,52 +82,57 @@ const ManageUsers = () => {
         </div>
       </div>
 
-      <CreateUserForm formOpen={formOpen} />
+      {/* Create User Form Section */}
+      <div className="px-8 pt-4">
+        <CreateUserForm formOpen={formOpen} />
+      </div>
 
       <div className="p-8">
         {users.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-6xl mb-4 text-brand-gray">👥</div>
-            <h3 className="text-xl font-semibold text-brand-black mb-2">No users yet</h3>
+            <h3 className="text-xl font-semibold text-brand-blue mb-2">No users yet</h3>
             <p className="text-brand-gray">Create your first user to get started</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="space-y-4">
             {users.map((user) => (
               <div
                 key={user.id}
                 className="group bg-white border border-brand-gray-light rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="flex items-center space-x-4 mb-4">
-                  <img
-                    src={`${process.env.REACT_APP_BACKEND_URL}/${user.image}`}
-                    alt="User Avatar"
-                    className="w-16 h-16 rounded-full border-2 border-brand-blue object-cover"
-                  />
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-brand-black group-hover:text-brand-blue transition-colors duration-300">
-                      {user.username}
-                    </h3>
-                    <p className="text-sm text-brand-gray">{user.email}</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-6">
+                    <img
+                      src={`${process.env.REACT_APP_BACKEND_URL}/${user.image}`}
+                      alt="User Avatar"
+                      className="w-16 h-16 rounded-full border-2 border-brand-blue object-cover"
+                    />
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-brand-blue-dark group-hover:text-brand-blue transition-colors duration-300">
+                        {user.username}
+                      </h3>
+                      <p className="text-sm text-brand-gray mt-1">{user.email}</p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="flex items-center justify-between pt-4 border-t border-brand-gray-light">
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    user.role === 'admin' 
-                      ? 'bg-brand-blue text-white' 
-                      : 'bg-brand-gray-light text-brand-black'
-                  }`}>
-                    {user.role}
-                  </span>
                   
-                  <button
-                    onClick={() => confirmDeleteUser(user)}
-                    className="bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-600 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-red-500/30"
-                    aria-label={`Delete user ${user.username}`}
-                  >
-                    <FaTrash className="w-4 h-4" />
-                  </button>
+                  <div className="flex items-center space-x-4">
+                    <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                      user.role === 'admin' 
+                        ? 'bg-brand-blue text-white' 
+                        : 'bg-brand-gray-light text-brand-blue-dark'
+                    }`}>
+                      {user.role}
+                    </span>
+                    
+                    <button
+                      onClick={() => confirmDeleteUser(user)}
+                      className="bg-red-500 text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-600 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-red-500/30"
+                      aria-label={`Delete user ${user.username}`}
+                    >
+                      <FaTrash className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
