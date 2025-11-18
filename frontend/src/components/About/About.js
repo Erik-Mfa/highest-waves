@@ -35,7 +35,7 @@ const About = () => {
           preload="auto"
         >
           <source 
-            src="/assets/studio-footage.mp4" 
+            src={`${process.env.PUBLIC_URL || ''}/assets/studio-footage.mp4`} 
             type="video/mp4"
           />
           Your browser does not support the video tag.

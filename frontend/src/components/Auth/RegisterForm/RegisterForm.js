@@ -88,7 +88,7 @@ const RegisterForm = () => {
         <div className="text-center">
           <Link to="/" className="inline-block">
             <img
-              src="/assets/highestwaves-white-logo.png"
+              src={`${process.env.PUBLIC_URL || ''}/assets/highestwaves-white-logo.png`}
               alt="Highest Waves Logo"
               className="mx-auto h-20 w-auto transform transition-transform duration-300 hover:scale-105"
             />

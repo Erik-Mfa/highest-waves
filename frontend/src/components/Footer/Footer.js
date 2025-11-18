@@ -173,7 +173,7 @@ const Footer = () => {
         <div className="mt-12 flex justify-center border-t border-[#124D82] pt-12">
           <Link to="/" className="transition-transform duration-300 hover:scale-110">
             <img
-              src="/assets/highestwaves-white-logo.png"
+              src={`${process.env.PUBLIC_URL || ''}/assets/highestwaves-white-logo.png`}
               alt="Highest Waves Logo"
               className="h-16 w-auto sm:h-20 lg:h-24"
             />

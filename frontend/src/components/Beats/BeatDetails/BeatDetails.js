@@ -167,7 +167,7 @@ function BeatDetails() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center">
         <img
-          src="/assets/images/error-beat.png"
+          src={`${process.env.PUBLIC_URL || ''}/assets/images/error-beat.png`}
           alt="Beat not found"
           className="mb-6 size-64"
         />

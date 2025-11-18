@@ -42,7 +42,7 @@ const Header = ({ user, admin }) => {
           {/* Logo */}
           <Link to="/" className="z-10">
             <img
-              src="/assets/highestwaves-logo.png"
+              src={`${process.env.PUBLIC_URL || ''}/assets/highestwaves-logo.png`}
               alt="Highest Waves Logo"
               className="w-20 transition-transform duration-200 hover:scale-105 sm:w-24 lg:w-48"
             />

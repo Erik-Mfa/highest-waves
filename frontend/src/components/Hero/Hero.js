@@ -22,13 +22,13 @@ const Hero = () => {
   const [overlayPositions, setOverlayPositions] = useState([])
 
   const heroImages = [
-    '/assets/hero-images/rizzo-e-compania.jpeg',
-    '/assets/hero-images/happy-young-african-american-man-with-dreadlocks-p-2025-03-09-11-02-13-utc.jpg',
-    '/assets/hero-images/Large Screen Mockup 02.jpg',
-    '/assets/hero-images/urban-hype-wide-angle-portrait-of-an-african-man-2025-02-12-00-45-53-utc.jpg',
-    '/assets/hero-images/pexels-aleksandr-neplokhov-486399-1238941.jpg',
-    '/assets/hero-images/pexels-aleksandr-neplokhov-486399-1238989.jpg',
-    '/assets/hero-images/Whisk_e07fc315c9.jpg'
+    `${process.env.PUBLIC_URL || ''}/assets/hero-images/rizzo-e-compania.jpeg`,
+    `${process.env.PUBLIC_URL || ''}/assets/hero-images/happy-young-african-american-man-with-dreadlocks-p-2025-03-09-11-02-13-utc.jpg`,
+    `${process.env.PUBLIC_URL || ''}/assets/hero-images/Large Screen Mockup 02.jpg`,
+    `${process.env.PUBLIC_URL || ''}/assets/hero-images/urban-hype-wide-angle-portrait-of-an-african-man-2025-02-12-00-45-53-utc.jpg`,
+    `${process.env.PUBLIC_URL || ''}/assets/hero-images/pexels-aleksandr-neplokhov-486399-1238941.jpg`,
+    `${process.env.PUBLIC_URL || ''}/assets/hero-images/pexels-aleksandr-neplokhov-486399-1238989.jpg`,
+    `${process.env.PUBLIC_URL || ''}/assets/hero-images/Whisk_e07fc315c9.jpg`
   ]
 
   // Generate random positions for overlay images
@@ -246,7 +246,7 @@ const Hero = () => {
         <div className="page-card page-padding-xl">
           <div className="page-text-center">
             <img 
-              src="/assets/highestwaves-white-logo.png" 
+              src={`${process.env.PUBLIC_URL || ''}/assets/highestwaves-white-logo.png`} 
               alt="Highest Waves Logo" 
               className="max-w-md mx-auto mb-6"
               style={{ maxHeight: '200px' }}
