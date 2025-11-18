@@ -16,6 +16,7 @@ import { API_BASE_URL } from '../../../config/api'
 import './FeaturedBeats.css'
 
 const BACKEND_BASE_URL = API_BASE_URL.replace('/api', '')
+// Images are served via /api/assets, so use API_BASE_URL
 
 function FeaturedBeats() {
   console.log('FeaturedBeats: Component mounted')
@@ -100,12 +101,12 @@ function FeaturedBeats() {
 
     // Set the current track details
     dispatch(
-      setCurrentTrack(`${BACKEND_BASE_URL}/${beat.audioURL}`)
+      setCurrentTrack(`${API_BASE_URL}/${beat.audioURL}`)
     )
     dispatch(setCurrentTitle(beat.title))
     dispatch(setCurrentId(beat.id))
     dispatch(
-      setCurrentCover(`${BACKEND_BASE_URL}/${beat.image}`)
+      setCurrentCover(`${API_BASE_URL}/${beat.image}`)
     )
 
     // Toggle play/pause
@@ -136,14 +137,18 @@ function FeaturedBeats() {
               )}
 
               <img
-                src={`${BACKEND_BASE_URL}/${beat.image}`}
+                src={`${API_BASE_URL}/${beat.image}`}
                 alt={beat.title}
                 className={`size-full rounded-lg object-cover ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 style={{ aspectRatio: '1 / 1' }}
                 onLoad={() => setImageLoaded(true)}
                 onError={(e) => {
-                  console.error('Error loading image:', beat.image)
-                  e.target.src = `${process.env.PUBLIC_URL || ''}/assets/images/error-beat.png`
+                  // Prevent infinite loop - only log once and set placeholder
+                  if (!e.target.dataset.errorLogged) {
+                    console.error('Error loading image:', beat.image)
+                    e.target.dataset.errorLogged = 'true'
+                    e.target.style.display = 'none'
+                  }
                 }}
               />
 
@@ -153,7 +158,7 @@ function FeaturedBeats() {
               >
                 {/* Conditionally render FaPlay or FaPause */}
                 {currentTrack ===
-                  `${BACKEND_BASE_URL}/${beat.audioURL}` &&
+                  `${API_BASE_URL}/${beat.audioURL}` &&
                 isPlaying ? (
                   <FaPause size={32} />
                 ) : (
