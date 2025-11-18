@@ -1,68 +1,41 @@
-/* FeaturedBeats Component - Simplified Styles */
+/* FeaturedBeats Component - Grid Layout with Scroll Opacity */
 
-/* Marquee Animation */
-.marquee-container {
-  position: relative;
-  z-index: 10;
-  overflow: hidden;
+/* Grid Layout - Smaller and More Compact */
+.beats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
   width: 100%;
-}
-
-.marquee-content {
-  display: flex;
-  gap: 0.75rem;
-  animation: marquee 30s linear infinite;
-}
-
-.marquee-content > div {
-  flex: 0 0 200px;
-  height: 240px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 @media (min-width: 640px) {
-  .marquee-content > div {
-    flex: 0 0 220px;
-    height: 260px;
+  .beats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.25rem;
   }
 }
 
 @media (min-width: 768px) {
-  .marquee-content {
-    gap: 1rem;
-  }
-  .marquee-content > div {
-    flex: 0 0 240px;
-    height: 280px;
+  .beats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .marquee-content > div {
-    flex: 0 0 260px;
-    height: 300px;
+  .beats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.75rem;
   }
 }
 
 @media (min-width: 1280px) {
-  .marquee-content > div {
-    flex: 0 0 280px;
-    height: 320px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .marquee-content > div {
-    flex: 0 0 300px;
-    height: 340px;
-  }
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-100% - 1rem));
+  .beats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
   }
 }
 
@@ -74,19 +47,19 @@
   }
 }
 
-/* Play Button */
+/* Play Button - Smaller */
 .play-button {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background: linear-gradient(135deg, var(--brand-light), var(--brand-medium));
   border: none;
   border-radius: 50%;
   color: var(--brand-contrast);
-  font-size: 1.25rem;
+  font-size: 1rem;
   opacity: 0;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -222,28 +195,31 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .marquee-content {
+  .beats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 0.75rem;
+    padding: 0 0.5rem;
   }
   
   .play-button {
-    width: 45px;
-    height: 45px;
-    font-size: 1.125rem;
+    width: 35px;
+    height: 35px;
+    font-size: 0.875rem;
   }
   
   .featured-beat-info {
-    padding: 1rem;
+    padding: 0.75rem;
   }
   
   .featured-beat-title {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .marquee-content > div {
-    flex: 0 0 180px;
-    height: 220px;
+  .beats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.5rem;
   }
 }
+

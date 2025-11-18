@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -17,6 +17,8 @@ import './FeaturedBeats.css'
 function FeaturedBeats() {
   const [featuredBeats, setFeaturedBeats] = useState([])
   const [isImageLoaded, setImageLoaded] = useState(false)
+  const [beatsOpacity, setBeatsOpacity] = useState({})
+  const sectionRef = useRef(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -28,7 +30,7 @@ function FeaturedBeats() {
     const fetchFeaturedBeats = async () => {
       try {
         const response = await getBeats()
-        const latestBeats = response.slice(0, 10) // Increased from 7 to 10 beats
+        const latestBeats = response.slice(0, 6) // Reduced to 6 beats
         setFeaturedBeats(latestBeats)
       } catch (error) {
         console.error('Error fetching featured beats:', error)
@@ -37,6 +39,43 @@ function FeaturedBeats() {
 
     fetchFeaturedBeats()
   }, [])
+
+  // Scroll-based opacity effect
+  useEffect(() => {
+    if (featuredBeats.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const beatId = entry.target.dataset.beatId
+          if (beatId) {
+            const ratio = entry.intersectionRatio
+            // Calculate opacity based on intersection ratio
+            // When fully visible (ratio = 1), opacity = 1
+            // When not visible (ratio = 0), opacity = 0.3
+            const opacity = Math.max(0.3, ratio)
+            
+            setBeatsOpacity(prev => ({
+              ...prev,
+              [beatId]: opacity
+            }))
+          }
+        })
+      },
+      {
+        threshold: Array.from({ length: 101 }, (_, i) => i / 100), // 0 to 1 in 0.01 steps
+        rootMargin: '-10% 0px -10% 0px' // Start effect when element is 10% into viewport
+      }
+    )
+
+    // Observe all beat cards
+    const beatCards = document.querySelectorAll('[data-beat-id]')
+    beatCards.forEach(card => observer.observe(card))
+
+    return () => {
+      beatCards.forEach(card => observer.unobserve(card))
+    }
+  }, [featuredBeats])
 
   const handleBeatClick = (beatId) => {
     navigate(`/beats/${beatId}`)
@@ -67,49 +106,52 @@ function FeaturedBeats() {
   }
 
   return (
-    <div className="relative py-8 sm:py-12 md:py-16 lg:py-20">
-      <h2 className="page-title mb-8 sm:mb-10 md:mb-12">
+    <div ref={sectionRef} className="relative py-4 sm:py-6 md:py-8 lg:py-10">
+      <h2 className="page-title mb-4 sm:mb-6 md:mb-8">
         Featured Beats
       </h2>
 
-      <div className="marquee-container pt-4 sm:pt-6 md:pt-8">
-        <div className="marquee-content">
-          {featuredBeats.concat(featuredBeats).map((beat, index) => (
-            <div
-              key={`${beat.id}-${index}`}
-              className="group relative mr-3 inline-block rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:z-50"
-              onClick={() => handleBeatClick(beat.id)}
-            >
-              <div className="relative flex size-48 items-center justify-center rounded-lg overflow-hidden sm:size-56 md:size-60 lg:size-64 xl:size-72">
-                {!isImageLoaded && (
-                  <div className="absolute inset-0 animate-pulse rounded-lg bg-gray-700"></div>
+      <div className="beats-grid pt-2 sm:pt-3 md:pt-4">
+        {featuredBeats.map((beat) => (
+          <div
+            key={beat.id}
+            data-beat-id={beat.id}
+            className="group relative rounded-lg transition-all duration-500 hover:scale-105 hover:shadow-lg hover:z-50"
+            style={{ 
+              opacity: beatsOpacity[beat.id] || 0.3,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease'
+            }}
+            onClick={() => handleBeatClick(beat.id)}
+          >
+            <div className="relative flex size-32 items-center justify-center rounded-lg overflow-hidden sm:size-36 md:size-40 lg:size-44 xl:size-48">
+              {!isImageLoaded && (
+                <div className="absolute inset-0 animate-pulse rounded-lg bg-gray-700"></div>
+              )}
+
+              <img
+                src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
+                alt={beat.title}
+                className={`size-full rounded-lg object-cover ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                style={{ aspectRatio: '1 / 1' }}
+                onLoad={() => setImageLoaded(true)}
+              />
+
+              <button
+                onClick={(e) => handlePlayTrack(e, beat)}
+                className="absolute inset-0 flex items-center justify-center rounded-lg p-2 text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+              >
+                {/* Conditionally render FaPlay or FaPause */}
+                {currentTrack ===
+                  `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
+                isPlaying ? (
+                  <FaPause size={32} />
+                ) : (
+                  <FaPlay size={32} />
                 )}
-
-                <img
-                  src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
-                  alt={beat.title}
-                  className={`size-full rounded-lg object-cover ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ aspectRatio: '1 / 1' }}
-                  onLoad={() => setImageLoaded(true)}
-                />
-
-                <button
-                  onClick={(e) => handlePlayTrack(e, beat)}
-                  className="absolute inset-0 flex items-center justify-center rounded-lg p-2 text-cyan-400 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
-                >
-                  {/* Conditionally render FaPlay or FaPause */}
-                  {currentTrack ===
-                    `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
-                  isPlaying ? (
-                    <FaPause size={48} />
-                  ) : (
-                    <FaPlay size={48} />
-                  )}
-                </button>
-              </div>
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   )
