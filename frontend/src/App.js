@@ -39,6 +39,7 @@ const ScrollToTop = () => {
   const { pathname } = useLocation()
 
   useEffect(() => {
+    console.log('ScrollToTop: Pathname changed to:', pathname)
     window.scrollTo(0, 0) // Scrolls to top
   }, [pathname])
 
@@ -46,6 +47,8 @@ const ScrollToTop = () => {
 }
 
 function App() {
+  console.log('App: Component mounted')
+  console.log('App: Router starting')
   return (
     <Provider store={store}>
       <Router>

@@ -22,9 +22,11 @@ const Layout = ({ children }) => {
 
   // Fetch user and admin info
   useEffect(() => {
+    console.log('Layout: Component mounted, fetching user data...')
     const fetchData = async () => {
       try {
         const authenticatedUser = await isAuthenticated()
+        console.log('Layout: Authenticated user:', authenticatedUser)
         const isUserAdmin = authenticatedUser ? await isAdmin() : false
 
         setUser(authenticatedUser)

@@ -12,7 +12,10 @@ import {
 import { setPlaylist, setCurrentIndex } from '../../../store/playlistSlice'
 import { getBeats } from '../../../services/api/beats'
 import { FaPlay, FaPause } from 'react-icons/fa' // Added FaPause for pause functionality
+import { API_BASE_URL } from '../../../config/api'
 import './FeaturedBeats.css'
+
+const BACKEND_BASE_URL = API_BASE_URL.replace('/api', '')
 
 function FeaturedBeats() {
   console.log('FeaturedBeats: Component mounted')
@@ -97,12 +100,12 @@ function FeaturedBeats() {
 
     // Set the current track details
     dispatch(
-      setCurrentTrack(`${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}`)
+      setCurrentTrack(`${BACKEND_BASE_URL}/${beat.audioURL}`)
     )
     dispatch(setCurrentTitle(beat.title))
     dispatch(setCurrentId(beat.id))
     dispatch(
-      setCurrentCover(`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`)
+      setCurrentCover(`${BACKEND_BASE_URL}/${beat.image}`)
     )
 
     // Toggle play/pause
@@ -133,11 +136,15 @@ function FeaturedBeats() {
               )}
 
               <img
-                src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
+                src={`${BACKEND_BASE_URL}/${beat.image}`}
                 alt={beat.title}
                 className={`size-full rounded-lg object-cover ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 style={{ aspectRatio: '1 / 1' }}
                 onLoad={() => setImageLoaded(true)}
+                onError={(e) => {
+                  console.error('Error loading image:', beat.image)
+                  e.target.src = `${process.env.PUBLIC_URL || ''}/assets/images/error-beat.png`
+                }}
               />
 
               <button
@@ -146,7 +153,7 @@ function FeaturedBeats() {
               >
                 {/* Conditionally render FaPlay or FaPause */}
                 {currentTrack ===
-                  `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
+                  `${BACKEND_BASE_URL}/${beat.audioURL}` &&
                 isPlaying ? (
                   <FaPause size={32} />
                 ) : (
