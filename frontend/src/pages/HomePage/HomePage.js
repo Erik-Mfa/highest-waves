@@ -6,6 +6,7 @@ import About from '../../components/About/About'
 import '../../styles/page-responsive-pattern.css'
 
 function HomePage() {
+  console.log('HomePage: Component mounted')
   return (
     <div className="page-container page-bg-gradient relative overflow-hidden">
       {/* Enhanced Background Elements */}

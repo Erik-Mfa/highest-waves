@@ -15,6 +15,7 @@ import { FaPlay, FaPause } from 'react-icons/fa' // Added FaPause for pause func
 import './FeaturedBeats.css'
 
 function FeaturedBeats() {
+  console.log('FeaturedBeats: Component mounted')
   const [featuredBeats, setFeaturedBeats] = useState([])
   const [isImageLoaded, setImageLoaded] = useState(false)
   const [beatsOpacity, setBeatsOpacity] = useState({})
@@ -29,11 +30,14 @@ function FeaturedBeats() {
   useEffect(() => {
     const fetchFeaturedBeats = async () => {
       try {
+        console.log('FeaturedBeats: Fetching beats...')
         const response = await getBeats()
+        console.log('FeaturedBeats: Received beats:', response)
         const latestBeats = response.slice(0, 6) // Reduced to 6 beats
         setFeaturedBeats(latestBeats)
       } catch (error) {
         console.error('Error fetching featured beats:', error)
+        console.error('Error details:', error.response?.data, error.message)
       }
     }
 

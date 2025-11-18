@@ -26,10 +26,15 @@ export const createBeat = async (beatDetails) => {
 
 export const getBeats = async () => {
   try {
+    console.log('getBeats: Making request to:', instance.defaults.baseURL + '/beats')
     const response = await instance.get('/beats')
+    console.log('getBeats: Response received:', response.status, response.data?.length)
     return response.data || []
   } catch (error) {
     console.error('Error fetching featured beats:', error)
+    console.error('Error URL:', error.config?.url)
+    console.error('Error baseURL:', error.config?.baseURL)
+    console.error('Error response:', error.response?.status, error.response?.data)
     return [] // Return empty array on error so components can still render
   }
 }
