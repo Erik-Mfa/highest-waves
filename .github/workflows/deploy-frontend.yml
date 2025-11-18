@@ -41,7 +41,7 @@ jobs:
         working-directory: frontend
         env:
           NODE_ENV: production
-          REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL || vars.BACKEND_URL || 'http://localhost:3001' }}
+          REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL || 'https://api.highestwaves.com' }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
