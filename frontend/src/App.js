@@ -49,9 +49,12 @@ const ScrollToTop = () => {
 function App() {
   console.log('App: Component mounted')
   console.log('App: Router starting')
+  // Get basename from homepage in package.json or use default
+  const basename = process.env.PUBLIC_URL || '/highest-waves'
+  console.log('App: Using basename:', basename)
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename={basename}>
         <ScrollToTop />
 
         <Routes>
