@@ -18,6 +18,7 @@ import {
   setCurrentCover,
   togglePlayPause
 } from '../../../store/audioPlayerSlice'
+import { API_BASE_URL } from '../../../config/api'
 
 function BeatDetails() {
   const [beat, setBeat] = useState(null)
@@ -89,15 +90,15 @@ function BeatDetails() {
 
   const handlePlayTrack = () => {
     if (
-      currentTrack !== `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}`
+      currentTrack !== `${API_BASE_URL}/${beat.audioURL}`
     ) {
       dispatch(
-        setCurrentTrack(`${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}`)
+        setCurrentTrack(`${API_BASE_URL}/${beat.audioURL}`)
       )
       dispatch(setCurrentTitle(beat.title))
       dispatch(setCurrentId(beat.id))
       dispatch(
-        setCurrentCover(`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`)
+        setCurrentCover(`${API_BASE_URL}/${beat.image}`)
       )
       if (!isPlaying) {
         dispatch(togglePlayPause(true))
@@ -201,14 +202,21 @@ function BeatDetails() {
       >
         {/* Play/Pause button with hover effect */}
             <img
-              src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
+              src={`${API_BASE_URL}/${beat.image}`}
               alt={beat.title}
               className="w-full aspect-square object-cover rounded-2xl"
+              onError={(e) => {
+                if (!e.target.dataset.errorLogged) {
+                  console.error('Error loading image:', beat.image)
+                  e.target.dataset.errorLogged = 'true'
+                  e.target.style.display = 'none'
+                }
+              }}
             />
             <div className="absolute inset-0 flex items-center justify-center transition-all duration-[0.8s] ease-in-out rounded-2xl">
               <div className="flex size-full items-center justify-center bg-brand-overlay transition-all duration-[1.2s] ease-in-out hover:bg-opacity-0 rounded-2xl">
             {currentTrack ===
-              `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
+              `${API_BASE_URL}/${beat.audioURL}` &&
             isPlaying ? (
                   <FaPause size={64} className="text-brand-light transition-all duration-[1.2s] ease-in-out hover:scale-125" />
             ) : (

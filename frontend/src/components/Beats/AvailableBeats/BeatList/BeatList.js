@@ -13,6 +13,7 @@ import {
 import { setPlaylist, setCurrentIndex } from '../../../../store/playlistSlice'
 import { useNavigate } from 'react-router-dom'
 import { FaPlay, FaPause } from 'react-icons/fa' // Import FaPause for the pause button
+import { API_BASE_URL } from '../../../../config/api'
 import './BeatList.css'
 
 function BeatList({ beats, filters }) {
@@ -87,13 +88,13 @@ function BeatList({ beats, filters }) {
 
     // Set the current track details
     dispatch(
-      setCurrentTrack(`${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}`)
+      setCurrentTrack(`${API_BASE_URL}/${beat.audioURL}`)
     )
     dispatch(setCurrentTitle(beat.title))
     dispatch(setCurrentId(beat.id))
     dispatch(setCurrentOwner(beat.owner.username))
     dispatch(
-      setCurrentCover(`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`)
+      setCurrentCover(`${API_BASE_URL}/${beat.image}`)
     )
 
     // Toggle play/pause
@@ -117,26 +118,33 @@ function BeatList({ beats, filters }) {
 
               <div className="relative w-full overflow-hidden rounded-lg pt-[100%]">
                 <img
-                  src={`${process.env.REACT_APP_BACKEND_URL}/${beat.image}`}
+                  src={`${API_BASE_URL}/${beat.image}`}
                   alt={beat.title}
                   className={`absolute left-0 top-0 size-full object-cover transition-all duration-300 ${
                     isImageLoaded ? 'opacity-100' : 'opacity-0'
                   }`}
                   onLoad={() => setImageLoaded(true)}
+                  onError={(e) => {
+                    if (!e.target.dataset.errorLogged) {
+                      console.error('Error loading image:', beat.image)
+                      e.target.dataset.errorLogged = 'true'
+                      e.target.style.display = 'none'
+                    }
+                  }}
                 />
 
                 {/* Play/Pause Button */}
                 <button
                   onClick={(e) => handlePlayTrack(e, beat)}
                   aria-label={
-                    currentTrack === `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` && isPlaying
+                    currentTrack === `${API_BASE_URL}/${beat.audioURL}` && isPlaying
                       ? 'Pause preview'
                       : 'Play preview'
                   }
                   className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 bg-transparent p-0 text-cyan-400 opacity-0 transition-all duration-300 group-hover:opacity-100 group-active:opacity-100 hover:scale-110 focus:scale-110 focus:outline-none"
                 >
                   {currentTrack ===
-                    `${process.env.REACT_APP_BACKEND_URL}/${beat.audioURL}` &&
+                    `${API_BASE_URL}/${beat.audioURL}` &&
                   isPlaying ? (
                     <FaPause size={28} />
                   ) : (
