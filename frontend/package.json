@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Erik-Mfa.github.io/highest-waves",
+  "homepage": "https://erik-mfa.github.io/highest-waves",
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "@stripe/react-stripe-js": "^2.8.0",
