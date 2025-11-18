@@ -4,7 +4,7 @@ import { isAuthenticated } from './auth'
 import { isAdmin } from './auth'
 
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}`  // Use relative path instead of full URL
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api`
 })
 
 // Create a tag

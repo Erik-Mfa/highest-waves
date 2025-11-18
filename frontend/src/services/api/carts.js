@@ -2,7 +2,7 @@ import axios from 'axios'
 import Cookies from 'universal-cookie'
 
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api`,
   withCredentials: true
 })
 

@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie'
 import { jwtDecode } from 'jwt-decode'
 
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api`,
   withCredentials: true
 })
 

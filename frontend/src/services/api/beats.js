@@ -1,16 +1,16 @@
 /* eslint-disable no-undef */
 import axios from 'axios'
 import { isAuthenticated } from './auth'
-
-const beatOwner = await isAuthenticated()
+import { API_BASE_URL } from '../../config/api'
 
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}`
+  baseURL: API_BASE_URL
 })
 
 export const createBeat = async (beatDetails) => {
   try {
-    beatDetails.owner = beatOwner.userId
+    const beatOwner = await isAuthenticated()
+    beatDetails.owner = beatOwner?.userId
     const response = await instance.post('/beats', beatDetails, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -26,10 +26,11 @@ export const createBeat = async (beatDetails) => {
 
 export const getBeats = async () => {
   try {
-    const response = await instance.get('/beats') // Adjust the endpoint
-    return response.data
+    const response = await instance.get('/beats')
+    return response.data || []
   } catch (error) {
     console.error('Error fetching featured beats:', error)
+    return [] // Return empty array on error so components can still render
   }
 }
 
@@ -61,7 +62,8 @@ export const deleteBeat = async (beatId) => {
 
 export const updateBeat = async (beatId, beatDetails) => {
   try {
-    beatDetails.owner = beatOwner.userId // Ensure the owner is set
+    const beatOwner = await isAuthenticated()
+    beatDetails.owner = beatOwner?.userId // Ensure the owner is set
     const response = await instance.put(`/beats/${beatId}`, beatDetails, {
       headers: {
         'Content-Type': 'multipart/form-data' // In case you are updating files

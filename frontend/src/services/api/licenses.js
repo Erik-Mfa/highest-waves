@@ -1,22 +1,14 @@
 /* eslint-disable no-undef */
 import axios from 'axios'
 
-// The REACT_APP_BACKEND_URL already includes /api, so we need to remove it or use just the base
-const backendBaseUrl = process.env.REACT_APP_BACKEND_URL?.replace('/api', '') || 'http://localhost:3001'
-
 const instance = axios.create({
-  baseURL: backendBaseUrl
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api`
 })
 
 // Get all licenses
 export const getLicenses = async () => {
   try {
-    console.log('API: Original Backend URL:', process.env.REACT_APP_BACKEND_URL)
-    console.log('API: Cleaned Base URL:', backendBaseUrl)
-    console.log('API: Instance baseURL:', instance.defaults.baseURL)
-    console.log('API: Full URL will be:', `${backendBaseUrl}/api/licenses`)
-    
-    const response = await instance.get('/api/licenses')
+    const response = await instance.get('/licenses')
     return response.data
   } catch (error) {
     console.error('Error fetching licenses:', error)
@@ -30,7 +22,7 @@ export const getLicenses = async () => {
 export const getLicenseById = async (id) => {
   try {
     const numericId = parseInt(id)
-    const response = await instance.get(`/api/licenses/${numericId}`)
+    const response = await instance.get(`/licenses/${numericId}`)
     return response.data
   } catch (error) {
     console.error('Error fetching license:', error)
@@ -42,7 +34,7 @@ export const getLicenseById = async (id) => {
 export const createLicense = async (licenseData) => {
   try {
     console.log('API: Creating license:', licenseData)
-    const response = await instance.post('/api/licenses', licenseData, {
+    const response = await instance.post('/licenses', licenseData, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -62,9 +54,8 @@ export const updateLicense = async (id, licenseData) => {
     const numericId = parseInt(id)
     console.log('API: Updating license with ID:', id, '-> converted to:', numericId)
     console.log('API: License data:', licenseData)
-    console.log('API: Full URL:', `${process.env.REACT_APP_BACKEND_URL}/api/licenses/${numericId}`)
     
-    const response = await instance.put(`/api/licenses/${numericId}`, licenseData, {
+    const response = await instance.put(`/licenses/${numericId}`, licenseData, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -86,7 +77,7 @@ export const deleteLicense = async (id) => {
   try {
     const numericId = parseInt(id)
     console.log('API: Deleting license with ID:', numericId)
-    const response = await instance.delete(`/api/licenses/${numericId}`, {
+    const response = await instance.delete(`/licenses/${numericId}`, {
       withCredentials: true
     })
     return response.data
