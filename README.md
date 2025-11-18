@@ -63,7 +63,7 @@ REACT_APP_BACKEND_URL=/api
 - Store production credentials securely
 - Regularly rotate secrets and API keys
 
-## 📦 Complete Deployment Guide
+## Complete Deployment Guide
 
 ### 1. Initial EC2 Setup
 
